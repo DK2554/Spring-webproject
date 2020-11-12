@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.portfolio.model.service.PortfolioService;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
-@Controller
+@RestController
 public class PortfolioController {
 	@Autowired
 	private PortfolioService service;
@@ -42,7 +45,7 @@ public class PortfolioController {
 //		
 //			
 //	}
-	@ResponseBody
+	
 	@RequestMapping(value="/portfolio/portfolioenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
 	public String portboard(Pboard pboard,@RequestBody MultipartFile[] file,HttpServletRequest request) {
@@ -93,5 +96,12 @@ public class PortfolioController {
 		
 			
 	}
+	@RequestMapping(value="/portfolio/portfolioList.do",method = RequestMethod.GET)
+	public List<Pboard> responsePboard()throws JsonMappingException,JsonGenerationException,IOException{
+		List<Pboard> list=service.selectListPboard();
+		return list;
+		
+	}
+	
 
 }

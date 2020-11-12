@@ -13,4 +13,6 @@ public interface PortfolioDao {
 
 	int insertAttachment(SqlSessionTemplate session, Attachment file);
 
+	List<Pboard> selectLitpboard(SqlSessionTemplate session);
+
 }

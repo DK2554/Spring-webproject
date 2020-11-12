@@ -22,5 +22,11 @@ public class PortfolioDaoImpl implements PortfolioDao {
 		// TODO Auto-generated method stub
 		return session.insert("pboard.insertAttachment",file);
 	}
+
+	@Override
+	public List<Pboard> selectLitpboard(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("pboard.selectpboard");
+	}
 	
 }
