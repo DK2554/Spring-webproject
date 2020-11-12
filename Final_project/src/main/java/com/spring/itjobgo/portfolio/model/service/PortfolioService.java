@@ -9,4 +9,8 @@ public interface PortfolioService {
 
 	int insertPboard(Pboard pboard, List<Attachment> files);
 
+	List<Pboard> selectListPboard();
+
+	
+
 }
