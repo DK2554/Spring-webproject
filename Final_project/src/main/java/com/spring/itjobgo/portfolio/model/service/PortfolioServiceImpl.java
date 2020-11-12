@@ -15,6 +15,8 @@ import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
 @Service
 public class PortfolioServiceImpl implements PortfolioService {
+	
+
 	@Autowired
 	private  PortfolioDao dao;
 	@Autowired
@@ -36,6 +38,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 			
 		}
 		return result;
+	}
+	@Override
+	public List<Pboard> selectListPboard() {
+		// TODO Auto-generated method stub
+		return dao.selectLitpboard(session);
 	}
 
 }
