@@ -2,8 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="communityBoard">
 
-	<select id="selectBoardList" resultType="communityBoard">
+<!-- 	<select id="selectBoardOne" parameterType="map" resultMap="communnityBoard">
 		SELECT * FROM COMMUNITY_BOARD
 	</select>
+	
+
+ -->
+ 	<select id="selectBoardList" resultType="communityBoard">
+		SELECT * FROM COMMUNITY_BOARD
+	</select> 
+	
+<!-- 	<select id="selectBoardList2" parameterType="map" resultMap="">
+		SELECT * FROM COMMUNITY_BOARD
+	</select> -->
+	
+		<resultMap id="communnityBoard"
+			type="com.spring.itjobgo.community.model.vo.CommunityBoard">
+			<result column="BOARD_SQ" property="boardSq" />
+			<result column="BOARD_DIVISION" property="boardDivision" />
+			<result column="BOARD_CONTENT" property="boardContent" />
+			<result column="BOARD_DATE" property="boardDate" />
+			<result column="BOARD_ORIGINAL_FILEPATH" property="boardOriginalFilepath" />
+			<result column="BOARD_RENAME_FILEPATH" property="boardRenameFilepath" />
+			<result column="MEMBER_NUM" property="memberNum" />
+		</resultMap>
+	
   
 </mapper>
