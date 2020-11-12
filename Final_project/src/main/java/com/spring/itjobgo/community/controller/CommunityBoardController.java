@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
@@ -26,15 +26,25 @@ public class CommunityBoardController {
 	//자유게시판 화면전환용 메서드
 	@ResponseBody
 	@RequestMapping(value="/communityBoardList" , method=RequestMethod.GET)
-	public List<CommunityBoard> communityBoard() {
+	public String communityBoard() throws JsonProcessingException {
 		
-		List<CommunityBoard>list = service.selectBoardList();
-		
-//		System.out.println("123: " + list);
-		
-		logger.debug(list.toString());
-		
-		return list;
+			List<CommunityBoard> list = service.selectBoardList();
+
+//			System.out.println(list);
+			
+			ObjectMapper mapper = new ObjectMapper();
+			
+			return mapper.writeValueAsString(list);
 		
 	}
+	
+	
+//	@ResponseBody
+//	@RequestMapping(value="/communityBoardList" , method=RequestMethod.GET)
+//	public CommunityBoard communityBoardList(@RequestBody Map param) {
+//		
+//		CommunityBoard cb = service.selectBoardList2(param);
+//		System.out.println(cb);
+//		return cb;
+//	}
 }
