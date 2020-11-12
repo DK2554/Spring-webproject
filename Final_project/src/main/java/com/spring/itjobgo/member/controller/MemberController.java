@@ -1,12 +1,15 @@
 package com.spring.itjobgo.member.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
+import com.spring.itjobgo.security.service.SecurityService;
 
 @RestController
 @RequestMapping("/member")
@@ -24,6 +28,12 @@ public class MemberController{
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+	
+	 @Autowired
+	 private SecurityService securityService;
+	
+	@Autowired
+	private Logger logger;
 	
 	@RequestMapping(value="/register", method = RequestMethod.POST )
 	public void memberRegister(@RequestBody Member member) {
@@ -51,37 +61,37 @@ public class MemberController{
 	}
 	
 	
-//	@RequestMapping(value="/login", method=RequestMethod.POST) 
-//	public Member loginMember (@RequestBody Map param, Model m, HttpSession session) throws IOException {
-//		System.out.println("param: " + param);
-//		
-//		Member login=service.selectOneMember(param);
-//		
-//		System.out.println("login: " + login);
-//		
-//		if(login!=null) {//id있음
-//		
-//				if(encoder.matches((String)param.get("memberPwd"), login.getMemberPwd())) {
-//					//비번매치
-//					System.out.println("비번매치");
-//					
-//					m.addAttribute("loginMember",login);
-//					System.out.println("m: " + login.getMemberPwd());
-//					return login;
-//				}
-//				return null;
-//			}else {
-//				return null;
-//			}
-//		
-//		
-//	}
+	@RequestMapping(value="/login", method=RequestMethod.POST) 
+	public Map loginMember (@RequestBody Map param, Model m, HttpSession session) throws IOException {
+		
+		logger.debug("param:" + param);
+		
+		Member login=service.selectOneMember(param);
+		
+		logger.debug("login:" + login);
+		
+		if(login!=null) {//id값이 존재하는 경우
+		
+				if(encoder.matches((String)param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
+					//비밀번호 매치o
+					//토큰값 생성해야됨 
+					String token = securityService.createToken((String)param.get("memberEmail"), (2 * 1000 * 60));
+			        Map<String, Object> map = new LinkedHashMap<String, Object>();
+			        map.put("token", token);
+			        logger.debug("map: " + map);
+			        return map;
+				}
+				else {//비밀번호 매치x
+				return null;
+				}
+			}else {
+				return null;
+			}
+		
+		
+	}
 	
-//	@GetMapping("/login")
-//	public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest){
-//		String token = service.createToken(loginRequest);
-//		return ResponseEntity.ok().body(new TokenResponse(token, "bearer"));
-//	}
+
 	 
 
 }

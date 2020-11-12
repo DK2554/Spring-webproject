@@ -1,4 +1,4 @@
-package com.spring.itjobgo.security;
+package com.spring.itjobgo.security.service;
 
 import java.security.Key;
 import java.util.Date;
