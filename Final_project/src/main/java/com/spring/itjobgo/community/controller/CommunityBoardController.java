@@ -35,7 +35,6 @@ public class CommunityBoardController {
 			ObjectMapper mapper = new ObjectMapper();
 			
 			return mapper.writeValueAsString(list);
-		
 	}
 	
 	
