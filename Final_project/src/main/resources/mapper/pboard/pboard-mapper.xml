@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pboard">
+  <insert id="insertpboard" parameterType="pboard">
+  	insert into pboard values(seq_pboard.nextval,#{pboardId},#{pboardTitle},#{pboardWriter},#{pboardContent},default,default,1)
+  <selectKey keyProperty="pboardWriter" resultType="string" order="BEFORE">
+	select member_name from  pboard join member on pboard.pboard_Id=member.member_sq
+  </selectKey> 
+  </insert>
+  <insert id="insertAttachment" parameterType="attachment">
+  insert into attachment values(seq_attach.nextval,#{pboardNo},#{orginalFilename},#{renameFilename},default,default)
+   <selectKey keyProperty="pboardNo" resultType="_int" order="BEFORE">
+  SELECT * FROM(SELECT * FROM pboard ORDER BY ROWNUM DESC)WHERE ROWNUM = 1
+  </selectKey>
+  </insert>
+  
+</mapper>
