@@ -98,6 +98,10 @@ public class PortfolioController {
 	@RequestMapping(value="/portfolio/portfolioList.do",method = RequestMethod.GET)
 	public List<Pboard> responsePboard()throws JsonMappingException,JsonGenerationException,IOException{
 		List<Pboard> list=service.selectListPboard();
+		for(Pboard a:list) {
+			logger.debug(a.toString());
+		}
+		
 		return list;
 		
 	}
