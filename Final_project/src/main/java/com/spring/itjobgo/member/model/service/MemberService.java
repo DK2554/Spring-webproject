@@ -5,6 +5,7 @@ import java.util.Map;
 import com.spring.itjobgo.member.model.vo.Member;
 
 public interface MemberService {
+	//public String createToken(LoginRequest loginRequest)
 
 	int insertMember(Member member);
 

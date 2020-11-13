@@ -3,11 +3,10 @@ package com.spring.itjobgo.member.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -52,31 +51,37 @@ public class MemberController{
 	}
 	
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST) 
-	public Member loginMember (@RequestBody Map param, Model m, HttpSession session) throws IOException {
-		System.out.println("param: " + param);
-		
-		Member login=service.selectOneMember(param);
-		
-		System.out.println("login: " + login);
-		
-		if(login!=null) {//id있음
-		
-				if(encoder.matches((String)param.get("memberPwd"), login.getMemberPwd())) {
-					//비번매치
-					System.out.println("비번매치");
-					
-					m.addAttribute("loginMember",login);
-					System.out.println("m: " + login.getMemberPwd());
-					return login;
-				}
-				return null;
-			}else {
-				return null;
-			}
-		
-		
-	}
+//	@RequestMapping(value="/login", method=RequestMethod.POST) 
+//	public Member loginMember (@RequestBody Map param, Model m, HttpSession session) throws IOException {
+//		System.out.println("param: " + param);
+//		
+//		Member login=service.selectOneMember(param);
+//		
+//		System.out.println("login: " + login);
+//		
+//		if(login!=null) {//id있음
+//		
+//				if(encoder.matches((String)param.get("memberPwd"), login.getMemberPwd())) {
+//					//비번매치
+//					System.out.println("비번매치");
+//					
+//					m.addAttribute("loginMember",login);
+//					System.out.println("m: " + login.getMemberPwd());
+//					return login;
+//				}
+//				return null;
+//			}else {
+//				return null;
+//			}
+//		
+//		
+//	}
+	
+//	@GetMapping("/login")
+//	public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest){
+//		String token = service.createToken(loginRequest);
+//		return ResponseEntity.ok().body(new TokenResponse(token, "bearer"));
+//	}
 	 
 
 }
