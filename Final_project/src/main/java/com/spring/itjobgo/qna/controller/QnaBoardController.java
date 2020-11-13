@@ -1,5 +1,19 @@
 package com.spring.itjobgo.qna.controller;
 
-public class QnaBoardController {
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/qna")
+public class QnaBoardController {
+	@Autowired
+
+
+	
+
+	
+	
+	
+	
+	
 }
