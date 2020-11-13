@@ -30,7 +30,7 @@ public class CommunityBoardController {
 		
 			List<CommunityBoard> list = service.selectBoardList();
 
-//			System.out.println(list);
+//		System.out.println(list);
 			
 			ObjectMapper mapper = new ObjectMapper();
 			
