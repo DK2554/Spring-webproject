@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-	<!-- 
-		typealias 
-	-->
+	<!-- typealias -->
 	<settings>
-	   <setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+
 	</settings>
 	<typeAliases>
-	<typeAlias type="com.spring.itjobgo.portfolio.model.vo.Attachment" alias="attachment"/>
-		<typeAlias type="com.spring.itjobgo.member.model.vo.Member" alias="member"/>
-		<typeAlias type="com.spring.itjobgo.portfolio.model.vo.Pboard" alias="pboard"/>
-			<typeAlias type="com.spring.itjobgo.community.model.vo.CommunityBoard" alias="communityBoard"/>
+		<typeAlias
+			type="com.spring.itjobgo.portfolio.model.vo.Attachment"
+			alias="attachment" />
+		<typeAlias type="com.spring.itjobgo.member.model.vo.Member"
+			alias="member" />
+		<typeAlias
+			type="com.spring.itjobgo.portfolio.model.vo.Pboard" alias="pboard" />
+		<typeAlias
+			type="com.spring.itjobgo.community.model.vo.CommunityBoard"
+			alias="communityBoard" />
 	</typeAliases>
-	
+
 </configuration>
