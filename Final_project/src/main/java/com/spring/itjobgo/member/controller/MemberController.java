@@ -77,6 +77,7 @@ public class MemberController{
 					//토큰값 생성해야됨 
 					String token = securityService.createToken((String)param.get("memberEmail"), (2 * 1000 * 60));
 			        Map<String, Object> map = new LinkedHashMap<String, Object>();
+			        //토큰값!!!
 			        map.put("token", token);
 			        logger.debug("map: " + map);
 			        return map;
