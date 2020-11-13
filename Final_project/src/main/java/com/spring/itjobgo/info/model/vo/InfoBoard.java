@@ -6,15 +6,15 @@ import lombok.Data;
 @Data
 public class InfoBoard {
 	
-	private int InfoSq;
-	private String InfoCategory;
-	private String InfoTitle;
-	private Date InfoDate;
-	private int InfoTime;
-	private String InfoAddress;
-	private String InfoOriginalFilepath;
-	private String InfoRenameFilepath;
-	private int MemberNum;
+	private int infoSq;
+	private String infoCategory;
+	private String infoTitle;
+	private Date infoDate;
+	private int infoTime;
+	private String infoAddress;
+	private String infoOriginalFilepath;
+	private String infoRenameFilepath;
+	private int memberNum;
 	
 }
   
