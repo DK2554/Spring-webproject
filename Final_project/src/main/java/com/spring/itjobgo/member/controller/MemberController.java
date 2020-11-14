@@ -1,4 +1,4 @@
-package com.spring.itjobgo.member.controller;
+0package com.spring.itjobgo.member.controller;
 
 import java.io.IOException;
 import java.util.Map;
