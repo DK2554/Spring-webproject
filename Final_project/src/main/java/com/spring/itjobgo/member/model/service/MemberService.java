@@ -13,4 +13,9 @@ public interface MemberService {
 
 	Member selectPhoneNum(Map param);
 
+	Member selectEmailPhone(Map param);
+
+	int updatePwd(Member member);
+
+
 }

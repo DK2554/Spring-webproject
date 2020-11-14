@@ -12,9 +12,19 @@
 		resultMap="memberMap">
 		SELECT * FROM MEMBER WHERE Member_email=#{memberEmail}
 	</select>
+	
+	<select id="selectEmailPhone" parameterType="map" resultMap="memberMap">
+	select * from member where member_Email=#{memberEmail} and member_phone=#{memberPhone}
+	</select>
+	
+	<update id="updatePwd" parameterType="member">
+	update member set member_Pwd=#{memberPwd, jdbcType=VARCHAR} where member_Email=#{memberEmail, jdbcType=VARCHAR}
+	</update>
+	
 	<select parameterType="map" id="selectPhoneNum"
 		resultMap="memberMap">SELECT * FROM MEMBER WHERE MEMBER_PHONE=#{memberPhone}
 	</select>
+	
 		<resultMap id="memberMap"
 			type="com.spring.itjobgo.member.model.vo.Member">
 			<result column="MEMBER_EMAIL" property="memberEmail" />
