@@ -11,11 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.spring.itjobgo.community.model.service.CommunityBoardService;
+import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.info.model.service.InfoBoardService;
 import com.spring.itjobgo.info.model.vo.InfoBoard;
 
 @RestController
-@RequestMapping("/info")
+@RequestMapping("/community")
 public class InfoBoardController {
 	@Autowired
 	private Logger logger;
@@ -23,16 +25,24 @@ public class InfoBoardController {
 	@Autowired
 	private InfoBoardService service;
 	
+    //화면전환용 메서드
 	@ResponseBody
 	@RequestMapping(value="/infoBoardList" , method=RequestMethod.GET)
-	public String communityBoard() throws JsonProcessingException {
+	public List<InfoBoard> InfoBoard()  {
 		
 		List<InfoBoard> list = service.selectBoardList();
-	
-		ObjectMapper mapper = new ObjectMapper();
 		
-		return mapper.writeValueAsString(list);
+		for(InfoBoard i : list){
+		    System.out.println(i);
+		}
+
+		System.out.println(list);
+			
+		
+		return list;
+
+		
+		
+		
+			}
 	}
-}
-
-

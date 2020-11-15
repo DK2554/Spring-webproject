@@ -1,12 +1,9 @@
 package com.spring.itjobgo.community.model.vo;
 
 import java.sql.Date;
-<<<<<<< HEAD
-=======
 
 import org.springframework.format.annotation.DateTimeFormat;
 
->>>>>>> 838c2c33b6f1804d82127551aaf74b19da1d1f18
 import lombok.Data;
 
 @Data
