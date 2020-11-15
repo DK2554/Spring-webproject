@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,26 +64,35 @@ public class MemberController {
 	public Member compareEmailPhone(@RequestBody Map param) throws IOException {
 
 		Member m = service.selectEmailPhone(param);
-		//TODO: nullpt 에러
+		// TODO: nullpt 에러
+		return m;
+	}
+
+	// 전화번호 이메일 비교 : 비밀번호 업데이트
+	@RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
+	public void UpdatePwd(@RequestBody Map param) throws IOException {
+
+		Member m = service.selectOneMember(param);
+
+		String encodePw = encoder.encode((String) param.get("memberPwd"));// 업데이트된 비번 암호화
+		m.setMemberPwd(encodePw);
+
+		System.out.println(m);
+		service.updatePwd(m);
+
+	}
+	
+	//이메일찾기
+	@RequestMapping(value = "/selectPhone", method = RequestMethod.POST)
+	public Member selectPhone(@RequestBody Map param) throws IOException {
+
+		Member m = service.selectPhone(param);		
 		return m;
 	}
 	
-	// 전화번호 이메일 비교 : 비밀번호 업데이트
-		@RequestMapping(value = "/updatePwd", method = RequestMethod.POST)
-		public void UpdatePwd(@RequestBody Map param) throws IOException {
-			
-			Member m = service.selectOneMember(param);
-			
-			String encodePw = encoder.encode((String) param.get("memberPwd"));//업데이트된 비번 암호화
-			m.setMemberPwd(encodePw);
-			
-			System.out.println(m);
-			service.updatePwd(m);
-			
-		}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public Map loginMember(@RequestBody Map param, Model m, HttpSession session) throws IOException {
+	public Map loginMember(@RequestBody Map param) throws IOException {
 
 		logger.debug("param:" + param);
 

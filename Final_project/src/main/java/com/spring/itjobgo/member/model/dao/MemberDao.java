@@ -18,5 +18,7 @@ public interface MemberDao {
 
 	int updatePwd(SqlSession session, Member member);
 
+	Member selectPhone(SqlSession session, Map param);
+
 
 }
