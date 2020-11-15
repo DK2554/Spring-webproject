@@ -40,6 +40,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return result;
 	}
 	@Override
+	public Pboard selectPboardOne(int pboardNo) {
+	
+		return dao.selectOnepboard(session,pboardNo);
+	}
+	@Override
 	public List<Pboard> selectListPboard() {
 		// TODO Auto-generated method stub
 		return dao.selectLitpboard(session);

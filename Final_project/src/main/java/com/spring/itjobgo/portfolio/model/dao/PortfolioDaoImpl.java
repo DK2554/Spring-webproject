@@ -24,6 +24,12 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public Pboard selectOnepboard(SqlSessionTemplate session, int pboardNo) {
+	
+		return session.selectOne("pboard.selectOnepboard",pboardNo);
+	}
+
+	@Override
 	public List<Pboard> selectLitpboard(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
 		return session.selectList("pboard.selectpboard");
