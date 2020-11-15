@@ -19,8 +19,8 @@
 			type="com.spring.itjobgo.community.model.vo.CommunityBoard"
 			alias="communityBoard" />
 		<typeAlias
-			alias="qBoard" 
-			type="com.spring.itjobgo.qna.model.vo.QnaBoard"/>
+			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
+			alias="qBoard" />
 	</typeAliases>
 
 </configuration>

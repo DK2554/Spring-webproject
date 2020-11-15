@@ -1,4 +1,4 @@
-0package com.spring.itjobgo.member.controller;
+package com.spring.itjobgo.member.controller;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;
