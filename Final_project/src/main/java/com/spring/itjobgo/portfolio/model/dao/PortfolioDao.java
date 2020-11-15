@@ -15,4 +15,6 @@ public interface PortfolioDao {
 
 	List<Pboard> selectLitpboard(SqlSessionTemplate session);
 
+	Pboard selectOnepboard(SqlSessionTemplate session, int pboardNo);
+
 }

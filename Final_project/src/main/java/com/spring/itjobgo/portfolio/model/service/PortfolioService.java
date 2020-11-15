@@ -11,6 +11,8 @@ public interface PortfolioService {
 
 	List<Pboard> selectListPboard();
 
+	Pboard selectPboardOne(int pboardNo);
+
 	
 
 }

@@ -16,4 +16,8 @@
   <select id="selectpboard" resultType="pboard">
   select * from pboard
   </select>
+  
+  <select id="selectOnepboard" parameterType="_int" resultType="pboard">	
+  select *from pboard where pboard_no=#{pboardNo}
+  </select>
 </mapper>
