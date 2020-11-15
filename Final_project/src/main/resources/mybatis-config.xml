@@ -18,9 +18,20 @@
 		<typeAlias
 			type="com.spring.itjobgo.community.model.vo.CommunityBoard"
 			alias="communityBoard" />
+<<<<<<< HEAD
 			
 		<typeAlias type="com.spring.itjobgo.community.model.vo.CB_ATTACHMENT" 
 		alias="cb_attachment"/>
+=======
+		<typeAlias
+<<<<<<< HEAD
+			type="com.spring.itjobgo.info.model.vo.Info"
+			alias="Info" />
+=======
+			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
+			alias="qBoard" />
+>>>>>>> 3ab779067e8035253dd8876e847a11c9b816e74d
+>>>>>>> af30b2edf835777c9a8b18bb275a4b757a530be6
 	</typeAliases>
 
 </configuration>

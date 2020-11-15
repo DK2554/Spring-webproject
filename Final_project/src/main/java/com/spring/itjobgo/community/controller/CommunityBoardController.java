@@ -71,11 +71,12 @@ public class CommunityBoardController {
 			int rndNum=(int)(Math.random()*1000);
 			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
 			
+			
 			try {
 				//파일저장하기
 				//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
 				f.transferTo(new File(saveDir+"/"+renameFileName));
-			}catch(IOException e) {
+			}catch(IOException e) 
 				e.printStackTrace();
 			}
 			CB_ATTACHMENT file2=new CB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
