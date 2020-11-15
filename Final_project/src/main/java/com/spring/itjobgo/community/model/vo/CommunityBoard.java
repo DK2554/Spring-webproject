@@ -15,8 +15,6 @@ public class CommunityBoard {
 	private String boardContent;//내용
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date boardDate;//날짜
-	private String boardOriginalFilepath;
-	private String boardRenameFilepath;
 	private int memberNum; //회원시퀀스로 분류
 
 }

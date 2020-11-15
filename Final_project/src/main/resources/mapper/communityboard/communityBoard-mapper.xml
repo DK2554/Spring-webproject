@@ -26,6 +26,23 @@
 			<result column="BOARD_RENAME_FILEPATH" property="boardRenameFilepath" />
 			<result column="MEMBER_NUM" property="memberNum" />
 		</resultMap>
-	
-  
+		
+		
+		<!-- 자유게시판 글 작성 -->
+		<insert id ="insertBoard" parameterType="communityBoard">
+			INSERT INTO COMMUNITY_BOARD VALUES(
+												SEQ_COMMUNITY_BOARD_NO.NEXTVAL,
+												'일반',
+												#{boardTitle},
+												#{boardContent},
+												SYSDATE,
+												1)
+		</insert>
+		
+		<!-- 첨부파일 첨부 -->
+		<insert id="insertAttachment" parameterType="cb_attachment">
+			<selectKey keyProperty="boardSq" resultType="_int" order="BEFORE">
+	 		select SEQ_COMMUNITY_BOARD_NO.currval from dual
+	  		</selectKey>
+  		</insert>
 </mapper>

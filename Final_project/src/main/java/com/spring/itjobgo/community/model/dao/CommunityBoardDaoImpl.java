@@ -6,7 +6,9 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
+import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Repository
 public class CommunityBoardDaoImpl implements CommunityBoardDao {
@@ -17,27 +19,20 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		return session.selectList("communityBoard.selectBoardList"); 
 	}
 
+	@Override
+	public int insertCommunityBoard(SqlSessionTemplate session, CommunityBoard CB) {
+		// TODO Auto-generated method stub
+		return session.insert("communityBoard.insertBoard",CB);
+	}
+
+	@Override
+	public int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT ca) {
+		// TODO Auto-generated method stub
+		return session.insert("communityBoard.insertAttachment",ca);
+	}
+
 	
 
-//	@Override
-//	public CommunityBoard selectBoardList(SqlSessionTemplate session) {
-//		// TODO Auto-generated method stub
-//		return session.selectList("communityBoard.selectBoardList"); 
-//	}
-
-//	@Override
-//	public CommunityBoard selectBoardList(SqlSessionTemplate session, List<CommunityBoard> list) {
-//		// TODO Auto-generated method stub
-//		return session.selectList("communityBoard.selectBoardList"); 
-//	}
-//	  
-	  
-	 
-
-//	@Override
-//	public CommunityBoard selectBoardList2(SqlSessionTemplate session, Map param) {
-//		// TODO Auto-generated method stub
-//		return (CommunityBoard) session.selectList("communityBoard.selectBoardList2");
-//	}
+	
 
 }
