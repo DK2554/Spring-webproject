@@ -10,6 +10,7 @@ public class QnaBoard {
 	private int qnaSeq;
 	private String qnaCategory;
 	private String qnaTitle;
+	private String qnaWriter;
 	private String qnaContent;
 	private String qnaAnswerYn;
 	private Date qnaDate;

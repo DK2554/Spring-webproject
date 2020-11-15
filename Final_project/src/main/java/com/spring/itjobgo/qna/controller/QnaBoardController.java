@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
@@ -20,10 +21,12 @@ public class QnaBoardController {
 	@Autowired
 	private QnaBoardService service;
 	
+	@ResponseBody
 	@RequestMapping(value="/qna/qnaboardlist" , method=RequestMethod.GET)
 	public List<QnaBoard> qnaBoard() {
 		
-		List<QnaBoard> list =service.selectBoardList();
+		
+		List<QnaBoard> list =service.selectQnaBoard();
 
 		for(QnaBoard i : list) {
 			System.out.println(i);

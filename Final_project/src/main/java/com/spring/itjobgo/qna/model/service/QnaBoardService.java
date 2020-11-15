@@ -6,6 +6,6 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 public interface QnaBoardService {
 
-	List<QnaBoard> selectBoardList();
+	List<QnaBoard> selectQnaBoard();
 	
 }

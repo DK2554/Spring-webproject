@@ -6,22 +6,23 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.itjobgo.community.model.dao.CommunityBoardDao;
+import com.spring.itjobgo.qna.model.dao.QnaBoardDao;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
-@Service
-public class QnaBoardServiceImpl implements QnaBoardService {
-
-@Autowired
-private CommunityBoardDao dao;
-
-@Autowired
-private SqlSessionTemplate session;
-
-@Override
-public List<QnaBoard> selectBoardList(){
-	return dao.selectBoardList(session);
-}
+	@Service
+	public class QnaBoardServiceImpl implements QnaBoardService {
+	
+	@Autowired
+	private QnaBoardDao dao;
+	
+	@Autowired
+	private SqlSessionTemplate session;
+	
+	@Override
+	public List<QnaBoard> selectQnaBoard(){
+		
+		return dao.selectQnaBoard(session);
+	}
 
 
 	

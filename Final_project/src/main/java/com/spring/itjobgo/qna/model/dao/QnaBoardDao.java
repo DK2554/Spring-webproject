@@ -8,7 +8,7 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 public interface QnaBoardDao {
 
-	List<QnaBoard> selectBoardList(SqlSessionTemplate session);
+	List<QnaBoard> selectQnaBoard(SqlSessionTemplate session);
 	
 }
 

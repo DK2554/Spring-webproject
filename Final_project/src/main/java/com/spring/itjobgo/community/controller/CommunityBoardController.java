@@ -36,7 +36,7 @@ public class CommunityBoardController {
 			for(CommunityBoard i : list){
 			    System.out.println(i);
 			}
-
+			
 			System.out.println(list);
 				
 			
