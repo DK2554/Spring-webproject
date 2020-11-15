@@ -36,5 +36,18 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectPhoneNum(Map param) {
 		return dao.selectPhoneNum(session, param);
 	}
+
+	@Override
+	public Member selectEmailPhone(Map param) {
+		return dao.selectEmailPhone(session, param);
+	}
+
+	@Override
+	public int updatePwd(Member member) {
+		
+		return dao.updatePwd(session,member);
+	}
+
+	
 			
 }
