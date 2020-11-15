@@ -18,6 +18,9 @@
 		<typeAlias
 			type="com.spring.itjobgo.community.model.vo.CommunityBoard"
 			alias="communityBoard" />
+		<typeAlias
+			type="com.spring.itjobgo.info.model.vo.Info"
+			alias="Info" />
 	</typeAliases>
 
 </configuration>
