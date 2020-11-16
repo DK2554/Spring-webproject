@@ -26,9 +26,9 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 	}
 
 	@Override
-	public int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT ca) {
+	public int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT cb_attach) {
 		// TODO Auto-generated method stub
-		return session.insert("communityBoard.insertAttachment",ca);
+		return session.insert("communityBoard.insertAttachment",cb_attach);
 	}
 
 	

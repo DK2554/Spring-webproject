@@ -26,6 +26,7 @@ public List<CommunityBoard> selectBoardList() {
 	return dao.selectBoardList(session);
 }
 
+//자유게시판 글쓰기
 @Override
 public int insertCommunityBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 	
@@ -36,7 +37,10 @@ public int insertCommunityBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 		if(!files.isEmpty()) {
 			//files에 데이터가 있으면
 			for(CB_ATTACHMENT file:files) {
+				
+				//결과값이 있으면 반복문을 통해서 첨부파일을 insert하는 dao 로직을 생성
 				result=dao.insertAttachment(session,file);
+				
 				if(result==0)throw new RuntimeException("입력오류");
 			}
 		}
