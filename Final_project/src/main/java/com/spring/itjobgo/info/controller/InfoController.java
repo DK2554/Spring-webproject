@@ -36,7 +36,6 @@ public class InfoController {
 			for(Info i : list){
 			    System.out.println(i);
 			}
-
 				System.out.println(list);
 					
 			return list;
