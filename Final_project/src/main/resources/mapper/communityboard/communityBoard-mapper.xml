@@ -22,7 +22,7 @@
 	<insert id ="insertBoard" parameterType="communityBoard">
 		INSERT INTO COMMUNITY_BOARD VALUES(
 											SEQ_COMMUNITY_BOARD_NO.NEXTVAL,
-											'일반',
+											#{boardDivision},
 											#{boardTitle},
 											#{boardContent},
 											DEFAULT,
@@ -33,16 +33,16 @@
 	<insert id="insertAttachment" parameterType="cb_attachment">
 	INSERT INTO CB_ATTACHMENT VALUES(
 											SEQ_CB_ATTACHMENT_NO.NEXTVAL,
-											#{pboardNo},
+											#{cbBoardNo},
 											#{originalfilename},
 											#{renamedfilename},
-											default,
-											default										
+											DEFAULT,
+											DEFAULT										
 											)
 		
 		<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
 		selectKey를 설정한다 -->
-		<selectKey keyProperty="pboardNo" resultType="_int" order="BEFORE">
+		<selectKey keyProperty="cbBoardNo" resultType="_int" order="BEFORE">
  		SELECT SEQ_COMMUNITY_BOARD_NO.CURRVAL FROM DUAL
   		</selectKey>
   		
