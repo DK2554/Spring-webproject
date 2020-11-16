@@ -22,6 +22,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 	@Autowired
 	private SqlSessionTemplate session;
 	
+	
 	@Override
 	public int insertPboard(Pboard pboard, List<Attachment> files) {
 		int result=dao.insertPboard(session,pboard);
@@ -48,6 +49,12 @@ public class PortfolioServiceImpl implements PortfolioService {
 	public List<Pboard> selectListPboard() {
 		// TODO Auto-generated method stub
 		return dao.selectLitpboard(session);
+	}
+	//게시판삭제
+	@Override
+	public int deletePboard(int no) {
+		// TODO Auto-generated method stub
+		return dao.deletepboard(session,no);
 	}
 
 }

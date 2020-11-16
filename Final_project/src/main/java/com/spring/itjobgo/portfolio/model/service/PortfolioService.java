@@ -13,6 +13,8 @@ public interface PortfolioService {
 
 	Pboard selectPboardOne(int pboardNo);
 
+	int deletePboard(int no);
+
 	
 
 }

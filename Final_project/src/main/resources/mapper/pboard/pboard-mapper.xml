@@ -20,4 +20,7 @@
   <select id="selectOnepboard" parameterType="_int" resultType="pboard">	
   select *from pboard where pboard_no=#{pboardNo}
   </select>
+  <delete id="deletepboard" parameterType="_int" >
+  delete from pboard where pboard_no=#{no}
+  </delete>
 </mapper>

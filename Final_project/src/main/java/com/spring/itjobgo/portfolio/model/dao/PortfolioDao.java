@@ -17,4 +17,6 @@ public interface PortfolioDao {
 
 	Pboard selectOnepboard(SqlSessionTemplate session, int pboardNo);
 
+	int deletepboard(SqlSessionTemplate session, int no);
+
 }

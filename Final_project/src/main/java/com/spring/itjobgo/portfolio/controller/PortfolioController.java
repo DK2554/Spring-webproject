@@ -107,7 +107,7 @@ public class PortfolioController {
 		return list;
 		
 	}
-	@RequestMapping(value="/poryfolio/pboardinfo{pboardNo}.do",method = RequestMethod.GET)
+	@RequestMapping(value="/portfolio/pboardinfo{pboardNo}.do",method = RequestMethod.GET)
 	public Pboard pboardinfo(@PathVariable int pboardNo) 
 	throws JsonMappingException,JsonGenerationException,IOException{
 	
@@ -115,5 +115,17 @@ public class PortfolioController {
 		Pboard bp=service.selectPboardOne(pboardNo);
 		//return pb;
 		return bp;
+	}
+	@RequestMapping(value="/portfolio/pboarddel{no}.do",method = RequestMethod.POST)
+	public String pboarddel(@PathVariable int no) throws JsonMappingException,JsonGenerationException,IOException{
+		String msg="";
+		logger.debug("이메소드 수행");
+		int result=service.deletePboard(no);
+		if(result >0) {
+			msg="삭제성공";
+		}else {
+			msg="삭제실패";
+		}
+		return msg;	
 	}
 }
