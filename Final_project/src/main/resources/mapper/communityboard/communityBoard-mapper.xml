@@ -2,47 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="communityBoard">
 
-<!-- 	<select id="selectBoardOne" parameterType="map" resultMap="communnityBoard">
-		SELECT * FROM COMMUNITY_BOARD
-	</select>
-	
-
- -->
+	<resultMap id="communnityBoard"
+		type="com.spring.itjobgo.community.model.vo.CommunityBoard">
+		<result column="BOARD_SQ" property="boardSq" />
+		<result column="BOARD_DIVISION" property="boardDivision" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="BOARD_DATE" property="boardDate" />
+		<result column="BOARD_ORIGINAL_FILEPATH" property="boardOriginalFilepath" />
+		<result column="BOARD_RENAME_FILEPATH" property="boardRenameFilepath" />
+		<result column="MEMBER_NUM" property="memberNum" />
+	</resultMap>
+		
+	<!-- 자유게시판 전체 조회 -->
  	<select id="selectBoardList" resultType="communityBoard">
 		SELECT * FROM COMMUNITY_BOARD
 	</select> 
-	
-<!-- 	<select id="selectBoardList2" parameterType="map" resultMap="">
-		SELECT * FROM COMMUNITY_BOARD
-	</select> -->
-	
-		<resultMap id="communnityBoard"
-			type="com.spring.itjobgo.community.model.vo.CommunityBoard">
-			<result column="BOARD_SQ" property="boardSq" />
-			<result column="BOARD_DIVISION" property="boardDivision" />
-			<result column="BOARD_CONTENT" property="boardContent" />
-			<result column="BOARD_DATE" property="boardDate" />
-			<result column="BOARD_ORIGINAL_FILEPATH" property="boardOriginalFilepath" />
-			<result column="BOARD_RENAME_FILEPATH" property="boardRenameFilepath" />
-			<result column="MEMBER_NUM" property="memberNum" />
-		</resultMap>
+
+	<!-- 자유게시판 글 작성 -->
+	<insert id ="insertBoard" parameterType="communityBoard">
+		INSERT INTO COMMUNITY_BOARD VALUES(
+											SEQ_COMMUNITY_BOARD_NO.NEXTVAL,
+											'일반',
+											#{boardTitle},
+											#{boardContent},
+											DEFAULT,
+											1)
+	</insert>
 		
+	<!-- 첨부파일 첨부 -->
+	<insert id="insertAttachment" parameterType="cb_attachment">
+	INSERT INTO CB_ATTACHMENT VALUES(
+											SEQ_CB_ATTACHMENT_NO.NEXTVAL,
+											#{pboardNo},
+											#{originalfilename},
+											#{renamedfilename},
+											default,
+											default										
+											)
 		
-		<!-- 자유게시판 글 작성 -->
-		<insert id ="insertBoard" parameterType="communityBoard">
-			INSERT INTO COMMUNITY_BOARD VALUES(
-												SEQ_COMMUNITY_BOARD_NO.NEXTVAL,
-												'일반',
-												#{boardTitle},
-												#{boardContent},
-												SYSDATE,
-												1)
-		</insert>
-		
-		<!-- 첨부파일 첨부 -->
-		<insert id="insertAttachment" parameterType="cb_attachment">
-			<selectKey keyProperty="boardSq" resultType="_int" order="BEFORE">
-	 		select SEQ_COMMUNITY_BOARD_NO.currval from dual
-	  		</selectKey>
-  		</insert>
+		<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
+		selectKey를 설정한다 -->
+		<selectKey keyProperty="pboardNo" resultType="_int" order="BEFORE">
+ 		SELECT SEQ_COMMUNITY_BOARD_NO.CURRVAL FROM DUAL
+  		</selectKey>
+  		
+	</insert>
+  		
 </mapper>

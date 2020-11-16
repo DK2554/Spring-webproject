@@ -14,7 +14,7 @@ public class CB_ATTACHMENT {
 	private Date uploaddate;
 	private String status;
 
-	public CB_ATTACHMENT(int i, int j, String originalFileName2, String renameFileName, Object object, Object object2) {
+	public CB_ATTACHMENT() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -72,6 +72,19 @@ public class CB_ATTACHMENT {
 				+ originalfilename + ", renamedfilename=" + renamedfilename + ", uploaddate=" + uploaddate + ", status="
 				+ status + "]";
 	}
+
+	public CB_ATTACHMENT(int attachmentno, int pboardNo, String originalfilename, String renamedfilename,
+			Date uploaddate, String status) {
+		super();
+		this.attachmentno = attachmentno;
+		this.pboardNo = pboardNo;
+		this.originalfilename = originalfilename;
+		this.renamedfilename = renamedfilename;
+		this.uploaddate = uploaddate;
+		this.status = status;
+	}
+	
+	
 	
 	
 }

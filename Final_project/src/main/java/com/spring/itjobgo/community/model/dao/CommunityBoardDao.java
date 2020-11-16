@@ -11,9 +11,11 @@ import com.spring.itjobgo.portfolio.model.vo.Attachment;
 public interface CommunityBoardDao {
 	
 	List<CommunityBoard> selectBoardList(SqlSessionTemplate session);
-
+	
+	//글작성
 	int insertCommunityBoard(SqlSessionTemplate session, CommunityBoard CB);
 	
-	int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT ca);
+	//첨부파일 insert
+	int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT cb_attach);
 
 }

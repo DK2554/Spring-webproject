@@ -13,7 +13,7 @@ public class CommunityBoard {
 	private String boardDivision;//분류
 	private String boardTitle; //제목
 	private String boardContent;//내용
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date boardDate;//날짜
 	private int memberNum; //회원시퀀스로 분류
 
