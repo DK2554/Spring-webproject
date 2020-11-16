@@ -76,7 +76,7 @@ public class CommunityBoardController {
 				//파일저장하기
 				//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
 				f.transferTo(new File(saveDir+"/"+renameFileName));
-			}catch(IOException e) 
+			}catch(IOException e) {
 				e.printStackTrace();
 			}
 			CB_ATTACHMENT file2=new CB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
@@ -84,6 +84,7 @@ public class CommunityBoardController {
 			}
 		}
 		int result=0;
+		
 		try {
 			result=service.insertCommunityBoard(cb,files);
 		}catch(RuntimeException e) {
@@ -92,7 +93,7 @@ public class CommunityBoardController {
 		String msg="";
 		if(result>0) msg="등록성공";
 		else msg="등록실패";
-	
+
 		
 		return msg;
 		
