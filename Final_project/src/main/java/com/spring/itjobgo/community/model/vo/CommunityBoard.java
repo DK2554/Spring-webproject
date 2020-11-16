@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class CommunityBoard {
 	
+	
 	private int boardSq;// 번호
 	private String boardDivision;//분류
 	private String boardTitle; //제목
