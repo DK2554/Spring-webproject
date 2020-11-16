@@ -48,6 +48,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.updatePwd(session,member);
 	}
 
+	@Override
+	public Member selectPhone(Map param) {
+		return dao.selectPhone(session, param);
+	}
+
 	
 			
 }

@@ -42,6 +42,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.updatePwd", member);
 	}
 
+	@Override
+	public Member selectPhone(SqlSession session, Map param) {
+		return session.selectOne("member.selectPhone", param);
+	}
+
 
 	
 }
