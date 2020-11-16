@@ -85,7 +85,7 @@ public class CommunityBoardController {
 			
 			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
 			
-<<<<<<< HEAD
+
 			try {
 				//파일저장하기
 				//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
@@ -98,21 +98,7 @@ public class CommunityBoardController {
 			}
 		}
 		int result=0;
-=======
-					try {
-						//renamedFileName 으로 파일을 저장한다 > transferTo(파일)
-						f.transferTo(new File(saveDir+"/"+renameFileName));
-						
-					}catch(IOException e) {
-						e.printStackTrace();
-						}
-						CB_ATTACHMENT file2=new CB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
-						files.add(file2);
-				}
-			}
-		
-		int result =0;
->>>>>>> c61b5eb6e7a7be6068d19647de70a15823281a45
+
 		
 		try {
 			//게시판 글 작성
@@ -126,12 +112,7 @@ public class CommunityBoardController {
 		if(result>0) msg="등록성공";
 		
 		else msg="등록실패";
-<<<<<<< HEAD
 
-		
-=======
-	
->>>>>>> c61b5eb6e7a7be6068d19647de70a15823281a45
 		return msg;
 		
 	}
