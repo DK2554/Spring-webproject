@@ -78,9 +78,4 @@ public class CB_ATTACHMENT {
 	}
 	
 	
-	
-	
-	
-	
-	
 }
