@@ -117,4 +117,10 @@ public class CommunityBoardController {
 		
 	}
 	
+	//자유게시판 상세화면 전환 페이지
+	@RequestMapping(value="/community/communityBoardView",method=RequestMethod.GET)
+	public CommunityBoard selectOne()
+	
+	
+	
 }//클래스
