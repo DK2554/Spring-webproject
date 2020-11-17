@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -118,8 +119,18 @@ public class CommunityBoardController {
 	}
 	
 	//자유게시판 상세화면 전환 페이지
-	@RequestMapping(value="/community/communityBoardView",method=RequestMethod.GET)
-	public CommunityBoard selectOne()
+//	@RequestMapping(value="/community/communityBoardView{boardSq}",
+//									method=RequestMethod.GET)
+//	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
+//		
+//		logger.debug("boardSq"+Integer.toString(boardSq));
+//		
+//		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
+//		
+//		return cboard;
+//		
+//		
+//	}
 	
 	
 	
