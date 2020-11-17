@@ -119,18 +119,35 @@ public class CommunityBoardController {
 	}
 	
 	//자유게시판 상세화면 전환 페이지
-//	@RequestMapping(value="/community/communityBoardView{boardSq}",
-//									method=RequestMethod.GET)
-//	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
-//		
-//		logger.debug("boardSq"+Integer.toString(boardSq));
-//		
-//		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
-//		
-//		return cboard;
-//		
-//		
-//	}
+	@RequestMapping(value="/community/communityBoardView{boardSq}",
+									method=RequestMethod.GET)
+	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
+		
+		logger.debug("boardSq"+Integer.toString(boardSq));
+		
+		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
+		
+		return cboard;
+	
+	}
+	
+	//자유게시판 삭제하기
+	@RequestMapping(value="community/communityBoardDelete{boardSq}",
+									method=RequestMethod.POST)
+	public String deleteBoard(@PathVariable int boardSq) {
+		
+		int result = service.deleteBoard(boardSq);
+		
+		String msg="";
+		
+		if(result>0) {
+			msg="글삭제 성공";
+		}
+		else {
+			msg="글삭제 실패";
+		}
+		return msg;
+	}
 	
 	
 	
