@@ -114,13 +114,12 @@ public class CommunityBoardController {
       
       else msg="등록실패";
 
-<<<<<<< HEAD
       return msg;
       
    }
    
 }//클래스
-=======
+
 		return msg;
 		
 	}
@@ -142,4 +141,4 @@ public class CommunityBoardController {
 	
 	
 }//클래스
->>>>>>> c940184ca52d1f0c996493d3427a676989818840
+
