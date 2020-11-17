@@ -50,6 +50,27 @@ public int insertCommunityBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 }
 
 
+//자유게시판 상세보기
+@Override
+public CommunityBoard selectCommunityBoardOne(int boardSq) {
+	// TODO Auto-generated method stub
+	return dao.selectCommunityBoardOne(session,boardSq);
+}
+
+//자유게시판 삭제하기
+@Override
+public int deleteBoard(int boardSq) {
+	// TODO Auto-generated method stub
+	return dao.deleteBoard(session, boardSq);
+}
+
+
+
+
+
+
+
+
 
 
 
