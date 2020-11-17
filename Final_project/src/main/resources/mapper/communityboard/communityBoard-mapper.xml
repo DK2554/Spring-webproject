@@ -68,7 +68,7 @@
 	
 	<!-- 자유게시판 삭제하기 -->
 	<delete id="deleteBoard" parameterType="_int">
-		DELETE * FROM COMMUNITY_BOARD WHERE BOARD_SQ=#{boardSq}
+		DELETE  FROM COMMUNITY_BOARD WHERE BOARD_SQ=#{boardSq}
 	</delete>
 	
   		
