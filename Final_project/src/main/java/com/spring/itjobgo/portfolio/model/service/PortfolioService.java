@@ -15,6 +15,8 @@ public interface PortfolioService {
 
 	int deletePboard(int no);
 
+	Attachment selectattac(int no);
+
 	
 
 }

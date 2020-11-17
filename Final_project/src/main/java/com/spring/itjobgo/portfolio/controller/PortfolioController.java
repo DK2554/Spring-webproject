@@ -126,6 +126,17 @@ public class PortfolioController {
 		}else {
 			msg="삭제실패";
 		}
+		logger.debug(msg);
 		return msg;	
 	}
+	@RequestMapping(value="/portfolio/pbaordupdate{no}.do",method = RequestMethod.GET)
+	public Attachment pboardupdate(@PathVariable int no) 
+			throws JsonMappingException,JsonGenerationException,IOException{
+			
+				logger.debug("pbaordNo"+Integer.toString(no));
+				Attachment at=service.selectattac(no);
+				logger.debug(at.toString());
+				
+				return at;
+			}
 }

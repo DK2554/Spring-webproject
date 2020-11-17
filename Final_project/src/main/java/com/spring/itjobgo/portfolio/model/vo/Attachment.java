@@ -5,13 +5,20 @@ import java.sql.Date;
 public class Attachment {
 	private int attachementNo;
 	private int pboardNo;
-	private String orginalFilename;
-	private String renameFilename;
+	private String originalFilename;
+	private String renamedFilename;
 	private Date uploadDate;
 	private String status; 
 	
 	public Attachment() {
 		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Attachment [attachementNo=" + attachementNo + ", pboardNo=" + pboardNo + ", originalFilename="
+				+ originalFilename + ", renamedFilename=" + renamedFilename + ", uploadDate=" + uploadDate + ", status="
+				+ status + "]";
 	}
 
 	public int getAttachementNo() {
@@ -30,20 +37,20 @@ public class Attachment {
 		this.pboardNo = pboardNo;
 	}
 
-	public String getOrginalFilename() {
-		return orginalFilename;
+	public String getOriginalFilename() {
+		return originalFilename;
 	}
 
-	public void setOrginalFilename(String orginalFilename) {
-		this.orginalFilename = orginalFilename;
+	public void setOriginalFilename(String originalFilename) {
+		this.originalFilename = originalFilename;
 	}
 
-	public String getRenameFilename() {
-		return renameFilename;
+	public String getRenamedFilename() {
+		return renamedFilename;
 	}
 
-	public void setRenameFilename(String renameFilename) {
-		this.renameFilename = renameFilename;
+	public void setRenamedFilename(String renamedFilename) {
+		this.renamedFilename = renamedFilename;
 	}
 
 	public Date getUploadDate() {
@@ -62,24 +69,17 @@ public class Attachment {
 		this.status = status;
 	}
 
-	@Override
-	public String toString() {
-		return "Attachment [attachementNo=" + attachementNo + ", pboardNo=" + pboardNo + ", orginalFilename="
-				+ orginalFilename + ", renameFilename=" + renameFilename + ", uploadDate=" + uploadDate + ", status="
-				+ status + "]";
-	}
-
-	public Attachment(int attachementNo, int pboardNo, String orginalFilename, String renameFilename, Date uploadDate,
+	public Attachment(int attachementNo, int pboardNo, String originalFilename, String renamedFilename, Date uploadDate,
 			String status) {
 		super();
 		this.attachementNo = attachementNo;
 		this.pboardNo = pboardNo;
-		this.orginalFilename = orginalFilename;
-		this.renameFilename = renameFilename;
+		this.originalFilename = originalFilename;
+		this.renamedFilename = renamedFilename;
 		this.uploadDate = uploadDate;
 		this.status = status;
 	}
 
-
+	
 	
 }
