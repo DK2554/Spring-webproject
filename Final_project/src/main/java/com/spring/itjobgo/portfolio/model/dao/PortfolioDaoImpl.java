@@ -12,6 +12,12 @@ import com.spring.itjobgo.portfolio.model.vo.Pboard;
 public class PortfolioDaoImpl implements PortfolioDao {
 
 	@Override
+	public int deletepboard(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.delete("pboard.deletepboard",no);
+	}
+
+	@Override
 	public int insertPboard(SqlSessionTemplate session, Pboard pboard) {
 		
 		return session.insert("pboard.insertpboard",pboard);
@@ -21,6 +27,12 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	public int insertAttachment(SqlSessionTemplate session, Attachment file) {
 		// TODO Auto-generated method stub
 		return session.insert("pboard.insertAttachment",file);
+	}
+
+	@Override
+	public Pboard selectOnepboard(SqlSessionTemplate session, int pboardNo) {
+	
+		return session.selectOne("pboard.selectOnepboard",pboardNo);
 	}
 
 	@Override

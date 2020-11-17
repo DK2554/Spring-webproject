@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,6 +107,25 @@ public class PortfolioController {
 		return list;
 		
 	}
+	@RequestMapping(value="/portfolio/pboardinfo{pboardNo}.do",method = RequestMethod.GET)
+	public Pboard pboardinfo(@PathVariable int pboardNo) 
+	throws JsonMappingException,JsonGenerationException,IOException{
 	
-
+		logger.debug("pbaordNo"+Integer.toString(pboardNo));
+		Pboard bp=service.selectPboardOne(pboardNo);
+		//return pb;
+		return bp;
+	}
+	@RequestMapping(value="/portfolio/pboarddel{no}.do",method = RequestMethod.POST)
+	public String pboarddel(@PathVariable int no) throws JsonMappingException,JsonGenerationException,IOException{
+		String msg="";
+		logger.debug("이메소드 수행");
+		int result=service.deletePboard(no);
+		if(result >0) {
+			msg="삭제성공";
+		}else {
+			msg="삭제실패";
+		}
+		return msg;	
+	}
 }
