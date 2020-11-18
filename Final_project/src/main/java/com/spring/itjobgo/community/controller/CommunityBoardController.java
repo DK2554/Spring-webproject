@@ -184,4 +184,7 @@ public class CommunityBoardController {
 	
 	
 	
+	
+	
+	
 }//클래스
