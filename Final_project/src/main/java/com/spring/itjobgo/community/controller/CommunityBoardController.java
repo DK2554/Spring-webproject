@@ -149,6 +149,4 @@ public class CommunityBoardController {
 		return msg;
 	}
 	
-	
-	
 }//클래스
