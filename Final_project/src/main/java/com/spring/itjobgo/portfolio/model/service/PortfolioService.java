@@ -17,6 +17,8 @@ public interface PortfolioService {
 
 	Attachment selectattac(int no);
 
+	int updatepboard(Pboard pboard, List<Attachment> files);
+
 	
 
 }

@@ -1,14 +1,12 @@
 package com.spring.itjobgo.community.model.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
-import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Repository
 public class CommunityBoardDaoImpl implements CommunityBoardDao {
@@ -46,6 +44,13 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 	public int deleteBoard(SqlSessionTemplate session, int boardSq) {
 		// TODO Auto-generated method stub
 		return session.delete("communityBoard.deleteBoard",boardSq);
+	}
+	
+	//첩부파일 조회
+	@Override
+	public CB_ATTACHMENT selectAttach(SqlSessionTemplate session, int boardSq) {
+		// TODO Auto-generated method stub
+		return session.selectOne("communityBoard.selectAttach",boardSq);
 	}
 	
 	
