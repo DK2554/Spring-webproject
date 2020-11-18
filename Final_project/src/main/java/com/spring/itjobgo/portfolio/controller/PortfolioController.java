@@ -147,54 +147,57 @@ public class PortfolioController {
 				
 				return at;
 			}
-	@RequestMapping(value="/portfolio/portfolioupdataend{no}.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(value="/portfolio/portfolioupdataend.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
-	public String pboardUpdataEnd(@PathVariable int no,Pboard pboard,@RequestBody MultipartFile[] file,HttpServletRequest request) {
-		pboard.setPboardId(1);
-		logger.debug("매핑확인");
-		logger.debug("======vue에서 전송한  파일========");
-		logger.debug("파일명"+file[0].getOriginalFilename());
-		logger.debug("파일크기 : "+file[0].getSize());
-		logger.debug(pboard.toString());
-		String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
-		File dir=new File(saveDir);
-		if(!dir.exists()) {
-			//지정된 경로의 폴더가 없으면 생성해라
-			dir.mkdirs();
-		}
-		List<Attachment> files=new ArrayList();
-		for(MultipartFile f:file) {
-			if(!f.isEmpty()) {
-			String originalFileName=f.getOriginalFilename();
-			String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
-			int rndNum=(int)(Math.random()*1000);
-			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+	public String pboardUpdataEnd(Pboard pboard,@RequestBody(required = false) MultipartFile[]  filen,HttpServletRequest request) {
+			logger.debug("그냥 매핑테스트");
 			
-			try {
-				//파일저장하기
-				//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
-				f.transferTo(new File(saveDir+"/"+renameFileName));
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			Attachment file2=new Attachment(0,0,originalFileName,renameFileName,null,null);
-			files.add(file2);
-			}
-		}
-		int result=0;
-		try {
-			result=service.insertPboard(pboard,files);
-		}catch(RuntimeException e) {
-			e.printStackTrace();
-		}
-		String msg="";
-		if(result>0) msg="등록성공";
-		else msg="등록실패";
-	
-		
-		return msg;
-		
+			if(filen.length>0) {
+				int no=pboard.getPboardNo();
+				String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
+				File dir=new File(saveDir);
+				if(!dir.exists()) {
+					//지정된 경로의 폴더가 없으면 생성해라
+					dir.mkdirs();
+				}
+				List<Attachment> files=new ArrayList();
+				for(MultipartFile f:filen) {
+					if(!f.isEmpty()) {
+					String originalFileName=f.getOriginalFilename();
+					String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+					int rndNum=(int)(Math.random()*1000);
+					String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+					
+					try {
+						//파일저장하기
+						//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
+						f.transferTo(new File(saveDir+"/"+renameFileName));
+					}catch(IOException e) {
+						e.printStackTrace();
+					}
+					Attachment file2=new Attachment(0,no,originalFileName,renameFileName,null,null);
+					files.add(file2);
+					}
+				}
+				int result=0;
+				try {
+					result=service.updatepboard(pboard,files);
+				}catch(RuntimeException e) {
+					e.printStackTrace();
+				}
+				String msg="";
+				if(result>0) msg="등록성공";
+				else msg="등록실패";
 			
+			}
+			else {
+				
+			}
+				
+			//넘겨줄 파일이 있을때 서버에 올리고  attachment db를 수정
+			//넘겨줄 파일이 없으면 게시글만 수정하면 대는거 아님?
+			
+	return "매핑테스트";
 	}
 }

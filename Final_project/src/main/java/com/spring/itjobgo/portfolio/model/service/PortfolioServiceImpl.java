@@ -55,6 +55,24 @@ public class PortfolioServiceImpl implements PortfolioService {
 		// TODO Auto-generated method stub
 		return dao.selectLitpboard(session);
 	}
+	@Override
+	public int updatepboard(Pboard pboard, List<Attachment> files) {
+		// TODO Auto-generated method stub
+		int result =dao.updatedpboard(session,pboard);
+		if(result==0) throw new RuntimeException("입력오류");
+		if(result>0) {
+			if(!files.isEmpty()) {
+				//files에 데이터가 있으면
+				for(Attachment file:files) {
+					result=dao.updateattachment(session, file);
+					if(result==0)throw new RuntimeException("입력오류");
+				}
+			}
+			
+		}
+		return result;
+
+	}
 	//게시판삭제
 	@Override
 	public int deletePboard(int no) {
