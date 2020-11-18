@@ -134,17 +134,34 @@ public class CommunityBoardController {
 	//자유게시판 삭제하기
 	@RequestMapping(value="community/communityBoardDelete{boardSq}",
 									method=RequestMethod.POST)
-	public String deleteBoard(@PathVariable int boardSq) {
+	public String deleteBoard(@PathVariable int boardSq , HttpServletRequest request) {
 		
+		//먼저 첨부파일이 삭제가 되면 그 그결과값이 result>0이면 게시글 삭제로 이어지도록
+		String msg = "";
+		logger.debug("첨부파일 삭제 후 게시글 삭제 로직 수행 logger");
+		
+		//먼저 게시글 번호를 가지고 해당 첨부파일을 가져오는 메서드
+		CB_ATTACHMENT cba = service.selectAttach(boardSq);
+		System.out.println(cba);
+		
+		//첨부파일을 가져온 후 첨부파일을 서버에서(/resources/upload/communityBoard)삭제
+		String ReNameFile =cba.getRenamedfilename();
+		String saveDir = request.getServletContext().getRealPath("/resources/upload/communityBoard");
+		
+		//먼저 게시글 삭제 후 첨부파일 삭제
 		int result = service.deleteBoard(boardSq);
 		
-		String msg="";
-		
 		if(result>0) {
-			msg="글삭제 성공";
+			msg="자유게시판 글삭제 성공";
+			//게시글 삭제를 성공했을때 첨부파일이 있다면 첨부파일도 삭제
+			File file = new File(saveDir+"/"+ReNameFile);
+			if(file.exists()) {
+				if(file.delete()) logger.debug("첨부파일 삭제 성공");
+				else logger.debug("첨부파일 삭제 실패");
+			}
 		}
 		else {
-			msg="글삭제 실패";
+			msg="자유게시판 글삭제 실패";
 		}
 		return msg;
 	}
