@@ -132,7 +132,7 @@ public class CommunityBoardController {
 	}
 	
 	//자유게시판 삭제하기
-	@RequestMapping(value="community/communityBoardDelete{boardSq}",
+	@RequestMapping(value="/community/communityBoardDelete{boardSq}",
 									method=RequestMethod.POST)
 	public String deleteBoard(@PathVariable int boardSq , HttpServletRequest request) {
 		
@@ -165,5 +165,22 @@ public class CommunityBoardController {
 		}
 		return msg;
 	}
+	
+	//수정화면으로 전환시 게시글 번호를 통해 첨부파일을 가져오는 메서드
+	@RequestMapping(value="/community/communityBoardUpdate{boardSq}",method = RequestMethod.GET)
+	public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
+		
+		System.out.println(boardSq);
+		
+		logger.debug("boardSq" + Integer.toString(boardSq));
+		CB_ATTACHMENT cba = service.selectAttach(boardSq);
+		logger.debug(cba.toString());
+		
+		System.out.println(cba);
+		
+		return cba;
+		
+	}
+	
 	
 }//클래스
