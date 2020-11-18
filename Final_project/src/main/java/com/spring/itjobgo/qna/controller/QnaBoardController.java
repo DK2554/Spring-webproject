@@ -28,6 +28,7 @@ public class QnaBoardController {
 	@Autowired
 	private Logger logger;
 	
+	
 	@Autowired
 	private QnaBoardService service;
 	
