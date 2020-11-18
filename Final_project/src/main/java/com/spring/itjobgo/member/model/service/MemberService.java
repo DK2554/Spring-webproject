@@ -19,5 +19,7 @@ public interface MemberService {
 
 	Member selectPhone(Map param);
 
+	
+
 
 }

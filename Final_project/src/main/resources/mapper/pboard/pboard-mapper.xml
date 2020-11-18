@@ -8,13 +8,13 @@
   </selectKey> --> 
   </insert>
   <insert id="insertAttachment" parameterType="attachment">
-  insert into attachment values(seq_attach.nextval,#{pboardNo},#{orginalFilename},#{renameFilename},default,default)
+  insert into attachment values(seq_attach.nextval,#{pboardNo},#{originalFilename},#{renamedFilename},default,default)
    <selectKey keyProperty="pboardNo" resultType="_int" order="BEFORE">
  		select seq_pboard.currval from dual
   </selectKey>
   </insert>
   <select id="selectpboard" resultType="pboard">
-  select * from pboard
+  select * from pboard order by pboard_No
   </select>
   
   <select id="selectOnepboard" parameterType="_int" resultType="pboard">	
@@ -23,4 +23,13 @@
   <delete id="deletepboard" parameterType="_int" >
   delete from pboard where pboard_no=#{no}
   </delete>
+  <select id="selectattachment"  parameterType="_int" resultType="attachment">
+  select * from attachment where pboard_no=#{no}
+  </select>
+  <update id="updatepboard" >
+  update pboard set pboard_title=#{pboardTitle},pboard_content=#{pboardContent} where pboard_no=#{pboardNo}
+  </update>
+  <update id="updateattachment">
+  update attachment set originalFilename=#{originalFilename},renamedFilename=#{renamedFilename} where pboard_no=#{pboardNo}
+  </update>
 </mapper>

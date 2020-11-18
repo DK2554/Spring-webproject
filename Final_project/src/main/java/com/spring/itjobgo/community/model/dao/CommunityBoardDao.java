@@ -17,5 +17,16 @@ public interface CommunityBoardDao {
 	
 	//첨부파일 insert
 	int insertAttachment(SqlSessionTemplate session, CB_ATTACHMENT cb_attach);
+	
+	//글 상세보기
+	CommunityBoard selectCommunityBoardOne(SqlSessionTemplate session, int boardSq);
+
+	//글 삭제하기
+	int deleteBoard(SqlSessionTemplate session, int boardSq);
+	
+	//첨부파일 조회
+	CB_ATTACHMENT selectAttach(SqlSessionTemplate session, int boardSq);
+
+
 
 }

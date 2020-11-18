@@ -117,15 +117,87 @@ public class PortfolioController {
 		return bp;
 	}
 	@RequestMapping(value="/portfolio/pboarddel{no}.do",method = RequestMethod.POST)
-	public String pboarddel(@PathVariable int no) throws JsonMappingException,JsonGenerationException,IOException{
+	public String pboarddel(@PathVariable int no,HttpServletRequest request) throws JsonMappingException,JsonGenerationException,IOException{
 		String msg="";
 		logger.debug("이메소드 수행");
+		Attachment at=service.selectattac(no);
+		String fname=at.getRenamedFilename();
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
 		int result=service.deletePboard(no);
 		if(result >0) {
 			msg="삭제성공";
+			File file=new File(saveDir+"/"+fname);
+			if(file.exists()) {
+				if(file.delete()) logger.debug("삭제성공");
+				else logger.debug("삭제실패");
+			}
 		}else {
 			msg="삭제실패";
 		}
+		logger.debug(msg);
 		return msg;	
+	}
+	@RequestMapping(value="/portfolio/pbaordupdate{no}.do",method = RequestMethod.GET)
+	public Attachment pboardupdate(@PathVariable int no) 
+			throws JsonMappingException,JsonGenerationException,IOException{
+			
+				logger.debug("pbaordNo"+Integer.toString(no));
+				Attachment at=service.selectattac(no);
+				logger.debug(at.toString());
+				
+				return at;
+			}
+	@RequestMapping(value="/portfolio/portfolioupdataend.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	//@ModelAttribute 생략가능  써주는것이 좋음 
+	public String pboardUpdataEnd(Pboard pboard,@RequestBody(required = false) MultipartFile[]  filen,HttpServletRequest request) {
+			logger.debug("그냥 매핑테스트");
+			
+			if(filen.length>0) {
+				int no=pboard.getPboardNo();
+				String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
+				File dir=new File(saveDir);
+				if(!dir.exists()) {
+					//지정된 경로의 폴더가 없으면 생성해라
+					dir.mkdirs();
+				}
+				List<Attachment> files=new ArrayList();
+				for(MultipartFile f:filen) {
+					if(!f.isEmpty()) {
+					String originalFileName=f.getOriginalFilename();
+					String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+					int rndNum=(int)(Math.random()*1000);
+					String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+					
+					try {
+						//파일저장하기
+						//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
+						f.transferTo(new File(saveDir+"/"+renameFileName));
+					}catch(IOException e) {
+						e.printStackTrace();
+					}
+					Attachment file2=new Attachment(0,no,originalFileName,renameFileName,null,null);
+					files.add(file2);
+					}
+				}
+				int result=0;
+				try {
+					result=service.updatepboard(pboard,files);
+				}catch(RuntimeException e) {
+					e.printStackTrace();
+				}
+				String msg="";
+				if(result>0) msg="등록성공";
+				else msg="등록실패";
+			
+			}
+			else {
+				
+			}
+				
+			//넘겨줄 파일이 있을때 서버에 올리고  attachment db를 수정
+			//넘겨줄 파일이 없으면 게시글만 수정하면 대는거 아님?
+			
+	return "매핑테스트";
 	}
 }

@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="communityBoard">
 
+	<!-- update, delete, insert
+					는 리턴타입이 int이기때문에 알아서 반영된다 
+					=>그래서 resultType = _int 가 생략한다				
+	-->
+	
+	<!-- select는 
+			반드시 resultType이 있다 
+												parameterType 은 입력될 데이터, 
+												resultType은 쿼리 후 결과를 위한 데이터		
+	-->
+
 	<resultMap id="communnityBoard"
 		type="com.spring.itjobgo.community.model.vo.CommunityBoard">
 		<result column="BOARD_SQ" property="boardSq" />
@@ -29,7 +40,7 @@
 											1)
 	</insert>
 		
-	<!-- 첨부파일 첨부 -->
+	<!-- 글쓰기의 첨부파일 첨부 -->
 	<insert id="insertAttachment" parameterType="cb_attachment">
 	INSERT INTO CB_ATTACHMENT VALUES(
 											SEQ_CB_ATTACHMENT_NO.NEXTVAL,
@@ -47,5 +58,23 @@
   		</selectKey>
   		
 	</insert>
+	
+	<!-- 자유게시판 상세보기 -->
+	<select id="selectCommunityBoardOne"  parameterType="_int" 
+	resultType="communityBoard">
+		SELECT * FROM COMMUNITY_BOARD WHERE BOARD_SQ=#{boardSq}
+	
+	</select>
+	
+	<!-- 자유게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE  FROM COMMUNITY_BOARD WHERE BOARD_SQ=#{boardSq}
+	</delete>
+	
+	<!-- 첨부파일 조회 -->
+	<select id="selectAttach" resultType="CB_ATTACHMENT" parameterType="_int">
+		SELECT * FROM CB_ATTACHMENT WHERE CB_BOARD_NO=#{boardSq}
+	</select>
+	
   		
 </mapper>

@@ -39,14 +39,30 @@ public class MemberController {
 
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
-		int result = service.insertMember(member);
+		int result = 0;
+		System.out.println(member);
+		try {
+			result = service.insertMember(member);
+					
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		
 
 	}
 
 	// 이메일 중복검사
 	@RequestMapping(value = "/checkEmail", method = RequestMethod.POST)
 	public Member checkEmail(@RequestBody Map param) throws IOException {
-
+		System.out.println(param);
+		Member m = service.selectOneMember(param);
+		return m;
+	}
+	
+	//회원 정보 가져오기
+	@RequestMapping(value = "/getMember", method = RequestMethod.GET)
+	public Member getMember(@RequestParam Map param) throws IOException {
+		System.out.println("멤버호출: " + param);
 		Member m = service.selectOneMember(param);
 		return m;
 	}
