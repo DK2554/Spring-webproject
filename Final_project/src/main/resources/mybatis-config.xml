@@ -30,8 +30,13 @@
 		<typeAlias type="com.spring.itjobgo.info.model.vo.Info"
 			alias="Info" />
 			
-		<typeAlias type="com.spring.itjobgo.qna.model.vo.QnaBoard"
-			alias="qBoard"/>
+		<typeAlias
+			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
+			alias="qna-Board"/>
+			
+		<typeAlias
+			type="com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT"
+			alias="qna-attachment" />
 			
 	</typeAliases>
 
