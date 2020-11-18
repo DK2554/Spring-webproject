@@ -21,4 +21,8 @@ public interface PortfolioDao {
 
 	Attachment selectOneAttach(SqlSessionTemplate session, int no);
 
+	int updatedpboard(SqlSessionTemplate session, Pboard pboard);
+
+	int updateattachment(SqlSessionTemplate session, Attachment file);
+
 }
