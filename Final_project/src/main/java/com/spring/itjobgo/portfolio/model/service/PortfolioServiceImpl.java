@@ -46,6 +46,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return dao.selectOnepboard(session,pboardNo);
 	}
 	@Override
+	public Attachment selectattac(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectOneAttach(session,no);
+	}
+	@Override
 	public List<Pboard> selectListPboard() {
 		// TODO Auto-generated method stub
 		return dao.selectLitpboard(session);

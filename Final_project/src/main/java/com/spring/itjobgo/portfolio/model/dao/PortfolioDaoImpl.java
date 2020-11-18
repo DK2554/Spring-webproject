@@ -18,6 +18,12 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public Attachment selectOneAttach(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pboard.selectattachment",no);
+	}
+
+	@Override
 	public int insertPboard(SqlSessionTemplate session, Pboard pboard) {
 		
 		return session.insert("pboard.insertpboard",pboard);

@@ -19,4 +19,6 @@ public interface PortfolioDao {
 
 	int deletepboard(SqlSessionTemplate session, int no);
 
+	Attachment selectOneAttach(SqlSessionTemplate session, int no);
+
 }
