@@ -118,27 +118,20 @@ public class CommunityBoardController {
       
    }
    
+   //자유게시판 상세화면 전환 페이지
+//   @RequestMapping(value="/community/communityBoardView{boardSq}",
+//                           method=RequestMethod.GET)
+//   public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
+//      
+//      logger.debug("boardSq"+Integer.toString(boardSq));
+//      
+//      CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
+//      
+//      return cboard;
+//      
+//      
+//   }
+   
+   
+   
 }//클래스
-
-		return msg;
-		
-	}
-	
-	//자유게시판 상세화면 전환 페이지
-//	@RequestMapping(value="/community/communityBoardView{boardSq}",
-//									method=RequestMethod.GET)
-//	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
-//		
-//		logger.debug("boardSq"+Integer.toString(boardSq));
-//		
-//		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
-//		
-//		return cboard;
-//		
-//		
-//	}
-	
-	
-	
-}//클래스
-

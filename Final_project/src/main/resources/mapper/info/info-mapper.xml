@@ -2,14 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Info">
 
-<!-- <select id="selectInfoOne" parameterType="map" resultMap="Info">
-		SELECT * FROM INFO
-	</select>
--->
+		<resultMap id="Info"
+		type="com.spring.itjobgo.info.model.vo.Info">
+		<result column="INFO_SQ" property="infoSq" />
+		<result column="INFO_CATEGORY" property="infoCategory" />
+		<result column="INFO_TITLE" property="infoTitle" />
+		<result column="INFO_DATE" property="infoDate" />
+		<result column="INFO_TIME" property="infoTime" />
+		<result column="INFO_ADDRESS" property="infoAddress" />
+		<result column="INFO_ORIGINAL_FILEPATH" property="infoOriginalFilepath" />
+		<result column="INFO_RENAME_FILEPATH" property="infoRenameFilepath" />
+		<result column="MEMBER_NUM" property="memberNum" />
+	</resultMap>
+		
 
  	<select id="selectInfoList" resultType="Info">
 		SELECT * FROM INFO
 	</select> 
 	
+	<!-- 자유게시판 글 작성 -->
+	<insert id ="insertInfo" parameterType="Info">
+		INSERT INTO INFO VALUES(
+											SEQ_INFO_NO.NEXTVAL,
+											#{infoCategory},
+											#{infoTitle},
+											#{infoDate},
+											#{infoTime},
+											#{infoAddress},																				
+											DEFAULT,
+											1)
+	</insert>
 		
+	<!-- 첨부파일 첨부 -->
+	<insert id="insertAttachment" parameterType="info_attachment">
+	INSERT INTO INFO_ATTACHMENT VALUES(
+											SEQ_INFO_ATTACHMENT_NO.NEXTVAL,
+											#{infoNo},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT										
+											)
+		
+		<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
+		selectKey를 설정한다 -->
+		<selectKey keyProperty="infoNo" resultType="_int" order="BEFORE">
+ 		SELECT SEQ_INFO_NO.CURRVAL FROM DUAL
+  		</selectKey>
+  		
+	</insert>
+  		
 </mapper>
+	

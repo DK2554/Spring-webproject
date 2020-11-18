@@ -1,20 +1,20 @@
-package com.spring.itjobgo.community.model.vo;
+package com.spring.itjobgo.info.model.vo;
 
 import java.sql.Date;
 
 import lombok.Data;
 
 
-public class CB_ATTACHMENT {
+public class INFO_ATTACHMENT {
 	
 	private int attachmentno;
-	private int cbBoardNo;
+	private int infoNo;
 	private String originalfilename;
 	private String renamedfilename;
 	private Date uploaddate;
 	private String status;
 
-	public CB_ATTACHMENT() {
+	public INFO_ATTACHMENT() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -26,12 +26,12 @@ public class CB_ATTACHMENT {
 		this.attachmentno = attachmentno;
 	}
 
-	public int getCbBoardNo() {
-		return cbBoardNo;
+	public int getInfoNo() {
+		return infoNo;
 	}
 
-	public void setCbBoardNo(int cbBoardNo) {
-		this.cbBoardNo = cbBoardNo;
+	public void setgetInfoNo(int infoNo) {
+		this.infoNo = infoNo;
 	}
 
 	public String getOriginalfilename() {
@@ -66,18 +66,16 @@ public class CB_ATTACHMENT {
 		this.status = status;
 	}
 
-	public CB_ATTACHMENT(int attachmentno, int cbBoardNo, String originalfilename, String renamedfilename,
+	public INFO_ATTACHMENT(int attachmentno, int infoNo, String originalfilename, String renamedfilename,
 			Date uploaddate, String status) {
 		super();
 		this.attachmentno = attachmentno;
-		this.cbBoardNo = cbBoardNo;
+		this.infoNo = infoNo;
 		this.originalfilename = originalfilename;
 		this.renamedfilename = renamedfilename;
 		this.uploaddate = uploaddate;
 		this.status = status;
 	}
-	
-	
 	
 	
 }
