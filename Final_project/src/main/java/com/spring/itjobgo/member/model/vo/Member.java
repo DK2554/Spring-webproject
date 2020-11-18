@@ -8,7 +8,7 @@ public class Member {
 	private String memberEmail;
 	private String memberPwd;
 	private String memberName;
-	private long memberPhone;
+	private String memberPhone;
 	private String memberLevel;
 	private String memberPostCode;
 	private String memberAddr;
