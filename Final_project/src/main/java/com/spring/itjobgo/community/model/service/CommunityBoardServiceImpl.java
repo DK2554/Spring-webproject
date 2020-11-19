@@ -64,6 +64,15 @@ public int deleteBoard(int boardSq) {
 	return dao.deleteBoard(session, boardSq);
 }
 
+//첨부파일 조회
+@Override
+public CB_ATTACHMENT selectAttach(int boardSq) {
+	// TODO Auto-generated method stub
+	return dao.selectAttach(session, boardSq);
+}
+
+
+
 
 
 

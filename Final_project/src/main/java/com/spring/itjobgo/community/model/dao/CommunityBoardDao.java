@@ -24,7 +24,8 @@ public interface CommunityBoardDao {
 	//글 삭제하기
 	int deleteBoard(SqlSessionTemplate session, int boardSq);
 	
-
+	//첨부파일 조회
+	CB_ATTACHMENT selectAttach(SqlSessionTemplate session, int boardSq);
 
 
 

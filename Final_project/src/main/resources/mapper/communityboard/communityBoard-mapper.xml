@@ -71,5 +71,10 @@
 		DELETE  FROM COMMUNITY_BOARD WHERE BOARD_SQ=#{boardSq}
 	</delete>
 	
+	<!-- 첨부파일 조회 -->
+	<select id="selectAttach" resultType="CB_ATTACHMENT" parameterType="_int">
+		SELECT * FROM CB_ATTACHMENT WHERE CB_BOARD_NO=#{boardSq}
+	</select>
+	
   		
 </mapper>
