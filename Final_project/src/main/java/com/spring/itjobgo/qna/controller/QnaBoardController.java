@@ -36,7 +36,6 @@ public class QnaBoardController {
 	@RequestMapping(value="/qna/qnaboardlist" , method=RequestMethod.GET)
 	public List<QnaBoard> qnaBoard() {
 		
-		
 		List<QnaBoard> list =service.selectQnaBoard();
 
 		for(QnaBoard i : list) {
@@ -54,7 +53,7 @@ public class QnaBoardController {
 	public String qnaWrite(QnaBoard qnaboard,
 										@RequestBody MultipartFile[] file, HttpServletRequest request)
 																																								{
-			qnaboard.setQnaSeq(1);
+//			qnaboard.setQnaSeq(1);
 	
 	logger.debug("매핑 확인");
 	logger.debug("======vue에서 전송한  파일========");
@@ -62,6 +61,7 @@ public class QnaBoardController {
 	logger.debug("파일크기 : "+file[0].getSize());
 	logger.debug(qnaboard.toString());
 			
+	
 	//업로드 경로설정
 	//파일 리네임 처리 후 파일 저장하기
 	String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
@@ -73,7 +73,7 @@ public class QnaBoardController {
 		dir.mkdirs(); //mk > make directory
 	}
 	
-	List<QB_ATTACHMENT> files=new ArrayList<QB_ATTACHMENT>();
+	List<QB_ATTACHMENT> files=new ArrayList();
 	
 	for(MultipartFile f:file) {
 		
