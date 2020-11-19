@@ -52,8 +52,9 @@ public class QnaBoardController {
 	@RequestMapping(value="/qna/qnaBoardWrite",method = RequestMethod.POST,
 										consumes= {"multipart/form-data"})
 	public String qnaWrite(QnaBoard qnaboard,
-										@RequestBody MultipartFile[] file, HttpServletRequest request) {
-//			qnaboard.setBoardSq(1);
+										@RequestBody MultipartFile[] file, HttpServletRequest request)
+																																								{
+			qnaboard.setQnaSeq(1);
 	
 	logger.debug("매핑 확인");
 	logger.debug("======vue에서 전송한  파일========");
