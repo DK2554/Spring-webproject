@@ -55,7 +55,7 @@
 		
 		<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
 		selectKey를 설정한다 -->
-		<selectKey keyProperty="cbBoardNo" resultType="_int" order="BEFORE">
+		<selectKey keyProperty="boardSq" resultType="_int" order="BEFORE">
  		SELECT SEQ_COMMUNITY_BOARD_NO.CURRVAL FROM DUAL
   		</selectKey>
   		
