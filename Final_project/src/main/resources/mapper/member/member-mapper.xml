@@ -7,7 +7,7 @@
 		insert into member
 		values(MEMBER_SQ.nextval,#{memberEmail}, #{memberPwd},
 		#{memberName},
-		#{memberPhone},0,null, null,null,null,NULL)
+		#{memberPhone},0,null, null,null,null,NULL,null,null)
 	</insert>
 
 	<select id="selectOneMember" parameterType="map"
@@ -23,12 +23,13 @@
 
 	<select id="selectPhone" parameterType="map"
 		resultMap="memberMap">
-		select * from member where member_phone=#{memberPhone}
+		select * from member where member_phone=#{memberPhone} and member_name=#{memberName}
 	</select>
 
 	<update id="updatePwd" parameterType="member">
-		update member set member_Pwd=#{memberPwd, jdbcType=VARCHAR} where
-		member_Email=#{memberEmail, jdbcType=VARCHAR}
+		update member set member_Pwd=#{memberPwd}
+		 where
+		member_Email=#{memberEmail}
 	</update>
 
 	<select parameterType="map" id="selectPhoneNum"
@@ -46,6 +47,9 @@
 		<result column="MEMBER_ADDR" property="memberAddr" />
 		<result column="MEMBER_ADDR_DTL" property="memberAddrDtl" />
 		<result column="MEMBER_ADDR_EXTRA" property="memberAddrExtra" />
+		<result column="MEMBER_PIC" property="memberPic" />
+		<result column="MEMBER_TOKEN" property="memberToken" />
+		<result column="MEMBER_POSITION" property="memberPosition" />
 	</resultMap>
 
 </mapper>
