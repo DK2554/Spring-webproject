@@ -33,10 +33,10 @@ public class QnaBoardController {
 	private QnaBoardService service;
 	
 	@ResponseBody
-	@RequestMapping(value="/qna/qnaboardlist" , method=RequestMethod.GET)
+	@RequestMapping(value="qna/qnaboardlist" , method=RequestMethod.GET)
 	public List<QnaBoard> qnaBoard() {
 		
-		
+		System.out.println("==qna리스트==");
 		List<QnaBoard> list =service.selectQnaBoard();
 
 		for(QnaBoard i : list) {
@@ -51,68 +51,74 @@ public class QnaBoardController {
 	//qna게시판 글작성하기
 	@RequestMapping(value="/qna/qnaBoardWrite",method = RequestMethod.POST,
 										consumes= {"multipart/form-data"})
-	public String qnaWrite(QnaBoard qnaboard,
-										@RequestBody MultipartFile[] file, HttpServletRequest request) {
-//			qnaboard.setBoardSq(1);
-	
-	logger.debug("매핑 확인");
-	logger.debug("======vue에서 전송한  파일========");
-	logger.debug("파일명"+file[0].getOriginalFilename());
-	logger.debug("파일크기 : "+file[0].getSize());
-	logger.debug(qnaboard.toString());
-			
-	//업로드 경로설정
-	//파일 리네임 처리 후 파일 저장하기
-	String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
-	
-	File dir=new File(saveDir);
-	
-	if(!dir.exists()) {
+	public String cbBoard(QnaBoard Qboard,
+			@RequestBody MultipartFile[] file, HttpServletRequest request) 
+
+	{
+		Qboard.setBoardId(1);
+		System.out.println("==파일저장시작==");
+		logger.debug("매핑확인");
+		logger.debug("======vue에서 전송한  파일========");
+		logger.debug("파일명"+file[0].getOriginalFilename());
+		logger.debug("파일크기 : "+file[0].getSize());
+		logger.debug(Qboard.toString());
+		
+		
+		
+		//업로드 경로 설정
+		//파일 리네임 처리후 파일 저장하기
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBorad");
+		
+		File dir=new File(saveDir);
+		
+		if(!dir.exists()) {
 		//지정된경로의 폴더가 없으면
 		dir.mkdirs(); //mk > make directory
-	}
-	
-	List<QB_ATTACHMENT> files=new ArrayList<QB_ATTACHMENT>();
-	
-	for(MultipartFile f:file) {
+		}
+		
+		List<QB_ATTACHMENT> files=new ArrayList<QB_ATTACHMENT>();
+		
+		for(MultipartFile f:file) {
 		
 		if(!f.isEmpty()) {
-			
-			String originalFileName=f.getOriginalFilename();
-			String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
-			
-			int rndNum=(int)(Math.random()*1000);
-			
-			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
-			
-			try {
-				//파일저장하기
-				//스프링이 제공하는 멀티파트가 메소드를 제공한다. transferTo(파일)이라는 메소드를 제공한다.
-				f.transferTo(new File(saveDir+"/"+renameFileName));
-			}catch(IOException e) {
-				e.printStackTrace();
-			}
-			QB_ATTACHMENT file2=new QB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
-			files.add(file2);
-
-		}
-	}
-	int result=0;
-	
-	try {
-		result=service.insertQnaBoard(qnaboard,files);
-	
-	}catch(RuntimeException e) {
+		
+		String originalFileName=f.getOriginalFilename();
+		String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+		
+		int rndNum=(int)(Math.random()*1000);
+		
+		String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+		
+		
+		try {
+		//파일저장하기
+		//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
+		f.transferTo(new File(saveDir+"/"+renameFileName));
+		}catch(IOException e) {
 		e.printStackTrace();
-	}
-	
-	String msg="";
-	if(result>0) msg="등록성공";
-	
-	else msg="등록실패";
-	
-	return msg;
+		}
+		QB_ATTACHMENT file2=new QB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
+		files.add(file2);
+		}
+		}
+		int result=0;
+		
+		
+		try {
+		//게시판 글 작성
+		result=service.insertQnaBoard(Qboard,files);
+		
+		}catch(RuntimeException e) {
+		e.printStackTrace();
+		}
+		
+		String msg="";
+		if(result>0) msg="등록성공";
+		
+		else msg="등록실패";
+		
+		return msg;
 	
 
 	}

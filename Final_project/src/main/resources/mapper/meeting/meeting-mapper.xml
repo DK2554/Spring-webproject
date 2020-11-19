@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="meeting">
+  <insert id="insertmboard" parameterType="map">
+  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address})
+  </insert>
+  <insert id="insertmattach" parameterType="attachment" >
+  insert into m_attachment values(seq_attach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
+   <selectKey keyProperty="pboardSq" resultType="_int" order="BEFORE">
+ 		select seq_meet.currval from dual
+  </selectKey>
+  </insert>
+</mapper>
