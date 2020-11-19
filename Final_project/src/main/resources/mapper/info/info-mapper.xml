@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="Info">
 
-		<resultMap id="Info"
-		type="com.spring.itjobgo.info.model.vo.Info">
+		<resultMap id="Info" type="com.spring.itjobgo.info.model.vo.Info">
 		<result column="INFO_SQ" property="infoSq" />
 		<result column="INFO_CATEGORY" property="infoCategory" />
 		<result column="INFO_TITLE" property="infoTitle" />
@@ -49,8 +48,25 @@
 		<selectKey keyProperty="infoNo" resultType="_int" order="BEFORE">
  		SELECT SEQ_INFO_NO.CURRVAL FROM DUAL
   		</selectKey>
-  		
-	</insert>
+ 
+  </insert>
+	
+	<!-- 상세보기 -->
+	<select id="selectInfoOne"  parameterType="_int" 
+	resultType="info">
+		SELECT * FROM INFO WHERE INFO_SQ=#{infoSq}
+	
+	</select>
+	
+	<!-- 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE  FROM INFO WHERE INFO_SQ=#{infoSq}
+	</delete>
+	
+	<!-- 첨부파일 조회 -->
+	<select id="selectAttach" resultType="INFO_ATTACHMENT" parameterType="_int">
+		SELECT * FROM INFO_ATTACHMENT WHERE INFO_NO=#{infoSq}
+	</select>
+	
   		
 </mapper>
-	
