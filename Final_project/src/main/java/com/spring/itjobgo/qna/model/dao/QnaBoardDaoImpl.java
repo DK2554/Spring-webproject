@@ -19,12 +19,12 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	@Override
 	public int insertQnaBoard(SqlSessionTemplate session, QnaBoard qb) {
-		return session.insert("qnaboard.insertQna",qb);
+		return session.insert("qnaBoard.insertQna",qb);
 	}
 
 	@Override
 	public int insertAttachment(SqlSessionTemplate session, QB_ATTACHMENT qb_attachment) {
-		return session.insert("qnaboard.insertAttachment",qb_attachment);
+		return session.insert("qnaBoard.insertAttachment",qb_attachment);
 	}
 
 	

@@ -2,8 +2,6 @@ package com.spring.itjobgo.qna.model.vo;
 
 import java.sql.Date;
 
-import lombok.Data;
-
 
 public class QnaBoard {
 	
@@ -15,6 +13,7 @@ public class QnaBoard {
 	private String qnaAnswerYn;
 	private Date qnaDate;
 	private int memberNum;
+	private int boardId;
 	
 	public QnaBoard() {
 		// TODO Auto-generated constructor stub
@@ -22,6 +21,14 @@ public class QnaBoard {
 
 	public int getQnaSeq() {
 		return qnaSeq;
+	}
+
+	public int getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
 	}
 
 	public void setQnaSeq(int qnaSeq) {
@@ -84,15 +91,8 @@ public class QnaBoard {
 		this.memberNum = memberNum;
 	}
 
-	@Override
-	public String toString() {
-		return "QnaBoard [qnaSeq=" + qnaSeq + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaWriter="
-				+ qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn + ", qnaDate=" + qnaDate
-				+ ", memberNum=" + memberNum + "]";
-	}
-
 	public QnaBoard(int qnaSeq, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
-			String qnaAnswerYn, Date qnaDate, int memberNum) {
+			String qnaAnswerYn, Date qnaDate, int memberNum, int boardId) {
 		super();
 		this.qnaSeq = qnaSeq;
 		this.qnaCategory = qnaCategory;
@@ -102,7 +102,19 @@ public class QnaBoard {
 		this.qnaAnswerYn = qnaAnswerYn;
 		this.qnaDate = qnaDate;
 		this.memberNum = memberNum;
+		this.boardId = boardId;
 	}
+
+	@Override
+	public String toString() {
+		return "QnaBoard [qnaSeq=" + qnaSeq + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaWriter="
+				+ qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn + ", qnaDate=" + qnaDate
+				+ ", memberNum=" + memberNum + ", boardId=" + boardId + "]";
+	}
+
+	
+	
+	
 	
 	
 }
