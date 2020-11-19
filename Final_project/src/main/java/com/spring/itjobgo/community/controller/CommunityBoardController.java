@@ -19,12 +19,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
+import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @RestController
 public class CommunityBoardController {
+<<<<<<< HEAD
    
    @Autowired
    private Logger logger;
@@ -86,6 +90,69 @@ public class CommunityBoardController {
          
          String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
          
+=======
+	
+	@Autowired
+	private Logger logger;
+	
+	@Autowired
+	private CommunityBoardService service;
+	
+	//자유게시판 화면전환용 메서드
+	@ResponseBody
+	@RequestMapping(value="/community/communityBoardList" , method=RequestMethod.GET)
+	public List<CommunityBoard> communityBoard()  {
+		
+			List<CommunityBoard> list = service.selectBoardList();
+			
+			for(CommunityBoard i : list){
+			    System.out.println(i);
+			}
+				
+			return list;
+	}
+	
+	//자유게시판 글쓰기
+	@RequestMapping(value="/community/communityBoardForm",
+									method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public String cbBoard(CommunityBoard cboard,
+											@RequestBody MultipartFile[] file, HttpServletRequest request) 
+	
+																																						{
+		cboard.setBoardId(1);
+		
+		logger.debug("매핑확인");
+		logger.debug("======vue에서 전송한  파일========");
+		logger.debug("파일명"+file[0].getOriginalFilename());
+		logger.debug("파일크기 : "+file[0].getSize());
+		logger.debug(cboard.toString());
+		
+		//업로드 경로 설정
+		//파일 리네임 처리후 파일 저장하기
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+		
+		File dir=new File(saveDir);
+		
+		if(!dir.exists()) {
+			//지정된경로의 폴더가 없으면
+			dir.mkdirs(); //mk > make directory
+		}
+		
+		List<CB_ATTACHMENT> files=new ArrayList<CB_ATTACHMENT>();
+		
+		for(MultipartFile f:file) {
+			
+			if(!f.isEmpty()) {
+				
+			String originalFileName=f.getOriginalFilename();
+			String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+			
+			int rndNum=(int)(Math.random()*1000);
+			
+			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+			
+>>>>>>> 56fc57627b179d7e819fa1abc9973cfdfe7daff1
 
          try {
             //파일저장하기
@@ -186,6 +253,7 @@ public class CommunityBoardController {
 		return msg;
 	}
 	
+<<<<<<< HEAD
 	//수정화면으로 전환시 게시글 번호를 통해 첨부파일을 가져오는 메서드
 	@RequestMapping(value="/community/communityBoardUpdate{boardSq}",method = RequestMethod.GET)
 	public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
@@ -202,6 +270,59 @@ public class CommunityBoardController {
 		
 	}
 
+=======
+//첨부파일 먼저 불러오기 (update form 으로)
+@RequestMapping(value="/community/communityBoardUpdate{boardSq}",
+									method=RequestMethod.GET)
+public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
+	
+	System.out.println("==첨부파일 불러오기 맵핑 시작==");
+	
+	CB_ATTACHMENT cba = service.selectAttach(boardSq);
+	
+	System.out.println(cba);
+	
+	return cba;
+}
+
+//게시판 수정(update)
+//@RequestMapping(value="/community/communityBoardUpdate" , 
+//									method = RequestMethod.POST, 
+//									consumes = { "multipart/form-data" })
+//public String communityBoardUpdate(CommunityBoard cb, @RequestBody(required=false)
+//												MultipartFile[]  filen,HttpServletRequest request) {
+//	
+//	System.out.println("==업데이트 메서드 실행==");
+//	
+//	if(filen.length>0) {
+//		
+//		int no = cb.getBoardSq();
+//		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+//		
+//		File dir = new File(saveDir);
+//		if(!dir.exists()) {
+//			//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
+//			dir.mkdirs();
+//		}
+//		List<CB_ATTACHMENT> files = new ArrayList();
+//		
+//		for(MultipartFile f : filen) {
+//			if(!f.isEmpty()) {
+//				//원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
+//				String originalFileName=f.getOriginalFilename();
+//				String ext = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+//				guswndi 
+//			}
+//		}
+//		
+//	}
+//	
+//}
+	
+	
+	
+	
+>>>>>>> 56fc57627b179d7e819fa1abc9973cfdfe7daff1
 	
 }//클래스
 

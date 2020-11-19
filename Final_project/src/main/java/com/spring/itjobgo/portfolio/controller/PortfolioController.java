@@ -192,7 +192,7 @@ public class PortfolioController {
 			
 			}
 			else {
-				
+				int result=service.updatepboard(pboard);
 			}
 				
 			//넘겨줄 파일이 있을때 서버에 올리고  attachment db를 수정

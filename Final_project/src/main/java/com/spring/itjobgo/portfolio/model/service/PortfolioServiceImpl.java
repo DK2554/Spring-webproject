@@ -73,6 +73,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return result;
 
 	}
+	@Override
+	public int updatepboard(Pboard pboard) {
+		// TODO Auto-generated method stub
+		return   dao.updatedpboard(session,pboard);
+	}
 	//게시판삭제
 	@Override
 	public int deletePboard(int no) {

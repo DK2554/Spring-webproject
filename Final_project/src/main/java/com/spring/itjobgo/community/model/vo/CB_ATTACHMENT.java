@@ -8,7 +8,7 @@ import lombok.Data;
 public class CB_ATTACHMENT {
 	
 	private int attachmentno;
-	private int cbBoardNo;
+	private int boardSq;
 	private String originalfilename;
 	private String renamedfilename;
 	private Date uploaddate;
@@ -26,12 +26,12 @@ public class CB_ATTACHMENT {
 		this.attachmentno = attachmentno;
 	}
 
-	public int getCbBoardNo() {
-		return cbBoardNo;
+	public int getBoardSq() {
+		return boardSq;
 	}
 
-	public void setCbBoardNo(int cbBoardNo) {
-		this.cbBoardNo = cbBoardNo;
+	public void setBoardSq(int boardSq) {
+		this.boardSq = boardSq;
 	}
 
 	public String getOriginalfilename() {
@@ -66,16 +66,25 @@ public class CB_ATTACHMENT {
 		this.status = status;
 	}
 
-	public CB_ATTACHMENT(int attachmentno, int cbBoardNo, String originalfilename, String renamedfilename,
+	@Override
+	public String toString() {
+		return "CB_ATTACHMENT [attachmentno=" + attachmentno + ", boardSq=" + boardSq + ", originalfilename="
+				+ originalfilename + ", renamedfilename=" + renamedfilename + ", uploaddate=" + uploaddate + ", status="
+				+ status + "]";
+	}
+
+	public CB_ATTACHMENT(int attachmentno, int boardSq, String originalfilename, String renamedfilename,
 			Date uploaddate, String status) {
 		super();
 		this.attachmentno = attachmentno;
-		this.cbBoardNo = cbBoardNo;
+		this.boardSq = boardSq;
 		this.originalfilename = originalfilename;
 		this.renamedfilename = renamedfilename;
 		this.uploaddate = uploaddate;
 		this.status = status;
 	}
+
+    
 	
 	
 	
