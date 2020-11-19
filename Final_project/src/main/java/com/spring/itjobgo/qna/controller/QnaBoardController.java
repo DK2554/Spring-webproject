@@ -63,6 +63,8 @@ public class QnaBoardController {
 		logger.debug("파일크기 : "+file[0].getSize());
 		logger.debug(Qboard.toString());
 		
+		
+		
 		//업로드 경로 설정
 		//파일 리네임 처리후 파일 저장하기
 		String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBorad");
