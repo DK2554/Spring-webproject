@@ -37,14 +37,16 @@
 											#{boardTitle},
 											#{boardContent},
 											DEFAULT,
-											1)
+											1,
+											#{boardId}
+											)
 	</insert>
 		
 	<!-- 글쓰기의 첨부파일 첨부 -->
 	<insert id="insertAttachment" parameterType="cb_attachment">
 	INSERT INTO CB_ATTACHMENT VALUES(
 											SEQ_CB_ATTACHMENT_NO.NEXTVAL,
-											#{cbBoardNo},
+											#{boardSq},
 											#{originalfilename},
 											#{renamedfilename},
 											DEFAULT,
@@ -73,8 +75,9 @@
 	
 	<!-- 첨부파일 조회 -->
 	<select id="selectAttach" resultType="CB_ATTACHMENT" parameterType="_int">
-		SELECT * FROM CB_ATTACHMENT WHERE CB_BOARD_NO=#{boardSq}
+		SELECT * FROM CB_ATTACHMENT WHERE BOARD_SQ=#{boardSq}
 	</select>
 	
+  		
   		
 </mapper>
