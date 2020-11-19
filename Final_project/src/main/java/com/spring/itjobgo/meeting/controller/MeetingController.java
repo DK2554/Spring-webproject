@@ -25,7 +25,7 @@ public class MeetingController {
 	private Logger logger;
 	
 	@RequestMapping("/meeting/meetingenroller.do")
-	public ModelAndView meetingFromEnd(MultipartFile upFile,ModelAndView mv,HttpServletRequest request) {
+	public String meetingFromEnd(MultipartFile upFile,HttpServletRequest request) {
 		
 		String saveDir=request.getServletContext().getRealPath("/resources/upload/meeting");
 		File dir=new File(saveDir);
@@ -54,7 +54,7 @@ public class MeetingController {
 		
 		
 		
-		return mv;
+		return "매핑테스트";
 	}
 	
 	
