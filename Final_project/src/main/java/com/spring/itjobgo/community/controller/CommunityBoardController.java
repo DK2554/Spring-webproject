@@ -114,11 +114,9 @@ public class CommunityBoardController {
       
       else msg="등록실패";
 
-<<<<<<< HEAD
+
       return msg;
       
-   }
-   
    //자유게시판 상세화면 전환 페이지
 //   @RequestMapping(value="/community/communityBoardView{boardSq}",
 //                           method=RequestMethod.GET)
@@ -134,12 +132,11 @@ public class CommunityBoardController {
 //   }
    
    
-   
-}//클래스
-=======
-		return msg;
-		
-	}
+                                                                                                                  
+
+     }//클래스
+		/* return msg; */
+
 	
 	//자유게시판 상세화면 전환 페이지
 	@RequestMapping(value="/community/communityBoardView{boardSq}",
@@ -204,11 +201,7 @@ public class CommunityBoardController {
 		return cba;
 		
 	}
-	
-	
-	
-	
-	
+
 	
 }//클래스
->>>>>>> 579309b2262b442294553b671fb9f4a5adfb7f69
+
