@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
+import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @RestController
 public class CommunityBoardController {
@@ -53,7 +56,7 @@ public class CommunityBoardController {
 											@RequestBody MultipartFile[] file, HttpServletRequest request) 
 	
 																																						{
-		cboard.setBoardSq(1);
+		cboard.setBoardId(1);
 		
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
@@ -166,22 +169,53 @@ public class CommunityBoardController {
 		return msg;
 	}
 	
-	//수정화면으로 전환시 게시글 번호를 통해 첨부파일을 가져오는 메서드
-	@RequestMapping(value="/community/communityBoardUpdate{boardSq}",method = RequestMethod.GET)
-	public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
-		
-		System.out.println(boardSq);
-		
-		logger.debug("boardSq" + Integer.toString(boardSq));
-		CB_ATTACHMENT cba = service.selectAttach(boardSq);
-		logger.debug(cba.toString());
-		
-		System.out.println(cba);
-		
-		return cba;
-		
-	}
+//첨부파일 먼저 불러오기 (update form 으로)
+@RequestMapping(value="/community/communityBoardUpdate{boardSq}",
+									method=RequestMethod.GET)
+public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
 	
+	System.out.println("==첨부파일 불러오기 맵핑 시작==");
+	
+	CB_ATTACHMENT cba = service.selectAttach(boardSq);
+	
+	System.out.println(cba);
+	
+	return cba;
+}
+
+//게시판 수정(update)
+//@RequestMapping(value="/community/communityBoardUpdate" , 
+//									method = RequestMethod.POST, 
+//									consumes = { "multipart/form-data" })
+//public String communityBoardUpdate(CommunityBoard cb, @RequestBody(required=false)
+//												MultipartFile[]  filen,HttpServletRequest request) {
+//	
+//	System.out.println("==업데이트 메서드 실행==");
+//	
+//	if(filen.length>0) {
+//		
+//		int no = cb.getBoardSq();
+//		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+//		
+//		File dir = new File(saveDir);
+//		if(!dir.exists()) {
+//			//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
+//			dir.mkdirs();
+//		}
+//		List<CB_ATTACHMENT> files = new ArrayList();
+//		
+//		for(MultipartFile f : filen) {
+//			if(!f.isEmpty()) {
+//				//원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
+//				String originalFileName=f.getOriginalFilename();
+//				String ext = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+//				guswndi 
+//			}
+//		}
+//		
+//	}
+//	
+//}
 	
 	
 	
