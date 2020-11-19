@@ -62,6 +62,7 @@ public class QnaBoardController {
 	logger.debug(qnaboard.toString());
 			
 	
+	
 	//업로드 경로설정
 	//파일 리네임 처리 후 파일 저장하기
 	String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
