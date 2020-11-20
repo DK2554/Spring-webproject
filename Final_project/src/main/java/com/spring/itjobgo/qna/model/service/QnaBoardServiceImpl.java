@@ -15,10 +15,8 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	
 	@Autowired
 	private QnaBoardDao dao;
-	
 	@Autowired
 	private SqlSessionTemplate session;
-	
 	@Override
 	public List<QnaBoard> selectQnaBoard(){
 		
@@ -30,9 +28,8 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	//qna게시판 글쓰기
 	@Override
 	public int insertQnaBoard(QnaBoard qb, List<QB_ATTACHMENT> files) {
-
 		int result=dao.insertQnaBoard(session,qb);
-		
+
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
@@ -45,10 +42,16 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 				}
 			}
 		}
-		
 		return result;
 	}
 
+	//qna게시판 상세보기
+	@Override
+	public QnaBoard selectQnaBoardOne(int qnaSeq) {
+		return dao.selectQnaBoardOne(session,qnaSeq);
+	}
+	
+	
 
 	
 	

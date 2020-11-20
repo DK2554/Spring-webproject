@@ -14,6 +14,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.meeting.model.service.MeetingService;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
+import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @RestController
@@ -80,17 +82,19 @@ public class MeetingController {
 		return msg;
 	}
 	@RequestMapping(value="meeting/meetingList.do" ,method = RequestMethod.GET)
-	public Map meetingList()throws JsonMappingException,JsonGenerationException,IOException{
-		Map data=new HashedMap();
-		String msg="매핑테스트";
-		data.put("msg",msg);
-		data.put("msg1",msg);
-		data.put("msg2",msg);
-		data.put("msg3",msg);
-		
+	public List<Mboard> meetingList()throws JsonMappingException,JsonGenerationException,IOException{
+		List<Mboard> list=service.selectMlist();
 		logger.debug("여기오면 매핑성공");
-		return data;
+		logger.debug(list.toString());
+		return list;
 	}
+	@RequestMapping(value="meeting/meetinginfo{no}.do",method=RequestMethod.GET)
+	public Mboard meetinginfo(@PathVariable int no)throws JsonMappingException,JsonGenerationException,IOException{
+		Mboard md=service.selectMb(no);
+		logger.debug(md.toString());
+		return md;
+	}
+	
 	
 	
 

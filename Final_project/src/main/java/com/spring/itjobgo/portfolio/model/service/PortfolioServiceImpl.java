@@ -26,17 +26,16 @@ public class PortfolioServiceImpl implements PortfolioService {
 	@Override
 	public int insertPboard(Pboard pboard, List<Attachment> files) {
 		int result=dao.insertPboard(session,pboard);
-		
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
 				//files에 데이터가 있으면
+				//첨부파일이있을경우에 있는값을 리턴하고
 				for(Attachment file:files) {
 					result=dao.insertAttachment(session,file);
 					if(result==0)throw new RuntimeException("입력오류");
 				}
-			}
-			
+			}	
 		}
 		return result;
 	}
