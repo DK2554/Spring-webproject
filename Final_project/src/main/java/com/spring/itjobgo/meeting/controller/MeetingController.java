@@ -80,17 +80,13 @@ public class MeetingController {
 		return msg;
 	}
 	@RequestMapping(value="meeting/meetingList.do" ,method = RequestMethod.GET)
-	public Map meetingList()throws JsonMappingException,JsonGenerationException,IOException{
-		Map data=new HashedMap();
-		String msg="매핑테스트";
-		data.put("msg",msg);
-		data.put("msg1",msg);
-		data.put("msg2",msg);
-		data.put("msg3",msg);
+	public int meetingList()throws JsonMappingException,JsonGenerationException,IOException{
+		int data=service.selectMlist();
 		
 		logger.debug("여기오면 매핑성공");
 		return data;
 	}
+	
 	
 	
 

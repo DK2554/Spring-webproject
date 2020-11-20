@@ -10,4 +10,6 @@ public interface MeetingService {
 
 	int insertMboard(Map param, List<Mattachment> files);
 
+	int selectMlist();
+
 }
