@@ -12,7 +12,12 @@
 		<typeAlias
 			type="com.spring.itjobgo.portfolio.model.vo.Attachment"
 			alias="attachment" />
-			
+		
+		<typeAlias type="com.spring.itjobgo.meeting.model.vo.Mboard"
+		alias="mboard" />
+		<typeAlias type="com.spring.itjobgo.common.StringArrayType"
+		alias="strarr" />
+		
 		<typeAlias type="com.spring.itjobgo.member.model.vo.Member"
 			alias="member" />
 			
@@ -37,6 +42,7 @@
 		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT"
 			alias="qna_attachment" />
+		
 			
 		<typeAlias type="com.spring.itjobgo.community.model.vo.CB_ATTACHMENT"
 			alias="CB_ATTACHMENT"/>

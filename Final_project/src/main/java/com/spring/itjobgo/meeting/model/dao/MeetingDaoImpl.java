@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
+import com.spring.itjobgo.meeting.model.vo.Mboard;
 
 
 @Repository
@@ -25,9 +26,15 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
-	public int selectMlist(SqlSessionTemplate session) {
+	public Mboard selectMinfo(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
-		return session.selectOne("meeting.selectmList");
+		return session.selectOne("meeting.selectminfo",no);
+	}
+
+	@Override
+	public List<Mboard> selectMlist(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("meeting.selectmList");
 	}
 
 }

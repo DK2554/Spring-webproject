@@ -50,11 +50,15 @@ public class PortfolioController {
 	@RequestMapping(value="/portfolio/portfolioenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
 	public String portboard(Pboard pboard,@RequestBody MultipartFile[] file,HttpServletRequest request) {
+		//로그인한 사용자의 키를 넣을거임
 		pboard.setPboardId(1);
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
-		logger.debug("파일명"+file[0].getOriginalFilename());
-		logger.debug("파일크기 : "+file[0].getSize());
+		if(file.length>0) {
+			//오류나는 이유 로거에서 파일출력하는 부분에서 걸렸음
+			logger.debug("파일명"+file[0].getOriginalFilename());
+			logger.debug("파일크기 : "+file[0].getSize());
+		}
 		logger.debug(pboard.toString());
 		String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
 		File dir=new File(saveDir);

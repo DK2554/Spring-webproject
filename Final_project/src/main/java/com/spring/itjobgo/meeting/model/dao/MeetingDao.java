@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
+import com.spring.itjobgo.meeting.model.vo.Mboard;
 
 
 public interface MeetingDao {
@@ -14,6 +15,8 @@ public interface MeetingDao {
 
 	int insertAttachment(SqlSessionTemplate session, Mattachment file);
 
-	int selectMlist(SqlSessionTemplate session);
+	List<Mboard> selectMlist(SqlSessionTemplate session);
+
+	Mboard selectMinfo(SqlSessionTemplate session, int no);
 
 }

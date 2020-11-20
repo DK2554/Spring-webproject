@@ -10,8 +10,14 @@
  		select seq_meet.currval from dual
   </selectKey>
   </insert>
-  <select id="selectmList" resultType="_int">
-  	select count(*) from collab_board
+  <resultMap type="mboard" id="mboardmap">
+	<result column="collab_lang" property="collabLang" typeHandler="strarr"/>
+</resultMap>
+  <select id="selectmList" resultMap="mboardmap" >
+  	select collab_sq,collab_title,collab_writer,collab_simcontent,collab_back,collab_front,collab_desgin from collab_board
   
+  </select>
+  <select id="selectminfo" resultMap="mboardmap" parameterType="_int"> 
+  	select * from collab_board where collab_sq=#{no}
   </select>
 </mapper>
