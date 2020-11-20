@@ -34,12 +34,15 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public Member selectEmailPhone(SqlSession session, Map param) {
+		System.out.println("dao: " + param);
 		return session.selectOne("member.selectEmailPhone", param);
 	}
 
 	@Override
 	public int updatePwd(SqlSession session,Member member) {
-		return session.selectOne("member.updatePwd", member);
+		System.out.println("update dao: " + member);
+		
+		return session.update("member.updatePwd", member);
 	}
 
 	@Override

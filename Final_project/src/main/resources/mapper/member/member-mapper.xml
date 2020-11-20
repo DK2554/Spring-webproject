@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="member">
+
+
+	<insert id="insertMember" parameterType="member">
+		insert into member
+		values(MEMBER_SQ.nextval,#{memberEmail}, #{memberPwd},
+		#{memberName},
+		#{memberPhone},0,null, null,null,null,NULL,null,null)
+	</insert>
+
+	<select id="selectOneMember" parameterType="map"
+		resultMap="memberMap">
+		SELECT * FROM MEMBER WHERE Member_email=#{memberEmail}
+	</select>
+
+	<select id="selectEmailPhone" parameterType="map"
+		resultMap="memberMap">
+		select * from member where member_Email=#{memberEmail} and
+		member_phone=#{memberPhone}
+	</select>
+
+	<select id="selectPhone" parameterType="map"
+		resultMap="memberMap">
+		select * from member where member_phone=#{memberPhone} and member_name=#{memberName}
+	</select>
+
+	<update id="updatePwd" parameterType="member">
+		update member set member_Pwd=#{memberPwd}
+		 where
+		member_Email=#{memberEmail}
+	</update>
+
+	<select parameterType="map" id="selectPhoneNum"
+		resultMap="memberMap">SELECT * FROM MEMBER WHERE MEMBER_PHONE=#{memberPhone}
+	</select>
+
+	<resultMap id="memberMap"
+		type="com.spring.itjobgo.member.model.vo.Member">
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_PWD" property="memberPwd" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_PHONE" property="memberPhone" />
+		<result column="MEMBER_LEVEL" property="memberLevel" />
+		<result column="MEMBER_POSTCODE" property="memberPostCode" />
+		<result column="MEMBER_ADDR" property="memberAddr" />
+		<result column="MEMBER_ADDR_DTL" property="memberAddrDtl" />
+		<result column="MEMBER_ADDR_EXTRA" property="memberAddrExtra" />
+		<result column="MEMBER_PIC" property="memberPic" />
+		<result column="MEMBER_TOKEN" property="memberToken" />
+		<result column="MEMBER_POSITION" property="memberPosition" />
+	</resultMap>
+
+</mapper>
