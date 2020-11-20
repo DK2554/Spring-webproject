@@ -40,6 +40,7 @@ public class QnaBoardController {
 		System.out.println("==qna리스트==");
 		List<QnaBoard> list =service.selectQnaBoard();
 
+		
 		for(QnaBoard i : list) {
 			System.out.println(i);
 		}
