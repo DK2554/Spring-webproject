@@ -36,4 +36,10 @@ public class MeetingServiceImpl implements MeetingService {
 		return result;
 	}
 
+	@Override
+	public int selectMlist() {
+		// TODO Auto-generated method stub
+		return dao.selectMlist(session);
+	}
+
 }
