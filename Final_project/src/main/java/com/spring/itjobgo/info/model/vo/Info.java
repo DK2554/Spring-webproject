@@ -1,23 +1,94 @@
 package com.spring.itjobgo.info.model.vo;
 
-import java.sql.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import lombok.Data;
-
-@Data
 public class Info {
 	
-	private int infoSq;// 번호
-	private String infoCategory;//분류
-	private String infoTitle; //제목
-	private String infoDate; //날짜
-/* @DateTimeFormat(pattern = "yyyy-MM-dd") */
-	private String infoTime; //시간
-	private String infoAddress;//주소
-//private String infoOriginalFilepath; 
-//private String infoRenameFilepath; 
-	private int memberNum; //회원시퀀스로 분류
+	private int infoSq;
+	private String infoCategory;
+	private String infoTitle; 
+	private String infoDate; 
+	private String infoTime; 
+	private String infoAddress;
+	private int memberNum;
 
+	public Info() {
+		
+	}
+
+	public int getInfoSq() {
+		return infoSq;
+	}
+
+	public void setInfoSq(int infoSq) {
+		this.infoSq = infoSq;
+	}
+
+	public String getInfoCategory() {
+		return infoCategory;
+	}
+
+	public void setInfoCategory(String infoCategory) {
+		this.infoCategory = infoCategory;
+	}
+
+	public String getInfoTitle() {
+		return infoTitle;
+	}
+
+	public void setInfoTitle(String infoTitle) {
+		this.infoTitle = infoTitle;
+	}
+
+	public String getInfoDate() {
+		return infoDate;
+	}
+
+	public void setInfoDate(String infoDate) {
+		this.infoDate = infoDate;
+	}
+
+	public String getInfoTime() {
+		return infoTime;
+	}
+
+	public void setInfoTime(String infoTime) {
+		this.infoTime = infoTime;
+	}
+
+	public String getInfoAddress() {
+		return infoAddress;
+	}
+
+	public void setInfoAddress(String infoAddress) {
+		this.infoAddress = infoAddress;
+	}
+
+	public int getMemberNum() {
+		return memberNum;
+	}
+
+	public void setMemberNum(int memberNum) {
+		this.memberNum = memberNum;
+	}
+	
+	public Info(int infoSq, String infoCategory, String infoTitle, String infoDate, String infoTime, String infoAddress,
+			int memberNum) {
+		super();
+		this.infoSq = infoSq;
+		this.infoCategory = infoCategory;
+		this.infoTitle = infoTitle;
+		this.infoDate = infoDate;
+		this.infoTime = infoTime;
+		this.infoAddress = infoAddress;
+		this.memberNum = memberNum;
+	}
+
+	@Override
+	public String toString() {
+		return "Info [infoSq=" + infoSq + ", infoCategory=" + infoCategory + ", infoTitle=" + infoTitle + ", infoDate="
+				+ infoDate + ", infoTime=" + infoTime + ", infoAddress=" + infoAddress + ", memberNum=" + memberNum
+				+ "]";
+	}
+
+	
+	
 }

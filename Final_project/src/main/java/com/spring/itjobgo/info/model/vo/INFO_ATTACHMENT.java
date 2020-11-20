@@ -2,8 +2,6 @@ package com.spring.itjobgo.info.model.vo;
 
 import java.sql.Date;
 
-import lombok.Data;
-
 
 public class INFO_ATTACHMENT {
 	
@@ -15,7 +13,6 @@ public class INFO_ATTACHMENT {
 	private String status;
 
 	public INFO_ATTACHMENT() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getAttachmentno() {
