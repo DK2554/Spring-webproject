@@ -17,6 +17,9 @@ public interface QnaBoardDao {
 	//첨부파일 insert
 	int insertAttachment(SqlSessionTemplate session, QB_ATTACHMENT qb_attachment);
 	
+	//글 상세보기
+	QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qnaSeq);
+	
 }
 
 

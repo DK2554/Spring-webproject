@@ -44,9 +44,7 @@
 			alias="qna_attachment" />
 		
 			
-		<typeAlias type="com.spring.itjobgo.community.model.vo.CB_ATTACHMENT"
-			alias="CB_ATTACHMENT"/>
-			
+
 	</typeAliases>
 
 </configuration>
