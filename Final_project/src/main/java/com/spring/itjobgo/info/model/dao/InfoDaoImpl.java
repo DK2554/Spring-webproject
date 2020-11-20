@@ -1,13 +1,11 @@
 package com.spring.itjobgo.info.model.dao;
 
 import java.util.List;
-import java.util.Map;
+/*import java.util.Map;*/
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
-import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
 
@@ -33,21 +31,21 @@ public class InfoDaoImpl implements InfoDao {
 		return session.insert("info.insertAttachment",info_attach);
 	}
 	
-	//자유게시판 상세보기
+	//상세보기
 	@Override
 	public Info selectInfoOne(SqlSessionTemplate session, int infoSq) {
 		// TODO Auto-generated method stub
 		return session.selectOne("info.selectInfoOne", infoSq);
 	}
 
-	//자유게시판 삭제하기
+	//삭제하기
 	@Override
 	public int deleteBoard(SqlSessionTemplate session, int  infoSq) {
 		// TODO Auto-generated method stub
 		return session.delete("info.deleteBoard", infoSq);
 	}
 	
-	//첩부파일 조회
+	//첨부파일 조회
 	@Override
 	public INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq) {
 		// TODO Auto-generated method stub
