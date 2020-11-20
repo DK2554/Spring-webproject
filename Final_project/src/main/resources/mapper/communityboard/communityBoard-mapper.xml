@@ -58,8 +58,20 @@
 		<selectKey keyProperty="boardSq" resultType="_int" order="BEFORE">
  		SELECT SEQ_COMMUNITY_BOARD_NO.CURRVAL FROM DUAL
   		</selectKey>
-  		
 	</insert>
+	
+	<!-- 첨부파일이 없는 게시글 첨부파일을 등록해 update 하기 -->
+	<insert id="insertAttachment2" parameterType="cb_attachment">
+	INSERT INTO CB_ATTACHMENT VALUES(
+											#{attachmentno},
+											#{boardSq},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT										
+											)
+	</insert>
+	
 	
 	<!-- 자유게시판 상세보기 -->
 	<select id="selectCommunityBoardOne"  parameterType="_int" 
@@ -74,10 +86,27 @@
 	</delete>
 	
 	<!-- 첨부파일 조회 -->
-	<select id="selectAttach" resultType="CB_ATTACHMENT" parameterType="_int">
+	<select id="selectAttach" resultType="cb_attachment" parameterType="_int">
 		SELECT * FROM CB_ATTACHMENT WHERE BOARD_SQ=#{boardSq}
 	</select>
 	
+	<!-- 게시판 업데이트 update -->
+	<update id="updateBoard">
+		UPDATE COMMUNITY_BOARD SET 
+															BOARD_DIVISION=#{boardDivision},
+															BOARD_TITLE=#{boardTitle},
+															BOARD_CONTENT=#{boardContent}
+											WHERE BOARD_SQ=#{boardSq}
+	</update>
+	
+	<!-- 첨부파일 업데이트 -->
+	<update id="updateAttachment">
+		UPDATE CB_ATTACHMENT SET
+														ORIGINALFILENAME=#{originalfilename},
+														RENAMEDFILENAME=#{renamedfilename}
+											WHERE BOARD_SQ=#{boardSq}
+													
+	</update>
   		
   		
 </mapper>

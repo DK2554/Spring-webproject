@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.openmbean.InvalidOpenTypeException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -19,8 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
@@ -54,8 +53,7 @@ public class CommunityBoardController {
 									method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public String cbBoard(CommunityBoard cboard,
 											@RequestBody MultipartFile[] file, HttpServletRequest request) 
-	
-																																						{
+																																		{
 		cboard.setBoardId(1);
 		
 		logger.debug("매핑확인");
@@ -130,6 +128,8 @@ public class CommunityBoardController {
 		
 		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
 		
+		System.out.println("날짜포맷(전): "+cboard.getBoardDate());
+		
 		return cboard;
 	
 	}
@@ -184,40 +184,72 @@ public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
 }
 
 //게시판 수정(update)
-//@RequestMapping(value="/community/communityBoardUpdate" , 
-//									method = RequestMethod.POST, 
-//									consumes = { "multipart/form-data" })
-//public String communityBoardUpdate(CommunityBoard cb, @RequestBody(required=false)
-//												MultipartFile[]  filen,HttpServletRequest request) {
-//	
-//	System.out.println("==업데이트 메서드 실행==");
-//	
-//	if(filen.length>0) {
-//		
-//		int no = cb.getBoardSq();
-//		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
-//		
-//		File dir = new File(saveDir);
-//		if(!dir.exists()) {
-//			//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
-//			dir.mkdirs();
-//		}
-//		List<CB_ATTACHMENT> files = new ArrayList();
-//		
-//		for(MultipartFile f : filen) {
-//			if(!f.isEmpty()) {
-//				//원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
-//				String originalFileName=f.getOriginalFilename();
-//				String ext = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-//				guswndi 
-//			}
-//		}
-//		
-//	}
-//	
-//}
+@RequestMapping(value="/community/communityBoardUpdateEnd" , 
+								method = RequestMethod.POST, 
+								consumes = { "multipart/form-data" })
+public String communityBoardUpdate(CommunityBoard cb, 
+																@RequestBody(required = false) 
+																	MultipartFile[]  file,
+																	HttpServletRequest request) {
 	
+	System.out.println("==업데이트 메서드 실행==");
 	
+	if(file.length>0) {
+		//파일이 존재한다면 게시판 번호를 변수에 넣어둔다.
+		int boardSq = cb.getBoardSq();
+		
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+		
+		File dir = new File(saveDir);
+		if(!dir.exists()) {
+			//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
+			dir.mkdirs();
+		}
+		
+		List<CB_ATTACHMENT> files = new ArrayList();
+		
+		//원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
+		for(MultipartFile f:file) {
+			if(!f.isEmpty()) {
+			String originalFileName=f.getOriginalFilename();
+			String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+			int rndNum=(int)(Math.random()*1000);
+			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+			
+				
+				try {
+					//파일저장하기
+					//스프링이 제공하는 멀티파트가 메소드를 제공한다
+					//transfer to(파일) 메소드를 이용한다.
+					f.transferTo(new File(saveDir+"/"+renameFileName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				
+				CB_ATTACHMENT file2 =new CB_ATTACHMENT(0,boardSq,originalFileName,renameFileName,null,null);
+				files.add(file2);
+				
+			}
+		}
+		int result=0;
+		try {
+			//게시판 글 업데이트
+			result =service.updateBoard(cb,files);
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		String msg="";
+		if(result>0) msg="게시글 수정 성공";
+		else msg="게시글 수정 실패";
+		
+		}//193번째줄 if > 파일이 있다면 / 게시판 정보만 업데이트
+		else {
+			int result = service.updateBoard(cb);
+		}
+		return "업데이트 테스트";
+	
+	}
 	
 	
 	
