@@ -134,6 +134,7 @@ public class CommunityBoardController {
 	
 	}
 	
+	
 	//자유게시판 삭제하기
 	@RequestMapping(value="/community/communityBoardDelete{boardSq}",
 									method=RequestMethod.POST)
