@@ -60,7 +60,6 @@ public class MemberController {
 	//인포 업데이트
 	@RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
 	public int memberUpdate(@RequestBody Map param) {
-		System.out.println(param);
 		Member login = service.selectOneMember(param);//param값 존재하는 지 확인용
 		
 		login.setMemberPhone((String)param.get("memberPhone"));
@@ -72,18 +71,41 @@ public class MemberController {
 		System.out.println(login);
 		
 		int result = 0;
-		if (login != null) {// id값이 존재하는 경우
-
-			if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
-				logger.debug("비밀번호 맞음");
-				result = service.updateInfo(login);
-				return result;
-			}else {//비번 틀림
-				result = -1;
-				return result;
-			}
+		
+		if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {
+			logger.debug("비밀번호 맞음");
+			result = service.updateInfo(login);
+			return result;
+		} else {
+			result = -1;
+			return result;
 		}
-		return result;
+	}
+	
+	//비밀번호 변경 : 회원정보 수정
+	@RequestMapping(value = "/updatePwdInfo", method = RequestMethod.POST)
+	public int updatePwdInfo(@RequestBody Map param) {
+		System.out.println(param);
+		Member login = service.selectOneMember(param);//param값 존재하는 지 확인용
+		System.out.println(login);
+		
+		int result = 0;
+		
+		if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
+			logger.debug("비밀번호매치");
+			String encodePw = encoder.encode((String) param.get("memberNewPwd"));// 업데이트된 비번 암호화
+			login.setMemberPwd(encodePw);
+			System.out.println(login);
+			result = service.updatePwd(login);
+			return result;
+		}else {
+			logger.debug("비밀번호xx");
+			result = -1;
+			return result;
+		}	
+		
+		
+		
 	}
 
 	// 이메일 중복검사
@@ -124,9 +146,6 @@ public class MemberController {
 	public int UpdatePwd(@RequestBody Map param) throws IOException {
 		System.out.println("update controller: " + param);
 		Member m = service.selectOneMember(param);
-
-		
-		
 		
 		String encodePw = encoder.encode((String) param.get("memberPwd"));// 업데이트된 비번 암호화
 		m.setMemberPwd(encodePw);

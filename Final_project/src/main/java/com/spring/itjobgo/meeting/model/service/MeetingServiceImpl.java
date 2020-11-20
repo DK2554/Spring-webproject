@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
+import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Service
@@ -34,6 +35,18 @@ public class MeetingServiceImpl implements MeetingService {
 			
 		}
 		return result;
+	}
+
+	@Override
+	public Mboard selectMb(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectMinfo(session,no);
+	}
+
+	@Override
+	public List<Mboard> selectMlist() {
+		// TODO Auto-generated method stub
+		return dao.selectMlist(session);
 	}
 
 }
