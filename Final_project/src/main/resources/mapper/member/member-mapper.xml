@@ -23,13 +23,27 @@
 
 	<select id="selectPhone" parameterType="map"
 		resultMap="memberMap">
-		select * from member where member_phone=#{memberPhone} and member_name=#{memberName}
+		select * from member where member_phone=#{memberPhone} and
+		member_name=#{memberName}
 	</select>
 
 	<update id="updatePwd" parameterType="member">
-		update member set member_Pwd=#{memberPwd}
-		 where
+		update member set
+		member_Pwd=#{memberPwd}
+		where
 		member_Email=#{memberEmail}
+	</update>
+
+	<update id="updateInfo" parameterType="member">
+		update member set
+			member_phone=#{memberPhone},
+			member_postcode=#{memberPostCode},
+			member_addr=#{memberAddr},
+			member_addr_dtl=#{memberAddrDtl},
+			member_addr_extra=#{memberAddrExtra},
+			member_position=#{memberPosition}
+		where member_email=#{memberEmail}
+
 	</update>
 
 	<select parameterType="map" id="selectPhoneNum"
