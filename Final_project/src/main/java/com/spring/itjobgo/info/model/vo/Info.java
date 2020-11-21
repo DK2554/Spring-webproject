@@ -9,9 +9,10 @@ public class Info {
 	private String infoTime; 
 	private String infoAddress;
 	private int memberNum;
-
+	private String infoContent;
+	
 	public Info() {
-		
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getInfoSq() {
@@ -69,9 +70,24 @@ public class Info {
 	public void setMemberNum(int memberNum) {
 		this.memberNum = memberNum;
 	}
-	
+
+	public String getInfoContent() {
+		return infoContent;
+	}
+
+	public void setInfoContent(String infoContent) {
+		this.infoContent = infoContent;
+	}
+
+	@Override
+	public String toString() {
+		return "Info [infoSq=" + infoSq + ", infoCategory=" + infoCategory + ", infoTitle=" + infoTitle + ", infoDate="
+				+ infoDate + ", infoTime=" + infoTime + ", infoAddress=" + infoAddress + ", memberNum=" + memberNum
+				+ ", infoContent=" + infoContent + "]";
+	}
+
 	public Info(int infoSq, String infoCategory, String infoTitle, String infoDate, String infoTime, String infoAddress,
-			int memberNum) {
+			int memberNum, String infoContent) {
 		super();
 		this.infoSq = infoSq;
 		this.infoCategory = infoCategory;
@@ -80,15 +96,10 @@ public class Info {
 		this.infoTime = infoTime;
 		this.infoAddress = infoAddress;
 		this.memberNum = memberNum;
+		this.infoContent = infoContent;
 	}
-
-	@Override
-	public String toString() {
-		return "Info [infoSq=" + infoSq + ", infoCategory=" + infoCategory + ", infoTitle=" + infoTitle + ", infoDate="
-				+ infoDate + ", infoTime=" + infoTime + ", infoAddress=" + infoAddress + ", memberNum=" + memberNum
-				+ "]";
-	}
-
+	
+	
 	
 	
 }

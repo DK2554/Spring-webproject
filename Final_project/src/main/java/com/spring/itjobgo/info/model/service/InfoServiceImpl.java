@@ -45,23 +45,23 @@ public List<Info> selectInfoList() {
 		
 	}
 
-//	//상세보기
-//	@Override
-//	public Info selectInfoOne(int infoSq) {
-//		return dao.selectInfoOne(session,infoSq);
-//	}
-//
-//	//삭제하기
-//	@Override
-//	public int deleteBoard(int infoSq) {
-//		return dao.deleteBoard(session, infoSq);
-//	}
-//
-//	//첨부파일 조회
-//	@Override
-//	public INFO_ATTACHMENT selectAttach(int infoSq) {
-//		return dao.selectAttach(session, infoSq);
-//	}
+	//상세보기
+	@Override
+	public Info selectInfoOne(int infoSq) {
+		return dao.selectInfoOne(session,infoSq);
+	}
+
+	//삭제하기
+	@Override
+	public int deleteBoard(int infoSq) {
+		return dao.deleteBoard(session, infoSq);
+	}
+
+	//첨부파일 조회
+	@Override
+	public INFO_ATTACHMENT selectAttach(int infoSq) {
+		return dao.selectAttach(session, infoSq);
+	}
 
 
 	}

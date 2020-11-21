@@ -17,14 +17,14 @@ public interface InfoDao {
 	//첨부파일 insert
 	int insertAttachment(SqlSessionTemplate session, INFO_ATTACHMENT info_attach);
 
-//	//글 상세보기
-//	Info selectInfoOne(SqlSessionTemplate session, int infoSq);
-//
-//	//글 삭제하기
-//	int deleteBoard(SqlSessionTemplate session, int infoSq);
-//	
-//	//첨부파일 조회
-//	INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq);
+	//글 상세보기
+	Info selectInfoOne(SqlSessionTemplate session, int infoSq);
+
+	//글 삭제하기
+	int deleteBoard(SqlSessionTemplate session, int infoSq);
+	
+	//첨부파일 조회
+	INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq);
 
 
 }

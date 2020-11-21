@@ -30,6 +30,9 @@
 		<typeAlias type="com.spring.itjobgo.info.model.vo.Info"
 			alias="Info" />
 			
+			<typeAlias type="com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT"
+			alias="info_attachment" />
+			
 		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
 			alias="qnaBoard"/>

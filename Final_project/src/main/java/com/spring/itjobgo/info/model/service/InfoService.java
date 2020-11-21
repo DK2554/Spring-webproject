@@ -11,11 +11,11 @@ public interface InfoService {
 
 	int insertInfo(Info cb, List<INFO_ATTACHMENT> files);
 
-//	Info selectInfoOne(int infoSq);
-//	
-//	int deleteBoard(int infoSq);
-//	
-//	INFO_ATTACHMENT selectAttach(int infoSq);
+	Info selectInfoOne(int infoSq);
+	
+	int deleteBoard(int infoSq);
+	
+	INFO_ATTACHMENT selectAttach(int infoSq);
 	
 }
 

@@ -206,7 +206,6 @@ public CB_ATTACHMENT selectAttach(@PathVariable int boardSq) {
 //            //원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
 //            String originalFileName=f.getOriginalFilename();
 //            String ext = originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-//            guswndi 
 //         }
 //      }
 //      

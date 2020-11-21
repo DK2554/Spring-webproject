@@ -28,23 +28,23 @@ public class InfoDaoImpl implements InfoDao {
 		return session.insert("info.insertAttachment",info_attach);
 	}
 	
-//	//상세보기
-//	@Override
-//	public Info selectInfoOne(SqlSessionTemplate session, int infoSq) {
-//		return session.selectOne("info.selectInfoOne", infoSq);
-//	}
-//
-//	//삭제하기
-//	@Override
-//	public int deleteBoard(SqlSessionTemplate session, int  infoSq) {
-//		return session.delete("info.deleteBoard", infoSq);
-//	}
-//	
-//	//첨부파일 조회
-//	@Override
-//	public INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq) {
-//		return session.selectOne("info.selectAttach",infoSq);
-//	}
-//	
+	//상세보기
+	@Override
+	public Info selectInfoOne(SqlSessionTemplate session, int infoSq) {
+		return session.selectOne("info.selectInfoOne", infoSq);
+	}
+
+	//삭제하기
+	@Override
+	public int deleteBoard(SqlSessionTemplate session, int  infoSq) {
+		return session.delete("info.deleteBoard", infoSq);
+	}
+	
+	//첨부파일 조회
+	@Override
+	public INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq) {
+		return session.selectOne("info.selectAttach",infoSq);
+	}
+	
 
 }
