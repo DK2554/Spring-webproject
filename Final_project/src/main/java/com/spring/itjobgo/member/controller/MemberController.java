@@ -99,7 +99,7 @@ public class MemberController {
 			result = service.updatePwd(login);
 			return result;
 		}else {
-			logger.debug("비밀번호xx");
+			
 			result = -1;
 			return result;
 		}	
