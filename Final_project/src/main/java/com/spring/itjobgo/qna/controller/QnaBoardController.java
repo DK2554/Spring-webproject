@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +40,7 @@ public class QnaBoardController {
 		System.out.println("==qna리스트==");
 		List<QnaBoard> list =service.selectQnaBoard();
 
+		
 		for(QnaBoard i : list) {
 			System.out.println(i);
 		}
@@ -122,6 +124,22 @@ public class QnaBoardController {
 	
 
 	}
+	
+	//qna게시판 상세화면 전환페이지
+	@RequestMapping(value="/qna/qnaBoardView{QnaSeq}",
+										method=RequestMethod.GET)
+	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq) {
+		
+		System.out.print("============상세화면===================");
+		
+		logger.debug("qnaSeq"+Integer.toString(QnaSeq));
+		
+		QnaBoard qboard =service.selectQnaBoardOne(QnaSeq);
+		
+		return qboard;
+		
+	}
+	
 	
 	
 	

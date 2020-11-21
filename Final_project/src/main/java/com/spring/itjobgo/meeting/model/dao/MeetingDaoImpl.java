@@ -1,11 +1,13 @@
 package com.spring.itjobgo.meeting.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
+import com.spring.itjobgo.meeting.model.vo.Mboard;
 
 
 @Repository
@@ -21,6 +23,18 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int insertAttachment(SqlSessionTemplate session, Mattachment file) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.insertmattach",file);
+	}
+
+	@Override
+	public Mboard selectMinfo(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectminfo",no);
+	}
+
+	@Override
+	public List<Mboard> selectMlist(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("meeting.selectmList");
 	}
 
 }

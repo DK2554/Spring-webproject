@@ -53,6 +53,28 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		return session.selectOne("communityBoard.selectAttach",boardSq);
 	}
 	
+	//첨부파일 update
+	@Override
+	public int updateAttachment(SqlSessionTemplate session, CB_ATTACHMENT cb_attach) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateAttachment",cb_attach);
+	}
+	
+	//게시글(객체)update
+	@Override
+	public int updateBoard(SqlSessionTemplate session, CommunityBoard cb) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateBoard",cb);
+	}
+
+	@Override
+	public int insertAttachment2(SqlSessionTemplate session, CB_ATTACHMENT cb_attach) {
+		// TODO Auto-generated method stub
+		return session.insert("communityBoard.insertAttachment2",cb_attach);
+	}
+	
+	
+	
 	
 	
 	

@@ -27,6 +27,13 @@ public interface CommunityBoardDao {
 	//첨부파일 조회
 	CB_ATTACHMENT selectAttach(SqlSessionTemplate session, int boardSq);
 
-
+	//첨부파일 update
+	int updateAttachment(SqlSessionTemplate session,CB_ATTACHMENT cb_attach);
+	
+	//게시글(객체) update
+	int updateBoard(SqlSessionTemplate session, CommunityBoard cb);
+	
+	//첨부파일 insert
+	int insertAttachment2(SqlSessionTemplate session, CB_ATTACHMENT cb_attach);
 
 }

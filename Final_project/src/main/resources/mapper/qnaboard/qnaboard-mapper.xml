@@ -50,11 +50,25 @@
 			<selectKey keyProperty="qnaSeq" resultType="_int" order="BEFORE">
 	 		SELECT SEQ_QNA_NO.CURRVAL FROM DUAL
 	  		</selectKey>		 
-	  		
 			<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
 			selectKey를 설정한다 -->
-			
 	</insert>
+	
+	
+	<!-- qna게시판 글 상세보기 -->
+	<select id="selectQnaBoardOne" parameterType="_int" resultType="qnaBoard">
+			SELECT * FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>

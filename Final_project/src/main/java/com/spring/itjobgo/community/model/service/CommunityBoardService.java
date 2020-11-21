@@ -16,4 +16,8 @@ public interface CommunityBoardService {
 	int deleteBoard(int boardSq);
 	
 	CB_ATTACHMENT selectAttach(int boardSq);
+	
+	int updateBoard(CommunityBoard cb,List<CB_ATTACHMENT>files);
+	
+	int updateBoard(CommunityBoard cb);
 }
