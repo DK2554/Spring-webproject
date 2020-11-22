@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,16 +20,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.security.service.SecurityService;
 
+import net.sf.json.JSON;
+
 @RestController
 @RequestMapping("/member")
 public class MemberController {
-
+	
 	@Autowired
 	private MemberService service;
 
@@ -222,10 +228,11 @@ public class MemberController {
 	}
 
 
-	 @RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
+//	 @SuppressWarnings("deprecation")
+	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
 	 public String naverLogin( @RequestParam(value = "code") String code,
 	            @RequestParam(value = "state") String state)throws Exception {
-	        String clientId = "fsL4vVVgvsoOwkPoWPO4";//애플리케이션 클라이언트 아이디값";
+	        String clientId = "aYgNgGmIwR3wysmlCfRd";//애플리케이션 클라이언트 아이디값";
 	        String naverClientSecret = "voZaFcwXXi";//시크릿값
 	        String apiURL;
 	        apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
@@ -234,7 +241,7 @@ public class MemberController {
 	        apiURL += "&code=" + code;
 	        apiURL += "&state=" + state;
 	        String access_token = "";
-	        String refresh_token = "";
+	        
 	        
 	        try {
 	            URL url = new URL(apiURL);
@@ -248,6 +255,7 @@ public class MemberController {
 	            } else {  // 에러 발생
 	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
 	            }
+	            
 	            String inputLine;
 	            StringBuffer res = new StringBuffer();
 	            while ((inputLine = br.readLine()) != null) {
@@ -255,31 +263,96 @@ public class MemberController {
 	            }
 	            br.close();
 	            
-//	            if(responseCode==200) { // 성공적으로 토큰을 가져온다면
-//	                int id;
-//	                String nickName, email, tmp;
-//	                JsonParser parser = new JsonParser();
-//	                JsonElement accessElement = parser.parse(res.toString());
-//	                access_token = accessElement.getAsJsonObject().get("access_token").getAsString();
-//
-//	                tmp = getUserInfo(access_token);
-//	                JsonElement userInfoElement = parser.parse(tmp);
-//	                id = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("id").getAsInt();
-//	                nickName = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("nickname").getAsString();
-//	                email = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("email").getAsString();
-//
-//	                access_token = createJWTToken(id, nickName, email);
-//	            }
-//	        } catch (Exception e) {
-//	            System.out.println(e);
-//	        }
-	            if(responseCode==200) {
-	                System.out.println(res.toString());
+	            
+	            if(responseCode==200) {//토큰 잘 가져오는 경우
+	            	int id;
+	                String memberName, memberEmail, tmp;
+					
+					JsonParser parser = new JsonParser();
+					
+	                JsonElement accessElement = parser.parse(res.toString());//access_token, refresh_token
+	                logger.debug("accessElement: " + accessElement);
+	                
+	                access_token = accessElement.getAsJsonObject().get("access_token").getAsString(); //access_token
+	                
+	                
+	                tmp = getUserInfo(access_token);//유저정보 가져오기 
+	                
+	                JsonElement userInfoElement = parser.parse(tmp);
+	                id = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("id").getAsInt();
+	                System.out.println("response: " + userInfoElement.getAsJsonObject().get("response").getAsJsonObject());
+	                memberEmail = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("email").getAsString();
+	                memberName = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("name").getAsString();
+
+	                //네이버에서 받은 토큰에 유저 정보 넣어서 토큰 생성 
+	                access_token = createJWTToken(id, memberName, memberEmail);
 	              }
 	            } catch (Exception e) {
 	              System.out.println(e);
 	            }
-	        return "redirect:http://localhost:8080/agreement?token=" + access_token;
+	        return "redirect:http://localhost:8081/naverLogin?token=" + access_token;
+	        
 	    }
+	 
+	 private String getUserInfo(String access_token) {
+	        String header = "Bearer " + access_token; // Bearer 다음에 공백 추가 + 토큰
+	        
+	        try {
+	            String apiURL = "https://openapi.naver.com/v1/nid/me"; //정보요청
+	            URL url = new URL(apiURL);
+	            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+	            con.setRequestMethod("GET");
+	            con.setRequestProperty("Authorization", header);
+	            int responseCode = con.getResponseCode();
+	            BufferedReader br;
+	            
+	            
+	            if(responseCode==200) { // 정상 호출
+	                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+	            } else {  // 에러 발생
+	                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	            }
+	            String inputLine;
+	            StringBuffer res = new StringBuffer();
+	            while ((inputLine = br.readLine()) != null) {
+	                res.append(inputLine);
+	            }
+	            br.close();
+	            logger.debug("getUserInfo: " + res.toString()); //받아온 정보
+	            return res.toString();
+	            
+	        } catch (Exception e) {
+	            System.err.println(e);
+	            return "Err";
+	        }
+	    }
+	 
+	    private String createJWTToken(int id, String memberEmail, String memberName) {//토큰 발행용
+	        String token = null;
+	        DecodedJWT jwt = null;
+
+	        try {
+	            Long EXPIRATION_TIME = 1000L * 60L * 10L;
+	            Date issuedAt = new Date();
+	            Date notBefore = new Date(issuedAt.getTime());
+	            Date expiresAt = new Date(issuedAt.getTime() + EXPIRATION_TIME);
+
+	            Algorithm algorithm = Algorithm.HMAC256("iouytrdfcvghjkluytfgcvbnjkliuytfdcvbhj");
+	            token = JWT.create()
+	                    .withIssuer("auth0")
+	                    .withSubject(memberName)
+	                    .withAudience("itjobgo")
+	                    .withClaim("id", id)
+	                    .withClaim("memberEmail", memberEmail)
+	                    .withNotBefore(notBefore)
+	                    .withExpiresAt(expiresAt)
+	                    .sign(algorithm);
+	        } catch (Exception e) {
+	            System.err.println("err: " + e);
+	        }
+	        logger.debug("token: " + token);
+	        return token;
+	    }
+	 
 
 }
