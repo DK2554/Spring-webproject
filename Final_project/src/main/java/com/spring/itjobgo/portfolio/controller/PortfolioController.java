@@ -50,10 +50,8 @@ public class PortfolioController {
 	
 	@RequestMapping(value="/portfolio/portfolioenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
-	public String portboard(Pboard pboard,@RequestParam(value="memberEmail") String email,@RequestBody MultipartFile[] file,HttpServletRequest request) {
+	public String portboard(Pboard pboard,@RequestParam(value="memberSq") int memberno,@RequestBody MultipartFile[] file,HttpServletRequest request) {
 		//로그인한 사용자의 키를 넣을거임
-		logger.debug(email);
-		int memberno=service.selectmemberno(email);
 		pboard.setPboardId(memberno);
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
