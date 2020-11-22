@@ -13,11 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
-=======
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
->>>>>>> 80762b6c9050e29ab95ea6036be40fb9f3ec0fb8
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,11 +26,8 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.meeting.model.service.MeetingService;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
-<<<<<<< HEAD
-=======
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
->>>>>>> 80762b6c9050e29ab95ea6036be40fb9f3ec0fb8
 
 @RestController
 public class MeetingController {
