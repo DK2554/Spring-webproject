@@ -50,6 +50,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectPhone", param);
 	}
 
+	@Override
+	public int updateInfo(SqlSession session, Member login) {
+		return session.update("member.updateInfo", login);
+	}
+
 
 	
 }

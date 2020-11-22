@@ -19,6 +19,8 @@ public interface MemberService {
 
 	Member selectPhone(Map param);
 
+	int updateInfo(Member login);
+
 	
 
 
