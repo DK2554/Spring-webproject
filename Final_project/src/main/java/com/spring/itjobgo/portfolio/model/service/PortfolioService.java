@@ -21,6 +21,8 @@ public interface PortfolioService {
 
 	int updatepboard(Pboard pboard);
 
+	int selectmemberno(String email);
+
 	
 
 }
