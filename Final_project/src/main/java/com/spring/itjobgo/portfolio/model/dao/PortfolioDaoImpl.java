@@ -38,6 +38,12 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public int selectmemberno(SqlSessionTemplate session, String email) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pboard.selectmemberno",email);
+	}
+
+	@Override
 	public int insertPboard(SqlSessionTemplate session, Pboard pboard) {
 		
 		return session.insert("pboard.insertpboard",pboard);
