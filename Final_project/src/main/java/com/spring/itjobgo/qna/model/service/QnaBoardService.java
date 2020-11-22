@@ -13,4 +13,11 @@ public interface QnaBoardService {
 	
 	QnaBoard selectQnaBoardOne(int qnaSeq);
 	
+	int deleteBoard(int qnaSeq);
+	
+	QB_ATTACHMENT selectAttach(int qnaSeq);
+	
+	
+	
+	
 }

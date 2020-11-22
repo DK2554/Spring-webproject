@@ -36,6 +36,21 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 		return session.selectOne("qnaBoard.selectQnaBoardOne",qnaSeq);
 	}
 
+	//qna게시판 삭제하기
+	@Override
+	public int deleteBoard(SqlSessionTemplate session, int qnaSeq) {
+		return session.delete("qnaBoard.deleteBoard",qnaSeq);
+	}
+
+	//첨부파일 조회
+	@Override
+	public QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qnaSeq) {
+		return session.selectOne("qnaBoard.selectAttach",qnaSeq);
+	}
+
+	
+	
+	
 	
 	
 }

@@ -40,7 +40,6 @@ public class QnaBoardController {
 		System.out.println("==qna리스트==");
 		List<QnaBoard> list =service.selectQnaBoard();
 
-		
 		for(QnaBoard i : list) {
 			System.out.println(i);
 		}
@@ -140,6 +139,47 @@ public class QnaBoardController {
 		
 	}
 	
+	//qna게시판 삭제하기
+	@RequestMapping(value="/qna/qnaBoardDelete{qnaSeq}",
+									method=RequestMethod.POST)
+	public String deleteBoard(@PathVariable int qnaSeq, HttpServletRequest request) {
+		
+			//첨부파일 삭제가 되면 그 결과값이 result>0이면 게시글 삭제로 이어지도록
+			String msg="";
+			logger.debug("첨부파일 삭제 후 게시글 삭제 로직 수행 logger");
+			
+			//먼저 게시글 번호를 가지고 해당 첨부파일을 가져오는 메서드
+			QB_ATTACHMENT qba = service.selectAttach(qnaSeq);
+			System.out.println("qba");
+			
+			//첨부파일을 가져온 후 첨부파일을 서버에서(/resources/upload/communityBoard)삭제
+			String ReNameFile = qba.getRenamedfilename();
+			String saveDir = request.getServletContext().getRealPath("/resources/upload/qnaBoard");
+			
+			//먼저 게시글 삭제 후 첨부파일 삭제
+			int result =service.deleteBoard(qnaSeq);
+			
+			if(result>0) {
+				msg="qna게시판 글 삭제 성공";
+				//게시글 삭제를 성공했을때 첨부파일이 있다면 첨부파일도 삭제
+				File file = new File(saveDir+"/"+ReNameFile);
+				if(file.exists()) {
+					if(file.delete()) logger.debug("첨부파일 삭제 성공");
+					else logger.debug("첨부파일 삭제 실패");
+				}
+			}
+			else {
+				msg="qna게시판 글 삭제 실패";
+				}
+			return msg;
+	}
+	
+			
+			
+			
+			
+			
+	}
 	
 	
 	
@@ -148,7 +188,26 @@ public class QnaBoardController {
 	
 	
 	
-}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 
 	
 	

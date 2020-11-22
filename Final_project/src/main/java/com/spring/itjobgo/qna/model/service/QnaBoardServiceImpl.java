@@ -50,6 +50,19 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	public QnaBoard selectQnaBoardOne(int qnaSeq) {
 		return dao.selectQnaBoardOne(session,qnaSeq);
 	}
+
+	@Override
+	public int deleteBoard(int qnaSeq) {
+		// TODO Auto-generated method stub
+		return dao.deleteBoard(session,qnaSeq);
+	}
+
+	@Override
+	public QB_ATTACHMENT selectAttach(int qnaSeq) {
+		// TODO Auto-generated method stub
+		return dao.selectAttach(session,qnaSeq);
+	}
+	
 	
 	
 

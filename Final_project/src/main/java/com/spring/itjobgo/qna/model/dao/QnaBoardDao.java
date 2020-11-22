@@ -20,6 +20,12 @@ public interface QnaBoardDao {
 	//글 상세보기
 	QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qnaSeq);
 	
+	//글삭제
+	int deleteBoard(SqlSessionTemplate session, int qnaSeq);
+	
+	//첨부파일 조회
+	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qnaSeq);
+	
 }
 
 

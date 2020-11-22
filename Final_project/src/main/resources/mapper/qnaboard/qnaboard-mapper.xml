@@ -60,9 +60,14 @@
 			SELECT * FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
 	</select>
 	
+	<!-- qna게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+			DELETE FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
+	</delete>
 	
-	
-	
+	<select id="selectAttach" resultType="qna_attachment" parameterType="_int">
+			SELECT*FROM QB_ATTACHMENT WHERE QB_BOARD_NO=#{qnaSeq}
+	</select>
 	
 	
 	
