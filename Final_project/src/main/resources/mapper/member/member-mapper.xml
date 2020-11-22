@@ -52,6 +52,7 @@
 
 	<resultMap id="memberMap"
 		type="com.spring.itjobgo.member.model.vo.Member">
+		<result column="MEMBER_SQ" property="memberSq" />
 		<result column="MEMBER_EMAIL" property="memberEmail" />
 		<result column="MEMBER_PWD" property="memberPwd" />
 		<result column="MEMBER_NAME" property="memberName" />
