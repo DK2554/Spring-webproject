@@ -18,17 +18,9 @@ public class Mboard {
 	private int collabFront;
 	private int collabDesgin;
 	private String address;
+	private Date rdate;
 	public Mboard() {
 		// TODO Auto-generated constructor stub
-	}
-	@Override
-	public String toString() {
-		return "Mboard [collabSq=" + collabSq + ", collabTitle=" + collabTitle + ", collabContent=" + collabContent
-				+ ", collabSimcontent=" + collabSimcontent + ", collabWriter=" + collabWriter + ", collabEmail="
-				+ collabEmail + ", collabPhone=" + collabPhone + ", collabUploaddate=" + collabUploaddate
-				+ ", collabDeadline=" + collabDeadline + ", collabLang=" + Arrays.toString(collabLang) + ", collabBack="
-				+ collabBack + ", collabFront=" + collabFront + ", collabDesgin=" + collabDesgin + ", address="
-				+ address + "]";
 	}
 	public int getCollabSq() {
 		return collabSq;
@@ -114,9 +106,15 @@ public class Mboard {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+	public Date getRdate() {
+		return rdate;
+	}
+	public void setRdate(Date rdate) {
+		this.rdate = rdate;
+	}
 	public Mboard(int collabSq, String collabTitle, String collabContent, String collabSimcontent, String collabWriter,
 			String collabEmail, String collabPhone, Date collabUploaddate, Date collabDeadline, String[] collabLang,
-			int collabBack, int collabFront, int collabDesgin, String address) {
+			int collabBack, int collabFront, int collabDesgin, String address, Date rdate) {
 		super();
 		this.collabSq = collabSq;
 		this.collabTitle = collabTitle;
@@ -132,7 +130,18 @@ public class Mboard {
 		this.collabFront = collabFront;
 		this.collabDesgin = collabDesgin;
 		this.address = address;
+		this.rdate = rdate;
 	}
+	@Override
+	public String toString() {
+		return "Mboard [collabSq=" + collabSq + ", collabTitle=" + collabTitle + ", collabContent=" + collabContent
+				+ ", collabSimcontent=" + collabSimcontent + ", collabWriter=" + collabWriter + ", collabEmail="
+				+ collabEmail + ", collabPhone=" + collabPhone + ", collabUploaddate=" + collabUploaddate
+				+ ", collabDeadline=" + collabDeadline + ", collabLang=" + Arrays.toString(collabLang) + ", collabBack="
+				+ collabBack + ", collabFront=" + collabFront + ", collabDesgin=" + collabDesgin + ", address="
+				+ address + ", rdate=" + rdate + "]";
+	}
+	
 	
 	
 }

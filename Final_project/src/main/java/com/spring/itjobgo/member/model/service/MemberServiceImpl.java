@@ -53,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.selectPhone(session, param);
 	}
 
+	@Override
+	public int updateInfo(Member login) {
+		return dao.updateInfo(session, login);
+	}
+
 	
 			
 }

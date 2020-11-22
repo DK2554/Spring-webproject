@@ -25,4 +25,6 @@ public interface PortfolioDao {
 
 	int updateattachment(SqlSessionTemplate session, Attachment file);
 
+	int selectmemberno(SqlSessionTemplate session, String email);
+
 }

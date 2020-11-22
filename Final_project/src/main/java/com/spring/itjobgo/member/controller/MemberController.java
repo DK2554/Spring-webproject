@@ -59,27 +59,53 @@ public class MemberController {
 	}
 	//인포 업데이트
 	@RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
-	public String memberUpdate(@RequestBody Map param) {
+	public int memberUpdate(@RequestBody Map param) {
+		Member login = service.selectOneMember(param);//param값 존재하는 지 확인용
 		
-		Member login = service.selectOneMember(param);
+		login.setMemberPhone((String)param.get("memberPhone"));
+		login.setMemberPostCode((String)param.get("memberPostCode"));
+		login.setMemberAddr((String)param.get("memberAddr"));
+		login.setMemberAddrDtl((String)param.get("memberAddrDtl"));
+		login.setMemberAddrExtra((String)param.get("memberAddrExtra"));
+		login.setMemberPosition((String)param.get("memberPosition"));
+		System.out.println(login);
 		
-		if (login != null) {// id값이 존재하는 경우
-
-			if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
-				logger.debug("비밀번호 맞음");
-				//업데이트
-			}else {//비번 틀림
-				return null;
-			}
-			}
-//		try {
-//			result = service.insertMember(member);
-//					
-//		}catch(RuntimeException e) {
-//			e.printStackTrace();
-//		}
+		int result = 0;
 		
-		return null;
+		if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {
+			logger.debug("비밀번호 맞음");
+			result = service.updateInfo(login);
+			return result;
+		} else {
+			result = -1;
+			return result;
+		}
+	}
+	
+	//비밀번호 변경 : 회원정보 수정
+	@RequestMapping(value = "/updatePwdInfo", method = RequestMethod.POST)
+	public int updatePwdInfo(@RequestBody Map param) {
+		System.out.println(param);
+		Member login = service.selectOneMember(param);//param값 존재하는 지 확인용
+		System.out.println(login);
+		
+		int result = 0;
+		
+		if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
+			logger.debug("비밀번호매치");
+			String encodePw = encoder.encode((String) param.get("memberNewPwd"));// 업데이트된 비번 암호화
+			login.setMemberPwd(encodePw);
+			System.out.println(login);
+			result = service.updatePwd(login);
+			return result;
+		}else {
+			
+			result = -1;
+			return result;
+		}	
+		
+		
+		
 	}
 
 	// 이메일 중복검사
@@ -110,7 +136,7 @@ public class MemberController {
 	// 전화번호 이메일 비교 : 비밀번호 업데이트
 	@RequestMapping(value = "/compareEmailPhone", method = RequestMethod.POST)
 	public Member compareEmailPhone(@RequestBody Map param) throws IOException {
-		System.out.println("controller: " + param);
+		
 		Member m = service.selectEmailPhone(param);
 		return m;
 	}
@@ -120,9 +146,6 @@ public class MemberController {
 	public int UpdatePwd(@RequestBody Map param) throws IOException {
 		System.out.println("update controller: " + param);
 		Member m = service.selectOneMember(param);
-
-		
-		
 		
 		String encodePw = encoder.encode((String) param.get("memberPwd"));// 업데이트된 비번 암호화
 		m.setMemberPwd(encodePw);
@@ -147,6 +170,27 @@ public class MemberController {
 		return m;
 	}
 	
+	//이메일 비밀번호 확인 : 회원정보 수정
+	@RequestMapping(value = "/checkInfo", method = RequestMethod.POST)
+	public int checkMember(@RequestBody Map param) throws IOException {
+		System.out.println("controller: " + param);
+		Member login = service.selectOneMember(param);
+		System.out.println("login: " + login);
+		if (login != null) {// id값이 존재하는 경우
+
+			if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
+				// 비밀번호 매치o
+				System.out.println("비밀번호 ok");
+				return 1;
+				} else {// 비밀번호 매치x
+					System.out.println("비밀번호 no");
+					return 0;
+				}
+			} else {
+				System.out.println("비밀번호 no");
+				return 0;
+			}
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Map loginMember(@RequestBody Map param) throws IOException {

@@ -20,5 +20,7 @@ public interface MemberDao {
 
 	Member selectPhone(SqlSession session, Map param);
 
+	int updateInfo(SqlSession session, Member login);
+
 
 }
