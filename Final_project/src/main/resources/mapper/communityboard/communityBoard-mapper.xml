@@ -13,7 +13,7 @@
 												resultType은 쿼리 후 결과를 위한 데이터		
 	-->
 
-	<resultMap id="communnityBoard"
+<!-- 	<resultMap id="communnityBoard"
 		type="com.spring.itjobgo.community.model.vo.CommunityBoard">
 		<result column="BOARD_SQ" property="boardSq" />
 		<result column="BOARD_DIVISION" property="boardDivision" />
@@ -22,7 +22,7 @@
 		<result column="BOARD_ORIGINAL_FILEPATH" property="boardOriginalFilepath" />
 		<result column="BOARD_RENAME_FILEPATH" property="boardRenameFilepath" />
 		<result column="MEMBER_NUM" property="memberNum" />
-	</resultMap>
+	</resultMap> -->
 		
 	<!-- 자유게시판 전체 조회 -->
  	<select id="selectBoardList" resultType="communityBoard">
@@ -37,8 +37,9 @@
 											#{boardTitle},
 											#{boardContent},
 											DEFAULT,
-											1,
-											#{boardId}
+											#{memberNum},
+											#{boardWriter},
+											1
 											)
 	</insert>
 		

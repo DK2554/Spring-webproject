@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meeting">
   <insert id="insertmboard" parameterType="map">
-  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address})
+  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate})
   </insert>
   <insert id="insertmattach" parameterType="attachment" >
   insert into m_attachment values(seq_attach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)

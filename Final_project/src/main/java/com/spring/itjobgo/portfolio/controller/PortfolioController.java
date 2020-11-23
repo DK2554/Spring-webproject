@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,9 +50,9 @@ public class PortfolioController {
 	
 	@RequestMapping(value="/portfolio/portfolioenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
-	public String portboard(Pboard pboard,@RequestBody MultipartFile[] file,HttpServletRequest request) {
+	public String portboard(Pboard pboard,@RequestParam(value="memberSq") int memberno,@RequestBody MultipartFile[] file,HttpServletRequest request) {
 		//로그인한 사용자의 키를 넣을거임
-		pboard.setPboardId(1);
+		pboard.setPboardId(memberno);
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
 		if(file.length>0) {
@@ -125,19 +126,29 @@ public class PortfolioController {
 		String msg="";
 		logger.debug("이메소드 수행");
 		Attachment at=service.selectattac(no);
-		String fname=at.getRenamedFilename();
-		String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
-		int result=service.deletePboard(no);
-		if(result >0) {
-			msg="삭제성공";
-			File file=new File(saveDir+"/"+fname);
-			if(file.exists()) {
-				if(file.delete()) logger.debug("삭제성공");
-				else logger.debug("삭제실패");
-			}
+		if(at!=null){
+			//첨부파일이 있는 게시물일 경우 이 로직 실행
+			String fname=at.getRenamedFilename();
+			String saveDir=request.getServletContext().getRealPath("/resources/upload/portfolio");
+			int result=service.deletePboard(no);
+			if(result >0) {
+				msg="삭제성공";
+				File file=new File(saveDir+"/"+fname);
+				if(file.exists()) {
+					if(file.delete()) logger.debug("삭제성공");
+					else logger.debug("삭제실패");
+				}
+			}else {
+				msg="삭제실패";
+			}	
 		}else {
-			msg="삭제실패";
+			//첨부파일이 없는 게시글 삭제
+			int result=service.deletePboard(no);
+			msg= (result>0) ? "삭제성공":"삭제실패";
 		}
+			
+	
+		
 		logger.debug(msg);
 		return msg;	
 	}
