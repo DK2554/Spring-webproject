@@ -55,6 +55,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updateInfo", login);
 	}
 
+	@Override
+	public int deleteMember(SqlSession session, String email) {
+		System.out.println("login: " + email);
+		return session.delete("member.deleteMember", email);
+	}
+
 
 	
 }
