@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.management.openmbean.InvalidOpenTypeException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
-import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @RestController
 public class CommunityBoardController {
@@ -51,10 +50,12 @@ public class CommunityBoardController {
 	//자유게시판 글쓰기
 	@RequestMapping(value="/community/communityBoardForm",
 									method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public String cbBoard(CommunityBoard cboard,
+	public String cbBoard(CommunityBoard cboard,@RequestParam(value="memberSq") int memberno,
 											@RequestBody MultipartFile[] file, HttpServletRequest request) 
-																																		{
-		cboard.setBoardId(1);
+										{
+		
+	System.out.println("멤버번호  : "+memberno);																							
+	cboard.setMemberNum(memberno);
 		
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");

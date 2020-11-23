@@ -10,31 +10,18 @@ import lombok.Data;
 public class CommunityBoard {
 	
 	
-	private int boardSq;// 번호
+	private int boardSq;// 번호(PK)
 	private String boardDivision;//분류
 	private String boardTitle; //제목
 	private String boardContent;//내용
-//	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date boardDate;//날짜
 	private int memberNum; //회원시퀀스로 분류
-	private int boardId; //게시판 아이디
+	private String boardWriter;
+	private int boardCount;//조회수
 	
 	
 	public CommunityBoard() {
 		// TODO Auto-generated constructor stub
-	}
-
-
-	public CommunityBoard(int boardSq, String boardDivision, String boardTitle, String boardContent, Date boardDate,
-			int memberNum, int boardId) {
-		super();
-		this.boardSq = boardSq;
-		this.boardDivision = boardDivision;
-		this.boardTitle = boardTitle;
-		this.boardContent = boardContent;
-		this.boardDate = boardDate;
-		this.memberNum = memberNum;
-		this.boardId = boardId;
 	}
 
 
@@ -98,27 +85,38 @@ public class CommunityBoard {
 	}
 
 
-	public int getBoardId() {
-		return boardId;
+	public String getBoardWriter() {
+		return boardWriter;
 	}
 
 
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
+	public void setBoardWriter(String boardWriter) {
+		this.boardWriter = boardWriter;
 	}
 
 
-	@Override
-	public String toString() {
-		return "CommunityBoard [boardSq=" + boardSq + ", boardDivision=" + boardDivision + ", boardTitle=" + boardTitle
-				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", memberNum=" + memberNum
-				+ ", boardId=" + boardId + "]";
+	public int getBoardCount() {
+		return boardCount;
 	}
-	
-	
-	
-	
-	
+
+
+	public void setBoardCount(int boardCount) {
+		this.boardCount = boardCount;
+	}
+
+
+	public CommunityBoard(int boardSq, String boardDivision, String boardTitle, String boardContent, Date boardDate,
+			int memberNum, String boardWriter, int boardCount) {
+		super();
+		this.boardSq = boardSq;
+		this.boardDivision = boardDivision;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardDate = boardDate;
+		this.memberNum = memberNum;
+		this.boardWriter = boardWriter;
+		this.boardCount = boardCount;
+	}
 	
 	
 }
