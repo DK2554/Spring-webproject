@@ -21,6 +21,8 @@ public interface MemberService {
 
 	int updateInfo(Member login);
 
+	int deleteMember(String email);
+
 	
 
 
