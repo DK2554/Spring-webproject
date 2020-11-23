@@ -1,13 +1,18 @@
 package com.spring.itjobgo.portfolio.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
@@ -15,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +32,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.portfolio.model.service.PortfolioService;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
+import com.spring.itjobgo.portfolio.model.vo.Comment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
 @RestController
@@ -214,5 +221,62 @@ public class PortfolioController {
 			//넘겨줄 파일이 없으면 게시글만 수정하면 대는거 아님?
 			
 	return "매핑테스트";
+	}
+	@RequestMapping(value="portfolio/attachment{no}",method=RequestMethod.GET)
+	public Attachment returnattachment(@PathVariable int no) {
+		logger.debug(Integer.toString(no));
+		Attachment att=service.selectattac(no);
+		if(att==null) return null; //첨부파일이 없으면 null을 반환하고
+		else return att; //첨부파일이 있으면 받아온 객체를 반환해라
+		
+	}
+	@RequestMapping(value="portfolio/filedownload",method=RequestMethod.GET)
+	//첨부파일 이름 보내기
+	public void filedownload(HttpServletRequest request,HttpServletResponse response,@RequestHeader(name="user-agent")String header,@RequestParam(value="oriName") String oriName,@RequestParam(value="reName")  String reName) {
+		logger.debug(oriName);
+		logger.debug(reName);
+		String path=request.getServletContext().getRealPath("/resources/upload/portfolio");
+		File saveFile=new File(path+"/"+reName);
+		BufferedInputStream bis=null;
+		ServletOutputStream sos=null;
+		
+		try {
+			bis=new BufferedInputStream(new FileInputStream(saveFile));
+			sos=response.getOutputStream();
+			boolean isMSIE=header.indexOf("Trident")!=-1||header.indexOf("MSIE")!=-1;
+			String encodeRename="";
+			if(isMSIE) {
+				encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
+				
+			}else {
+				encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
+			}
+			response.setContentType("application/octet-stream;charset=utf-8");
+			response.setHeader("Content-Disposition", "attachment;filename=\""+encodeRename+"\"");
+			response.setHeader("Content-Transfer-Encoding", "binary;");
+			response.setContentLength((int)saveFile.length());
+			int read=-1;
+			while((read=bis.read())!=-1) {
+				sos.write(read);
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				sos.close();
+				bis.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@RequestMapping(value="portfolio/comment.do",method =RequestMethod.POST)
+	public String comment( Comment cm) {
+		String msg="";
+	
+		logger.debug(cm.toString());
+		logger.debug("매핑테스트");
+		return msg;
 	}
 }

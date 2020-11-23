@@ -22,5 +22,7 @@ public interface MemberDao {
 
 	int updateInfo(SqlSession session, Member login);
 
+	int deleteMember(SqlSession session, String email);
+
 
 }
