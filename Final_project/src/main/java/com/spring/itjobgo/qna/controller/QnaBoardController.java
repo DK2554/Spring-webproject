@@ -174,6 +174,86 @@ public class QnaBoardController {
 			return msg;
 	}
 	
+	//첨부파일 먼저 불러오기(update form으로)
+	@RequestMapping(value="/qna/qnaBoardUpdate{qnaSeq}",
+										method = RequestMethod.GET)
+	public QB_ATTACHMENT selectAttach(@PathVariable int qnaSeq) {
+		System.out.println("===첨부파일 불러오기 맵핑 시작===");
+		
+		QB_ATTACHMENT qba=service.selectAttach(qnaSeq);
+		
+		System.out.println("qba");
+		
+		return qba;
+	}
+	
+	
+	//qna 게시판 수정하기
+	@RequestMapping(value="/qna/qnaBoardUpdateEnd",
+										method=RequestMethod.POST,
+										consumes= {"multipart/form-data"})
+	public String qnaBoardUpdate(QnaBoard qb,
+														@RequestBody(required=false)
+															MultipartFile[] file,
+															HttpServletRequest request) {
+		
+		System.out.println("==업데이트 메서드 실행=========");
+		
+		if(file.length>0) {
+			int qnaSeq = qb.getQnaSeq();
+			
+			String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
+			
+			File dir = new File(saveDir);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			List<QB_ATTACHMENT> files = new ArrayList();
+			
+			//원래 파일이 존재한다면 get해서 가져와서 변수에 저장해두기
+			for(MultipartFile f:file) {
+				if(!f.isEmpty()) {
+					String originalFileName=f.getOriginalFilename();
+					String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+					int rndNum=(int)(Math.random()*1000);
+					String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+					
+					try {
+						//파일 저장하기
+						//스프링이 제공하는 멀티파트가 메소드를 제공한다.
+						//transfer to(파일) 메소드를 이용한다.
+						f.transferTo(new File(saveDir+"/"+renameFileName));
+					}catch(IOException e) {
+						e.printStackTrace();
+					}
+					
+					QB_ATTACHMENT file2 = new QB_ATTACHMENT(0,qnaSeq,originalFileName,renameFileName,null,null);
+					files.add(file2);
+					
+				}
+			}
+			int result=0;
+			try {
+				//게시판 글 업데이트
+				result = service.updateBoard(qb,files);
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+			}
+			String msg="";
+			if(result>0) msg="게시글 수정 성공";
+			else msg="게시글 수정 실패";
+			
+			}//193번째줄 if > 파일이 있다면 / 게시판 정보만 업데이트
+			else {
+			int result = service.updateBoard(qb);
+			}
+			return "업데이트 테스트";
+	
+	}
+										
+	
 			
 			
 			

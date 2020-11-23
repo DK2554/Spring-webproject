@@ -53,15 +53,41 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	@Override
 	public int deleteBoard(int qnaSeq) {
-		// TODO Auto-generated method stub
 		return dao.deleteBoard(session,qnaSeq);
 	}
 
 	@Override
 	public QB_ATTACHMENT selectAttach(int qnaSeq) {
-		// TODO Auto-generated method stub
 		return dao.selectAttach(session,qnaSeq);
 	}
+
+	@Override
+	public int updateBoard(QnaBoard qb, List<QB_ATTACHMENT> files) {
+		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다.
+		int result = dao.updateBoard(session,qb);
+		//등록이 성공되지 않는다면
+		if(result>0) {
+			if(!files.isEmpty()) {
+				for(QB_ATTACHMENT file:files) {
+					result=dao.updateAttachment(session,file);
+					//첨부파일이 없는 게시글일 경우 시퀀스 때문에 수정이 안된다.
+					//그럴경우 시퀀스가 없는 insertAttachment2매퍼로 이동하도록 유도한다.
+					if(result==0)						
+						 
+						dao.insertAttachment2(session,file);
+							System.out.println("==첨부파일이 없는 글 첨부파일 등록 성공===");
+				}//for문
+			}//세번째 if문
+		}//두번째 if문
+		
+		return result;
+	}
+
+	@Override
+	public int updateBoard(QnaBoard qb) {
+		return dao.updateBoard(session,qb);
+	}
+	
 	
 	
 	

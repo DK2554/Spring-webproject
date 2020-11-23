@@ -17,7 +17,9 @@ public interface QnaBoardService {
 	
 	QB_ATTACHMENT selectAttach(int qnaSeq);
 	
+	int updateBoard(QnaBoard qb, List<QB_ATTACHMENT>files);
 	
+	int updateBoard(QnaBoard qb);
 	
 	
 }

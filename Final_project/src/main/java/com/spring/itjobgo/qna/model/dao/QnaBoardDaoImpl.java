@@ -48,6 +48,24 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 		return session.selectOne("qnaBoard.selectAttach",qnaSeq);
 	}
 
+	//첨부파일 update
+	@Override
+	public int updateAttachment(SqlSessionTemplate session, QB_ATTACHMENT qb_attach) {
+		return session.update("qnaBoard.updateAttachment",qb_attach);
+	}
+
+	//게시글(객체)update
+	@Override
+	public int updateBoard(SqlSessionTemplate session, QnaBoard qb) {
+		return session.update("qnaBoard.updateBoard",qb);
+	}
+
+	@Override
+	public int insertAttachment2(SqlSessionTemplate session, QB_ATTACHMENT qb_attach) {
+		return session.insert("qnaBoard.insertAttachment2",qb_attach);
+	}
+
+	
 	
 	
 	

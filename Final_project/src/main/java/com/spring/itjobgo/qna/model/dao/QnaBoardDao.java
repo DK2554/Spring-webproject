@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
@@ -25,6 +26,18 @@ public interface QnaBoardDao {
 	
 	//첨부파일 조회
 	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qnaSeq);
+	
+	//첨부파일 update
+	int updateAttachment(SqlSessionTemplate session,QB_ATTACHMENT qb_attach);
+	
+	//게시글(객체) update
+	int updateBoard(SqlSessionTemplate session, QnaBoard qb);
+	
+	//첨부파일 insert
+	int insertAttachment2(SqlSessionTemplate session, QB_ATTACHMENT qb_attach);
+	
+	
+	
 	
 }
 
