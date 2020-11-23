@@ -58,6 +58,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.updateInfo(session, login);
 	}
 
+	@Override
+	public int deleteMember(String email) {
+		return dao.deleteMember(session, email);
+	}
+
 	
 			
 }

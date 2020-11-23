@@ -49,6 +49,10 @@
 	<select parameterType="map" id="selectPhoneNum"
 		resultMap="memberMap">SELECT * FROM MEMBER WHERE MEMBER_PHONE=#{memberPhone}
 	</select>
+	
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}
+	</delete>
 
 	<resultMap id="memberMap"
 		type="com.spring.itjobgo.member.model.vo.Member">
