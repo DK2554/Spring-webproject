@@ -74,8 +74,8 @@
 	<update id="updateBoard">
 			UPDATE QNA_BOARD SET
 													QNA_CATEGORY=#{qnaCategory},
-													BOARD_TITLE=#{qnaTitle},
-													BOARD_CONTENT=#{qnaContent}
+													QNA_TITLE=#{qnaTitle},
+													QNA_CONTENT=#{qnaContent}
 												WHERE QNA_SEQ=#{qnaSeq}
 	</update>
 	

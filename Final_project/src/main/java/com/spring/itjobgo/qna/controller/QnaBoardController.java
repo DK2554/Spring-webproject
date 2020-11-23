@@ -200,12 +200,14 @@ public class QnaBoardController {
 		System.out.println("==업데이트 메서드 실행=========");
 		
 		if(file.length>0) {
+			//파일이 존재한다면 게시판 번호를 변수에 넣어둔다.
 			int qnaSeq = qb.getQnaSeq();
 			
 			String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
 			
 			File dir = new File(saveDir);
 			if(!dir.exists()) {
+				//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
 				dir.mkdirs();
 			}
 			
