@@ -46,5 +46,21 @@ public class InfoDaoImpl implements InfoDao {
 		return session.selectOne("info.selectAttach",infoSq);
 	}
 	
+	//첨부파일 update
+	@Override
+	public int updateAttachment(SqlSessionTemplate session, INFO_ATTACHMENT info_attach) {
+		return session.update("info.updateAttachment",info_attach);
+	}
+	
+	//게시글(객체)update
+	@Override
+	public int updateInfo(SqlSessionTemplate session, Info cb) {
+		return session.update("info.updateinfo",cb);
+	}
 
+	@Override
+	public int insertAttachment2(SqlSessionTemplate session, INFO_ATTACHMENT info_attach) {
+		return session.insert("info.insertAttachment2",info_attach);
+	}
+		
 }

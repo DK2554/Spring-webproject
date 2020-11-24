@@ -63,5 +63,39 @@ public List<Info> selectInfoList() {
 		return dao.selectAttach(session, infoSq);
 	}
 
+	//첨부파일이 있을때 update
+	@Override
+	public int updateInfo(Info cb, List<INFO_ATTACHMENT> files) {
+		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다
+		int result = dao.updateInfo(session,cb);
+		//등록이 성공되지 않는다면
+		if(result==0) throw new RuntimeException("게시글 등록 오류");
+		//등록이 성공하고 첨부파일이 존재한다면 첨부파일 등록해줘야한다.
+			if(result>0) {
+				if(!files.isEmpty()) {
+					for(INFO_ATTACHMENT file : files) {
+						result=dao.updateAttachment(session, file);
+						
+						//첨부파일이없는 게시글일 경우 시퀀스때문에 수정이 안된다
+						//그럴경우 시퀀스가 없는 insertAttachment2매퍼로 이동하도록 유도한다.
+						if(result==0) 
+							
+							dao.insertAttachment2(session, file);
+						
+							System.out.println("==첨부파일 없는 글 첨부파일 등록성공==");
+					}//for문
+				}//세번째 if문
+			}//두번째 if문
+			
+			return result;
+		}
+
+	//첨부파일이 없을때 게시판 내용만 update
+	@Override
+	public int updateInfo(Info cb) {
+		// TODO Auto-generated method stub
+		return dao.updateInfo(session,cb);
+		}
+
 
 	}

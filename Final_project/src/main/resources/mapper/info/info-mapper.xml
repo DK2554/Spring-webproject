@@ -52,7 +52,7 @@
 	  
 	  	<!-- 첨부파일이 없는 게시글 update 하기 -->
 		<insert id="insertAttachment2" parameterType="info_attachment">
-		INSERT INTO CB_ATTACHMENT VALUES(
+		INSERT INTO INFO_ATTACHMENT VALUES(
 												#{attachmentno},
 												#{infoNo},
 												#{originalfilename},
@@ -80,7 +80,7 @@
 		</select>
 		
 	<!-- 게시판 업데이트 update -->
-		<update id="updateBoard=">
+		<update id="updateInfo=">
 			UPDATE INFO SET 
 						INFO_CATEGORY=#{infoCategory},
 						INFO_TITLE=#{infoTitle},

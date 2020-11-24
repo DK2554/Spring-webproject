@@ -16,6 +16,10 @@ public interface InfoService {
 	int deleteBoard(int infoSq);
 	
 	INFO_ATTACHMENT selectAttach(int infoSq);
+
+	int updateInfo(Info cb,List<INFO_ATTACHMENT>files);
+	
+	int updateInfo(Info cb);
 	
 }
 
