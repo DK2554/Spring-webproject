@@ -32,4 +32,7 @@
   <update id="updateattachment">
   update attachment set originalFilename=#{originalFilename},renamedFilename=#{renamedFilename} where pboard_no=#{pboardNo}
   </update>
+  <select id="selectmemberno" parameterType="string" resultType="_int">
+  select member_sq from member where member_email=#{email}
+  </select>
 </mapper>

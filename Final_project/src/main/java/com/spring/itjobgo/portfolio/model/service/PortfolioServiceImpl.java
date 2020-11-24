@@ -72,6 +72,12 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return result;
 
 	}
+	//로그인한 email로 멤버 기본키 가져오기
+	@Override
+	public int selectmemberno(String email) {
+		// TODO Auto-generated method stub
+		return dao.selectmemberno(session,email);
+	}
 	@Override
 	public int updatepboard(Pboard pboard) {
 		// TODO Auto-generated method stub
