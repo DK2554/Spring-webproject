@@ -3,6 +3,7 @@ package com.spring.itjobgo.portfolio.model.service;
 import java.util.List;
 
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
+import com.spring.itjobgo.portfolio.model.vo.Comment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
 public interface PortfolioService {
@@ -22,6 +23,8 @@ public interface PortfolioService {
 	int updatepboard(Pboard pboard);
 
 	int selectmemberno(String email);
+
+	int insertComment(Comment cm);
 
 	
 

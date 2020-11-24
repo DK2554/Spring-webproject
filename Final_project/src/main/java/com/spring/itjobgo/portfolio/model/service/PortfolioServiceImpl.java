@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.portfolio.model.dao.PortfolioDao;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
+import com.spring.itjobgo.portfolio.model.vo.Comment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
 
@@ -23,6 +24,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 	private SqlSessionTemplate session;
 	
 	
+	@Override
+	public int insertComment(Comment cm) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session,cm);
+	}
 	@Override
 	public int insertPboard(Pboard pboard, List<Attachment> files) {
 		int result=dao.insertPboard(session,pboard);

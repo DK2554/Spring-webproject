@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
+import com.spring.itjobgo.portfolio.model.vo.Comment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 
 public interface PortfolioDao {
@@ -26,5 +27,7 @@ public interface PortfolioDao {
 	int updateattachment(SqlSessionTemplate session, Attachment file);
 
 	int selectmemberno(SqlSessionTemplate session, String email);
+
+	int insertComment(SqlSessionTemplate session, Comment cm);
 
 }

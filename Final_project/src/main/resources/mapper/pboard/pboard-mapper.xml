@@ -35,4 +35,7 @@
   <select id="selectmemberno" parameterType="string" resultType="_int">
   select member_sq from member where member_email=#{email}
   </select>
+  <insert id="insertcomment" parameterType="comment" >
+  insert into pcomment values(seq_pcoment.nextval,#{pboardNo},#{pcommentContent},#{memberSq},default,#{memberName})
+  </insert>
 </mapper>

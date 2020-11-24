@@ -270,11 +270,11 @@ public class PortfolioController {
 			}
 		}
 	}
-	
+	//댓글 작성
 	@RequestMapping(value="portfolio/comment.do",method =RequestMethod.POST)
 	public String comment( Comment cm) {
 		String msg="";
-	
+		int result=service.insertComment(cm);
 		logger.debug(cm.toString());
 		logger.debug("매핑테스트");
 		return msg;
