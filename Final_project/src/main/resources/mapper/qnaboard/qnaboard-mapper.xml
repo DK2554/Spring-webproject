@@ -60,14 +60,32 @@
 			SELECT * FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
 	</select>
 	
+	<!-- qna게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+			DELETE FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
+	</delete>
 	
+	<!-- 첨부파일 조회 -->
+	<select id="selectAttach" resultType="qna_attachment" parameterType="_int">
+			SELECT*FROM QB_ATTACHMENT WHERE QB_BOARD_NO=#{qnaSeq}
+	</select>
 	
+	<!-- qna게시판 업데이트 update -->	
+	<update id="updateBoard">
+			UPDATE QNA_BOARD SET
+													QNA_CATEGORY=#{qnaCategory},
+													QNA_TITLE=#{qnaTitle},
+													QNA_CONTENT=#{qnaContent}
+												WHERE QNA_SEQ=#{qnaSeq}
+	</update>
 	
-	
-	
-	
-	
-	
+	<!-- 첨부파일 업데이트 -->	
+	<update id="updateAttachment">
+			UPDATE QB_ATTACHMENT SET
+													ORIGINALFILENAME=#{originalfilename},
+													RENAMEDFILENAME=#{renamedfilename}
+												WHERE QB_BOARD_NO=#{qnaSeq}
+	</update>
 	
 	
 	

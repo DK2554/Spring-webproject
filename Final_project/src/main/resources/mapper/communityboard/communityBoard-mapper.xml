@@ -97,7 +97,7 @@
 															BOARD_DIVISION=#{boardDivision},
 															BOARD_TITLE=#{boardTitle},
 															BOARD_CONTENT=#{boardContent}
-											WHERE BOARD_SQ=#{boardSq}
+											WHERE BOARD_SQ=#{boardSq} 
 	</update>
 	
 	<!-- 첨부파일 업데이트 -->
