@@ -1,18 +1,24 @@
 package com.spring.itjobgo.community.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
@@ -34,9 +42,8 @@ public class CommunityBoardController {
 	private CommunityBoardService service;
 	
 	//자유게시판 화면전환용 메서드
-	@ResponseBody
 	@RequestMapping(value="/community/communityBoardList" , method=RequestMethod.GET)
-	public List<CommunityBoard> communityBoard()  {
+	public List<CommunityBoard> communityBoard() throws JsonMappingException,JsonGenerationException,IOException  {
 		
 			List<CommunityBoard> list = service.selectBoardList();
 			
@@ -59,8 +66,11 @@ public class CommunityBoardController {
 		
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
-		logger.debug("파일명"+file[0].getOriginalFilename());
-		logger.debug("파일크기 : "+file[0].getSize());
+		//파일이 있다면
+		if(file.length>0) {
+			logger.debug("파일명"+file[0].getOriginalFilename());
+			logger.debug("파일크기 : "+file[0].getSize());	
+		}
 		logger.debug(cboard.toString());
 		
 		//업로드 경로 설정
@@ -123,13 +133,14 @@ public class CommunityBoardController {
 	//자유게시판 상세화면 전환 페이지
 	@RequestMapping(value="/community/communityBoardView{boardSq}",
 									method=RequestMethod.GET)
-	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq) {
+	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq)
+			throws JsonMappingException,JsonGenerationException,IOException{
 		
 		logger.debug("boardSq"+Integer.toString(boardSq));
 		
 		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
 		
-		System.out.println("날짜포맷(전): "+cboard.getBoardDate());
+//		System.out.println("날짜포맷(전): "+cboard.getBoardDate());
 		
 		return cboard;
 	
@@ -139,7 +150,9 @@ public class CommunityBoardController {
 	//자유게시판 삭제하기
 	@RequestMapping(value="/community/communityBoardDelete{boardSq}",
 									method=RequestMethod.POST)
-	public String deleteBoard(@PathVariable int boardSq , HttpServletRequest request) {
+	public String deleteBoard(@PathVariable int boardSq , HttpServletRequest request) 
+				throws JsonMappingException,JsonGenerationException,IOException
+			{
 		
 		//먼저 첨부파일이 삭제가 되면 그 그결과값이 result>0이면 게시글 삭제로 이어지도록
 		String msg = "";
@@ -148,7 +161,8 @@ public class CommunityBoardController {
 		//먼저 게시글 번호를 가지고 해당 첨부파일을 가져오는 메서드
 		CB_ATTACHMENT cba = service.selectAttach(boardSq);
 		System.out.println(cba);
-		
+		//첨부파일이 있을경우
+		if(cba!=null) {	
 		//첨부파일을 가져온 후 첨부파일을 서버에서(/resources/upload/communityBoard)삭제
 		String ReNameFile =cba.getRenamedfilename();
 		String saveDir = request.getServletContext().getRealPath("/resources/upload/communityBoard");
@@ -168,6 +182,12 @@ public class CommunityBoardController {
 		else {
 			msg="자유게시판 글삭제 실패";
 		}
+		//첨부파일이 없는 게시글 삭제
+		}else {
+			int result = service.deleteBoard(boardSq);
+			msg =(result>0) ?"자유게시판 글 삭제 성공" : " 자유게시판 글 삭제 실패";
+		}
+		logger.debug(msg);
 		return msg;
 	}
 	
@@ -252,7 +272,63 @@ public String communityBoardUpdate(CommunityBoard cb,
 		return "업데이트 테스트";
 	
 	}
+
+//첨부파일 표시
+@RequestMapping(value="community/communityBoardAttachment{boardSq}",
+								method=RequestMethod.GET)
+public CB_ATTACHMENT downLoad(@PathVariable int boardSq) {
 	
+	System.out.println("==첨부파일 다운로드 매핑 시작==");
+	logger.debug(Integer.toString(boardSq));
+	CB_ATTACHMENT cba = service.selectAttach(boardSq);
+	if(cba==null) return null;
+	else return cba;
+}
+
+//첨부파일 다운로드(이름 보내기)
+@RequestMapping(value="community/filedownload",method=RequestMethod.GET)
+public void filedownload(HttpServletRequest request,HttpServletResponse response,
+											@RequestHeader(name="user-agent")String header,
+											@RequestParam(value="oriName") String oriName,
+											@RequestParam(value="reName")  String reName) 
+											{
 	
+	logger.debug(oriName);
+	logger.debug(reName);
+	String path=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+	File saveFile=new File(path+"/"+reName);
+	BufferedInputStream bis=null;
+	ServletOutputStream sos=null;
+	
+	try {
+		bis=new BufferedInputStream(new FileInputStream(saveFile));
+		sos=response.getOutputStream();
+		boolean isMSIE=header.indexOf("Trident")!=-1||header.indexOf("MSIE")!=-1;
+		String encodeRename="";
+		if(isMSIE) {
+			encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
+			
+		}else {
+			encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
+		}
+		response.setContentType("application/octet-stream;charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment;filename=\""+encodeRename+"\"");
+		response.setHeader("Content-Transfer-Encoding", "binary;");
+		response.setContentLength((int)saveFile.length());
+		int read=-1;
+		while((read=bis.read())!=-1) {
+			sos.write(read);
+		}
+	}catch(IOException e) {
+		e.printStackTrace();
+	}finally {
+		try {
+			sos.close();
+			bis.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
 	
 }//클래스
