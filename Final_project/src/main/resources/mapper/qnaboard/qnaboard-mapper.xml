@@ -70,7 +70,7 @@
 			SELECT*FROM QB_ATTACHMENT WHERE QB_BOARD_NO=#{qnaSeq}
 	</select>
 	
-	<!-- 게시판 업데이트 update -->	
+	<!-- qna게시판 업데이트 update -->	
 	<update id="updateBoard">
 			UPDATE QNA_BOARD SET
 													QNA_CATEGORY=#{qnaCategory},
