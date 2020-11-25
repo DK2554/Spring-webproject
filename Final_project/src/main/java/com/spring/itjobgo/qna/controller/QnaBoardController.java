@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
@@ -35,7 +37,6 @@ public class QnaBoardController {
 	
 	@Autowired
 	private Logger logger;
-	
 	
 	@Autowired
 	private QnaBoardService service;
@@ -56,21 +57,24 @@ public class QnaBoardController {
 		return list;
 	}
 	
-	//qna게시판 글작성하기
-	@RequestMapping(value="/qna/qnaBoardWrite",method = RequestMethod.POST,
-										consumes= {"multipart/form-data"})
-	public String cbBoard(QnaBoard Qboard,
-			@RequestBody MultipartFile[] file, HttpServletRequest request) 
-
-	{
-		Qboard.setBoardId(1);
-		System.out.println("==파일저장시작==");
+	//qna게시판 글쓰기
+	@RequestMapping(value="/qna/qnaBoardWrite",
+										method = RequestMethod.POST, consumes= {"multipart/form-data"})
+		public String qbBoard(QnaBoard Qboard, @RequestParam(value="memberSq") int memberno,
+													@RequestBody MultipartFile[] file, HttpServletRequest request) 
+										{
+		
+		System.out.println("멤버번호 : " + memberno);
+		Qboard.setMemberNum(memberno);
+		
 		logger.debug("매핑확인");
 		logger.debug("======vue에서 전송한  파일========");
-		logger.debug("파일명"+file[0].getOriginalFilename());
-		logger.debug("파일크기 : "+file[0].getSize());
+		//파일이 있다면
+		if(file.length>0) {
+			logger.debug("파일명"+file[0].getOriginalFilename());
+			logger.debug("파일크기"+file[0].getSize());
+		}
 		logger.debug(Qboard.toString());
-		
 		
 		
 		//업로드 경로 설정
@@ -102,15 +106,15 @@ public class QnaBoardController {
 		try {
 		//파일저장하기
 		//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
-		f.transferTo(new File(saveDir+"/"+renameFileName));
+			f.transferTo(new File(saveDir+"/"+renameFileName));
 		}catch(IOException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		QB_ATTACHMENT file2=new QB_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
 		files.add(file2);
 		}
-		}
-		int result=0;
+	}
+	int result=0;
 		
 		
 		try {
@@ -134,9 +138,10 @@ public class QnaBoardController {
 	//qna게시판 상세화면 전환페이지
 	@RequestMapping(value="/qna/qnaBoardView{QnaSeq}",
 										method=RequestMethod.GET)
-	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq) {
+	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq)
+			throws JsonMappingException,JsonGenerationException,IOException{
 		
-		System.out.print("============상세화면===================");
+		System.out.print("=======상세화면========");
 		
 		logger.debug("qnaSeq"+Integer.toString(QnaSeq));
 		
@@ -149,7 +154,9 @@ public class QnaBoardController {
 	//qna게시판 삭제하기
 	@RequestMapping(value="/qna/qnaBoardDelete{qnaSeq}",
 									method=RequestMethod.POST)
-	public String deleteBoard(@PathVariable int qnaSeq, HttpServletRequest request) {
+	public String deleteBoard(@PathVariable int qnaSeq, HttpServletRequest request) 
+			throws JsonMappingException,JsonGenerationException,IOException
+			{
 		
 			//첨부파일 삭제가 되면 그 결과값이 result>0이면 게시글 삭제로 이어지도록
 			String msg="";
@@ -159,6 +166,9 @@ public class QnaBoardController {
 			QB_ATTACHMENT qba = service.selectAttach(qnaSeq);
 			System.out.println("qba");
 			
+			//첨부파일이 있을경우
+			if(qba!=null) {
+
 			//첨부파일을 가져온 후 첨부파일을 서버에서(/resources/upload/communityBoard)삭제
 			String ReNameFile = qba.getRenamedfilename();
 			String saveDir = request.getServletContext().getRealPath("/resources/upload/qnaBoard");
@@ -177,9 +187,16 @@ public class QnaBoardController {
 			}
 			else {
 				msg="qna게시판 글 삭제 실패";
-				}
+			}
+			//첨부파일이 없는 게시글 삭제
+			}else {
+				int result = service.deleteBoard(qnaSeq);
+				msg =(result>0)? "qna게시판 글 삭제 성공" : "qna게시판 글 삭제 실패";
+			}
+			logger.debug(msg);
 			return msg;
 	}
+	
 	
 	//첨부파일 먼저 불러오기(update form으로)
 	@RequestMapping(value="/qna/qnaBoardUpdate{qnaSeq}",
@@ -263,13 +280,14 @@ public class QnaBoardController {
 	}
 		
 	////////////////첨부파일 표시하기
-	@RequestMapping(value="qna/qnaBoardAttachmnet{qnaSeq}",
+	@RequestMapping(value="qna/qnaBoardAttachment{qnaSeq}",
 										method=RequestMethod.GET)
 	public QB_ATTACHMENT downLoad(@PathVariable int qnaSeq) {
 		
 		System.out.println("====첨부파일 다운로드 매핑 시작=====");
 		logger.debug(Integer.toString(qnaSeq));
 		QB_ATTACHMENT qba=service.selectAttach(qnaSeq);
+		logger.debug(qba.toString());
 		if(qba==null) return null;
 		else return qba;
 	}
