@@ -279,4 +279,20 @@ public class PortfolioController {
 		logger.debug("매핑테스트");
 		return msg;
 	}
+	//댓글 조회
+	@RequestMapping(value="portfolio/commentList{no}.do",method =RequestMethod.GET)
+	public List<Comment> commentList(@PathVariable int no){
+		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글 을 불러오는것
+		logger.debug("메핑텟트");
+		List<Comment> list=service.selectComment(no);
+		for(Comment cm:list) {
+			logger.debug(cm.toString());
+		}
+		return list;
+	}
+	@RequestMapping(value="portfolio/commentdelte",method=RequestMethod.GET)
+	public void commentdel(@RequestParam int no) {
+		int result=service.deletecomment(no);
+		
+	}
 }

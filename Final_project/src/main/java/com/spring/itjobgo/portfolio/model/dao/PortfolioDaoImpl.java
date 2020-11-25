@@ -33,6 +33,18 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	
 
 	@Override
+	public int deletecomment(SqlSessionTemplate session,int no) {
+		// TODO Auto-generated method stub
+		return session.delete("pboard.deletecomment",no);
+	}
+
+	@Override
+	public List<Comment> selectComment(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectList("pboard.selectcommentlist",no);
+	}
+
+	@Override
 	public int updateattachment(SqlSessionTemplate session, Attachment file) {
 		// TODO Auto-generated method stub
 		return session.update("pboard.updateattachment",file);

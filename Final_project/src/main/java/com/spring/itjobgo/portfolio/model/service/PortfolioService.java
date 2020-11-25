@@ -26,6 +26,10 @@ public interface PortfolioService {
 
 	int insertComment(Comment cm);
 
+	List<Comment> selectComment(int no);
+
+	int deletecomment(int no);
+
 	
 
 }

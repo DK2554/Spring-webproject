@@ -38,4 +38,10 @@
   <insert id="insertcomment" parameterType="comment" >
   insert into pcomment values(seq_pcoment.nextval,#{pboardNo},#{pcommentContent},#{memberSq},default,#{memberName})
   </insert>
+  <select id="selectcommentlist" parameterType="_int" resultType="comment">
+  select * from pcomment where pboard_no=#{no} order by pcomment_date desc
+  </select>
+  <delete id="deletecomment">
+  delete pcomment where pboard_no=#{no}
+  </delete>
 </mapper>

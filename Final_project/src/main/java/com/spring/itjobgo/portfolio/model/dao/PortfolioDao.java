@@ -30,4 +30,8 @@ public interface PortfolioDao {
 
 	int insertComment(SqlSessionTemplate session, Comment cm);
 
+	List<Comment> selectComment(SqlSessionTemplate session, int no);
+
+	int deletecomment(SqlSessionTemplate session,int no);
+
 }

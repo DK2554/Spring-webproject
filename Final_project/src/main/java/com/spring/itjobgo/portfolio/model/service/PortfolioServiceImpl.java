@@ -30,6 +30,16 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return dao.insertComment(session,cm);
 	}
 	@Override
+	public int deletecomment(int no) {
+		// TODO Auto-generated method stub
+		return dao.deletecomment(session,no);
+	}
+	@Override
+	public List<Comment> selectComment(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session,no);
+	}
+	@Override
 	public int insertPboard(Pboard pboard, List<Attachment> files) {
 		int result=dao.insertPboard(session,pboard);
 		if(result==0) throw new RuntimeException("입력오류");

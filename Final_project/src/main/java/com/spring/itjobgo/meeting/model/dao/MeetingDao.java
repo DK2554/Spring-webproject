@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 
 
 public interface MeetingDao {
@@ -18,5 +19,7 @@ public interface MeetingDao {
 	List<Mboard> selectMlist(SqlSessionTemplate session);
 
 	Mboard selectMinfo(SqlSessionTemplate session, int no);
+
+	int insertapply(SqlSessionTemplate session, Tmpapply tmp);
 
 }

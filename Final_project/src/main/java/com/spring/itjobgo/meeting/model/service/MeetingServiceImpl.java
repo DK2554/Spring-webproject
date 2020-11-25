@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Service
@@ -41,6 +42,15 @@ public class MeetingServiceImpl implements MeetingService {
 	public Mboard selectMb(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectMinfo(session,no);
+	}
+
+	@Override
+	public int insertapply(int memberSq, String postion) {
+		// TODO Auto-generated method stub
+		Tmpapply tmp=new Tmpapply();
+		tmp.setMemberSq(memberSq);
+		tmp.setPostion(postion);
+		return dao.insertapply(session,tmp);
 	}
 
 	@Override
