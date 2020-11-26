@@ -34,8 +34,6 @@ import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 @RestController
 public class CommunityBoardController {
-<<<<<<< HEAD
-   
    @Autowired
    private Logger logger;
    
@@ -99,8 +97,6 @@ public class CommunityBoardController {
          
          String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
          
-=======
-	
 	@Autowired
 	private Logger logger;
 	
@@ -165,7 +161,6 @@ public class CommunityBoardController {
 			
 			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
 			
->>>>>>> b70ec2481554183a896f559803cc8fe718d4463a
 
          try {
             //파일저장하기
@@ -194,7 +189,6 @@ public class CommunityBoardController {
       
       else msg="등록실패";
 
-<<<<<<< HEAD
       return msg;
       
    }
