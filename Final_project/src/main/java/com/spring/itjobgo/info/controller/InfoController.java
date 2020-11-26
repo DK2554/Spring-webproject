@@ -1,20 +1,27 @@
 package com.spring.itjobgo.info.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.spring.itjobgo.info.model.service.InfoService;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
+import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 
 @RestController
 public class InfoController {
@@ -122,6 +130,8 @@ public class InfoController {
    									method=RequestMethod.GET)
    	public Info selectInfoOne(@PathVariable int infoSq) {
    		
+   		System.out.print("=========상세화면===========");
+   		
    		logger.debug("infoSq"+Integer.toString(infoSq));
    		
    		Info cboard = service.selectInfoOne(infoSq);
@@ -130,7 +140,7 @@ public class InfoController {
    	}
    	
    	//글 삭제하기
-   	@RequestMapping(value="/info/infoDelete{infoSq}",
+   	@RequestMapping(value="/info/infoDelete{infoSeq}",
    									method=RequestMethod.POST)
    	public String deleteBoard(@PathVariable int infoSq ) {
    		
@@ -246,9 +256,64 @@ public class InfoController {
    	   
    	   }
    	   
-   	   
-   	   
-   	}//클래스
-   	
+//////첨부파일 표시//////
+@RequestMapping(value="info/infoAttachmnet{infoSq}",
+							method=RequestMethod.GET)
+public INFO_ATTACHMENT downLoad(@PathVariable int infoSq) {
+
+System.out.println("====첨부파일 다운로드 매핑 시작=====");
+logger.debug(Integer.toString(infoSq));
+INFO_ATTACHMENT qba=service.selectAttach(infoSq);
+if(qba==null) return null;
+else return qba;
+}
+
+////////////////첨부파일 다운로드(이름 보내기)
+@RequestMapping(value="info/infofiledownload",method=RequestMethod.GET)
+public void infofiledownload(HttpServletRequest request, HttpServletResponse response,
+											@RequestHeader(name="user-agent")String header,
+											@RequestParam(value="oriName")String oriName,
+											@RequestParam(value="reName")String reName)
+											{
+logger.debug(oriName);
+logger.debug(reName);
+String path=request.getServletContext().getRealPath("/resources/upload/info");
+File saveFile=new File(path+"/"+reName);
+BufferedInputStream bis=null;
+ServletOutputStream sos=null;
+
+try {
+bis=new BufferedInputStream(new FileInputStream(saveFile));
+sos=response.getOutputStream();
+boolean isMSIE=header.indexOf("Trident")!=-1||header.indexOf("MSIE")!=-1;
+String encodeRename="";
+if(isMSIE) {
+	encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
+	
+}else {
+	encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
+}
+response.setContentType("application/octet-stream;charset=utf-8");
+response.setHeader("Content-Disposition", "attachment;filename=\""+encodeRename+"\"");
+response.setHeader("Content-Transfer-Encoding", "binary;");
+response.setContentLength((int)saveFile.length());
+int read=-1;
+while((read=bis.read())!=-1) {
+	sos.write(read);
+}
+}catch(IOException e) {
+e.printStackTrace();
+}finally {
+try {
+	sos.close();
+	bis.close();
+}catch(IOException e) {
+	e.printStackTrace();
+}
+}
+}
+
+
+}
 
 
