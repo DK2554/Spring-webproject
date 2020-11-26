@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
+import com.spring.itjobgo.portfolio.model.vo.Comment;
 import com.spring.itjobgo.portfolio.model.vo.Pboard;
 @Repository
 public class PortfolioDaoImpl implements PortfolioDao {
@@ -18,12 +19,30 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public int insertComment(SqlSessionTemplate session, Comment cm) {
+		// TODO Auto-generated method stub
+		return session.insert("pboard.insertcomment",cm);
+	}
+
+	@Override
 	public Attachment selectOneAttach(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pboard.selectattachment",no);
 	}
 
 	
+
+	@Override
+	public int deletecomment(SqlSessionTemplate session,int no) {
+		// TODO Auto-generated method stub
+		return session.delete("pboard.deletecomment",no);
+	}
+
+	@Override
+	public List<Comment> selectComment(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectList("pboard.selectcommentlist",no);
+	}
 
 	@Override
 	public int updateattachment(SqlSessionTemplate session, Attachment file) {
