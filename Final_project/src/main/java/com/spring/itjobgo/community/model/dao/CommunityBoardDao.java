@@ -36,4 +36,6 @@ public interface CommunityBoardDao {
 	//첨부파일 insert
 	int insertAttachment2(SqlSessionTemplate session, CB_ATTACHMENT cb_attach);
 
+	//조회수증가
+	int updateReadCount(SqlSessionTemplate session, int boardSq);
 }

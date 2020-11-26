@@ -108,6 +108,13 @@
 											WHERE BOARD_SQ=#{boardSq}
 													
 	</update>
+	
+	<update id="updateReadCount">
+		UPDATE COMMUNITY_BOARD SET
+												BOARD_COUNT=BOARD_COUNT+1
+												WHERE BOARD_SQ=#{boardSq}
+
+	</update>
   		
   		
 </mapper>

@@ -11,7 +11,7 @@ public interface CommunityBoardService {
 	
 	int insertCommunityBoard(CommunityBoard cb, List<CB_ATTACHMENT> files);
 
-	CommunityBoard selectCommunityBoardOne(int boardSq);
+	CommunityBoard selectCommunityBoardOne(int boardSq ,boolean hasRead);
 	
 	int deleteBoard(int boardSq);
 	

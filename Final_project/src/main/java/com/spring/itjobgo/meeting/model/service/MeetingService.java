@@ -15,4 +15,6 @@ public interface MeetingService {
 
 	Mboard selectMb(int no);
 
+	int insertapply(int memberSq, String postion);
+
 }

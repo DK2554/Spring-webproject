@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,6 +53,7 @@ public class CommunityBoardController {
 				
 			return list;
 	}
+	
 	
 	//자유게시판 글쓰기
 	@RequestMapping(value="/community/communityBoardForm",
@@ -133,14 +134,44 @@ public class CommunityBoardController {
 	//자유게시판 상세화면 전환 페이지
 	@RequestMapping(value="/community/communityBoardView{boardSq}",
 									method=RequestMethod.GET)
-	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq)
+	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq, 
+																						HttpServletRequest request,
+																						HttpServletResponse response)
 			throws JsonMappingException,JsonGenerationException,IOException{
 		
 		logger.debug("boardSq"+Integer.toString(boardSq));
 		
-		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
+		//조회수 증가로직 쿠키이용
+		Cookie[] cookies =request.getCookies();
+		String boardHistory="";
+		boolean hasRead=false; 
 		
-//		System.out.println("날짜포맷(전): "+cboard.getBoardDate());
+		if(cookies!=null) {
+		for(Cookie c : cookies) {
+			
+			
+			String name = c.getName();
+			String value = c.getValue();
+			
+			if("boardHistory".equals(name)) {
+				boardHistory=value; //현재 저장된 값대입 덮어쓰기하면서 누적
+				
+				if(value.contains("|"+boardSq+"|")) {
+					hasRead=true;
+					break;
+				}
+			}
+		  }//for
+		}//if
+		
+		if(!hasRead) {
+			Cookie c = new Cookie("boardHistory",boardHistory+"|"+boardSq+"|");
+			c.setMaxAge(-1);
+			response.addCookie(c);
+					
+		}	
+		
+		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq,hasRead);
 		
 		return cboard;
 	
