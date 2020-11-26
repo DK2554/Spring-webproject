@@ -54,6 +54,7 @@ public class CommunityBoardController {
 			return list;
 	}
 	
+	
 	//자유게시판 글쓰기
 	@RequestMapping(value="/community/communityBoardForm",
 									method = RequestMethod.POST, consumes = { "multipart/form-data" })
