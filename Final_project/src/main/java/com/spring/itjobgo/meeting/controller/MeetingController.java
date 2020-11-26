@@ -94,6 +94,13 @@ public class MeetingController {
 		logger.debug(md.toString());
 		return md;
 	}
+	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
+	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq ) {
+		logger.debug(Integer.toString(memberSq));
+		logger.debug(postion);
+		int result=service.insertapply(memberSq,postion);
+		
+	}
 	
 }
 	
