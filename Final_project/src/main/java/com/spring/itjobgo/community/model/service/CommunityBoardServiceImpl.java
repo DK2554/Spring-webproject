@@ -52,9 +52,19 @@ public int insertCommunityBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 
 //자유게시판 상세보기
 @Override
-public CommunityBoard selectCommunityBoardOne(int boardSq) {
+public CommunityBoard selectCommunityBoardOne(int boardSq,boolean hasRead) {
 	// TODO Auto-generated method stub
-	return dao.selectCommunityBoardOne(session,boardSq);
+	
+	CommunityBoard cb =dao.selectCommunityBoardOne(session, boardSq);
+	//hasRead가 false이면
+	if(cb!=null && !hasRead) {
+		int result =dao.updateReadCount(session,boardSq);
+		System.out.println("조회수증가로직 성공");
+	}	
+			
+	return cb;
+	
+	
 }
 
 //자유게시판 삭제하기

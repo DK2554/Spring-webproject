@@ -66,12 +66,19 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		// TODO Auto-generated method stub
 		return session.update("communityBoard.updateBoard",cb);
 	}
-
+	//첨부파일 다운로드
 	@Override
 	public int insertAttachment2(SqlSessionTemplate session, CB_ATTACHMENT cb_attach) {
 		// TODO Auto-generated method stub
 		return session.insert("communityBoard.insertAttachment2",cb_attach);
 	}
+	//조회수 증가로직
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int boardSq) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateReadCount",boardSq);
+	}
+	
 	
 	
 	
