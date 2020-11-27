@@ -47,8 +47,16 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//qna게시판 상세보기
 	@Override
-	public QnaBoard selectQnaBoardOne(int qnaSeq) {
-		return dao.selectQnaBoardOne(session,qnaSeq);
+	public QnaBoard selectQnaBoardOne(int qnaSeq, boolean hasRead) {
+		
+		QnaBoard qb = dao.selectQnaBoardOne(session, qnaSeq);
+		
+		//hasRead가 false이면
+		if(qb!=null && !hasRead) {
+			int result = dao.updateReadCount(session,qnaSeq);
+			System.out.println("조회수 증가 로직 성공");
+		}
+		return qb;
 	}
 
 	//qna게시판 삭제하기

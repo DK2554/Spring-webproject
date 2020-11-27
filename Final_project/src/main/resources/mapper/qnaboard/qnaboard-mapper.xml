@@ -31,8 +31,8 @@
 										#{qnaContent},
 										#{qnaAnswerYn},
 										DEFAULT,
-										1,
-										#{boardId}		
+										#{memberNum},
+										1
 										)
 	</insert>
 	
@@ -87,7 +87,7 @@
 													QNA_CATEGORY=#{qnaCategory},
 													QNA_TITLE=#{qnaTitle},
 													QNA_CONTENT=#{qnaContent}
-												WHERE QNA_SEQ=#{qnaSeq}
+										WHERE QNA_SEQ=#{qnaSeq}
 	</update>
 	
 	<!-- 첨부파일 업데이트 -->	
@@ -97,6 +97,14 @@
 													RENAMEDFILENAME=#{renamedfilename}
 												WHERE QB_BOARD_NO=#{qnaSeq}
 	</update>
+	
+	<!-- 조회수 카운트 -->
+	<update id="updateReadCount">
+			UPDATE QNA_BOARD SET
+										BOARD_COUNT=BOARD_COUNT+1
+										WHERE QNA_SEQ=#{qnaSeq}
+	</update>
+
 	
 	
 	

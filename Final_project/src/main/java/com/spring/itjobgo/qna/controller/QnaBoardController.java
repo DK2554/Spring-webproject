@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -138,18 +139,48 @@ public class QnaBoardController {
 	//qna게시판 상세화면 전환페이지
 	@RequestMapping(value="/qna/qnaBoardView{QnaSeq}",
 										method=RequestMethod.GET)
-	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq)
+	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq,
+																			HttpServletRequest request,
+																			HttpServletResponse response)
 			throws JsonMappingException,JsonGenerationException,IOException{
 		
 		System.out.print("=======상세화면========");
 		
 		logger.debug("qnaSeq"+Integer.toString(QnaSeq));
 		
-		QnaBoard qboard =service.selectQnaBoardOne(QnaSeq);
+		//조회수 증가로직 쿠키이용
+		Cookie[] cookies = request.getCookies();
+		String boardHistory="";
+		boolean hasRead=false;
+		
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name = c.getName();
+				String value = c.getValue();
+				
+				if("boardHistory".equals(name)) {
+					boardHistory=value; //현재 저장된 값 대입 덮어쓰기 하면서 누적
+					
+					if(value.contains("|"+QnaSeq+"|")) {
+						hasRead=true;
+						break;
+					}
+				}
+			}//for
+		}//if
+		
+		if(!hasRead) {
+			Cookie c = new Cookie("boardHistory",boardHistory+"|"+QnaSeq+"|");
+			c.setMaxAge(-1);
+			response.addCookie(c);
+					
+		}
+		
+		QnaBoard qboard =service.selectQnaBoardOne(QnaSeq,hasRead);
 		
 		return qboard;
-		
 	}
+	
 	
 	//qna게시판 삭제하기
 	@RequestMapping(value="/qna/qnaBoardDelete{qnaSeq}",
@@ -279,7 +310,7 @@ public class QnaBoardController {
 	
 	}
 		
-	////////////////첨부파일 표시하기
+	//첨부파일 표시
 	@RequestMapping(value="qna/qnaBoardAttachment{qnaSeq}",
 										method=RequestMethod.GET)
 	public QB_ATTACHMENT downLoad(@PathVariable int qnaSeq) {
@@ -287,12 +318,12 @@ public class QnaBoardController {
 		System.out.println("====첨부파일 다운로드 매핑 시작=====");
 		logger.debug(Integer.toString(qnaSeq));
 		QB_ATTACHMENT qba=service.selectAttach(qnaSeq);
-		logger.debug(qba.toString());
 		if(qba==null) return null;
 		else return qba;
 	}
 	
-	////////////////첨부파일 다운로드(이름 보내기)
+	
+	//첨부파일 다운로드(이름 보내기)
 	@RequestMapping(value="qna/qnafiledownload",method=RequestMethod.GET)
 	public void qnafiledownload(HttpServletRequest request, HttpServletResponse response,
 														@RequestHeader(name="user-agent")String header,

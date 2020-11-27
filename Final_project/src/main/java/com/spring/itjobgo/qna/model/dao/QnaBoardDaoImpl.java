@@ -65,7 +65,11 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 		return session.insert("qnaBoard.insertAttachment2",qb_attach);
 	}
 
-	
+	//조회수 증가로직
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int qnaSeq) {
+		return session.update("qnaBoard.updateReadCount",qnaSeq);
+	}
 	
 	
 	
