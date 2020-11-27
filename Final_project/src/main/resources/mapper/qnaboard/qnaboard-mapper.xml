@@ -31,12 +31,12 @@
 										#{qnaContent},
 										#{qnaAnswerYn},
 										DEFAULT,
-										1,
-										#{boardId}		
+										#{memberNum},
+										1
 										)
 	</insert>
 	
-	<!-- 첨부파일 등록  -->
+	<!-- 글쓰기 첨부파일 등록  -->
 	<insert id="insertAttachment" parameterType="qna_attachment">
 		INSERT INTO QB_ATTACHMENT VALUES(
 											SEQ_QB_ATTACHMENT_NO.NEXTVAL,
@@ -47,13 +47,24 @@
 											DEFAULT
 											)
 											
+			<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
+			selectKey를 설정한다 -->
 			<selectKey keyProperty="qnaSeq" resultType="_int" order="BEFORE">
 	 		SELECT SEQ_QNA_NO.CURRVAL FROM DUAL
 	  		</selectKey>		 
-			<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
-			selectKey를 설정한다 -->
 	</insert>
 	
+	<!-- 첨부파일이 없는 게시글 첨부파일을 등록해 update 하기 -->
+	<insert id="insertAttachment2" parameterType="qna_attachment">
+	INSERT INTO QB_ATTACHMENT VALUES(
+												#{attachmentno},
+												#{qnaSeq},
+												#{originalfilename},
+												#{renamedfilename},
+												DEFAULT,
+												DEFAULT				
+											)
+	</insert>
 	
 	<!-- qna게시판 글 상세보기 -->
 	<select id="selectQnaBoardOne" parameterType="_int" resultType="qnaBoard">
@@ -76,7 +87,7 @@
 													QNA_CATEGORY=#{qnaCategory},
 													QNA_TITLE=#{qnaTitle},
 													QNA_CONTENT=#{qnaContent}
-												WHERE QNA_SEQ=#{qnaSeq}
+										WHERE QNA_SEQ=#{qnaSeq}
 	</update>
 	
 	<!-- 첨부파일 업데이트 -->	
@@ -86,6 +97,14 @@
 													RENAMEDFILENAME=#{renamedfilename}
 												WHERE QB_BOARD_NO=#{qnaSeq}
 	</update>
+	
+	<!-- 조회수 카운트 -->
+	<update id="updateReadCount">
+			UPDATE QNA_BOARD SET
+										BOARD_COUNT=BOARD_COUNT+1
+										WHERE QNA_SEQ=#{qnaSeq}
+	</update>
+
 	
 	
 	

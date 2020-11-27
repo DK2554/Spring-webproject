@@ -11,7 +11,7 @@ public interface QnaBoardService {
 	
 	int insertQnaBoard(QnaBoard qnaboard, List<QB_ATTACHMENT> files);
 	
-	QnaBoard selectQnaBoardOne(int qnaSeq);
+	QnaBoard selectQnaBoardOne(int qnaSeq, boolean hasRead);
 	
 	int deleteBoard(int qnaSeq);
 	

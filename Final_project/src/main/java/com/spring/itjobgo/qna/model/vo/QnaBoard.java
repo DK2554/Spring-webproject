@@ -5,30 +5,36 @@ import java.sql.Date;
 
 public class QnaBoard {
 	
-	private int qnaSeq;
-	private String qnaCategory;
-	private String qnaTitle;
-	private String qnaWriter;
-	private String qnaContent;
-	private String qnaAnswerYn;
-	private Date qnaDate;
-	private int memberNum;
-	private int boardId;
+	private int qnaSeq; //번호(PK)
+	private String qnaCategory; //분류
+	private String qnaTitle; //제목
+	private String qnaWriter; //작성자
+	private String qnaContent; //내용
+	private String qnaAnswerYn; //답변여부
+	private Date qnaDate; //날짜
+	private int memberNum; //회원시퀀스로 분류
+	private int boardCount; //조회수
 	
 	public QnaBoard() {
 		// TODO Auto-generated constructor stub
 	}
 
+	public QnaBoard(int qnaSeq, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
+			String qnaAnswerYn, Date qnaDate, int memberNum, int boardCount) {
+		super();
+		this.qnaSeq = qnaSeq;
+		this.qnaCategory = qnaCategory;
+		this.qnaTitle = qnaTitle;
+		this.qnaWriter = qnaWriter;
+		this.qnaContent = qnaContent;
+		this.qnaAnswerYn = qnaAnswerYn;
+		this.qnaDate = qnaDate;
+		this.memberNum = memberNum;
+		this.boardCount = boardCount;
+	}
+
 	public int getQnaSeq() {
 		return qnaSeq;
-	}
-
-	public int getBoardId() {
-		return boardId;
-	}
-
-	public void setBoardId(int boardId) {
-		this.boardId = boardId;
 	}
 
 	public void setQnaSeq(int qnaSeq) {
@@ -91,30 +97,20 @@ public class QnaBoard {
 		this.memberNum = memberNum;
 	}
 
-	public QnaBoard(int qnaSeq, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
-			String qnaAnswerYn, Date qnaDate, int memberNum, int boardId) {
-		super();
-		this.qnaSeq = qnaSeq;
-		this.qnaCategory = qnaCategory;
-		this.qnaTitle = qnaTitle;
-		this.qnaWriter = qnaWriter;
-		this.qnaContent = qnaContent;
-		this.qnaAnswerYn = qnaAnswerYn;
-		this.qnaDate = qnaDate;
-		this.memberNum = memberNum;
-		this.boardId = boardId;
+	public int getBoardCount() {
+		return boardCount;
+	}
+
+	public void setBoardCount(int boardCount) {
+		this.boardCount = boardCount;
 	}
 
 	@Override
 	public String toString() {
 		return "QnaBoard [qnaSeq=" + qnaSeq + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaWriter="
 				+ qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn + ", qnaDate=" + qnaDate
-				+ ", memberNum=" + memberNum + ", boardId=" + boardId + "]";
+				+ ", memberNum=" + memberNum + ", boardCount=" + boardCount + "]";
 	}
-
-	
-	
-	
 	
 	
 }
