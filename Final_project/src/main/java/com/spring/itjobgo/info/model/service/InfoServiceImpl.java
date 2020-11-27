@@ -45,10 +45,17 @@ public List<Info> selectInfoList() {
 		
 	}
 
-	//상세보기
+	//상세 글 보기
 	@Override
-	public Info selectInfoOne(int infoSq) {
-		return dao.selectInfoOne(session,infoSq);
+	public Info selectInfoOne(int infoSq,boolean hasRead) {
+		Info cb =dao.selectInfoOne(session, infoSq);
+		//hasRead가 false이면
+		if(cb!=null && !hasRead) {
+			int result =dao.updateReadCount(session,infoSq);
+			System.out.println("조회수 증가 성공");
+		}	
+				
+		return cb;
 	}
 
 	//삭제하기
@@ -82,7 +89,7 @@ public List<Info> selectInfoList() {
 							
 							dao.insertAttachment2(session, file);
 						
-							System.out.println("==첨부파일 없는 글 첨부파일 등록성공==");
+							System.out.println("==첨부파일 없는 글 첨부파일 등록==");
 					}//for문
 				}//세번째 if문
 			}//두번째 if문

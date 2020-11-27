@@ -37,5 +37,6 @@ public interface InfoDao {
 	//첨부파일 insert
 	int insertAttachment2(SqlSessionTemplate session, INFO_ATTACHMENT info_attach);
 
-	
+	//조회수 증가
+    int updateReadCount(SqlSessionTemplate session, int infoSq);
 }

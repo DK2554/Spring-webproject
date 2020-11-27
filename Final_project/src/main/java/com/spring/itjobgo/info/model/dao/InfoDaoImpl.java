@@ -58,9 +58,16 @@ public class InfoDaoImpl implements InfoDao {
 		return session.update("info.updateinfo",cb);
 	}
 
+	//첨부파일 다운로드
 	@Override
 	public int insertAttachment2(SqlSessionTemplate session, INFO_ATTACHMENT info_attach) {
-		return session.insert("info.insertAttachment2",info_attach);
+		return session.insert("communityBoard.insertAttachment2",info_attach);
 	}
-		
+	
+	//조회수 증가로직
+	@Override
+	public int updateReadCount(SqlSessionTemplate session, int infoSq) {
+		return session.update("info.updateReadCount",infoSq);
+	}
+	
 }

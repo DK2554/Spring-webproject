@@ -1,16 +1,13 @@
 package com.spring.itjobgo.info.controller;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,7 +15,6 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,14 +22,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.info.model.service.InfoService;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
-import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 
 @RestController
 public class InfoController {
-	
+
 	@Autowired
 	private Logger logger;
 	
@@ -57,31 +55,19 @@ public class InfoController {
 			return list;
 		}
 	
-	 //취업정보 글 작성하기
+	//게시판 글쓰기
 	   @RequestMapping(value="/info/infoForm",
 	                           method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	   public String cbBoard(Info cboard,
-	                           @RequestBody MultipartFile[] file, HttpServletRequest request) 
-	   
-	                                                                                                                  {
-		   cboard.setInfoSq(1);
-			System.out.println("====파일저장시작====");
+	   public String cbBoard(Info cboard,@RequestParam(value="memberSq") int memberno,
+	                                 @RequestBody MultipartFile[] file, HttpServletRequest request) 
+	                              {
+	      
+	   System.out.println("멤버번호  : "+memberno);                                                                     
+	   cboard.setMemberNum(memberno);
+	      
 	      logger.debug("매핑확인");
 	      logger.debug("======vue에서 전송한  파일========");
-	      logger.debug("파일명"+file[0].getOriginalFilename());
-	      logger.debug("파일크기 : "+file[0].getSize());
-	      logger.debug(cboard.toString());
-	      
-	      //업로드 경로 설정
-	      //파일 리네임 처리후 파일 저장하기
-	      String saveDir=request.getServletContext().getRealPath("/resources/upload/info");
-	      
-	      File dir=new File(saveDir);
-	      
-	      if(!dir.exists()) {
-	         //지정된경로의 폴더가 없으면
-	         dir.mkdirs(); //mk > make directory
-	      }
+	     
 	      
 	      List<INFO_ATTACHMENT> files=new ArrayList<INFO_ATTACHMENT>();
 	      
@@ -97,13 +83,7 @@ public class InfoController {
 	         
 	         String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
 	         
-	         try {
-	            //파일저장하기
-	            //스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
-	            f.transferTo(new File(saveDir+"/"+renameFileName));
-	         }catch(IOException e) {
-	            e.printStackTrace();
-	         }
+	   
 	         INFO_ATTACHMENT file2=new INFO_ATTACHMENT(0,0,originalFileName,renameFileName,null,null);
 	         files.add(file2);
 	         }
@@ -125,19 +105,53 @@ public class InfoController {
 	      return msg;
      }
 
-   	//상세화면 전환 페이지
-   	@RequestMapping(value="/info/infoDetail{infoSq}",
-   									method=RequestMethod.GET)
-   	public Info selectInfoOne(@PathVariable int infoSq) {
-   		
-   		System.out.print("=========상세화면===========");
-   		
-   		logger.debug("infoSq"+Integer.toString(infoSq));
-   		
-   		Info cboard = service.selectInfoOne(infoSq);
-   		
-   		return cboard;
-   	}
+	   //자유게시판 상세화면 전환 페이지
+	   @RequestMapping(value="/info/infoDetail{infoSq}",
+	                           method=RequestMethod.GET)
+	   public Info selectInfoOne(@PathVariable int infoSq, 
+	                                                                  HttpServletRequest request,
+	                                                                  HttpServletResponse response)
+	         throws JsonMappingException,JsonGenerationException,IOException{
+	      
+	      logger.debug("infoSq"+Integer.toString(infoSq));
+	      
+	      //조회수 증가 
+	      Cookie[] cookies =request.getCookies();
+	      String boardHistory="";
+	      boolean hasRead=false; 
+	      
+	      if(cookies!=null) {
+	      for(Cookie c : cookies) {
+	         
+	         
+	         String name = c.getName();
+	         String value = c.getValue();
+	         
+	         if("boardHistory".equals(name)) {
+	            boardHistory=value; 
+	            
+	            if(value.contains("|"+infoSq+"|")) {
+	               hasRead=true;
+	               break;
+	            }
+	         }
+	        }//for
+	      }//if
+	      
+	      if(!hasRead) {
+	         Cookie c = new Cookie("boardHistory",boardHistory+"|"+infoSq+"|");
+	         c.setMaxAge(-1);
+	         response.addCookie(c);
+	               
+	      }   
+	      
+	      Info cboard = service.selectInfoOne(infoSq,hasRead);
+	      
+	      return cboard;
+	   
+	   }
+	   
+	   
    	
    	//글 삭제하기
    	@RequestMapping(value="/info/infoDelete{infoSeq}",
@@ -174,19 +188,20 @@ public class InfoController {
    		return msg;
    	}
    	
-  //첨부파일 먼저 불러오기 (update form 으로)
-   	@RequestMapping(value="/info/infoUpdate{infoSq}",
-   	                           method=RequestMethod.GET)
-   	public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
-   	   
-   	   System.out.println("==첨부파일 불러오기 맵핑 시작==");
-   	   
-   	   INFO_ATTACHMENT cba = service.selectAttach(infoSq);
-   	   
-   	   System.out.println(cba);
-   	   
-   	   return cba;
-   	}
+	/*
+	 * //첨부파일 먼저 불러오기 (update form 으로)
+	 * 
+	 * @RequestMapping(value="/info/infoUpdate{infoSq}", method=RequestMethod.GET)
+	 * public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
+	 * 
+	 * System.out.println("==첨부파일 불러오기 맵핑 시작==");
+	 * 
+	 * INFO_ATTACHMENT cba = service.selectAttach(infoSq);
+	 * 
+	 * System.out.println(cba);
+	 * 
+	 * return cba; }
+	 */
    	
   //게시판 수정(update)
    	@RequestMapping(value="/info/infoUpdateEnd" , 
@@ -224,9 +239,7 @@ public class InfoController {
    	         
    	            
    	            try {
-   	               //파일저장하기
-   	               //스프링이 제공하는 멀티파트가 메소드를 제공한다
-   	               //transfer to(파일) 메소드를 이용한다.
+   	               //파일 저장
    	               f.transferTo(new File(saveDir+"/"+renameFileName));
    	            }catch(IOException e) {
    	               e.printStackTrace();
@@ -247,8 +260,7 @@ public class InfoController {
    	      String msg="";
    	      if(result>0) msg="게시글 수정 성공";
    	      else msg="게시글 수정 실패";
-   	      
-   	      }//193번째줄 if > 파일이 있다면 / 게시판 정보만 업데이트
+   	      }
    	      else {
    	         int result = service.updateInfo(cb);
    	      }
@@ -256,19 +268,19 @@ public class InfoController {
    	   
    	   }
    	   
-//////첨부파일 표시//////
+/*//첨부파일 표시
 @RequestMapping(value="info/infoAttachmnet{infoSq}",
 							method=RequestMethod.GET)
 public INFO_ATTACHMENT downLoad(@PathVariable int infoSq) {
 
 System.out.println("====첨부파일 다운로드 매핑 시작=====");
 logger.debug(Integer.toString(infoSq));
-INFO_ATTACHMENT qba=service.selectAttach(infoSq);
-if(qba==null) return null;
-else return qba;
+INFO_ATTACHMENT cba=service.selectAttach(infoSq);
+if(cba==null) return null;
+else return cba;
 }
 
-////////////////첨부파일 다운로드(이름 보내기)
+//첨부파일 다운로드(이름 보내기)
 @RequestMapping(value="info/infofiledownload",method=RequestMethod.GET)
 public void infofiledownload(HttpServletRequest request, HttpServletResponse response,
 											@RequestHeader(name="user-agent")String header,
@@ -309,9 +321,10 @@ try {
 	bis.close();
 }catch(IOException e) {
 	e.printStackTrace();
-}
-}
-}
+  }
+ }
+}*/
+
 
 
 }

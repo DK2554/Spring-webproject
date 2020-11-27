@@ -2,19 +2,21 @@ package com.spring.itjobgo.info.model.vo;
 
 public class Info {
 	
-	private int infoSq;
-	private String infoCategory;
-	private String infoTitle; 
-	private String infoDate; 
-	private String infoTime; 
-	private String infoAddress;
-	private int memberNum;
-	private String infoContent;
+	private int infoSq; //게시글 번호
+	private String infoCategory; //분류
+	private String infoTitle;  //기업명
+	private String infoDate;  //일정
+	private String infoTime;  //시간
+	private String infoAddress; //주소
+	private int memberNum;   //작성자(관리자)
+	private String infoContent;  //첨부 내용
+	private int infoCount; //조회수
 	
 	public Info() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public int getInfoSq() {
 		return infoSq;
 	}
@@ -79,15 +81,17 @@ public class Info {
 		this.infoContent = infoContent;
 	}
 
-	@Override
-	public String toString() {
-		return "Info [infoSq=" + infoSq + ", infoCategory=" + infoCategory + ", infoTitle=" + infoTitle + ", infoDate="
-				+ infoDate + ", infoTime=" + infoTime + ", infoAddress=" + infoAddress + ", memberNum=" + memberNum
-				+ ", infoContent=" + infoContent + "]";
+	public int getInfoCount() {
+		return infoCount;
 	}
 
+	public void setInfoCount(int infoCount) {
+		this.infoCount = infoCount;
+	}
+
+
 	public Info(int infoSq, String infoCategory, String infoTitle, String infoDate, String infoTime, String infoAddress,
-			int memberNum, String infoContent) {
+			int memberNum, String infoContent, int infoCount) {
 		super();
 		this.infoSq = infoSq;
 		this.infoCategory = infoCategory;
@@ -97,9 +101,7 @@ public class Info {
 		this.infoAddress = infoAddress;
 		this.memberNum = memberNum;
 		this.infoContent = infoContent;
+		this.infoCount = infoCount;
 	}
-	
-	
-	
-	
+
 }

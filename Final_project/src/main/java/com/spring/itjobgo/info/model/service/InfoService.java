@@ -11,7 +11,7 @@ public interface InfoService {
 
 	int insertInfo(Info cb, List<INFO_ATTACHMENT> files);
 
-	Info selectInfoOne(int infoSq);
+	Info selectInfoOne(int infoSq,boolean hasRead);
 	
 	int deleteBoard(int infoSq);
 	
@@ -20,7 +20,7 @@ public interface InfoService {
 	int updateInfo(Info cb,List<INFO_ATTACHMENT>files);
 	
 	int updateInfo(Info cb);
-	
+
 }
 
 

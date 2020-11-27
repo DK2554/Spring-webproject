@@ -34,6 +34,7 @@ import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 @RestController
 public class CommunityBoardController {
+   
    @Autowired
    private Logger logger;
    
@@ -52,6 +53,7 @@ public class CommunityBoardController {
             
          return list;
    }
+   
    
    //자유게시판 글쓰기
    @RequestMapping(value="/community/communityBoardForm",
@@ -97,70 +99,6 @@ public class CommunityBoardController {
          
          String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
          
-	@Autowired
-	private Logger logger;
-	
-	@Autowired
-	private CommunityBoardService service;
-	
-	//자유게시판 화면전환용 메서드
-	@RequestMapping(value="/community/communityBoardList" , method=RequestMethod.GET)
-	public List<CommunityBoard> communityBoard() throws JsonMappingException,JsonGenerationException,IOException  {
-		
-			List<CommunityBoard> list = service.selectBoardList();
-			
-			for(CommunityBoard i : list){
-			    System.out.println(i);
-			}
-				
-			return list;
-	}
-	
-	
-	//자유게시판 글쓰기
-	@RequestMapping(value="/community/communityBoardForm",
-									method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public String cbBoard(CommunityBoard cboard,@RequestParam(value="memberSq") int memberno,
-											@RequestBody MultipartFile[] file, HttpServletRequest request) 
-										{
-		
-	System.out.println("멤버번호  : "+memberno);																							
-	cboard.setMemberNum(memberno);
-		
-		logger.debug("매핑확인");
-		logger.debug("======vue에서 전송한  파일========");
-		//파일이 있다면
-		if(file.length>0) {
-			logger.debug("파일명"+file[0].getOriginalFilename());
-			logger.debug("파일크기 : "+file[0].getSize());	
-		}
-		logger.debug(cboard.toString());
-		
-		//업로드 경로 설정
-		//파일 리네임 처리후 파일 저장하기
-		String saveDir=request.getServletContext().getRealPath("/resources/upload/communityBoard");
-		
-		File dir=new File(saveDir);
-		
-		if(!dir.exists()) {
-			//지정된경로의 폴더가 없으면
-			dir.mkdirs(); //mk > make directory
-		}
-		
-		List<CB_ATTACHMENT> files=new ArrayList<CB_ATTACHMENT>();
-		
-		for(MultipartFile f:file) {
-			
-			if(!f.isEmpty()) {
-				
-			String originalFileName=f.getOriginalFilename();
-			String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
-			
-			int rndNum=(int)(Math.random()*1000);
-			
-			String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
-			
 
          try {
             //파일저장하기
@@ -196,14 +134,44 @@ public class CommunityBoardController {
    //자유게시판 상세화면 전환 페이지
    @RequestMapping(value="/community/communityBoardView{boardSq}",
                            method=RequestMethod.GET)
-   public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq)
+   public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq, 
+                                                                  HttpServletRequest request,
+                                                                  HttpServletResponse response)
          throws JsonMappingException,JsonGenerationException,IOException{
       
       logger.debug("boardSq"+Integer.toString(boardSq));
       
-      CommunityBoard cboard = service.selectCommunityBoardOne(boardSq);
+      //조회수 증가로직 쿠키이용
+      Cookie[] cookies =request.getCookies();
+      String boardHistory="";
+      boolean hasRead=false; 
       
-//      System.out.println("날짜포맷(전): "+cboard.getBoardDate());
+      if(cookies!=null) {
+      for(Cookie c : cookies) {
+         
+         
+         String name = c.getName();
+         String value = c.getValue();
+         
+         if("boardHistory".equals(name)) {
+            boardHistory=value; //현재 저장된 값대입 덮어쓰기하면서 누적
+            
+            if(value.contains("|"+boardSq+"|")) {
+               hasRead=true;
+               break;
+            }
+         }
+        }//for
+      }//if
+      
+      if(!hasRead) {
+         Cookie c = new Cookie("boardHistory",boardHistory+"|"+boardSq+"|");
+         c.setMaxAge(-1);
+         response.addCookie(c);
+               
+      }   
+      
+      CommunityBoard cboard = service.selectCommunityBoardOne(boardSq,hasRead);
       
       return cboard;
    
@@ -254,103 +222,6 @@ public class CommunityBoardController {
       return msg;
    }
    
-=======
-		return msg;
-		
-	}
-	
-	//자유게시판 상세화면 전환 페이지
-	@RequestMapping(value="/community/communityBoardView{boardSq}",
-									method=RequestMethod.GET)
-	public CommunityBoard selectCommunityBoardOne(@PathVariable int boardSq, 
-																						HttpServletRequest request,
-																						HttpServletResponse response)
-			throws JsonMappingException,JsonGenerationException,IOException{
-		
-		logger.debug("boardSq"+Integer.toString(boardSq));
-		
-		//조회수 증가로직 쿠키이용
-		Cookie[] cookies =request.getCookies();
-		String boardHistory="";
-		boolean hasRead=false; 
-		
-		if(cookies!=null) {
-		for(Cookie c : cookies) {
-			
-			
-			String name = c.getName();
-			String value = c.getValue();
-			
-			if("boardHistory".equals(name)) {
-				boardHistory=value; //현재 저장된 값대입 덮어쓰기하면서 누적
-				
-				if(value.contains("|"+boardSq+"|")) {
-					hasRead=true;
-					break;
-				}
-			}
-		  }//for
-		}//if
-		
-		if(!hasRead) {
-			Cookie c = new Cookie("boardHistory",boardHistory+"|"+boardSq+"|");
-			c.setMaxAge(-1);
-			response.addCookie(c);
-					
-		}	
-		
-		CommunityBoard cboard = service.selectCommunityBoardOne(boardSq,hasRead);
-		
-		return cboard;
-	
-	}
-	
-	
-	//자유게시판 삭제하기
-	@RequestMapping(value="/community/communityBoardDelete{boardSq}",
-									method=RequestMethod.POST)
-	public String deleteBoard(@PathVariable int boardSq , HttpServletRequest request) 
-				throws JsonMappingException,JsonGenerationException,IOException
-			{
-		
-		//먼저 첨부파일이 삭제가 되면 그 그결과값이 result>0이면 게시글 삭제로 이어지도록
-		String msg = "";
-		logger.debug("첨부파일 삭제 후 게시글 삭제 로직 수행 logger");
-		
-		//먼저 게시글 번호를 가지고 해당 첨부파일을 가져오는 메서드
-		CB_ATTACHMENT cba = service.selectAttach(boardSq);
-		System.out.println(cba);
-		//첨부파일이 있을경우
-		if(cba!=null) {	
-		//첨부파일을 가져온 후 첨부파일을 서버에서(/resources/upload/communityBoard)삭제
-		String ReNameFile =cba.getRenamedfilename();
-		String saveDir = request.getServletContext().getRealPath("/resources/upload/communityBoard");
-		
-		//먼저 게시글 삭제 후 첨부파일 삭제
-		int result = service.deleteBoard(boardSq);
-		
-		if(result>0) {
-			msg="자유게시판 글삭제 성공";
-			//게시글 삭제를 성공했을때 첨부파일이 있다면 첨부파일도 삭제
-			File file = new File(saveDir+"/"+ReNameFile);
-			if(file.exists()) {
-				if(file.delete()) logger.debug("첨부파일 삭제 성공");
-				else logger.debug("첨부파일 삭제 실패");
-			}
-		}
-		else {
-			msg="자유게시판 글삭제 실패";
-		}
-		//첨부파일이 없는 게시글 삭제
-		}else {
-			int result = service.deleteBoard(boardSq);
-			msg =(result>0) ?"자유게시판 글 삭제 성공" : " 자유게시판 글 삭제 실패";
-		}
-		logger.debug(msg);
-		return msg;
-	}
-	
->>>>>>> b70ec2481554183a896f559803cc8fe718d4463a
 //첨부파일 먼저 불러오기 (update form 으로)
 @RequestMapping(value="/community/communityBoardUpdate{boardSq}",
                            method=RequestMethod.GET)
