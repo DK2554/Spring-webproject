@@ -8,12 +8,14 @@ import java.net.URL;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,8 +30,6 @@ import com.google.gson.JsonParser;
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.security.service.SecurityService;
-
-import net.sf.json.JSON;
 
 @RestController
 @RequestMapping("/member")
@@ -49,7 +49,7 @@ public class MemberController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public void memberRegister(@RequestBody Member member) {
-
+		System.out.println("member: " + member);
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
 		int result = 0;
@@ -87,6 +87,7 @@ public class MemberController {
 	// 인포 업데이트
 	@RequestMapping(value = "/updateInfo", method = RequestMethod.POST)
 	public int memberUpdate(@RequestBody Map param) {
+		System.out.println("parma: " + param);
 		Member login = service.selectOneMember(param);// param값 존재하는 지 확인용
 
 		login.setMemberPhone((String) param.get("memberPhone"));
@@ -244,10 +245,10 @@ public class MemberController {
 
 	}
 
-//	 @SuppressWarnings("deprecation")
-	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
-	public String naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state)
-			throws Exception {
+	 @SuppressWarnings("deprecation")
+	@RequestMapping(value = "/naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
+	public void naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state,HttpServletResponse httpServletResponse)
+			throws Exception,IOException   {
 		String clientId = "aYgNgGmIwR3wysmlCfRd";// 애플리케이션 클라이언트 아이디값";
 		String naverClientSecret = "voZaFcwXXi";// 시크릿값
 		String apiURL;
@@ -290,22 +291,56 @@ public class MemberController {
 				access_token = accessElement.getAsJsonObject().get("access_token").getAsString(); // access_token
 
 				tmp = getUserInfo(access_token);// 유저정보 가져오기
+				
+				System.out.println("temp: " + tmp);
 
 				JsonElement userInfoElement = parser.parse(tmp);
 				id = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("id").getAsInt();
 				System.out.println("response: " + userInfoElement.getAsJsonObject().get("response").getAsJsonObject());
+
 				memberEmail = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("email")
 						.getAsString();
 				memberName = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("name")
 						.getAsString();
-
+				
+				Member member = new Member();
+				member.setMemberName(memberName);
+				member.setMemberEmail(memberEmail);
+				member.setMemberPwd("0000");
+				member.setMemberToken(access_token);
+				Random rand = new Random();
+				
+				int ranPhone = rand.nextInt(9); 
+				member.setMemberPhone(String.valueOf(ranPhone));
+				System.out.println("member: " + rand);
+				
+				
 				// 네이버에서 받은 토큰에 유저 정보 넣어서 토큰 생성
 				access_token = createJWTToken(id, memberName, memberEmail);
+				
+				
+				
+				
+				logger.debug("memberEmail: " + memberEmail);
+
+				
+
+				
+				int result = 0;
+				System.out.println(member);
+				try {
+					result = service.insertMember(member);
+
+				} catch (RuntimeException e) {
+					e.printStackTrace();
+				}
+				
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		return "redirect:http://localhost:8081/naverLogin?token=" + access_token;
+		httpServletResponse.setHeader("access_token", access_token);
+		httpServletResponse.sendRedirect("http://localhost:8081/");
 
 	}
 
