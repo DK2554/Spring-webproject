@@ -2,9 +2,9 @@ package com.spring.itjobgo.qna.model.dao;
 
 import java.util.List;
 
+
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
@@ -36,7 +36,8 @@ public interface QnaBoardDao {
 	//첨부파일 insert
 	int insertAttachment2(SqlSessionTemplate session, QB_ATTACHMENT qb_attach);
 	
-	
+	//조회수 증가
+	int updateReadCount(SqlSessionTemplate session, int qnaSeq);
 	
 	
 }

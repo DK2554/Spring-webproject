@@ -7,7 +7,7 @@
 		insert into member
 		values(MEMBER_SQ.nextval,#{memberEmail}, #{memberPwd},
 		#{memberName},
-		#{memberPhone},0,null, null,null,null,NULL,null,null)
+		#{memberPhone},0,null, null,null,null,NULL,#{memberToken},null)
 	</insert>
 
 	<select id="selectOneMember" parameterType="map"
