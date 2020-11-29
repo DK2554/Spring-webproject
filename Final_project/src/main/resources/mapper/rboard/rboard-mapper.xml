@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="rboard">
+
+	<!-- 이력서 게시판 리스트 -->
+  <select id="selectRboard" resultType="rboard">
+  
+  	SELECT * FROM RBOARD
+<!--    	SELECT RBOARD_NO as rboardNo, 
+   	RBOARD_ID as rboardId, 
+   	RBOARD_TITLE as rboardTitle,
+   	RBOARD_CONTENT as rboardContent,
+   	RBOARD_WRITER as rboardWriter,
+   	RBOARD_DATE as rboardDate,
+   	RBOARD_STATUS as rboardStatus,
+   	RBOARD_COUNT as rboardCount
+   	FROM RBOARD -->
+  </select>
+  
+  <!-- 이력서 게시판 글 등록 -->
+  <insert id="insertRboard" parameterType="rboard">
+  	INSERT INTO RBOARD VALUES(
+  		RBOARD_SEQ_NO.NEXTVAL,
+  		#{rboardId},
+  		#{rboardTitle},
+  		#{rboardContent},
+  		#{rboardWriter},
+  		DEFAULT,
+  		DEFAULT,
+  		DEFAULT
+  	)
+  		
+  </insert>
+  
+  <!-- 이력서 게시판 첨부파일 등록 -->
+  
+  <insert id="insertAttachment" parameterType="rboard_attachment">
+  		INSERT INTO RBOARD_ATTACHMENT VALUES(
+  			RBOARD_ATTACHMENT_SEQ_NO.NEXTVAL,
+  			#{rboardNo},
+  			#{originalFilename},
+  			#{renamedFilename},
+  			DEFAULT,
+  			DEFAULT	
+  		)
+  		<selectKey keyProperty="rboardNo" resultType="_int" order="BEFORE">
+	 		SELECT RBOARD_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>	
+  </insert>
+</mapper>

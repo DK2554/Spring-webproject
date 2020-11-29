@@ -51,8 +51,11 @@
 			type="com.spring.itjobgo.notice.model.vo.Notice"
 			alias="Notice" />
 		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.Rboard"
+			alias="rboard" />
 			
-
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.RboardAttachment"
+			alias="rboard_attachment" />
 	</typeAliases>
 
 </configuration>
