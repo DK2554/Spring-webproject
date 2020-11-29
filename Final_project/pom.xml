@@ -206,7 +206,6 @@
          <version>1.0.2</version>
       </dependency>
 
-<<<<<<< HEAD
       <!-- 로그인 토큰 -->
       <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
       <dependency>
@@ -227,7 +226,7 @@
             <artifactId>java-jwt</artifactId>
             <version>3.4.0</version>
         </dependency>
-=======
+        
 		<!-- 로그인 토큰 -->
 		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
 		<dependency>
@@ -248,8 +247,7 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.4.0</version>
 		</dependency>
->>>>>>> 8d6004dfea07ddbcb7f77bea5f14434afed4a7b6
-
+		
       <!-- https://mvnrepository.com/artifact/org.springframework.security.oauth/spring-security-oauth2 -->
       <dependency>
          <groupId>org.springframework.security.oauth</groupId>

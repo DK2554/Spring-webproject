@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.info.model.service.InfoService;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
@@ -202,7 +201,6 @@ public class InfoController {
 	 * 
 	 * return cba; }
 	 */
-   	
   //게시판 수정(update)
    	@RequestMapping(value="/info/infoUpdateEnd" , 
    	                        method = RequestMethod.POST, 
