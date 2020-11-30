@@ -42,6 +42,6 @@
   select * from pcomment where pboard_no=#{no} order by pcomment_date desc
   </select>
   <delete id="deletecomment">
-  delete pcomment where pboard_no=#{no}
+  delete pcomment where pcomment_no=#{no}
   </delete>
 </mapper>
