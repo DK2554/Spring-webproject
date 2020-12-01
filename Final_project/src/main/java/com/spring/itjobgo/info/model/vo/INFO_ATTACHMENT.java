@@ -6,7 +6,7 @@ import java.sql.Date;
 public class INFO_ATTACHMENT {
 	
 	private int attachmentno;
-	private int infoNo;
+	private int infoSq;
 	private String originalfilename;
 	private String renamedfilename;
 	private Date uploaddate;
@@ -23,12 +23,12 @@ public class INFO_ATTACHMENT {
 		this.attachmentno = attachmentno;
 	}
 
-	public int getInfoNo() {
-		return infoNo;
+	public int getInfoSq() {
+		return infoSq;
 	}
 
-	public void setgetInfoNo(int infoNo) {
-		this.infoNo = infoNo;
+	public void setInfoSq(int infoSq) {
+		this.infoSq = infoSq;
 	}
 
 	public String getOriginalfilename() {
@@ -63,16 +63,22 @@ public class INFO_ATTACHMENT {
 		this.status = status;
 	}
 
-	public INFO_ATTACHMENT(int attachmentno, int infoNo, String originalfilename, String renamedfilename,
+	@Override
+	public String toString() {
+		return "INFO_ATTACHMENT [attachmentno=" + attachmentno + ", infoSq=" + infoSq + ", originalfilename="
+				+ originalfilename + ", renamedfilename=" + renamedfilename + ", uploaddate=" + uploaddate + ", status="
+				+ status + "]";
+	}
+
+	public INFO_ATTACHMENT(int attachmentno, int infoSq, String originalfilename, String renamedfilename,
 			Date uploaddate, String status) {
 		super();
 		this.attachmentno = attachmentno;
-		this.infoNo = infoNo;
+		this.infoSq = infoSq;
 		this.originalfilename = originalfilename;
 		this.renamedfilename = renamedfilename;
 		this.uploaddate = uploaddate;
 		this.status = status;
 	}
-	
 	
 }

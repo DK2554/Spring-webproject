@@ -9,7 +9,7 @@ public interface InfoService {
 	
 	List<Info> selectInfoList();
 
-	int insertInfo(Info cb, List<INFO_ATTACHMENT> files);
+	int insertInfo(Info ifo, List<INFO_ATTACHMENT> files);
 
 	Info selectInfoOne(int infoSq,boolean hasRead);
 	
@@ -17,9 +17,9 @@ public interface InfoService {
 	
 	INFO_ATTACHMENT selectAttach(int infoSq);
 
-	int updateInfo(Info cb,List<INFO_ATTACHMENT>files);
+	int updateInfo(Info ifo,List<INFO_ATTACHMENT>files);
 	
-	int updateInfo(Info cb);
+	int updateInfo(Info ifo);
 
 }
 

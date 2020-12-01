@@ -15,21 +15,21 @@
 	</resultMap>  -->
 		
    <!--취업정보 리스트-->
- 	<select id="selectInfoList" resultType="Info">
+ 	<select id="selectInfoList" resultType="info">
 		SELECT * FROM INFO
 	</select> 
 	
 	<!--취업정보 글 작성 -->
-	<insert id ="insertInfo" parameterType="Info">
+	<insert id ="insertInfo" parameterType="info">
 		INSERT INTO INFO VALUES(
 											INFO_SQ.NEXTVAL,
 											#{infoCategory},
 											#{infoTitle},
 											#{infoDate},
-											#{infoTime},
-											#{infoAddress},																				
-											1,
-											#{infoContent}
+											#{infoTime},	
+											#{memberNum},		
+											#{infoContent},																	
+											1					
 											)
 	</insert>
 		
@@ -37,7 +37,7 @@
 	<insert id="insertAttachment" parameterType="info_attachment">
 		INSERT INTO INFO_ATTACHMENT VALUES(
 												SEQ_INFO_ATTACHMENT_NO.NEXTVAL,
-												#{infoNo},
+												#{infoSq},
 												#{originalfilename},
 												#{renamedfilename},
 												DEFAULT,
@@ -47,14 +47,13 @@
 			<selectKey keyProperty="infoNo" resultType="_int" order="BEFORE">
 	 		SELECT SEQ_INFO_NO.CURRVAL FROM DUAL
 	  		</selectKey>
-	 
 	  </insert> 
 	  
 	  	<!-- 첨부파일이 없는 게시글 update 하기 -->
 		<insert id="insertAttachment2" parameterType="info_attachment">
 		INSERT INTO INFO_ATTACHMENT VALUES(
 												#{attachmentno},
-												#{infoNo},
+												#{infoSq},
 												#{originalfilename},
 												#{renamedfilename},
 												DEFAULT,
@@ -75,8 +74,8 @@
 		</delete>
 		
 	<!-- 첨부파일 조회 -->
-		<select id="selectAttach" resultType="INFO_ATTACHMENT" parameterType="_int">
-			SELECT * FROM INFO_ATTACHMENT WHERE INFO_NO=#{infoSq}
+		<select id="selectAttach" resultType="info_attachment" parameterType="_int">
+			SELECT * FROM INFO_ATTACHMENT WHERE INFO_SQ=#{infoSq}
 		</select>
 		
 	<!-- 게시판 업데이트 update -->
@@ -84,6 +83,8 @@
 			UPDATE INFO SET 
 						INFO_CATEGORY=#{infoCategory},
 						INFO_TITLE=#{infoTitle},
+						INFO_DATE=#{infoDate},
+						INFO_TIME=#{infoTime},						
 						INFO_CONTENT=#{infoContent}
 			WHERE INFO_SQ=#{infoSq}
 		</update>
@@ -95,7 +96,14 @@
 															RENAMEDFILENAME=#{renamedfilename}
 												WHERE INFO_SQ=#{infoSq}
 		</update>										
-	
+		
+		<!-- 조회수  -->
+		<update id="updateReadCount">
+		UPDATE INFO SET
+												INFO=INFO+1
+												WHERE INFO_SQ=#{infoSq}
+
+	</update>
 	
 	
 </mapper>

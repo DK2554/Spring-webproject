@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
-import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
 
@@ -14,7 +12,7 @@ public interface InfoDao {
 	List<Info> selectInfoList(SqlSessionTemplate session);
 
 	//글작성
-	int insertInfo(SqlSessionTemplate session, Info CB);
+	int insertInfo(SqlSessionTemplate session, Info IFO);
 	
 	//첨부파일 insert
 	int insertAttachment(SqlSessionTemplate session, INFO_ATTACHMENT info_attach);
@@ -32,7 +30,7 @@ public interface InfoDao {
 	int updateAttachment(SqlSessionTemplate session,INFO_ATTACHMENT info_attach);
 	
 	//게시글(객체) update
-	int updateInfo(SqlSessionTemplate session, Info cb);
+	int updateInfo(SqlSessionTemplate session, Info ifo);
 	
 	//첨부파일 insert
 	int insertAttachment2(SqlSessionTemplate session, INFO_ATTACHMENT info_attach);

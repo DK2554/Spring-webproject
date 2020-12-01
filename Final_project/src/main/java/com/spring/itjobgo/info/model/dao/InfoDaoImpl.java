@@ -1,7 +1,6 @@
 package com.spring.itjobgo.info.model.dao;
 
 import java.util.List;
-/*import java.util.Map;*/
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,15 +11,15 @@ import com.spring.itjobgo.info.model.vo.Info;
 @Repository
 public class InfoDaoImpl implements InfoDao {
 
-	//게시판 리스트 불러오기
+	//자유게시판 리스트 불러오기
 	@Override
 	public List<Info> selectInfoList(SqlSessionTemplate session) {
-		return session.selectList("info.selectInfoList");  
-	 }
+		return session.selectList("info.selectInfoList"); 
+	}	
 	//글쓰기
 	@Override
-	public int insertInfo(SqlSessionTemplate session, Info CB) {
-		return session.insert("info.insertInfo",CB);
+	public int insertInfo(SqlSessionTemplate session, Info IFO) {
+		return session.insert("info.insertInfo",IFO);
 	}
 	//글쓰기 할때 첨부파일
 	@Override
@@ -54,14 +53,14 @@ public class InfoDaoImpl implements InfoDao {
 	
 	//게시글(객체)update
 	@Override
-	public int updateInfo(SqlSessionTemplate session, Info cb) {
-		return session.update("info.updateinfo",cb);
+	public int updateInfo(SqlSessionTemplate session, Info ifo) {
+		return session.update("info.updateinfo",ifo);
 	}
 
 	//첨부파일 다운로드
 	@Override
 	public int insertAttachment2(SqlSessionTemplate session, INFO_ATTACHMENT info_attach) {
-		return session.insert("communityBoard.insertAttachment2",info_attach);
+		return session.insert("info.insertAttachment2",info_attach);
 	}
 	
 	//조회수 증가로직

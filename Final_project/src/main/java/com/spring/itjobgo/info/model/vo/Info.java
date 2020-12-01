@@ -7,8 +7,9 @@ public class Info {
 	private String infoTitle;  //기업명
 	private String infoDate;  //일정
 	private String infoTime;  //시간
-	private String infoAddress; //주소
+	
 	private int memberNum;   //작성자(관리자)
+	
 	private String infoContent;  //첨부 내용
 	private int infoCount; //조회수
 	
@@ -57,14 +58,6 @@ public class Info {
 		this.infoTime = infoTime;
 	}
 
-	public String getInfoAddress() {
-		return infoAddress;
-	}
-
-	public void setInfoAddress(String infoAddress) {
-		this.infoAddress = infoAddress;
-	}
-
 	public int getMemberNum() {
 		return memberNum;
 	}
@@ -90,7 +83,7 @@ public class Info {
 	}
 
 
-	public Info(int infoSq, String infoCategory, String infoTitle, String infoDate, String infoTime, String infoAddress,
+	public Info(int infoSq, String infoCategory, String infoTitle, String infoDate, String infoTime, 
 			int memberNum, String infoContent, int infoCount) {
 		super();
 		this.infoSq = infoSq;
@@ -98,7 +91,6 @@ public class Info {
 		this.infoTitle = infoTitle;
 		this.infoDate = infoDate;
 		this.infoTime = infoTime;
-		this.infoAddress = infoAddress;
 		this.memberNum = memberNum;
 		this.infoContent = infoContent;
 		this.infoCount = infoCount;

@@ -26,36 +26,35 @@ public List<Info> selectInfoList() {
 
 	//취업정보 글쓰기
 	@Override
-	public int insertInfo(Info cb, List<INFO_ATTACHMENT> files) {
+	public int insertInfo(Info ifo, List<INFO_ATTACHMENT> files) {
 		
-		int result=dao.insertInfo(session,cb);
+		int result=dao.insertInfo(session,ifo);
 		
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {	
+				//파일에 데이터가 있으면 
 				for(INFO_ATTACHMENT file:files) {
 					result=dao.insertAttachment(session,file);
 					
 					if(result==0)throw new RuntimeException("입력오류");
 				}
 			}	
-		}
-		
-		return result;
-		
+		}		
+		return result;	
 	}
 
-	//상세 글 보기
+	//취업정보 상세 글
 	@Override
 	public Info selectInfoOne(int infoSq,boolean hasRead) {
-		Info cb =dao.selectInfoOne(session, infoSq);
+		Info ifo =dao.selectInfoOne(session, infoSq);
 		//hasRead가 false이면
-		if(cb!=null && !hasRead) {
+		if(ifo!=null && !hasRead) {
 			int result =dao.updateReadCount(session,infoSq);
 			System.out.println("조회수 증가 성공");
 		}	
 				
-		return cb;
+		return ifo;
 	}
 
 	//삭제하기
@@ -72,9 +71,9 @@ public List<Info> selectInfoList() {
 
 	//첨부파일이 있을때 update
 	@Override
-	public int updateInfo(Info cb, List<INFO_ATTACHMENT> files) {
+	public int updateInfo(Info ifo, List<INFO_ATTACHMENT> files) {
 		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다
-		int result = dao.updateInfo(session,cb);
+		int result = dao.updateInfo(session,ifo);
 		//등록이 성공되지 않는다면
 		if(result==0) throw new RuntimeException("게시글 등록 오류");
 		//등록이 성공하고 첨부파일이 존재한다면 첨부파일 등록해줘야한다.
@@ -99,9 +98,9 @@ public List<Info> selectInfoList() {
 
 	//첨부파일이 없을때 게시판 내용만 update
 	@Override
-	public int updateInfo(Info cb) {
+	public int updateInfo(Info ifo) {
 		// TODO Auto-generated method stub
-		return dao.updateInfo(session,cb);
+		return dao.updateInfo(session,ifo);
 		}
 
 
