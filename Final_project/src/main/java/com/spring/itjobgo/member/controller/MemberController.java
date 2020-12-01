@@ -1,12 +1,16 @@
 package com.spring.itjobgo.member.controller;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -21,14 +25,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
+import com.spring.itjobgo.member.model.vo.MemberPhoto;
 import com.spring.itjobgo.security.service.SecurityService;
 
 @RestController
@@ -48,17 +55,21 @@ public class MemberController {
 	private Logger logger;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public void memberRegister(@RequestBody Member member) {
+	public int memberRegister(@RequestBody Member member) {
 		System.out.println("member: " + member);
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
+		member.setMemberLevel("0");// 일반회원 :0
 		int result = 0;
-		System.out.println(member);
-		try {
-			result = service.insertMember(member);
 
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+		System.out.println(member);
+
+		result = service.insertMember(member);
+
+		if (result > 0) {
+			return result;
+		} else {
+			return -1;
 		}
 
 	}
@@ -75,7 +86,7 @@ public class MemberController {
 			logger.debug("비밀번호 맞음");
 			result = service.deleteMember(login.getMemberEmail());
 			System.out.println("result: " + result);
-			
+
 			return result;
 		} else {
 			logger.debug("비밀번호 틀림");
@@ -204,16 +215,66 @@ public class MemberController {
 
 			if (encoder.matches((String) param.get("memberPwd"), login.getMemberPwd())) {// 비밀번호 비교
 				// 비밀번호 매치o
-				System.out.println("비밀번호 ok");
 				return 1;
 			} else {// 비밀번호 매치x
-				System.out.println("비밀번호 no");
 				return 0;
 			}
 		} else {
-			System.out.println("비밀번호 no");
 			return 0;
 		}
+	}
+
+	// 이력서 사진 업데이트
+	@RequestMapping(value = "/updatePhoto", method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public int updatePhoto(@RequestParam Map param, @RequestBody MultipartFile upFile,
+			HttpServletRequest request) throws IOException {
+		System.out.println("upFile: " + upFile);
+		System.out.println("controller: " + param);
+		System.out.println("controller2: " + param.get("memberSq"));
+		
+		int memberSq = Integer.parseInt(param.get("memberSq").toString());
+		
+		System.out.println("memberSq: " + memberSq);
+
+		String savePhoto = request.getServletContext().getRealPath("/resources/upload/member");// 경로지정
+		File file = new File(savePhoto);
+
+		if (!file.exists()) {// 디렉토리 유무화인 후 생성여부 결정
+			file.mkdirs();
+		}
+		
+			
+		String originalFileName = upFile.getOriginalFilename();// file이름 String으로
+
+		logger.debug("originFile: " + originalFileName);
+		String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+		logger.debug("ext: " + ext);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+		int rndNum = (int) (Math.random() * 1000);
+
+		String renamedFileName = sdf.format(new Date(System.currentTimeMillis())) + "_" + rndNum + "." + ext;
+		logger.debug("renamedFileName: " + renamedFileName);
+		try {
+			/* renamedFileName으로 파일을 저장하기 -> transferTo(파일) */
+			upFile.transferTo(new File(savePhoto + "/" + renamedFileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		MemberPhoto mp = new MemberPhoto();
+		mp.setMemberSq(memberSq);
+		mp.setOriginalFileName(originalFileName);
+		mp.setRenamedFileName(renamedFileName);
+		
+		//파일 디비에 저장
+		int result = 0;
+		
+		Member member = new Member(); 				
+		
+		result=service.insertPhoto(member, mp);
+		
+
+		return result;
+
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -245,10 +306,30 @@ public class MemberController {
 
 	}
 
-	 @SuppressWarnings("deprecation")
-	@RequestMapping(value = "/naverLogin", method = {RequestMethod.GET, RequestMethod.POST})
-	public void naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state,HttpServletResponse httpServletResponse)
-			throws Exception,IOException   {
+	// 카카오로그인
+	@RequestMapping(value = "/kakaoRegister", method = RequestMethod.POST)
+	public int kakaoRegister(@RequestBody Member member) {
+		System.out.println("member: " + member);
+		String encodePw = encoder.encode(member.getMemberPwd());
+		member.setMemberPwd(encodePw);
+		member.setMemberLevel("3");// 소셜회원 : 3으로 초기화
+		int result = 0;
+		System.out.println(member);
+
+		result = service.insertMember(member);
+		if (result > 0) {
+			return result;
+		} else {
+			return -1;
+		}
+
+	}
+
+	// 네이버 로그인
+	@SuppressWarnings("deprecation")
+	@RequestMapping(value = "/naverLogin", method = { RequestMethod.GET, RequestMethod.POST })
+	public int naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state,
+			HttpServletResponse httpServletResponse) throws Exception, IOException {
 		String clientId = "aYgNgGmIwR3wysmlCfRd";// 애플리케이션 클라이언트 아이디값";
 		String naverClientSecret = "voZaFcwXXi";// 시크릿값
 		String apiURL;
@@ -258,7 +339,8 @@ public class MemberController {
 		apiURL += "&code=" + code;
 		apiURL += "&state=" + state;
 		String access_token = "";
-
+		int result = 0;
+		String memberName, memberEmail = null, tmp;
 		try {
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -281,7 +363,6 @@ public class MemberController {
 
 			if (responseCode == 200) {// 토큰 잘 가져오는 경우
 				int id;
-				String memberName, memberEmail, tmp;
 
 				JsonParser parser = new JsonParser();
 
@@ -291,7 +372,7 @@ public class MemberController {
 				access_token = accessElement.getAsJsonObject().get("access_token").getAsString(); // access_token
 
 				tmp = getUserInfo(access_token);// 유저정보 가져오기
-				
+
 				System.out.println("temp: " + tmp);
 
 				JsonElement userInfoElement = parser.parse(tmp);
@@ -302,45 +383,61 @@ public class MemberController {
 						.getAsString();
 				memberName = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("name")
 						.getAsString();
-				
+
+				// member 객체 생성 insert용
 				Member member = new Member();
 				member.setMemberName(memberName);
 				member.setMemberEmail(memberEmail);
-				member.setMemberPwd("0000");
+
+				member.setMemberPwd("0000");// 비번 초기화
+				String encodePw = encoder.encode(member.getMemberPwd());
+				member.setMemberPwd(encodePw);
 				member.setMemberToken(access_token);
+				member.setMemberLevel("3");
 				Random rand = new Random();
-				
-				int ranPhone = rand.nextInt(9); 
+
+				int ranPhone = rand.nextInt(999999999);
 				member.setMemberPhone(String.valueOf(ranPhone));
 				System.out.println("member: " + rand);
-				
-				
+
 				// 네이버에서 받은 토큰에 유저 정보 넣어서 토큰 생성
 				access_token = createJWTToken(id, memberName, memberEmail);
-				
-				
-				
-				
+
 				logger.debug("memberEmail: " + memberEmail);
 
-				
-
-				
-				int result = 0;
 				System.out.println(member);
-				try {
+
+				ObjectMapper objectMapper = new ObjectMapper();
+				Map param = objectMapper.convertValue(member, Map.class); // pojo->map
+
+				Member login = service.selectOneMember(param);// db에 저장된 회원인지 확인
+
+				if (login == null) {// 디비에 없으면insert
+
 					result = service.insertMember(member);
 
-				} catch (RuntimeException e) {
-					e.printStackTrace();
+					if (result > 0) { //잘들어가면 페이지 이동
+						httpServletResponse.setHeader("access_token", access_token);// 헤더에 토큰 저장
+						httpServletResponse.sendRedirect(
+								"http://localhost:8081/naverLogin?token=" + access_token + "&email=" + memberEmail);
+						result = 1;
+					} else {
+						result = -1;
+					}
+
+				} else {// 디비에 있으면그냥 바로 토큰 저장하고 이동
+					httpServletResponse.setHeader("access_token", access_token);// 헤더에 토큰 저장
+					httpServletResponse.sendRedirect(
+							"http://localhost:8081/naverLogin?token=" + access_token + "&email=" + memberEmail);
 				}
-				
+
 			}
 		} catch (Exception e) {
+			
 			System.out.println(e);
 		}
-		httpServletResponse.setHeader("access_token", access_token);
-		httpServletResponse.sendRedirect("http://localhost:8081/");
+		logger.debug("result: " + result);
+		return result;
 
 	}
 
