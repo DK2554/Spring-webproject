@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.spring.itjobgo.member.model.vo.Member;
+import com.spring.itjobgo.member.model.vo.MemberPhoto;
 
 public interface MemberDao {
 
@@ -23,6 +24,8 @@ public interface MemberDao {
 	int updateInfo(SqlSession session, Member login);
 
 	int deleteMember(SqlSession session, String email);
+
+	int insertPhoto(SqlSession session, MemberPhoto mp);
 
 
 }

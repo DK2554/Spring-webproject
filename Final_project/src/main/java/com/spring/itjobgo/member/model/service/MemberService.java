@@ -1,8 +1,10 @@
 package com.spring.itjobgo.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.spring.itjobgo.member.model.vo.Member;
+import com.spring.itjobgo.member.model.vo.MemberPhoto;
 
 public interface MemberService {
 	//public String createToken(LoginRequest loginRequest)
@@ -22,6 +24,8 @@ public interface MemberService {
 	int updateInfo(Member login);
 
 	int deleteMember(String email);
+
+	int insertPhoto(Member member, MemberPhoto mp);
 
 	
 
