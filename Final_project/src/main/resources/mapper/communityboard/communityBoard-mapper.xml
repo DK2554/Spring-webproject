@@ -26,7 +26,7 @@
 		
 	<!-- 자유게시판 전체 조회 -->
  	<select id="selectBoardList" resultType="communityBoard">
-		SELECT * FROM COMMUNITY_BOARD
+		SELECT * FROM COMMUNITY_BOARD ORDER BY BOARD_SQ
 	</select> 
 
 	<!-- 자유게시판 글 작성 -->
@@ -109,12 +109,31 @@
 													
 	</update>
 	
+	<!-- 조회수 증가 -->
 	<update id="updateReadCount">
 		UPDATE COMMUNITY_BOARD SET
 												BOARD_COUNT=BOARD_COUNT+1
 												WHERE BOARD_SQ=#{boardSq}
 
 	</update>
+	
+	<!-- 댓글 insert -->
+	<insert id="insertComment" parameterType="CB_COMMENT">
+		INSERT INTO CB_COMMENT VALUES(
+											SEQ_COMMUNITY_BOARD_COMMENT_NO.NEXTVAL,
+											#{cboardNo},
+											#{cbCommentContent},
+											#{memberSq},
+											DEFAULT,
+											#{memberName}							
+											)
+	</insert>
+	
+	<!-- 댓글 조회하기 -->
+	<select id="selectComment" resultType="CB_COMMENT">
+		SELECT * FROM CB_COMMENT WHERE CBOARD_NO=#{cboardNo}
+						ORDER BY CB_COMMENT_DATE DESC
+	</select>
   		
   		
 </mapper>

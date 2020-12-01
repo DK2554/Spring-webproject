@@ -56,6 +56,13 @@
 			
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.RboardAttachment"
 			alias="rboard_attachment" />
+			
+			<typeAlias
+			type="com.spring.itjobgo.community.model.vo.CB_COMMENT"
+			alias="CB_COMMENT" />	
+			
+			
+			
 	</typeAliases>
 
 </configuration>

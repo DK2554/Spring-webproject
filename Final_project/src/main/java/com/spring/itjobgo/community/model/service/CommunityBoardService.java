@@ -3,6 +3,7 @@ package com.spring.itjobgo.community.model.service;
 import java.util.List;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 public interface CommunityBoardService {
@@ -20,4 +21,8 @@ public interface CommunityBoardService {
 	int updateBoard(CommunityBoard cb,List<CB_ATTACHMENT>files);
 	
 	int updateBoard(CommunityBoard cb);
+	
+	int insertComment(CB_COMMENT cbc);
+	
+	List<CB_COMMENT>selectComment(int cboardNo);
 }
