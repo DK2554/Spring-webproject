@@ -258,7 +258,7 @@ public class QnaBoardController {
 			//파일이 존재한다면 게시판 번호를 변수에 넣어둔다.
 			int qnaSeq = qb.getQnaSeq();
 			
-			String saveDir=request.getServletContext().getRealPath("/resource/upload/qnaBoard");
+			String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBoard");
 			
 			File dir = new File(saveDir);
 			if(!dir.exists()) {
