@@ -7,7 +7,14 @@
 		insert into member
 		values(MEMBER_SQ.nextval,#{memberEmail}, #{memberPwd},
 		#{memberName},
-		#{memberPhone},0,null, null,null,null,NULL,#{memberToken},null)
+		#{memberPhone},#{memberLevel},null,
+		null,null,null,#{memberToken},null)
+	</insert>
+
+	<insert id="insertPhoto" parameterType="member">
+		insert into member_photo values(#{memberSq},mem_photo_sq.nextVal,
+		#{originalFileName},#{renamedFileName},sysdate)
+
 	</insert>
 
 	<select id="selectOneMember" parameterType="map"
@@ -36,12 +43,12 @@
 
 	<update id="updateInfo" parameterType="member">
 		update member set
-			member_phone=#{memberPhone},
-			member_postcode=#{memberPostCode},
-			member_addr=#{memberAddr},
-			member_addr_dtl=#{memberAddrDtl},
-			member_addr_extra=#{memberAddrExtra},
-			member_position=#{memberPosition}
+		member_phone=#{memberPhone},
+		member_postcode=#{memberPostCode},
+		member_addr=#{memberAddr},
+		member_addr_dtl=#{memberAddrDtl},
+		member_addr_extra=#{memberAddrExtra},
+		member_position=#{memberPosition}
 		where member_email=#{memberEmail}
 
 	</update>
@@ -49,9 +56,10 @@
 	<select parameterType="map" id="selectPhoneNum"
 		resultMap="memberMap">SELECT * FROM MEMBER WHERE MEMBER_PHONE=#{memberPhone}
 	</select>
-	
+
 	<delete id="deleteMember" parameterType="String">
-		DELETE FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail}
+		DELETE FROM MEMBER WHERE
+		MEMBER_EMAIL=#{memberEmail}
 	</delete>
 
 	<resultMap id="memberMap"
@@ -66,7 +74,6 @@
 		<result column="MEMBER_ADDR" property="memberAddr" />
 		<result column="MEMBER_ADDR_DTL" property="memberAddrDtl" />
 		<result column="MEMBER_ADDR_EXTRA" property="memberAddrExtra" />
-		<result column="MEMBER_PIC" property="memberPic" />
 		<result column="MEMBER_TOKEN" property="memberToken" />
 		<result column="MEMBER_POSITION" property="memberPosition" />
 	</resultMap>

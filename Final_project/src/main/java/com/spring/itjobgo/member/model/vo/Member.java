@@ -14,7 +14,6 @@ public class Member {
 	private String memberAddr;
 	private String memberAddrDtl;
 	private String memberAddrExtra;
-	private String memberPic;
 	private String memberToken;
 	private String memberPosition;
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.member.model.vo.Member;
+import com.spring.itjobgo.member.model.vo.MemberPhoto;
 
 @Repository
 public class MemberDaoImpl implements MemberDao {
@@ -59,6 +60,12 @@ public class MemberDaoImpl implements MemberDao {
 	public int deleteMember(SqlSession session, String email) {
 		System.out.println("login: " + email);
 		return session.delete("member.deleteMember", email);
+	}
+
+	@Override
+	public int insertPhoto(SqlSession session, MemberPhoto mp) {
+		System.out.println("mp: " + mp);
+		return session.insert("member.insertPhoto", mp);
 	}
 
 
