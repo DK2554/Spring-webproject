@@ -35,7 +35,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
-import com.spring.itjobgo.member.model.vo.MemberPhoto;
 import com.spring.itjobgo.security.service.SecurityService;
 
 @RestController

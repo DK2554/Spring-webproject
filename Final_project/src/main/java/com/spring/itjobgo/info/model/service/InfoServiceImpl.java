@@ -47,6 +47,7 @@ public List<Info> selectInfoList() {
 	//취업정보 상세 글
 	@Override
 	public Info selectInfoOne(int infoSq,boolean hasRead) {
+	
 		Info ifo =dao.selectInfoOne(session, infoSq);
 		//hasRead가 false이면
 		if(ifo!=null && !hasRead) {
@@ -74,9 +75,9 @@ public List<Info> selectInfoList() {
 	public int updateInfo(Info ifo, List<INFO_ATTACHMENT> files) {
 		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다
 		int result = dao.updateInfo(session,ifo);
-		//등록이 성공되지 않는다면
+		//등록이 안되면
 		if(result==0) throw new RuntimeException("게시글 등록 오류");
-		//등록이 성공하고 첨부파일이 존재한다면 첨부파일 등록해줘야한다.
+		//등록 성공하고 첨부파일이 있다면 첨부파일 등록
 			if(result>0) {
 				if(!files.isEmpty()) {
 					for(INFO_ATTACHMENT file : files) {

@@ -113,16 +113,12 @@ public class InfoController {
 
 			// Info 글 작성하기
 			result = service.insertInfo(iboard, files);
-
 		} catch (RuntimeException e) {
 			e.printStackTrace();
-		}
+		}	
 		String msg = "";
-		if (result > 0)
-			msg = "등록 성공!";
-		else
-			msg = "등록 실패!";
-
+		if (result > 0) msg = "등록 성공!";
+		else msg = "등록 실패!";
 		return msg;
 	}
 
@@ -200,7 +196,7 @@ public class InfoController {
 						logger.debug("첨부파일 삭제 실패");
 				}
 			} else {
-				msg = " info게시글 삭제 실패 ";
+				msg = " info 게시글 삭제 실패 ";
 			}
 			// 첨부파일이 없는 게시글 삭제
 		} else {
@@ -214,7 +210,8 @@ public class InfoController {
 
 	// 첨부파일 먼저 불러오기 (update form 으로)
 
-	@RequestMapping(value = "/info/infoUpdate{infoSq}", method = RequestMethod.GET)
+	@RequestMapping(value = "/info/infoUpdate{infoSq}", 
+								method = RequestMethod.GET)
 	public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
 
 		System.out.println("==첨부파일 불러오기 맵핑 시작==");
@@ -227,9 +224,13 @@ public class InfoController {
 	}
 
 	// 게시판 수정(update)
-	@RequestMapping(value = "/info/infoUpdateEnd", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public String infoUpdate(Info ifo, @RequestBody(required = false) MultipartFile[] file,
-			HttpServletRequest request) {
+	@RequestMapping(value = "/info/infoUpdateEnd",
+						method = RequestMethod.POST, 
+						consumes = { "multipart/form-data" })
+	public String infoUpdate(Info ifo, 
+							@RequestBody(required = false) 
+							MultipartFile[] file,
+							HttpServletRequest request) {
 
 		System.out.println("==업데이트 메서드 실행==");
 

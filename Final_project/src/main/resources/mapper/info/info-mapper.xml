@@ -100,7 +100,7 @@
 		<!-- 조회수  -->
 		<update id="updateReadCount">
 		UPDATE INFO SET
-												INFO=INFO+1
+												INFO_COUNT=INFO_COUNT+1
 												WHERE INFO_SQ=#{infoSq}
 
 	</update>
