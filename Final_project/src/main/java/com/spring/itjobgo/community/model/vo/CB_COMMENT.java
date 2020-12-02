@@ -16,7 +16,6 @@ public class CB_COMMENT {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	public int getCbCommentNo() {
 		return cbCommentNo;
 	}
