@@ -226,14 +226,14 @@ public class MemberController {
 
 	// 이력서 사진 업데이트
 	@RequestMapping(value = "/updatePhoto", method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public int updatePhoto(@RequestParam Map param, @RequestBody MultipartFile upFile,
-			HttpServletRequest request) throws IOException {
+	public int updatePhoto(@RequestParam Map param, @RequestBody MultipartFile upFile, HttpServletRequest request)
+			throws IOException {
 		System.out.println("upFile: " + upFile);
 		System.out.println("controller: " + param);
 		System.out.println("controller2: " + param.get("memberSq"));
-		
+
 		int memberSq = Integer.parseInt(param.get("memberSq").toString());
-		
+
 		System.out.println("memberSq: " + memberSq);
 
 		String savePhoto = request.getServletContext().getRealPath("/resources/upload/member");// 경로지정
@@ -242,8 +242,7 @@ public class MemberController {
 		if (!file.exists()) {// 디렉토리 유무화인 후 생성여부 결정
 			file.mkdirs();
 		}
-		
-			
+
 		String originalFileName = upFile.getOriginalFilename();// file이름 String으로
 
 		logger.debug("originFile: " + originalFileName);
@@ -264,14 +263,13 @@ public class MemberController {
 		mp.setMemberSq(memberSq);
 		mp.setOriginalFileName(originalFileName);
 		mp.setRenamedFileName(renamedFileName);
-		
-		//파일 디비에 저장
+
+		// 파일 디비에 저장
 		int result = 0;
-		
-		Member member = new Member(); 				
-		
-		result=service.insertPhoto(member, mp);
-		
+
+		Member member = new Member();
+
+		result = service.insertPhoto(member, mp);
 
 		return result;
 
@@ -314,13 +312,24 @@ public class MemberController {
 		member.setMemberPwd(encodePw);
 		member.setMemberLevel("3");// 소셜회원 : 3으로 초기화
 		int result = 0;
-		System.out.println(member);
 
-		result = service.insertMember(member);
-		if (result > 0) {
-			return result;
-		} else {
-			return -1;
+		logger.debug("member: ", member);
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map param = objectMapper.convertValue(member, Map.class); // pojo->Map
+
+		Member login = service.selectOneMember(param);// 가입한 회원인지 확인
+
+		if (login == null) {// 디비에 없는 경우
+
+			result = service.insertMember(member);
+			if (result > 0) {
+				return result;
+			} else {
+				return -1;
+			}
+		}else { //디비에 존쟈하는 경우
+			return 1;
+			
 		}
 
 	}
@@ -328,7 +337,7 @@ public class MemberController {
 	// 네이버 로그인
 	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/naverLogin", method = { RequestMethod.GET, RequestMethod.POST })
-	public int naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state,
+	public void naverLogin(@RequestParam(value = "code") String code, @RequestParam(value = "state") String state,
 			HttpServletResponse httpServletResponse) throws Exception, IOException {
 		String clientId = "aYgNgGmIwR3wysmlCfRd";// 애플리케이션 클라이언트 아이디값";
 		String naverClientSecret = "voZaFcwXXi";// 시크릿값
@@ -384,6 +393,7 @@ public class MemberController {
 				memberName = userInfoElement.getAsJsonObject().get("response").getAsJsonObject().get("name")
 						.getAsString();
 
+				logger.debug("memberEmail: " + memberEmail);
 				// member 객체 생성 insert용
 				Member member = new Member();
 				member.setMemberName(memberName);
@@ -398,13 +408,12 @@ public class MemberController {
 
 				int ranPhone = rand.nextInt(999999999);
 				member.setMemberPhone(String.valueOf(ranPhone));
-				System.out.println("member: " + rand);
+				System.out.println("member: " + member);
 
 				// 네이버에서 받은 토큰에 유저 정보 넣어서 토큰 생성
 				access_token = createJWTToken(id, memberName, memberEmail);
 
 				logger.debug("memberEmail: " + memberEmail);
-
 				System.out.println(member);
 
 				ObjectMapper objectMapper = new ObjectMapper();
@@ -416,13 +425,11 @@ public class MemberController {
 
 					result = service.insertMember(member);
 
-					if (result > 0) { //잘들어가면 페이지 이동
+					if (result > 0) { // 잘들어가면 페이지 이동
 						httpServletResponse.setHeader("access_token", access_token);// 헤더에 토큰 저장
 						httpServletResponse.sendRedirect(
 								"http://localhost:8081/naverLogin?token=" + access_token + "&email=" + memberEmail);
-						result = 1;
-					} else {
-						result = -1;
+
 					}
 
 				} else {// 디비에 있으면그냥 바로 토큰 저장하고 이동
@@ -433,11 +440,10 @@ public class MemberController {
 
 			}
 		} catch (Exception e) {
-			
+
 			System.out.println(e);
 		}
 		logger.debug("result: " + result);
-		return result;
 
 	}
 
