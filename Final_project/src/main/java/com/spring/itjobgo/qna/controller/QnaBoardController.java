@@ -216,6 +216,7 @@ public class QnaBoardController {
 					else logger.debug("첨부파일 삭제 실패");
 				}
 			}
+			
 			else {
 				msg="qna게시판 글 삭제 실패";
 			}
