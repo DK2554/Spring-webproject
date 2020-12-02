@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="pboard">
   <insert id="insertpboard" parameterType="pboard">
-  	insert into pboard values(seq_pboard.nextval,#{pboardId},#{pboardTitle},#{pboardContent},#{pboardWriter},default,default,1)
+  	insert into pboard values(seq_pboard.nextval,#{pboardId},#{pboardTitle},#{pboardContent},#{pboardWriter},default,default,0)
   <!-- <selectKey keyProperty="pboardWriter" resultType="string" order="BEFORE">
 	select member_name from  pboard join member on pboard.pboard_Id=member.member_sq
   </selectKey> --> 
@@ -42,6 +42,14 @@
   select * from pcomment where pboard_no=#{no} order by pcomment_date desc
   </select>
   <delete id="deletecomment">
-  delete pcomment where pboard_no=#{no}
+  delete pcomment where pcomment_no=#{no}
   </delete>
+  <!--조회수 증가 로직-->
+  <update id="updatacount" parameterType="_int">
+  update pboard set pboard_count=pboard_count+1 where pboard_no=#{no}
+  </update>
+  <!--답글이 달리면 답변여부 상태 변경-->
+  <update id="updatecommentstatus" parameterType="_int">
+  update pboard set pboard_status = 'Y' where pboard_no=#{no}
+  </update>
 </mapper>
