@@ -117,6 +117,7 @@
 
 	</update>
 	
+	
 	<!-- 댓글 insert -->
 	<insert id="insertComment" parameterType="CB_COMMENT">
 		INSERT INTO CB_COMMENT VALUES(
