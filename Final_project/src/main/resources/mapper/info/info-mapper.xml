@@ -44,8 +44,8 @@
 												DEFAULT										
 												)
 	
-			<selectKey keyProperty="infoNo" resultType="_int" order="BEFORE">
-	 		SELECT SEQ_INFO_NO.CURRVAL FROM DUAL
+			<selectKey keyProperty="infoSq" resultType="_int" order="BEFORE">
+	 		SELECT INFO_SQ.CURRVAL FROM DUAL
 	  		</selectKey>
 	  </insert> 
 	  
@@ -69,7 +69,7 @@
 		</select>
 		
 	<!-- 삭제하기 -->
-		<delete id="deleteBoard" parameterType="_int">
+		<delete id="deleteInfo" parameterType="_int">
 			DELETE  FROM INFO WHERE INFO_SQ=#{infoSq}
 		</delete>
 		

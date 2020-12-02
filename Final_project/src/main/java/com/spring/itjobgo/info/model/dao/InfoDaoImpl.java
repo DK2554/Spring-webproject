@@ -35,8 +35,8 @@ public class InfoDaoImpl implements InfoDao {
 
 	//삭제하기
 	@Override
-	public int deleteBoard(SqlSessionTemplate session, int  infoSq) {
-		return session.delete("info.deleteBoard", infoSq);
+	public int deleteInfo(SqlSessionTemplate session, int  infoSq) {
+		return session.delete("info.deleteInfo", infoSq);
 	}
 	
 	//첨부파일 조회

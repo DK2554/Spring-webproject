@@ -166,7 +166,7 @@ public class InfoController {
 
 	// 취업정보 글 삭제하기
 	@RequestMapping(value = "/info/infoDelete{infoSeq}", method = RequestMethod.POST)
-	public String deleteBoard(@PathVariable int infoSq, HttpServletRequest request)
+	public String deleteInfo(@PathVariable int infoSq, HttpServletRequest request)
 			throws JsonMappingException, JsonGenerationException, IOException {
 
 		// 먼저 첨부파일이 삭제가 되면 그 그결과값이 result>0이면 게시글 삭제로 이어지도록
@@ -183,7 +183,7 @@ public class InfoController {
 			String saveDir = request.getServletContext().getRealPath("/resources/upload/info");
 
 			// 게시글 삭제 후 -> 첨부파일 삭제
-			int result = service.deleteBoard(infoSq);
+			int result = service.deleteInfo(infoSq);
 
 			if (result > 0) {
 				msg = "게시글 삭제 완료";
@@ -200,7 +200,7 @@ public class InfoController {
 			}
 			// 첨부파일이 없는 게시글 삭제
 		} else {
-			int result = service.deleteBoard(infoSq);
+			int result = service.deleteInfo(infoSq);
 			msg = (result > 0) ? " info 삭제 성공" : " info 삭제 실패";
 		}
 		logger.debug(msg);

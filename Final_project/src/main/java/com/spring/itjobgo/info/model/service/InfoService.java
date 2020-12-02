@@ -13,7 +13,7 @@ public interface InfoService {
 
 	Info selectInfoOne(int infoSq,boolean hasRead);
 	
-	int deleteBoard(int infoSq);
+	int deleteInfo(int infoSq);
 	
 	INFO_ATTACHMENT selectAttach(int infoSq);
 

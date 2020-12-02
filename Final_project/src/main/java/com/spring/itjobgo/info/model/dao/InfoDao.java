@@ -21,7 +21,7 @@ public interface InfoDao {
 	Info selectInfoOne(SqlSessionTemplate session, int infoSq);
 
 	//글 삭제하기
-	int deleteBoard(SqlSessionTemplate session, int infoSq);
+	int deleteInfo(SqlSessionTemplate session, int infoSq);
 	
 	//첨부파일 조회
 	INFO_ATTACHMENT selectAttach(SqlSessionTemplate session, int infoSq);
@@ -37,4 +37,5 @@ public interface InfoDao {
 
 	//조회수 증가
     int updateReadCount(SqlSessionTemplate session, int infoSq);
+
 }

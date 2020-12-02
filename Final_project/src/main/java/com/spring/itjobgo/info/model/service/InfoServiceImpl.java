@@ -60,8 +60,8 @@ public List<Info> selectInfoList() {
 
 	//삭제하기
 	@Override
-	public int deleteBoard(int infoSq) {
-		return dao.deleteBoard(session, infoSq);
+	public int deleteInfo(int infoSq) {
+		return dao.deleteInfo(session, infoSq);
 	}
 
 	//첨부파일 조회
@@ -86,9 +86,7 @@ public List<Info> selectInfoList() {
 						//첨부파일이없는 게시글일 경우 시퀀스때문에 수정이 안된다
 						//그럴경우 시퀀스가 없는 insertAttachment2매퍼로 이동하도록 유도한다.
 						if(result==0) 
-							
 							dao.insertAttachment2(session, file);
-						
 							System.out.println("==첨부파일 없는 글 첨부파일 등록==");
 					}//for문
 				}//세번째 if문
