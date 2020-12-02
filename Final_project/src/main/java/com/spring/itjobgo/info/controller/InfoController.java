@@ -165,10 +165,10 @@ public class InfoController {
 	}
 
 	// 취업정보 글 삭제하기
-	@RequestMapping(value = "/info/infoDelete{infoSeq}", method = RequestMethod.POST)
+	@RequestMapping(value = "info/infoDelete{infoSq}", method = RequestMethod.POST)
 	public String deleteInfo(@PathVariable int infoSq, HttpServletRequest request)
 			throws JsonMappingException, JsonGenerationException, IOException {
-
+System.out.println("게시판 삭제 맵");
 		// 먼저 첨부파일이 삭제가 되면 그 그결과값이 result>0이면 게시글 삭제로 이어지도록
 		String msg = "";
 		logger.debug("첨부파일 삭제 후 게시글 삭제 로직 수행 logger");
@@ -249,14 +249,14 @@ public class InfoController {
 			List<INFO_ATTACHMENT> files = new ArrayList();
 
 			// 원래 파일이 존재한다면! get해서 가져와서 변수에 저장해두기
-			for (MultipartFile f : file) {
-				if (!f.isEmpty()) {
-					String originalFileName = f.getOriginalFilename();
-					String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
-					int rndNum = (int) (Math.random() * 1000);
-					String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + "_" + rndNum + "." + ext;
-
+			   for(MultipartFile f:file) {
+			         if(!f.isEmpty()) {
+			         String originalFileName=f.getOriginalFilename();
+			         String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+			         SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+			         int rndNum=(int)(Math.random()*1000);
+			         String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+			         		            
 					try {
 						// 파일 저장
 						f.transferTo(new File(saveDir + "/" + renameFileName));
@@ -264,28 +264,28 @@ public class InfoController {
 						e.printStackTrace();
 					}
 
-					INFO_ATTACHMENT file2 = new INFO_ATTACHMENT(0, infoSq, originalFileName, renameFileName, null,
-							null);
+					INFO_ATTACHMENT file2 = new INFO_ATTACHMENT(0, infoSq, originalFileName, renameFileName, null,null);
 					files.add(file2);
 
 				}
 			}
-			int result = 0;
-			try {
-				// 게시판 글 업데이트
-				result = service.updateInfo(ifo, files);
-			} catch (RuntimeException e) {
-				e.printStackTrace();
-			}
-			String msg = "";
-			if (result > 0)
-				msg = "게시글 수정 성공";
-			else
-				msg = "게시글 수정 실패";
-		} else {
-			int result = service.updateInfo(ifo);
-		}
-		return "업데이트 테스트";
+			    int result=0;
+			      try {
+			         //게시판 글 업데이트
+			         result =service.updateInfo(ifo,files);
+			      }catch(RuntimeException e) {
+			         e.printStackTrace();
+			      }
+			      String msg="";
+			      if(result>0) msg="게시글 수정 성공";
+			      else msg="게시글 수정 실패";
+			      
+			      }//193번째줄 if > 파일이 있다면 / 게시판 정보만 업데이트
+			      else {
+			         int result = service.updateInfo(ifo);
+			      }
+			      return "업데이트 테스트";
+			   
 	}
 	
 	//첨부파일 표시

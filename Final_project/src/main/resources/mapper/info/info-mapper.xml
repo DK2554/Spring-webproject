@@ -16,7 +16,7 @@
 		
    <!--취업정보 리스트-->
  	<select id="selectInfoList" resultType="info">
-		SELECT * FROM INFO
+		SELECT * FROM INFO ORDER BY INFO_SQ DESC
 	</select> 
 	
 	<!--취업정보 글 작성 -->
@@ -79,7 +79,7 @@
 		</select>
 		
 	<!-- 게시판 업데이트 update -->
-		<update id="updateInfo=">
+		<update id="updateinfo">
 			UPDATE INFO SET 
 						INFO_CATEGORY=#{infoCategory},
 						INFO_TITLE=#{infoTitle},
@@ -92,19 +92,17 @@
 		<!-- 첨부파일 업데이트 -->
 		<update id="updateAttachment">
 			UPDATE INFO_ATTACHMENT SET
-															ORIGINALFILENAME=#{originalfilename},
-															RENAMEDFILENAME=#{renamedfilename}
-												WHERE INFO_SQ=#{infoSq}
+								ORIGINALFILENAME=#{originalfilename},
+								RENAMEDFILENAME=#{renamedfilename}
+					WHERE INFO_SQ=#{infoSq}
 		</update>										
 		
 		<!-- 조회수  -->
 		<update id="updateReadCount">
 		UPDATE INFO SET
-												INFO_COUNT=INFO_COUNT+1
-												WHERE INFO_SQ=#{infoSq}
+								INFO_COUNT=INFO_COUNT+1
+								WHERE INFO_SQ=#{infoSq}
 
 	</update>
-	
-	
 </mapper>
 	
