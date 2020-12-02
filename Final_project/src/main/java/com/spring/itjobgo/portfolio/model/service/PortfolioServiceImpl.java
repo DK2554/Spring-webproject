@@ -57,9 +57,19 @@ public class PortfolioServiceImpl implements PortfolioService {
 		return result;
 	}
 	@Override
-	public Pboard selectPboardOne(int pboardNo) {
-	
-		return dao.selectOnepboard(session,pboardNo);
+	public Pboard selectPboardOne(int pboardNo,boolean hasRead) {
+		Pboard pd=dao.selectOnepboard(session,pboardNo);
+		if(pd!=null && !hasRead) {
+			int result =dao.updateReadCount(session,pboardNo);
+			
+		}	
+		return  pd;
+	}
+	@Override
+	public int updatacommentText(int pboardNo) {
+		//답글이 달리면 답변여부를 변경해주는 로직
+		return dao.updatacommentText(session, pboardNo);
+		
 	}
 	@Override
 	public Attachment selectattac(int no) {

@@ -12,7 +12,7 @@ public interface PortfolioService {
 
 	List<Pboard> selectListPboard();
 
-	Pboard selectPboardOne(int pboardNo);
+	Pboard selectPboardOne(int pboardNo, boolean hasRead);
 
 	int deletePboard(int no);
 
@@ -29,6 +29,8 @@ public interface PortfolioService {
 	List<Comment> selectComment(int no);
 
 	int deletecomment(int no);
+
+	int updatacommentText(int pboardNo);
 
 	
 

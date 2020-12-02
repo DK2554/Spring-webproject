@@ -25,6 +25,19 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public int updateReadCount(SqlSessionTemplate session, int pboardNo) {
+		// TODO Auto-generated method stub
+		return session.update("pboard.updatacount",pboardNo);
+	}
+
+	@Override
+	public int updatacommentText(SqlSessionTemplate session, int pboardNo) {
+		// TODO Auto-generated method stub
+		// 답변 여부 변경 
+		return session.update("pboard.updatecommentstatus",pboardNo);
+	}
+
+	@Override
 	public Attachment selectOneAttach(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectOne("pboard.selectattachment",no);

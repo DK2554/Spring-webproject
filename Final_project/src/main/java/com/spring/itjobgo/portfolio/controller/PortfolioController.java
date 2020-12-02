@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -120,11 +122,41 @@ public class PortfolioController {
 		
 	}
 	@RequestMapping(value="/portfolio/pboardinfo{pboardNo}.do",method = RequestMethod.GET)
-	public Pboard pboardinfo(@PathVariable int pboardNo) 
+	public Pboard pboardinfo(@PathVariable int pboardNo,HttpServletRequest request,HttpServletResponse response) 
 	throws JsonMappingException,JsonGenerationException,IOException{
 	
 		logger.debug("pbaordNo"+Integer.toString(pboardNo));
-		Pboard bp=service.selectPboardOne(pboardNo);
+		//조회수 증가로직 쿠키이용
+		//
+				Cookie[] cookies =request.getCookies();
+				String boardHistory="";
+				boolean hasRead=false; 
+				
+				if(cookies!=null) {
+				for(Cookie c : cookies) {
+					
+					
+					String name = c.getName();
+					String value = c.getValue();
+					
+					if("boardHistory".equals(name)) {
+						boardHistory=value; //현재 저장된 값대입 덮어쓰기하면서 누적
+						
+						if(value.contains("|"+pboardNo+"|")) {
+							hasRead=true;
+							break;
+						}
+					}
+				  }//for
+				}//if
+				
+				if(!hasRead) {
+					Cookie c = new Cookie("boardHistory",boardHistory+"|"+pboardNo+"|");
+					c.setMaxAge(-1);
+					response.addCookie(c);
+							
+				}	
+		Pboard bp=service.selectPboardOne(pboardNo,hasRead);
 		//return pb;
 		return bp;
 	}
@@ -272,12 +304,14 @@ public class PortfolioController {
 	}
 	//댓글 작성
 	@RequestMapping(value="portfolio/comment.do",method =RequestMethod.POST)
-	public String comment( Comment cm) {
-		String msg="";
+	public void comment( Comment cm) {
+		
 		int result=service.insertComment(cm);
-		logger.debug(cm.toString());
-		logger.debug("매핑테스트");
-		return msg;
+		if(result>0) {
+			//답글이 달리면 N-> Y로 변경
+			int comment =service.updatacommentText(cm.getPboardNo());
+		}
+	
 	}
 	//댓글 조회
 	@RequestMapping(value="portfolio/commentList{no}.do",method =RequestMethod.GET)
@@ -290,9 +324,10 @@ public class PortfolioController {
 		}
 		return list;
 	}
-	@RequestMapping(value="portfolio/commentdelte",method=RequestMethod.GET)
-	public void commentdel(@RequestParam int no) {
+	@RequestMapping(value="portfolio/commentdel{no}.do",method=RequestMethod.POST)
+	public void commentdel(@PathVariable int no) {
 		int result=service.deletecomment(no);
 		
 	}
+	
 }
