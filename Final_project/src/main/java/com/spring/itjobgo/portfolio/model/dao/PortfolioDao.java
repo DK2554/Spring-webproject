@@ -34,4 +34,8 @@ public interface PortfolioDao {
 
 	int deletecomment(SqlSessionTemplate session,int no);
 
+	int updateReadCount(SqlSessionTemplate session, int pboardNo);
+
+	int updatacommentText(SqlSessionTemplate session, int pboardNo);
+
 }
