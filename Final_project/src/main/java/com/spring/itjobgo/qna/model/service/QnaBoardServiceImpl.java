@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.qna.model.dao.QnaBoardDao;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	@Service
@@ -103,6 +104,18 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	@Override
 	public int updateBoard(QnaBoard qb) {
 		return dao.updateBoard(session,qb);
+	}
+
+	//댓글 insert 로직
+	@Override
+	public int insertComment(QB_COMMENT cm) {
+		return dao.insertComment(session,cm);
+	}
+	
+	//댓글이 달리면 답변여부 변경해주는 로직
+	@Override
+	public int insertCommentText(int qbBoardNo) {
+		return dao.insertCommentText(session, qbBoardNo);
 	}
 	
 	

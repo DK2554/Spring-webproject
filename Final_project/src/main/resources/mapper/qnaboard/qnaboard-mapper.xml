@@ -104,6 +104,21 @@
 										BOARD_COUNT=BOARD_COUNT+1
 										WHERE QNA_SEQ=#{qnaSeq}
 	</update>
+	
+	<!-- 댓글 등록  -->
+	<insert id="insertComment" parameterType="qbcomment">
+			INSERT INTO QB_COMMENT VALUES(
+												SEQ_QB_COMMENT_NO.NEXTVAL,
+												#{qbBoardNo},
+												#{qbCommentContent},
+												#{memberSq},
+												default,
+												#{memberName}								
+												)
+	</insert>
+	
+	
+	
 
 	
 	

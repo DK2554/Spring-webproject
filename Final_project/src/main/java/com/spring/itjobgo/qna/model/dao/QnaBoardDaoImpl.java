@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 @Repository
@@ -69,6 +70,18 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 	@Override
 	public int updateReadCount(SqlSessionTemplate session, int qnaSeq) {
 		return session.update("qnaBoard.updateReadCount",qnaSeq);
+	}
+
+	//댓글 등록 로직
+	@Override
+	public int insertComment(SqlSessionTemplate session, QB_COMMENT cm) {
+		return session.insert("qnaBoard.insertComment",cm);
+	}
+
+	//댓글 등록시 답변여부 변경로직
+	@Override
+	public int insertCommentText(SqlSessionTemplate session, int qbBoardNo) {
+		return session.update("qnaBoard.insertCommentText",qbBoardNo);
 	}
 	
 	

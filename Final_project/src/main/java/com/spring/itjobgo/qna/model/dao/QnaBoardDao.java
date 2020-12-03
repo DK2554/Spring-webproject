@@ -2,10 +2,10 @@ package com.spring.itjobgo.qna.model.dao;
 
 import java.util.List;
 
-
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 public interface QnaBoardDao {
@@ -38,6 +38,13 @@ public interface QnaBoardDao {
 	
 	//조회수 증가
 	int updateReadCount(SqlSessionTemplate session, int qnaSeq);
+	
+	//댓글 등록
+	int insertComment(SqlSessionTemplate session, QB_COMMENT cm);
+	
+	//댓글 등록시 답변여부 변경
+	int insertCommentText(SqlSessionTemplate session, int qbBoardNo);
+	
 	
 	
 }

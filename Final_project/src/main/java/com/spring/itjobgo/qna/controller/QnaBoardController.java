@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 @RestController
@@ -369,6 +370,25 @@ public class QnaBoardController {
 		}
 	}
 			
+	// 댓글작성하기
+	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
+	public void comment(QB_COMMENT cm) {
+		int result = service.insertComment(cm);
+		if(result>0) {
+			//답글이 달리면 N->Y로 변경.
+			int comment = service.insertCommentText(cm.getQbBoardNo());
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 			
 	}
 	

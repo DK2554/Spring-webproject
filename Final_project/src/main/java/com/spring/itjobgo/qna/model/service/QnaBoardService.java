@@ -3,6 +3,7 @@ package com.spring.itjobgo.qna.model.service;
 import java.util.List;
 
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 public interface QnaBoardService {
@@ -20,6 +21,11 @@ public interface QnaBoardService {
 	int updateBoard(QnaBoard qb, List<QB_ATTACHMENT>files);
 	
 	int updateBoard(QnaBoard qb);
+	
+	int insertComment(QB_COMMENT cm);
+
+	int insertCommentText(int qbBoardNo);
+	
 	
 	
 }

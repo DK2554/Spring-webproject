@@ -48,6 +48,10 @@
 			alias="qna_attachment" />
 			
 		<typeAlias
+			type="com.spring.itjobgo.qna.model.vo.QB_COMMENT"
+			alias="qbcomment" />			
+			
+		<typeAlias
 			type="com.spring.itjobgo.notice.model.vo.Notice"
 			alias="Notice" />
 		
