@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class QnaBoard {
 	
-	private int qnaSeq; //번호(PK)  qnaboardNo
+	private int qnaSeq; //번호(PK) 
 	private String qnaCategory; //분류
 	private String qnaTitle; //제목
 	private String qnaWriter; //작성자

@@ -117,6 +117,22 @@
 												)
 	</insert>
 	
+	<!--댓글 등록시 답변상태 여부 변경 -->
+	<update id="insertCommentText" parameterType="_int">
+			UPDATE QNA_BOARD SET QNA_ANSWER_YN ='Y' WHERE QNA_SEQ=#{qbBoardNo}
+	</update>
+	
+	
+	<!--댓글 조회  -->
+	<select id="selectQnacomment" parameterType="_int" resultType="qbcomment">
+			SELECT * FROM QB_COMMENT WHERE QB_BOARD_NO=#{qbBoardNo}
+																		ORDER BY QBCOMMENT_DATE DESC
+	</select>
+	
+	<!-- 댓글삭제 -->
+	<delete id="deletecomment">
+			DELETE QB_COMMENT WHERE QB_BOARD_NO=#{qbCommentNo}
+	</delete>
 	
 	
 

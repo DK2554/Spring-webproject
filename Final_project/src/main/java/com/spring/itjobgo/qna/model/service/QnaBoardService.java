@@ -26,6 +26,9 @@ public interface QnaBoardService {
 
 	int insertCommentText(int qbBoardNo);
 	
+	List<QB_COMMENT> selectQnacomment(int qbBoardNo);
+	
+	int deletecomment(int qbCommentNo);
 	
 	
 }

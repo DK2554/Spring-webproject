@@ -22,4 +22,6 @@ public interface MeetingDao {
 
 	int insertapply(SqlSessionTemplate session, Tmpapply tmp);
 
+	Mattachment selectMattach(SqlSessionTemplate session, int no);
+
 }

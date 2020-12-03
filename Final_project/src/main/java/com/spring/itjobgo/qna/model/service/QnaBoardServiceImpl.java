@@ -117,6 +117,18 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	public int insertCommentText(int qbBoardNo) {
 		return dao.insertCommentText(session, qbBoardNo);
 	}
+
+	//댓글 조회 로직
+	@Override
+	public List<QB_COMMENT> selectQnacomment(int qbBoardNo) {
+		return dao.selectQnacomment(session,qbBoardNo);
+	}
+
+	//댓글 삭제 로직
+	@Override
+	public int deletecomment(int qbCommentNo) {
+		return dao.deletecomment(session,qbCommentNo);
+	}
 	
 	
 	

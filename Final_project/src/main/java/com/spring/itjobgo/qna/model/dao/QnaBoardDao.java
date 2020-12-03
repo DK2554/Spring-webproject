@@ -45,6 +45,11 @@ public interface QnaBoardDao {
 	//댓글 등록시 답변여부 변경
 	int insertCommentText(SqlSessionTemplate session, int qbBoardNo);
 	
+	//댓글 조회
+	List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qbBoardNo);
+	
+	//댓글 삭제
+	int deletecomment(SqlSessionTemplate session, int qbCommentNo);
 	
 	
 }

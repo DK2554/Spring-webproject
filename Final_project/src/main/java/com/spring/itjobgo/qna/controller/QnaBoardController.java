@@ -375,17 +375,29 @@ public class QnaBoardController {
 	public void comment(QB_COMMENT cm) {
 	System.out.println("댓글~~~~~~~~~~~~~~~~~~~~~~~매핑시작");
 		int result = service.insertComment(cm);
-//		if(result>0) {
-//			//답글이 달리면 N->Y로 변경. 이건 y변경되는거 아직 안한것 
-//			int comment = service.insertCommentText(cm.getQbBoardNo());
-//		}
+		if(result>0) {
+			//답글이 달리면 N->Y로 변경.
+			int comment = service.insertCommentText(cm.getQbBoardNo());
+		}
 		
 	}
+	//댓글 조회
+	@RequestMapping(value="qna/qnalist",method =RequestMethod.GET)
+	public List<QB_COMMENT> commentList(@PathVariable int qbBoardNo){
+		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글을 불러오는 것
+		logger.debug("댓글 조회 매핑테스트");
+		List<QB_COMMENT> list=service.selectQnacomment(qbBoardNo);
+		for(QB_COMMENT cm:list) {
+			logger.debug(cm.toString());
+		}
+		return list;
+	}
 	
-	
-	
-	
-	
+	//댓글삭제
+	@RequestMapping(value="qna/commentdel",method=RequestMethod.POST)
+	public void commentdel(@PathVariable int qbCommentNo) {
+			int result=service.deletecomment(qbCommentNo);
+	}
 	
 	
 	

@@ -83,6 +83,20 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 	public int insertCommentText(SqlSessionTemplate session, int qbBoardNo) {
 		return session.update("qnaBoard.insertCommentText",qbBoardNo);
 	}
+
+	//댓글 조회
+	@Override
+	public List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qbBoardNo) {
+		return session.selectList("qnaBoard.selectQnacomment",qbBoardNo);
+	}
+
+	//댓글 삭제
+	@Override
+	public int deletecomment(SqlSessionTemplate session, int qbCommentNo) {
+		return session.delete("qnaBoard.deletecomment",qbCommentNo);
+	}
+	
+	
 	
 	
 	
