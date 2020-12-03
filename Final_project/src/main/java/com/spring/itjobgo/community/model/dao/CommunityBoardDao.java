@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
@@ -38,4 +39,16 @@ public interface CommunityBoardDao {
 
 	//조회수증가
 	int updateReadCount(SqlSessionTemplate session, int boardSq);
+	
+	//댓글 insert
+	int insertComment(SqlSessionTemplate session, CB_COMMENT cbc);
+	
+	//댓글 select
+	List<CB_COMMENT>selectComment(SqlSessionTemplate session, int cboardNo);
+	
+	//댓글 delete
+	int deleteComment(SqlSessionTemplate session, int cbCommentNo);
+	
+	//댓글 update
+	int updateComment(SqlSessionTemplate session, CB_COMMENT cbc);
 }
