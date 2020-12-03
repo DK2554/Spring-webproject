@@ -2,9 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="notice">
   
+  <!-- 공지사항 select -->
   <select id="noticeList" resultType="Notice">
   	SELECT * FROM NOTICE
   </select>
   
+  <!-- 공지사항 insert -->
+<!--   <insert id="insertNotice">
+		INSERT INTO NOTICE VALUES(
+											SEQ_NOTICE_NO.NEXTVAL,
+											#{noticeDivision},
+											#{noticeTitle},
+											#{noticeContent},
+											DEFAULT,
+											1,
+											#{memberNum},
+											1
+											)
+  </insert> -->
+  
+  <!-- 첨부파일 등록 insert -->
+<!--   <insert id="insertNoticeAttachment" parameterType="">
+  
+  </insert> -->
   
 </mapper>

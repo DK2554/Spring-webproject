@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 @Repository
@@ -78,6 +79,33 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		// TODO Auto-generated method stub
 		return session.update("communityBoard.updateReadCount",boardSq);
 	}
+	//댓글 insert
+	@Override
+	public int insertComment(SqlSessionTemplate session, CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return session.insert("communityBoard.insertComment",cbc);
+	}
+	//댓글 조회
+	@Override
+	public List<CB_COMMENT> selectComment(SqlSessionTemplate session, int cboardNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("communityBoard.selectComment",cboardNo);
+	}
+	//댓글 삭제
+	@Override
+	public int deleteComment(SqlSessionTemplate session, int cboardNo) {
+		// TODO Auto-generated method stub
+		return session.delete("communityBoard.deleteComment",cboardNo);
+	}
+	//댓글 수정
+	@Override
+	public int updateComment(SqlSessionTemplate session, CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateComment",cbc);
+	}
+	
+	
+	
 	
 	
 	
@@ -91,4 +119,4 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 
 	
 
-}
+}//클래스

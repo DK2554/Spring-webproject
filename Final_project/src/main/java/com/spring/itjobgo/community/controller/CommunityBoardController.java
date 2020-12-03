@@ -30,6 +30,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 @RestController
@@ -349,17 +350,69 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
 		int read=-1;
 		while((read=bis.read())!=-1) {
 			sos.write(read);
-		}
-	}catch(IOException e) {
-		e.printStackTrace();
-	}finally {
-		try {
-			sos.close();
-			bis.close();
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				sos.close();
+				bis.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
-}
+
+	//댓글작성
+	@RequestMapping(value="community/comment", method=RequestMethod.POST)
+	public String insertComment(CB_COMMENT cbc) {
+		String msg="댓글insert";
+		int result = service.insertComment(cbc);
+		
+		logger.debug(cbc.toString());
+		logger.debug("댓글달기 매핑테스트");
+		return msg;
+	}
+	
+	//댓글조회
+	@RequestMapping(value="community/commentSelectOne{cboardNo}", method=RequestMethod.GET)
+	public  List<CB_COMMENT> commentList(@PathVariable int cboardNo){
+		
+		logger.debug(cboardNo + ": 의 댓글조회 맵핑 시작");
+		List<CB_COMMENT>list = service.selectComment(cboardNo);
+		
+		for(CB_COMMENT cbc : list) {
+			logger.debug(cbc.toString());
+		}
+		
+		return list;
+	}
+	
+	//댓글삭제
+	@RequestMapping(value="community/commentDelete{cbCommentNo}",method=RequestMethod.POST)
+	public void commentDelete(@PathVariable int cbCommentNo) {
+		
+		int result=service.deleteComment(cbCommentNo);
+		
+		if(result>0) {
+			System.out.println("게시판 댓글 삭제성공");		
+		}else {
+			System.out.println("게시판 댓글 삭제 실패");
+		}
+	}
+	
+	//김현주바보
+	//댓글수정
+	@RequestMapping(value="community/updateComment", method=RequestMethod.POST)
+	public String updateComment(CB_COMMENT cbc) {
+		System.out.println("==댓글수정 맵핑테스트==" + cbc);
+		String msg="댓글update";
+		int result = service.updateComment(cbc);
+		
+		logger.debug(cbc.toString());
+		logger.debug("댓글upate 매핑테스트");
+		return msg;
+	}
+	
 	
 }//클래스
