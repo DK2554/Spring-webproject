@@ -27,6 +27,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public Mattachment selectMattach(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectmattach",no);
+	}
+
+	@Override
 	public Mboard selectMinfo(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectOne("meeting.selectminfo",no);

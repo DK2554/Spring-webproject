@@ -27,6 +27,10 @@ public interface MemberService {
 
 	int insertPhoto(Member member, MemberPhoto mp);
 
+	String selectPhoto(String memberSq);
+
+	int updatePhoto(Member member, MemberPhoto mp);
+
 	
 
 
