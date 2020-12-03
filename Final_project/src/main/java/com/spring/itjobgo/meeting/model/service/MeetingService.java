@@ -17,4 +17,6 @@ public interface MeetingService {
 
 	int insertapply(int memberSq, String postion);
 
+	Mattachment selectMat(int no);
+
 }

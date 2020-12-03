@@ -27,5 +27,9 @@ public interface MemberDao {
 
 	int insertPhoto(SqlSession session, MemberPhoto mp);
 
+	String selectPhoto(SqlSession session, String memberSq);
+
+	int updatePhoto(SqlSession session, MemberPhoto mp);
+
 
 }

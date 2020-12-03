@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.community.model.dao.CommunityBoardDao;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
@@ -108,16 +109,41 @@ public int updateBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 		return result;
 	}
 
-//첨부파일이 없을때 게시판 내용만 update
-@Override
-public int updateBoard(CommunityBoard cb) {
-	// TODO Auto-generated method stub
-	return dao.updateBoard(session,cb);
-}
+	//첨부파일이 없을때 게시판 내용만 update
+	@Override
+	public int updateBoard(CommunityBoard cb) {
+		// TODO Auto-generated method stub
+		return dao.updateBoard(session,cb);
+	}
+	//댓글달기
+	@Override
+	public int insertComment(CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return dao.insertComment(session, cbc);
+	}
+
+	//댓글조회
+	@Override
+	public List<CB_COMMENT> selectComment(int cboardNo) {
+		// TODO Auto-generated method stub
+		return dao.selectComment(session, cboardNo);
+	}
+	//댓글삭제
+	@Override
+	public int deleteComment(int cbCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteComment(session,cbCommentNo);
+	}
+	//댓글수정
+	@Override
+	public int updateComment(CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return dao.updateComment(session,cbc);
+	}
+
+  
+	
 
 
 
-
-
-
-}
+}//클래스

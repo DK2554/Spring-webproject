@@ -68,6 +68,16 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertPhoto", mp);
 	}
 
+	@Override
+	public String selectPhoto(SqlSession session, String memberSq) {
+		return session.selectOne("member.selectPhoto", memberSq);
+	}
+
+	@Override
+	public int updatePhoto(SqlSession session, MemberPhoto mp) {
+		return session.update("member.updatePhoto", mp);
+	}
+
 
 	
 }

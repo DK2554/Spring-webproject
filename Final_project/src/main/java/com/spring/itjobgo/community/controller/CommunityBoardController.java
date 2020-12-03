@@ -30,6 +30,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
 
 @RestController
@@ -319,6 +320,7 @@ public CB_ATTACHMENT downLoad(@PathVariable int boardSq) {
 //첨부파일 다운로드(이름 보내기)
 @RequestMapping(value="community/filedownload",method=RequestMethod.GET)
 public void filedownload(HttpServletRequest request,HttpServletResponse response,
+<<<<<<< HEAD
                                  @RequestHeader(name="user-agent")String header,
                                  @RequestParam(value="oriName") String oriName,
                                  @RequestParam(value="reName")  String reName) 
@@ -363,3 +365,101 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
 }
    
 }//클래스
+=======
+											@RequestHeader(name="user-agent")String header,
+											@RequestParam(value="oriName") String oriName,
+											@RequestParam(value="reName")  String reName) 
+											{
+	
+	logger.debug(oriName);
+	logger.debug(reName);
+	String path=request.getServletContext().getRealPath("/resources/upload/communityBoard");
+	File saveFile=new File(path+"/"+reName);
+	BufferedInputStream bis=null;
+	ServletOutputStream sos=null;
+	
+	try {
+		bis=new BufferedInputStream(new FileInputStream(saveFile));
+		sos=response.getOutputStream();
+		boolean isMSIE=header.indexOf("Trident")!=-1||header.indexOf("MSIE")!=-1;
+		String encodeRename="";
+		if(isMSIE) {
+			encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
+			
+		}else {
+			encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
+		}
+		response.setContentType("application/octet-stream;charset=utf-8");
+		response.setHeader("Content-Disposition", "attachment;filename=\""+encodeRename+"\"");
+		response.setHeader("Content-Transfer-Encoding", "binary;");
+		response.setContentLength((int)saveFile.length());
+		int read=-1;
+		while((read=bis.read())!=-1) {
+			sos.write(read);
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				sos.close();
+				bis.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//댓글작성
+	@RequestMapping(value="community/comment", method=RequestMethod.POST)
+	public String insertComment(CB_COMMENT cbc) {
+		String msg="댓글insert";
+		int result = service.insertComment(cbc);
+		
+		logger.debug(cbc.toString());
+		logger.debug("댓글달기 매핑테스트");
+		return msg;
+	}
+	
+	//댓글조회
+	@RequestMapping(value="community/commentSelectOne{cboardNo}", method=RequestMethod.GET)
+	public  List<CB_COMMENT> commentList(@PathVariable int cboardNo){
+		
+		logger.debug(cboardNo + ": 의 댓글조회 맵핑 시작");
+		List<CB_COMMENT>list = service.selectComment(cboardNo);
+		
+		for(CB_COMMENT cbc : list) {
+			logger.debug(cbc.toString());
+		}
+		
+		return list;
+	}
+	
+	//댓글삭제
+	@RequestMapping(value="community/commentDelete{cbCommentNo}",method=RequestMethod.POST)
+	public void commentDelete(@PathVariable int cbCommentNo) {
+		
+		int result=service.deleteComment(cbCommentNo);
+		
+		if(result>0) {
+			System.out.println("게시판 댓글 삭제성공");		
+		}else {
+			System.out.println("게시판 댓글 삭제 실패");
+		}
+	}
+	
+	//김현주바보
+	//댓글수정
+	@RequestMapping(value="community/updateComment", method=RequestMethod.POST)
+	public String updateComment(CB_COMMENT cbc) {
+		System.out.println("==댓글수정 맵핑테스트==" + cbc);
+		String msg="댓글update";
+		int result = service.updateComment(cbc);
+		
+		logger.debug(cbc.toString());
+		logger.debug("댓글upate 매핑테스트");
+		return msg;
+	}
+	
+	
+}//클래스
+>>>>>>> 97bb4c8050e887e44895e4da012e0d4e2c4ff999

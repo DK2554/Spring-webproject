@@ -26,7 +26,7 @@
 		
 	<!-- 자유게시판 전체 조회 -->
  	<select id="selectBoardList" resultType="communityBoard">
-		SELECT * FROM COMMUNITY_BOARD
+		SELECT * FROM COMMUNITY_BOARD ORDER BY BOARD_SQ DESC
 	</select> 
 
 	<!-- 자유게시판 글 작성 -->
@@ -109,11 +109,44 @@
 													
 	</update>
 	
+	<!-- 조회수 증가 -->
 	<update id="updateReadCount">
 		UPDATE COMMUNITY_BOARD SET
 												BOARD_COUNT=BOARD_COUNT+1
 												WHERE BOARD_SQ=#{boardSq}
 
+	</update>
+	
+	
+	<!-- 댓글 insert -->
+	<insert id="insertComment" parameterType="CB_COMMENT">
+		INSERT INTO CB_COMMENT VALUES(
+											SEQ_COMMUNITY_BOARD_COMMENT_NO.NEXTVAL,
+											#{cboardNo},
+											#{cbCommentContent},
+											#{memberSq},
+											TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss'),
+											#{memberName}							
+											)
+	</insert>
+	
+	<!-- 댓글 조회하기 -->
+	<select id="selectComment" resultType="CB_COMMENT">
+		SELECT * FROM CB_COMMENT WHERE CBOARD_NO=#{cboardNo}
+						ORDER BY CB_COMMENT_DATE DESC
+	</select>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM CB_COMMENT WHERE CB_COMMENT_NO=#{cbCommentNo}
+	</delete>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="updateComment" parameterType="CB_COMMENT">
+		UPDATE CB_COMMENT SET
+												CB_COMMENT_CONTENT=#{cbCommentContent},
+												CB_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
+												WHERE CB_COMMENT_NO=#{cbCommentNo}
 	</update>
   		
   		

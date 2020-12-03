@@ -8,26 +8,31 @@
 
 	</settings>
 	<typeAliases>
-	
+
 		<typeAlias
 			type="com.spring.itjobgo.portfolio.model.vo.Attachment"
 			alias="attachment" />
-		<typeAlias type="com.spring.itjobgo.portfolio.model.vo.Comment"
-		alias="comment"
-		/>
+		<typeAlias
+			type="com.spring.itjobgo.meeting.model.vo.Mattachment"
+			alias="mattachment" />
+		<typeAlias
+			type="com.spring.itjobgo.portfolio.model.vo.Comment" alias="comment" />
 		<typeAlias type="com.spring.itjobgo.meeting.model.vo.Mboard"
-		alias="mboard" />
-		
-		
+			alias="mboard" />
+
+
 		<typeAlias type="com.spring.itjobgo.common.StringArrayType"
-		alias="strarr" />
-		
+			alias="strarr" />
+
 		<typeAlias type="com.spring.itjobgo.member.model.vo.Member"
 			alias="member" />
-			
+		<typeAlias
+			type="com.spring.itjobgo.member.model.vo.MemberPhoto"
+			alias="memberPhoto" />
+
 		<typeAlias
 			type="com.spring.itjobgo.portfolio.model.vo.Pboard" alias="pboard" />
-			
+
 		<typeAlias
 			type="com.spring.itjobgo.community.model.vo.CommunityBoard"
 			alias="communityBoard" />
@@ -38,6 +43,7 @@
 
 		<typeAlias type="com.spring.itjobgo.info.model.vo.Info"
 			alias="Info" />
+<<<<<<< HEAD
 			
 			<typeAlias type="com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT"
 			alias="info_attachment" />
@@ -46,19 +52,32 @@
 			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
 			alias="qnaBoard"/>
 			
+=======
+
+		<typeAlias type="com.spring.itjobgo.qna.model.vo.QnaBoard"
+			alias="qnaBoard" />
+
+>>>>>>> 97bb4c8050e887e44895e4da012e0d4e2c4ff999
 		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT"
 			alias="qna_attachment" />
-			
-		<typeAlias
-			type="com.spring.itjobgo.notice.model.vo.Notice"
+
+		<typeAlias type="com.spring.itjobgo.notice.model.vo.Notice"
 			alias="Notice" />
-		
+
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.Rboard"
 			alias="rboard" />
-			
-		<typeAlias type="com.spring.itjobgo.resume.model.vo.RboardAttachment"
+
+		<typeAlias
+			type="com.spring.itjobgo.resume.model.vo.RboardAttachment"
 			alias="rboard_attachment" />
+			
+			<typeAlias
+			type="com.spring.itjobgo.community.model.vo.CB_COMMENT"
+			alias="CB_COMMENT" />	
+			
+			
+			
 	</typeAliases>
 
 </configuration>
