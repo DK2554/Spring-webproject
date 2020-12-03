@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -328,6 +329,13 @@ public class PortfolioController {
 	public void commentdel(@PathVariable int no) {
 		int result=service.deletecomment(no);
 		
+	}
+	//댓글 업데이트
+	@RequestMapping(value="portfolio/updatecomment.do",method=RequestMethod.POST)
+	//public void commentupdate(String pcommentContent,int pcommentNo) {
+	public void commentupdate(@RequestBody Map param) {
+		logger.debug("param"+param);
+		int result =service.updatecomment(param);
 	}
 	
 }

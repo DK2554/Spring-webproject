@@ -2,7 +2,7 @@ package com.spring.itjobgo.portfolio.model.service;
 
 
 import java.util.List;
-
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,11 @@ public class PortfolioServiceImpl implements PortfolioService {
 	private SqlSessionTemplate session;
 	
 	
+	@Override
+	public int updatecomment(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatecomment(session,param);
+	}
 	@Override
 	public int insertComment(Comment cm) {
 		// TODO Auto-generated method stub

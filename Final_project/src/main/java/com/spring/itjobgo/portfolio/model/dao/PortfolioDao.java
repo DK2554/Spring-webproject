@@ -1,6 +1,7 @@
 package com.spring.itjobgo.portfolio.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -37,5 +38,7 @@ public interface PortfolioDao {
 	int updateReadCount(SqlSessionTemplate session, int pboardNo);
 
 	int updatacommentText(SqlSessionTemplate session, int pboardNo);
+
+	int updatecomment(SqlSessionTemplate session, Map param);
 
 }

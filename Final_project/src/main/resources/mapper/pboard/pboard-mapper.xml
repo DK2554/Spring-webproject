@@ -52,4 +52,7 @@
   <update id="updatecommentstatus" parameterType="_int">
   update pboard set pboard_status = 'Y' where pboard_no=#{no}
   </update>
+  <update id="updatecomment"   parameterType="java.util.HashMap">
+  update pcomment set pcomment_content =#{pcommentcontent} where pcomment_no=#{pcommentNo}
+  </update>
 </mapper>
