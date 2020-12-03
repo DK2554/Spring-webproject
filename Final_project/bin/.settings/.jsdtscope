@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+<<<<<<< HEAD
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="src/main/webapp"/>
+	<classpathentry kind="src" path="target/m2e-wtp/web-resources"/>
+=======
+<<<<<<< HEAD
+	<classpathentry kind="src" path="src/main/webapp"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="target/m2e-wtp/web-resources"/>
+=======
+<<<<<<< HEAD
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="src/main/webapp"/>
+	<classpathentry kind="src" path="target/m2e-wtp/web-resources"/>
+=======
+	<classpathentry kind="src" path="src/main/webapp"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="target/m2e-wtp/web-resources"/>
+>>>>>>> 7de8051c0ec41fe31fb5efa508fb7c76f736d37c
+>>>>>>> 7812aba3d6da28b924415bfe9e760ebb2eb59541
+>>>>>>> c4d089e3de417b2afb60e002640ee93b713a17f6
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.WebProject">
+		<attributes>
+			<attribute name="hide" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.baseBrowserLibrary"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
