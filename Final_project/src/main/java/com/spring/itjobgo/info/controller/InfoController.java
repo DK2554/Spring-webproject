@@ -207,9 +207,8 @@ System.out.println("게시판 삭제 맵");
 		return msg;
 
 	}
-
+	
 	// 첨부파일 먼저 불러오기 (update form 으로)
-
 	@RequestMapping(value = "/info/infoUpdate{infoSq}", 
 								method = RequestMethod.GET)
 	public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
