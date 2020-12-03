@@ -373,20 +373,21 @@ public class QnaBoardController {
 	// 댓글작성하기
 	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
 	public void comment(QB_COMMENT cm) {
-	System.out.println("댓글~~~~~~~~~~~~~~~~~~~~~~~매핑시작");
+	System.out.println("댓글작성하기~~~매핑시작");
 		int result = service.insertComment(cm);
 		if(result>0) {
 			//답글이 달리면 N->Y로 변경.
 			int comment = service.insertCommentText(cm.getQbBoardNo());
+			System.out.println("댓글작성하기~~~성공");
 		}
 		
 	}
 	//댓글 조회
 	@RequestMapping(value="qna/qnalist",method =RequestMethod.GET)
-	public List<QB_COMMENT> commentList(@PathVariable int qbBoardNo){
+	public List<QB_COMMENT> commentList(@PathVariable int qnaSeq){
 		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글을 불러오는 것
 		logger.debug("댓글 조회 매핑테스트");
-		List<QB_COMMENT> list=service.selectQnacomment(qbBoardNo);
+		List<QB_COMMENT> list=service.selectQnacomment(qnaSeq);
 		for(QB_COMMENT cm:list) {
 			logger.debug(cm.toString());
 		}

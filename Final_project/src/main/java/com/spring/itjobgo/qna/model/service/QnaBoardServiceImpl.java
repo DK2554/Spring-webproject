@@ -120,8 +120,8 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//댓글 조회 로직
 	@Override
-	public List<QB_COMMENT> selectQnacomment(int qbBoardNo) {
-		return dao.selectQnacomment(session,qbBoardNo);
+	public List<QB_COMMENT> selectQnacomment(int qnaSeq) {
+		return dao.selectQnacomment(session,qnaSeq);
 	}
 
 	//댓글 삭제 로직

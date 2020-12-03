@@ -50,7 +50,6 @@
 		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT"
 			alias="qna_attachment" />
-<<<<<<< HEAD
 			
 		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QB_COMMENT"
@@ -58,10 +57,6 @@
 			
 		<typeAlias
 			type="com.spring.itjobgo.notice.model.vo.Notice"
-=======
-
-		<typeAlias type="com.spring.itjobgo.notice.model.vo.Notice"
->>>>>>> 11b1334b612d17ec010149126da483c42cfbdca6
 			alias="Notice" />
 
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.Rboard"

@@ -123,11 +123,12 @@
 	</update>
 	
 	
-	<!--댓글 조회  -->
+	<!--댓글 조회  --> 
 	<select id="selectQnacomment" parameterType="_int" resultType="qbcomment">
-			SELECT * FROM QB_COMMENT WHERE QB_BOARD_NO=#{qbBoardNo}
+			SELECT * FROM QB_COMMENT WHERE QB_BOARD_NO=#{qnaSeq}
 																		ORDER BY QBCOMMENT_DATE DESC
 	</select>
+	
 	
 	<!-- 댓글삭제 -->
 	<delete id="deletecomment">

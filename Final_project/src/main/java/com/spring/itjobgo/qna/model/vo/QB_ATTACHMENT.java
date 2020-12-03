@@ -85,6 +85,7 @@ public QB_ATTACHMENT(int attachmentno, int qnaSeq, String originalfilename, Stri
 }
 
 
+
 	
 	
 }

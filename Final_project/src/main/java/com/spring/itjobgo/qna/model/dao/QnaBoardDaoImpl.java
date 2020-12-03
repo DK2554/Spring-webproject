@@ -86,8 +86,8 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//댓글 조회
 	@Override
-	public List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qbBoardNo) {
-		return session.selectList("qnaBoard.selectQnacomment",qbBoardNo);
+	public List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qnaSeq) {
+		return session.selectList("qnaBoard.selectQnacomment",qnaSeq);
 	}
 
 	//댓글 삭제
