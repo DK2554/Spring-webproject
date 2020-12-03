@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class QB_COMMENT {
 	
-	private int qbCommentNo;
-	private int qbBoardNo;
+	private int qbCommentNo; //자동시퀀스 연결
+	private int qbBoardNo; //외래키로 가져오는값
 	private String qbCommentContent;
 	private int memberSq;
-	private Date qbcommentDate;
+	private Date qbcommentDate; 
 	private String memberName;
 	
 public QB_COMMENT() {

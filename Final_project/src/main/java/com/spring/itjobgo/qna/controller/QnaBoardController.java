@@ -373,11 +373,12 @@ public class QnaBoardController {
 	// 댓글작성하기
 	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
 	public void comment(QB_COMMENT cm) {
+	System.out.println("댓글~~~~~~~~~~~~~~~~~~~~~~~매핑시작");
 		int result = service.insertComment(cm);
-		if(result>0) {
-			//답글이 달리면 N->Y로 변경.
-			int comment = service.insertCommentText(cm.getQbBoardNo());
-		}
+//		if(result>0) {
+//			//답글이 달리면 N->Y로 변경. 이건 y변경되는거 아직 안한것 
+//			int comment = service.insertCommentText(cm.getQbBoardNo());
+//		}
 		
 	}
 	
