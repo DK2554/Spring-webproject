@@ -39,6 +39,13 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Mattachment selectMat(int no) {
+		// TODO Auto-generated method stub
+		//번호로 첨부파일 db연동
+		return dao.selectMattach(session,no);
+	}
+
+	@Override
 	public Mboard selectMb(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectMinfo(session,no);

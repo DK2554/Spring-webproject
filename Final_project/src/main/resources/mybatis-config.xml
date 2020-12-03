@@ -12,6 +12,9 @@
 		<typeAlias
 			type="com.spring.itjobgo.portfolio.model.vo.Attachment"
 			alias="attachment" />
+				<typeAlias
+			type="com.spring.itjobgo.meeting.model.vo.Mattachment"
+			alias="mattachment" />
 		<typeAlias type="com.spring.itjobgo.portfolio.model.vo.Comment"
 		alias="comment"
 		/>

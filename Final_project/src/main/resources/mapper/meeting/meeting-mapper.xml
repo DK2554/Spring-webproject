@@ -4,8 +4,8 @@
   <insert id="insertmboard" parameterType="map">
   	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate})
   </insert>
-  <insert id="insertmattach" parameterType="attachment" >
-  insert into m_attachment values(seq_attach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
+  <insert id="insertmattach" parameterType="mattachment" >
+  insert into m_attachment values(seq_mattach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
    <selectKey keyProperty="pboardSq" resultType="_int" order="BEFORE">
  		select seq_meet.currval from dual
   </selectKey>
@@ -23,4 +23,7 @@
   <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
   insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion})
   </insert>
+  <select id="selectmattach" resultType="mattachment" parameterType="_int">
+  select * from m_attachment where pboard_sq=#{no}
+  </select>
 </mapper>
