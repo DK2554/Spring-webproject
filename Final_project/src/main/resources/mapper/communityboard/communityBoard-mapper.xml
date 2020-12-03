@@ -142,7 +142,7 @@
 	</delete>
 	
 	<!-- 댓글 수정하기 -->
-	<update id="updateComment">
+	<update id="updateComment" parameterType="CB_COMMENT">
 		UPDATE CB_COMMENT SET
 												CB_COMMENT_CONTENT=#{cbCommentContent},
 												CB_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
