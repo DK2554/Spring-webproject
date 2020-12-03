@@ -79,4 +79,15 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 
+	@Override
+	public String selectPhoto(String memberSq) {
+		return dao.selectPhoto(session, memberSq);
+	}
+
+	@Override
+	public int updatePhoto(Member member, MemberPhoto mp) {
+		return dao.updatePhoto(session, mp);
+	}
+
+	
 }
