@@ -8,13 +8,14 @@ public class CB_COMMENT {
 	private int cboardNo;
 	private String cbCommentContent;
 	private int memberSq;
-	private Date cbCommentDate;
+	private String cbCommentDate;
 	private String memberName;
 	
 	
 	  public CB_COMMENT() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 	public int getCbCommentNo() {
 		return cbCommentNo;
@@ -56,12 +57,12 @@ public class CB_COMMENT {
 	}
 
 
-	public Date getCbCommentDate() {
+	public String getCbCommentDate() {
 		return cbCommentDate;
 	}
 
 
-	public void setCbCommentDate(Date cbCommentDate) {
+	public void setCbCommentDate(String cbCommentDate) {
 		this.cbCommentDate = cbCommentDate;
 	}
 
@@ -84,7 +85,7 @@ public class CB_COMMENT {
 	}
 
 
-	public CB_COMMENT(int cbCommentNo, int cboardNo, String cbCommentContent, int memberSq, Date cbCommentDate,
+	public CB_COMMENT(int cbCommentNo, int cboardNo, String cbCommentContent, int memberSq, String cbCommentDate,
 			String memberName) {
 		super();
 		this.cbCommentNo = cbCommentNo;
@@ -95,6 +96,7 @@ public class CB_COMMENT {
 		this.memberName = memberName;
 	}
 
+	  
 
 
 	  

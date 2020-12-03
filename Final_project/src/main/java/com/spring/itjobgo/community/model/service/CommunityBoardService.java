@@ -25,4 +25,8 @@ public interface CommunityBoardService {
 	int insertComment(CB_COMMENT cbc);
 	
 	List<CB_COMMENT>selectComment(int cboardNo);
+	
+	int deleteComment(int cbCommentNo);
+	
+	int updateComment(CB_COMMENT cbc);
 }

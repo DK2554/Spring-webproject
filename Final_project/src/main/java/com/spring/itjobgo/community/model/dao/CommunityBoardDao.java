@@ -45,4 +45,10 @@ public interface CommunityBoardDao {
 	
 	//댓글 select
 	List<CB_COMMENT>selectComment(SqlSessionTemplate session, int cboardNo);
+	
+	//댓글 delete
+	int deleteComment(SqlSessionTemplate session, int cbCommentNo);
+	
+	//댓글 update
+	int updateComment(SqlSessionTemplate session, CB_COMMENT cbc);
 }

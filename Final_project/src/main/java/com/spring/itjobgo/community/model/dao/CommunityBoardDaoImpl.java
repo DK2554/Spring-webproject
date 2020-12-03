@@ -91,6 +91,19 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		// TODO Auto-generated method stub
 		return session.selectList("communityBoard.selectComment",cboardNo);
 	}
+	//댓글 삭제
+	@Override
+	public int deleteComment(SqlSessionTemplate session, int cboardNo) {
+		// TODO Auto-generated method stub
+		return session.delete("communityBoard.deleteComment",cboardNo);
+	}
+	//댓글 수정
+	@Override
+	public int updateComment(SqlSessionTemplate session, CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateComment",cbc);
+	}
+	
 	
 	
 	

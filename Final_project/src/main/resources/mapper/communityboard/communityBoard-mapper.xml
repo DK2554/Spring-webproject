@@ -26,7 +26,7 @@
 		
 	<!-- 자유게시판 전체 조회 -->
  	<select id="selectBoardList" resultType="communityBoard">
-		SELECT * FROM COMMUNITY_BOARD ORDER BY BOARD_SQ
+		SELECT * FROM COMMUNITY_BOARD ORDER BY BOARD_SQ DESC
 	</select> 
 
 	<!-- 자유게시판 글 작성 -->
@@ -125,7 +125,7 @@
 											#{cboardNo},
 											#{cbCommentContent},
 											#{memberSq},
-											DEFAULT,
+											TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss'),
 											#{memberName}							
 											)
 	</insert>
@@ -135,6 +135,19 @@
 		SELECT * FROM CB_COMMENT WHERE CBOARD_NO=#{cboardNo}
 						ORDER BY CB_COMMENT_DATE DESC
 	</select>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM CB_COMMENT WHERE CB_COMMENT_NO=#{cbCommentNo}
+	</delete>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="updateComment">
+		UPDATE CB_COMMENT SET
+												CB_COMMENT_CONTENT=#{cbCommentContent},
+												CB_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
+												WHERE CB_COMMENT_NO=#{cbCommentNo}
+	</update>
   		
   		
 </mapper>

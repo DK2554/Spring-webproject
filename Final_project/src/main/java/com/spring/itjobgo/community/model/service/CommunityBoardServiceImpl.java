@@ -115,8 +115,6 @@ public int updateBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 		// TODO Auto-generated method stub
 		return dao.updateBoard(session,cb);
 	}
-
-	
 	//댓글달기
 	@Override
 	public int insertComment(CB_COMMENT cbc) {
@@ -130,8 +128,20 @@ public int updateBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 		// TODO Auto-generated method stub
 		return dao.selectComment(session, cboardNo);
 	}
+	//댓글삭제
+	@Override
+	public int deleteComment(int cbCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteComment(session,cbCommentNo);
+	}
+	//댓글수정
+	@Override
+	public int updateComment(CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return dao.updateComment(session,cbc);
+	}
 
- 
+  
 	
 
 
