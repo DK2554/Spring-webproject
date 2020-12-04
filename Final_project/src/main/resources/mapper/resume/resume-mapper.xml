@@ -138,7 +138,7 @@
   <!-- 이력서 게시판 첨부파일 등록 -->
   
   <insert id="insertResumeAttachment" parameterType="resume_attachment">
-  		INSERT INTO RBOARD_ATTACHMENT VALUES(
+  		INSERT INTO RESUME_ATTACHMENT VALUES(
   			RESUME_ATTACHMENT_SEQ_NO.NEXTVAL,
   			#{memberNo},
   			#{originalFilename},

@@ -1,0 +1,210 @@
+개인정보 테이블
+resume
+
+resume_no
+member_no (회원번호)
+rname
+eng_name
+birth
+gender
+postcode
+address
+address_detail
+telephone
+rphone
+remail
+
+private int resumeNo;
+private int memberNo 
+private String rname;
+private String engName;
+private Date birth;
+private String gender;
+private int postcode;
+private String address;
+private String addressDetail;
+private String telephone;
+private String rphone;
+private String remail;
+
+
+
+증명사진 테이블
+Resume_Attachment
+
+resume_attachmentno
+member_no (회원번호)
+original_filename
+renamed_filename
+upload_date
+status
+
+private int resumeAttachmentno;
+private int memberNo;
+private String originalFilename;
+private String renamedFilename;
+private Date uploadDate;
+private String status;
+
+학력정보
+Resume_school
+
+resume_schoolno
+member_no
+school1
+school_name1
+school_start_date1
+school_finish_date1
+education1
+school2
+school_name2
+school_start_date2
+school_finish_date2
+
+private int resumeSchoolno;
+private int memberNo ;
+private String school1;
+private String schoolName1;
+private Date schoolStartDate1;
+private Date schoolFinishDate1;
+private String education1;
+private String school2;
+private String schoolName2;
+private Date schoolStartDate2;
+private Date schoolFinishDate2;
+private String education2;
+
+경력사항
+Resume_work
+
+resume_workno
+member_no
+work_start_date
+work_finish_date
+work_name
+work_level
+work_state
+work_detail
+
+
+private int resumeWorkno;
+private int memberNo;
+private Date workStartDate;
+private Date workFinishDate;
+private String workName;
+private String workLevel;
+private String workState;
+private String workDetail;
+
+자격증
+Resume_license
+
+resume_licenseno
+member_no
+license_name
+license_agency
+license_date
+
+
+private int resumeLicenseno;
+private int memberNo;
+private String licenseName;
+private String licenseAgency;
+private Date licenseDate;
+
+외국어능력
+Resume_language
+
+resume_languageno
+member_no
+language_name
+language_level
+language_test
+language_score
+language_date
+
+private int resumeLanguageno;
+private int memberNo;
+private String languageName;
+private String languageLevel;
+private String languageTest;
+private String languageScore;
+private Date languageDate;
+
+
+주요활동 및 수상
+Resume_activity
+
+resume_activityno
+member_no
+activity
+activity_start_date
+activity_finish_date
+activity_agency
+activity_work
+activity_detail
+
+private int resumeActivityno;
+private int memberNo;
+private String activity;
+private Date activityStartDate;
+private Date activityFinishDate;
+private String activityAgency;
+private String activityWork;
+private String activityDetail;
+
+
+
+참여 프로젝트
+Resume_project
+
+resume_projectno
+member_no
+project_part
+project_start_date
+project_finish_date
+project_name
+project_work
+project_detail
+
+
+private int resumeProjectno;
+private int memberNo;
+private String projectPart;
+private Date projectStartDate;
+private Date projectFinishDate;
+private String projectName;
+private String projectWork;
+private String projectDetail;
+
+해외경험
+Resume_abroad
+
+resumea_abroadno
+member_no
+abroad
+abroad_start_date
+abroad_finish_date
+abroad_countury
+abroad_agency
+abroad_detail
+
+private int resumeAbroadno;
+private int memberNo;
+private String abroad;
+private Date abroadStartDate;
+private Date abroadFinishDate;
+private String abroadCountury;
+private String abroadAgency;
+private String abroadDetail;
+
+
+
+
+
+
+
+
+
+
+
