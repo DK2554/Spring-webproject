@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -404,14 +405,16 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
 	//김현주바보
 	//댓글수정
 	@RequestMapping(value="community/updateComment", method=RequestMethod.POST)
-	public String updateComment(CB_COMMENT cbc) {
-		System.out.println("==댓글수정 맵핑테스트==" + cbc);
-		String msg="댓글update";
-		int result = service.updateComment(cbc);
+	public void updateComment(@RequestBody Map param) {
+		System.out.println("==댓글수정 맵핑테스트==");
+	
+		int result = service.updateComment(param);
 		
-		logger.debug(cbc.toString());
-		logger.debug("댓글upate 매핑테스트");
-		return msg;
+		logger.debug("댓글 param"+param);
+		if(result>0) {
+			System.out.println("==댓글 수정 성공==");
+		}
+	
 	}
 	
 	
