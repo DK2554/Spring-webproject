@@ -284,7 +284,6 @@ System.out.println("게시판 삭제 맵");
 			         int result = service.updateInfo(ifo);
 			      }
 			      return "업데이트 테스트";
-			   
 	}
 	
 	//첨부파일 표시
