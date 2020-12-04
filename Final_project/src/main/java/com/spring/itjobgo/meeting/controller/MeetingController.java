@@ -97,12 +97,14 @@ public class MeetingController {
 		logger.debug(list.toString());
 		return list;
 	}
+	//모임을 클릭했을때 해당 모임정보를 리턴
 	@RequestMapping(value="meeting/meetinginfo{no}.do",method=RequestMethod.GET)
 	public Mboard meetinginfo(@PathVariable int no)throws JsonMappingException,JsonGenerationException,IOException{
 		Mboard md=service.selectMb(no);
 		logger.debug(md.toString());
 		return md;
 	}
+	//모임신청하는 로직
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
 	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq ) {
 		logger.debug(Integer.toString(memberSq));

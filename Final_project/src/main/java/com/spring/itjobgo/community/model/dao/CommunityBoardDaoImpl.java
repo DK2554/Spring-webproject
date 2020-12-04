@@ -1,6 +1,7 @@
 package com.spring.itjobgo.community.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -99,9 +100,9 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 	}
 	//댓글 수정
 	@Override
-	public int updateComment(SqlSessionTemplate session, CB_COMMENT cbc) {
+	public int updateComment(SqlSessionTemplate session, Map param) {
 		// TODO Auto-generated method stub
-		return session.update("communityBoard.updateComment",cbc);
+		return session.update("communityBoard.updateComment",param);
 	}
 	
 	

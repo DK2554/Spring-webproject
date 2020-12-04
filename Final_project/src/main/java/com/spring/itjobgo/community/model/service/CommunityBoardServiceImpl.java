@@ -1,6 +1,7 @@
 package com.spring.itjobgo.community.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import com.spring.itjobgo.community.model.dao.CommunityBoardDao;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
-import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Service
 public class CommunityBoardServiceImpl implements CommunityBoardService {
@@ -136,9 +136,9 @@ public int updateBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 	}
 	//댓글수정
 	@Override
-	public int updateComment(CB_COMMENT cbc) {
+	public int updateComment(Map param) {
 		// TODO Auto-generated method stub
-		return dao.updateComment(session,cbc);
+		return dao.updateComment(session,param);
 	}
 
   
