@@ -1,13 +1,13 @@
 package com.spring.itjobgo.community.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
-import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 public interface CommunityBoardDao {
 	
@@ -50,5 +50,5 @@ public interface CommunityBoardDao {
 	int deleteComment(SqlSessionTemplate session, int cbCommentNo);
 	
 	//댓글 update
-	int updateComment(SqlSessionTemplate session, CB_COMMENT cbc);
+	int updateComment(SqlSessionTemplate session, Map param);
 }
