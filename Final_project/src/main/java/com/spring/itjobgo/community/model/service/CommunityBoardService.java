@@ -1,6 +1,7 @@
 package com.spring.itjobgo.community.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 import com.spring.itjobgo.community.model.vo.CB_COMMENT;
@@ -28,5 +29,5 @@ public interface CommunityBoardService {
 	
 	int deleteComment(int cbCommentNo);
 	
-	int updateComment(CB_COMMENT cbc);
+	int updateComment(Map param);
 }

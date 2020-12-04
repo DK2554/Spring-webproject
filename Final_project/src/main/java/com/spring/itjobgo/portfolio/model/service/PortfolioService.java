@@ -1,6 +1,7 @@
 package com.spring.itjobgo.portfolio.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 import com.spring.itjobgo.portfolio.model.vo.Comment;
@@ -31,6 +32,8 @@ public interface PortfolioService {
 	int deletecomment(int no);
 
 	int updatacommentText(int pboardNo);
+
+	int updatecomment(Map param);
 
 	
 

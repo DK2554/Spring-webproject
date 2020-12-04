@@ -2,6 +2,7 @@ package com.spring.itjobgo.portfolio.model.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -28,6 +29,12 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	public int updateReadCount(SqlSessionTemplate session, int pboardNo) {
 		// TODO Auto-generated method stub
 		return session.update("pboard.updatacount",pboardNo);
+	}
+
+	@Override
+	public int updatecomment(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.update("pboard.updatecomment", param);
 	}
 
 	@Override
