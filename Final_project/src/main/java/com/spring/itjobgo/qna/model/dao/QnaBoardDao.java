@@ -25,7 +25,7 @@ public interface QnaBoardDao {
 	int deleteBoard(SqlSessionTemplate session, int qboardNo);
 	
 	//첨부파일 조회
-	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int no);
+	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qboardNo);
 	
 	//첨부파일 update
 	int updateAttachment(SqlSessionTemplate session,QB_ATTACHMENT file);

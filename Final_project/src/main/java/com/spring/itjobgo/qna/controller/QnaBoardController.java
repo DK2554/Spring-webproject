@@ -233,23 +233,32 @@ public class QnaBoardController {
 	
 	
 	//첨부파일 먼저 불러오기(update form으로)
-	@RequestMapping(value="/qna/qnaBoardUpdate{no}",method = RequestMethod.GET)
-	public QB_ATTACHMENT qboardupdate(@PathVariable int no) 
+	@RequestMapping(value="/qna/qnaBoardUpdate{qboardNo}",method = RequestMethod.GET)
+	public QB_ATTACHMENT qboardupdate(@PathVariable int qboardNo) 
 			throws JsonMappingException,JsonGenerationException,IOException{
 		
-		logger.debug("qboardNo" +Integer.toString(no));
-		QB_ATTACHMENT qt=service.selectAttach(no);
-		logger.debug(qt.toString());
+		System.out.println("==첨부파일 불러오기 맵핑 시작==");
 		
-		return qt;
+		QB_ATTACHMENT qba=service.selectAttach(qboardNo);
+		
+		System.out.println(qba);
+		
+		return qba;
+		
 	}
 	
 	
 	//qna 게시판 수정하기//////////
-	@RequestMapping(value="/qna/qnaBoardUpdateEnd", method=RequestMethod.POST, consumes= {"multipart/form-data"})
+	@RequestMapping(value="/qna/qnaBoardUpdateEnd",
+										method=RequestMethod.POST,
+										consumes= {"multipart/form-data"})
 	//@ModelAttribute 생략가능  써주는것이 좋음 
-	public String qnaBoardUpdate(QnaBoard qboard,@RequestBody(required=false)	MultipartFile[] file,HttpServletRequest request) {
-		logger.debug("매핑테스트@");
+	public String qnaBoardUpdate(QnaBoard qboard,
+											@RequestBody(required=false)
+											MultipartFile[] file,
+											HttpServletRequest request) {
+		
+		System.out.println("==업데이트 메서드 실행==");
 		
 		if(file.length>0) {
 			//파일이 존재한다면 게시판 번호를 변수에 넣어둔다.

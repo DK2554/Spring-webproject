@@ -78,7 +78,7 @@
 	
 	<!-- 첨부파일 조회 -->
 	<select id="selectAttach" resultType="qna_attachment" parameterType="_int">
-			SELECT*FROM QB_ATTACHMENT WHERE QBOARD_NO=#{no}
+			SELECT*FROM QB_ATTACHMENT WHERE QBOARD_NO=#{qboardNo}
 	</select>
 	
 	<!-- qna게시판 업데이트 update -->	

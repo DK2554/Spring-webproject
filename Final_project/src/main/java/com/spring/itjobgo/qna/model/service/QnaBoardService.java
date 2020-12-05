@@ -16,9 +16,9 @@ public interface QnaBoardService {
 	
 	int deleteBoard(int qboardNo);
 	
-	QB_ATTACHMENT selectAttach(int no);
+	QB_ATTACHMENT selectAttach(int qboardNo);
 	
-	int updateBoard(QnaBoard qboard, List<QB_ATTACHMENT> files);
+	int updateBoard(QnaBoard qboard, List<QB_ATTACHMENT>files);
 	
 	int updateBoard(QnaBoard qboard);
 	

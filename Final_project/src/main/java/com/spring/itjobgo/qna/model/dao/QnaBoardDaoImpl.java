@@ -45,8 +45,8 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//첨부파일 조회
 	@Override
-	public QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int no) {
-		return session.selectOne("qnaBoard.selectAttach",no);
+	public QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qboardNo) {
+		return session.selectOne("qnaBoard.selectAttach",qboardNo);
 	}
 
 	//첨부파일 update

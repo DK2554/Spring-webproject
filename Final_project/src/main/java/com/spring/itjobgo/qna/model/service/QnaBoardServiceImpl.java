@@ -68,8 +68,8 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//첨부파일 조회
 	@Override
-	public QB_ATTACHMENT selectAttach(int no) {
-		return dao.selectAttach(session,no);
+	public QB_ATTACHMENT selectAttach(int qboardNo) {
+		return dao.selectAttach(session,qboardNo);
 	}
 
 	//첨부파일이 있을때 update
