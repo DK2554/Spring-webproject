@@ -107,10 +107,9 @@ public class InfoController {
 				files.add(file2);
 			}
 		}
+		
 		int result = 0;
-
 		try {
-
 			// Info 글 작성하기
 			result = service.insertInfo(iboard, files);
 		} catch (RuntimeException e) {
@@ -120,7 +119,7 @@ public class InfoController {
 		if (result > 0) msg = "등록 성공!";
 		else msg = "등록 실패!";
 		return msg;
-	}
+	 }
 
 	// 취업정보 게시판 상세화면 전환 페이지
 	@RequestMapping(value = "/info/infoDetail{infoSq}", method = RequestMethod.GET)
@@ -155,7 +154,6 @@ public class InfoController {
 			Cookie c = new Cookie("boardHistory", boardHistory + "|" + infoSq + "|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
-
 		}
 
 		Info iboard = service.selectInfoOne(infoSq, hasRead);
