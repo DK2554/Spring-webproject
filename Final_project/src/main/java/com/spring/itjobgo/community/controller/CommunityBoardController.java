@@ -31,8 +31,8 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.community.model.service.CommunityBoardService;
 import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
-import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.community.model.vo.CommunityBoard;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 
 @RestController
 public class CommunityBoardController {

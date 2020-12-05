@@ -33,32 +33,32 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//qna게시판 상세보기
 	@Override
-	public QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qnaSeq) {
-		return session.selectOne("qnaBoard.selectQnaBoardOne",qnaSeq);
+	public QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qboardNo) {
+		return session.selectOne("qnaBoard.selectQnaBoardOne",qboardNo);
 	}
 
 	//qna게시판 삭제하기
 	@Override
-	public int deleteBoard(SqlSessionTemplate session, int qnaSeq) {
-		return session.delete("qnaBoard.deleteBoard",qnaSeq);
+	public int deleteBoard(SqlSessionTemplate session, int qboardNo) {
+		return session.delete("qnaBoard.deleteBoard",qboardNo);
 	}
 
 	//첨부파일 조회
 	@Override
-	public QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qnaSeq) {
-		return session.selectOne("qnaBoard.selectAttach",qnaSeq);
+	public QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int no) {
+		return session.selectOne("qnaBoard.selectAttach",no);
 	}
 
 	//첨부파일 update
 	@Override
-	public int updateAttachment(SqlSessionTemplate session, QB_ATTACHMENT qb_attach) {
-		return session.update("qnaBoard.updateAttachment",qb_attach);
+	public int updateAttachment(SqlSessionTemplate session, QB_ATTACHMENT file) {
+		return session.update("qnaBoard.updateAttachment",file);
 	}
 
 	//게시글(객체)update
 	@Override
-	public int updateBoard(SqlSessionTemplate session, QnaBoard qb) {
-		return session.update("qnaBoard.updateBoard",qb);
+	public int updateBoard(SqlSessionTemplate session, QnaBoard qboard) {
+		return session.update("qnaBoard.updateBoard",qboard);
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//조회수 증가로직
 	@Override
-	public int updateReadCount(SqlSessionTemplate session, int qnaSeq) {
-		return session.update("qnaBoard.updateReadCount",qnaSeq);
+	public int updateReadCount(SqlSessionTemplate session, int qboardNo) {
+		return session.update("qnaBoard.updateReadCount",qboardNo);
 	}
 
 	//댓글 등록 로직
@@ -80,14 +80,14 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//댓글 등록시 답변여부 변경로직
 	@Override
-	public int insertCommentText(SqlSessionTemplate session, int qbBoardNo) {
-		return session.update("qnaBoard.insertCommentText",qbBoardNo);
+	public int insertCommentText(SqlSessionTemplate session, int qboardNo) {
+		return session.update("qnaBoard.insertCommentText",qboardNo);
 	}
 
 	//댓글 조회
 	@Override
-	public List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qnaSeq) {
-		return session.selectList("qnaBoard.selectQnacomment",qnaSeq);
+	public List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qboardNo) {
+		return session.selectList("qnaBoard.selectQnacomment",qboardNo);
 	}
 
 	//댓글 삭제

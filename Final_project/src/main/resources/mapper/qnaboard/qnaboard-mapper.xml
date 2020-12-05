@@ -40,7 +40,7 @@
 	<insert id="insertAttachment" parameterType="qna_attachment">
 		INSERT INTO QB_ATTACHMENT VALUES(
 											SEQ_QB_ATTACHMENT_NO.NEXTVAL,
-											#{qnaSeq},
+											#{qboardNo},
 											#{originalfilename},
 											#{renamedfilename},
 											DEFAULT,
@@ -49,7 +49,7 @@
 											
 			<!-- 현재 boardSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
 			selectKey를 설정한다 -->
-			<selectKey keyProperty="qnaSeq" resultType="_int" order="BEFORE">
+			<selectKey keyProperty="qboardNo" resultType="_int" order="BEFORE">
 	 		SELECT SEQ_QNA_NO.CURRVAL FROM DUAL
 	  		</selectKey>		 
 	</insert>
@@ -58,7 +58,7 @@
 	<insert id="insertAttachment2" parameterType="qna_attachment">
 	INSERT INTO QB_ATTACHMENT VALUES(
 												#{attachmentno},
-												#{qnaSeq},
+												#{qboardNo},
 												#{originalfilename},
 												#{renamedfilename},
 												DEFAULT,
@@ -68,26 +68,26 @@
 	
 	<!-- qna게시판 글 상세보기 -->
 	<select id="selectQnaBoardOne" parameterType="_int" resultType="qnaBoard">
-			SELECT * FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
+			SELECT * FROM QNA_BOARD WHERE QBOARD_NO=#{qboardNo}
 	</select>
 	
 	<!-- qna게시판 삭제하기 -->
 	<delete id="deleteBoard" parameterType="_int">
-			DELETE FROM QNA_BOARD WHERE QNA_SEQ=#{qnaSeq}
+			DELETE FROM QNA_BOARD WHERE QBOARD_NO=#{qboardNo}
 	</delete>
 	
 	<!-- 첨부파일 조회 -->
 	<select id="selectAttach" resultType="qna_attachment" parameterType="_int">
-			SELECT*FROM QB_ATTACHMENT WHERE QB_BOARD_NO=#{qnaSeq}
+			SELECT*FROM QB_ATTACHMENT WHERE QBOARD_NO=#{no}
 	</select>
 	
 	<!-- qna게시판 업데이트 update -->	
+													<!-- QNA_CATEGORY=#{qnaCategory}, -->
 	<update id="updateBoard">
 			UPDATE QNA_BOARD SET
-													QNA_CATEGORY=#{qnaCategory},
 													QNA_TITLE=#{qnaTitle},
 													QNA_CONTENT=#{qnaContent}
-										WHERE QNA_SEQ=#{qnaSeq}
+										WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
 	<!-- 첨부파일 업데이트 -->	
@@ -95,21 +95,21 @@
 			UPDATE QB_ATTACHMENT SET
 													ORIGINALFILENAME=#{originalfilename},
 													RENAMEDFILENAME=#{renamedfilename}
-												WHERE QB_BOARD_NO=#{qnaSeq}
+												WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
 	<!-- 조회수 카운트 -->
 	<update id="updateReadCount">
 			UPDATE QNA_BOARD SET
 										BOARD_COUNT=BOARD_COUNT+1
-										WHERE QNA_SEQ=#{qnaSeq}
+										WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
 	<!-- 댓글 등록  -->
 	<insert id="insertComment" parameterType="qbcomment">
 			INSERT INTO QB_COMMENT VALUES(
 												SEQ_QB_COMMENT_NO.NEXTVAL,
-												#{qbBoardNo},
+												#{qboardNo},
 												#{qbCommentContent},
 												#{memberSq},
 												default,
@@ -119,20 +119,20 @@
 	
 	<!--댓글 등록시 답변상태 여부 변경 -->
 	<update id="insertCommentText" parameterType="_int">
-			UPDATE QNA_BOARD SET QNA_ANSWER_YN ='Y' WHERE QNA_SEQ=#{qbBoardNo}
+			UPDATE QNA_BOARD SET QNA_ANSWER_YN ='Y' WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
 	
 	<!--댓글 조회  --> 
 	<select id="selectQnacomment" parameterType="_int" resultType="qbcomment">
-			SELECT * FROM QB_COMMENT WHERE QB_BOARD_NO=#{qnaSeq}
+			SELECT * FROM QB_COMMENT WHERE QBOARD_NO=#{qboardNo}
 																		ORDER BY QBCOMMENT_DATE DESC
 	</select>
 	
 	
 	<!-- 댓글삭제 -->
 	<delete id="deletecomment">
-			DELETE QB_COMMENT WHERE QB_BOARD_NO=#{qbCommentNo}
+			DELETE QB_COMMENT WHERE QBOARD_NO=#{qbCommentNo}
 	</delete>
 	
 	

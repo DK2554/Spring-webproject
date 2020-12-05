@@ -48,13 +48,13 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//qna게시판 상세보기
 	@Override
-	public QnaBoard selectQnaBoardOne(int qnaSeq, boolean hasRead) {
+	public QnaBoard selectQnaBoardOne(int qboardNo, boolean hasRead) {
 		
-		QnaBoard qb = dao.selectQnaBoardOne(session, qnaSeq);
+		QnaBoard qb = dao.selectQnaBoardOne(session, qboardNo);
 		
 		//hasRead가 false이면
 		if(qb!=null && !hasRead) {
-			int result = dao.updateReadCount(session,qnaSeq);
+			int result = dao.updateReadCount(session,qboardNo);
 			System.out.println("조회수 증가 로직 성공");
 		}
 		return qb;
@@ -62,21 +62,21 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//qna게시판 삭제하기
 	@Override
-	public int deleteBoard(int qnaSeq) {
-		return dao.deleteBoard(session,qnaSeq);
+	public int deleteBoard(int qboardNo) {
+		return dao.deleteBoard(session,qboardNo);
 	}
 
 	//첨부파일 조회
 	@Override
-	public QB_ATTACHMENT selectAttach(int qnaSeq) {
-		return dao.selectAttach(session,qnaSeq);
+	public QB_ATTACHMENT selectAttach(int no) {
+		return dao.selectAttach(session,no);
 	}
 
 	//첨부파일이 있을때 update
 	@Override
-	public int updateBoard(QnaBoard qb, List<QB_ATTACHMENT> files) {
+	public int updateBoard(QnaBoard qboard, List<QB_ATTACHMENT> files) {
 		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다.
-		int result = dao.updateBoard(session,qb);
+		int result = dao.updateBoard(session,qboard);
 		//등록이 성공되지 않는다면
 		if(result==0) throw new RuntimeException("게시글 등록 오류");
 		//등록이 성공하고 첨부파일이 존재한다면 첨부파일 등록을 해줘야 한다.
@@ -102,8 +102,8 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//첨부파일이 없을때 게시판 내용만 update
 	@Override
-	public int updateBoard(QnaBoard qb) {
-		return dao.updateBoard(session,qb);
+	public int updateBoard(QnaBoard qboard) {
+		return dao.updateBoard(session,qboard);
 	}
 
 	//댓글 insert 로직
@@ -114,14 +114,14 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	
 	//댓글이 달리면 답변여부 변경해주는 로직
 	@Override
-	public int insertCommentText(int qbBoardNo) {
-		return dao.insertCommentText(session, qbBoardNo);
+	public int insertCommentText(int qboardNo) {
+		return dao.insertCommentText(session, qboardNo);
 	}
 
 	//댓글 조회 로직
 	@Override
-	public List<QB_COMMENT> selectQnacomment(int qnaSeq) {
-		return dao.selectQnacomment(session,qnaSeq);
+	public List<QB_COMMENT> selectQnacomment(int qboardNo) {
+		return dao.selectQnacomment(session,qboardNo);
 	}
 
 	//댓글 삭제 로직

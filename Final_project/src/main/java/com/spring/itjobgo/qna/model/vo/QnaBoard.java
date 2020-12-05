@@ -5,7 +5,7 @@ import java.sql.Date;
 
 public class QnaBoard {
 	
-	private int qnaSeq; //번호(PK) 
+	private int qboardNo; //번호(PK) 
 	private String qnaCategory; //분류
 	private String qnaTitle; //제목
 	private String qnaWriter; //작성자
@@ -19,10 +19,10 @@ public class QnaBoard {
 		// TODO Auto-generated constructor stub
 	}
 
-	public QnaBoard(int qnaSeq, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
+	public QnaBoard(int qboardNo, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
 			String qnaAnswerYn, Date qnaDate, int memberNum, int boardCount) {
 		super();
-		this.qnaSeq = qnaSeq;
+		this.qboardNo = qboardNo;
 		this.qnaCategory = qnaCategory;
 		this.qnaTitle = qnaTitle;
 		this.qnaWriter = qnaWriter;
@@ -33,12 +33,12 @@ public class QnaBoard {
 		this.boardCount = boardCount;
 	}
 
-	public int getQnaSeq() {
-		return qnaSeq;
+	public int getQboardNo() {
+		return qboardNo;
 	}
 
-	public void setQnaSeq(int qnaSeq) {
-		this.qnaSeq = qnaSeq;
+	public void setQboardNo(int qboardNo) {
+		this.qboardNo = qboardNo;
 	}
 
 	public String getQnaCategory() {
@@ -107,10 +107,14 @@ public class QnaBoard {
 
 	@Override
 	public String toString() {
-		return "QnaBoard [qnaSeq=" + qnaSeq + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle + ", qnaWriter="
-				+ qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn + ", qnaDate=" + qnaDate
-				+ ", memberNum=" + memberNum + ", boardCount=" + boardCount + "]";
+		return "QnaBoard [qboardNo=" + qboardNo + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle
+				+ ", qnaWriter=" + qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn
+				+ ", qnaDate=" + qnaDate + ", memberNum=" + memberNum + ", boardCount=" + boardCount + "]";
 	}
+
+	
+	
+	
 	
 	
 }

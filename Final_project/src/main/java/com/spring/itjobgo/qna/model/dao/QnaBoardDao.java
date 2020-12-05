@@ -19,34 +19,34 @@ public interface QnaBoardDao {
 	int insertAttachment(SqlSessionTemplate session, QB_ATTACHMENT qb_attachment);
 	
 	//글 상세보기
-	QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qnaSeq);
+	QnaBoard selectQnaBoardOne(SqlSessionTemplate session, int qboardNo);
 	
 	//글삭제
-	int deleteBoard(SqlSessionTemplate session, int qnaSeq);
+	int deleteBoard(SqlSessionTemplate session, int qboardNo);
 	
 	//첨부파일 조회
-	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int qnaSeq);
+	QB_ATTACHMENT selectAttach(SqlSessionTemplate session, int no);
 	
 	//첨부파일 update
-	int updateAttachment(SqlSessionTemplate session,QB_ATTACHMENT qb_attach);
+	int updateAttachment(SqlSessionTemplate session,QB_ATTACHMENT file);
 	
 	//게시글(객체) update
-	int updateBoard(SqlSessionTemplate session, QnaBoard qb);
+	int updateBoard(SqlSessionTemplate session, QnaBoard qboard);
 	
 	//첨부파일 insert
 	int insertAttachment2(SqlSessionTemplate session, QB_ATTACHMENT qb_attach);
 	
 	//조회수 증가
-	int updateReadCount(SqlSessionTemplate session, int qnaSeq);
+	int updateReadCount(SqlSessionTemplate session, int qboardNo);
 	
 	//댓글 등록
 	int insertComment(SqlSessionTemplate session, QB_COMMENT cm);
 	
 	//댓글 등록시 답변여부 변경
-	int insertCommentText(SqlSessionTemplate session, int qbBoardNo);
+	int insertCommentText(SqlSessionTemplate session, int qboardNo);
 	
 	//댓글 조회
-	List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qnaSeq);
+	List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qboardNo);
 	
 	//댓글 삭제
 	int deletecomment(SqlSessionTemplate session, int qbCommentNo);
