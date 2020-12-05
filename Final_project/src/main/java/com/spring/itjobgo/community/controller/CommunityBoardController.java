@@ -402,7 +402,6 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
 		}
 	}
 	
-	//김현주바보
 	//댓글수정
 	@RequestMapping(value="community/updateComment", method=RequestMethod.POST)
 	public void updateComment(@RequestBody Map param) {
