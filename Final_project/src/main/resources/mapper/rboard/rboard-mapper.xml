@@ -5,7 +5,7 @@
 	<!-- 이력서 게시판 리스트 -->
   <select id="selectRboard" resultType="rboard">
   
-  	SELECT * FROM RBOARD
+  	SELECT * FROM RBOARD ORDER BY RBOARD_NO DESC
 <!--    	SELECT RBOARD_NO as rboardNo, 
    	RBOARD_ID as rboardId, 
    	RBOARD_TITLE as rboardTitle,
