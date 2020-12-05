@@ -283,7 +283,7 @@ public class MemberController {
 		} else {// 존재하는 경우 사진 업데이트
 			result = service.updatePhoto(member, mp);
 			if (result > 0) {
-				
+
 			} else {
 				result = -1;
 			}
@@ -299,14 +299,18 @@ public class MemberController {
 		String memberSq = param.get("memberSq").toString();
 
 		String tempImg = service.selectPhoto(memberSq);
+		String imagePath = null;
+		if (tempImg != null) {//등록된 사진이 있는경우
 
-		String imagePath = request.getServletContext().getRealPath("/resources/upload/member/" + tempImg);
+			imagePath = request.getServletContext().getRealPath("/resources/upload/member/" + tempImg);
 
-		InputStream imageStream = new FileInputStream(imagePath);
-		byte[] imageByteArray = IOUtils.toByteArray(imageStream);
-		imageStream.close();
-
-		return imageByteArray;
+			InputStream imageStream = new FileInputStream(imagePath);
+			byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+			imageStream.close();
+			return imageByteArray;
+		} else {
+			return null;
+		}
 
 	}
 
