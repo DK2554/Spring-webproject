@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="resume">
+
+	<!-- 이력서(개인정보) 등록-->
+
+  <insert id="insertResume" parameterType="resume">
+  	INSERT INTO RESUME VALUES(
+  		RESUME_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{rname},
+  		#{engName},
+  		#{birth},
+  		#{gender},
+  		#{postcode},
+  		#{address},
+  		#{addressDetail},
+  		#{telephone},
+  		#{rphone},
+  		#{remail}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(학력) 등록-->
+
+  <insert id="insertResumeSchool" parameterType="resume_school">
+  	INSERT INTO Resume_school VALUES(
+  		RESUME_SCHOOL_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{school1},
+  		#{schoolName1},
+  		#{schoolStartDate1},
+  		#{schoolFinishDate1},
+  		#{education1},
+  		#{school2},
+  		#{schoolName2},
+  		#{schoolStartDate2},
+  		#{schoolFinishDate2},
+  		#{education2}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(경력) 등록-->
+
+  <insert id="insertResumeWork" parameterType="resume_work">
+  	INSERT INTO Resume_work VALUES(
+  		RESUME_WORK_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{workStartDate},
+  		#{workFinishDate},
+  		#{workName},
+  		#{workLevel},
+  		#{workState},
+  		#{workDetail}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(자격증) 등록-->
+
+  <insert id="insertResumeLicense" parameterType="resume_license">
+  	INSERT INTO Resume_license VALUES(
+  		RESUME_LICENSE_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{licenseName},
+  		#{licenseAgency},
+  		#{licenseDate}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(외국어) 등록-->
+
+  <insert id="insertResumeLanguage" parameterType="resume_language">
+  	INSERT INTO Resume_language VALUES(
+  		RESUME_LANGUAGE_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{languageName},
+  		#{languageLevel},
+  		#{languageTest},
+  		#{languageScore},
+  		#{languageDate}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(주요활동 및 수상) 등록-->
+
+  <insert id="insertResumeActivity" parameterType="resume_activity">
+  	INSERT INTO Resume_activity VALUES(
+  		RESUME_ACTIVITY_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{activity},
+  		#{activityStartDate},
+  		#{activityFinishDate},
+  		#{activityAgency},
+  		#{activityWork},
+  		#{activityDetail}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(프로젝트) 등록-->
+
+  <insert id="insertResumeProject" parameterType="resume_project">
+  	INSERT INTO Resume_project VALUES(
+  		RESUME_PROJECT_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{projectPart},
+  		#{projectStartDate},
+  		#{projectFinishDate},
+  		#{projectName},
+  		#{projectWork},
+  		#{projectDetail}
+  	)
+  		
+  </insert>
+  
+  	<!-- 이력서(해외경험) 등록-->
+
+  <insert id="insertResumeAbroad" parameterType="resume_abroad">
+  	INSERT INTO Resume_abroad VALUES(
+  		RESUME_ABROAD_SEQ_NO.NEXTVAL,
+  		#{memberNo},
+  		#{abroad},
+  		#{abroadStartDate},
+  		#{abroadFinishDate},
+  		#{abroadCountury},
+  		#{abroadAgency},
+  		#{abroadDetail}
+  	)
+  		
+  </insert>
+  
+
+  <!-- 이력서 게시판 첨부파일 등록 -->
+  
+  <insert id="insertResumeAttachment" parameterType="resume_attachment">
+  		INSERT INTO RESUME_ATTACHMENT VALUES(
+  			RESUME_ATTACHMENT_SEQ_NO.NEXTVAL,
+  			#{memberNo},
+  			#{originalFilename},
+  			#{renamedFilename},
+  			DEFAULT,
+  			DEFAULT
+  			)
+  </insert>
+</mapper>

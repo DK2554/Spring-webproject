@@ -70,7 +70,35 @@
 			type="com.spring.itjobgo.community.model.vo.CB_COMMENT"
 			alias="CB_COMMENT" />	
 			
+				<typeAlias type="com.spring.itjobgo.resume.model.vo.Resume"
+			alias="resume" />
 			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAttachment"
+			alias="resume_attachment" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAbroad"
+			alias="resume_abroad" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeActivity"
+			alias="resume_activity" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeLanguage"
+			alias="resume_language" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAbroad"
+			alias="resume_abroad" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeLicense"
+			alias="resume_license" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeProject"
+			alias="resume_project" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeSchool"
+			alias="resume_school" />
+			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeWork"
+			alias="resume_work" />
 			
 	</typeAliases>
 
