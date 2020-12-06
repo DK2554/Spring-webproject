@@ -31,5 +31,9 @@ public interface MemberDao {
 
 	int updatePhoto(SqlSession session, MemberPhoto mp);
 
+	int insertScrap(SqlSession session, Map param);
+
+	int deleteScrap(SqlSession session, Map param);
+
 
 }

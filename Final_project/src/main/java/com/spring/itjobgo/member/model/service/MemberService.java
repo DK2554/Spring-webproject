@@ -31,6 +31,10 @@ public interface MemberService {
 
 	int updatePhoto(Member member, MemberPhoto mp);
 
+	int insertScrap(Map param);
+
+	int deleteScrap(Map param);
+
 	
 
 

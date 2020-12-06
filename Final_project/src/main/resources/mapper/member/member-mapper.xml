@@ -17,6 +17,10 @@
 		#{originalFileName},#{renamedFileName},sysdate)
 
 	</insert>
+	
+	<insert id="insertScrap" parameterType="map">
+	insert into Scrap values(scrap_sq.nextVal, #{memberSq}, #{jobNo})
+	</insert>
 
 	<select id="selectOneMember" parameterType="map"
 		resultMap="memberMap">
@@ -75,6 +79,10 @@
 	<delete id="deleteMember" parameterType="String">
 		DELETE FROM MEMBER WHERE
 		MEMBER_EMAIL=#{memberEmail}
+	</delete>
+	
+	<delete id="deleteScrap" parameterType="map">
+	delete from scrap where member_sq=#{memberSq} and job_no=#{jobNo}
 	</delete>
 
 	<resultMap id="memberMap"

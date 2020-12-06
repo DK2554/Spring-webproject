@@ -283,7 +283,7 @@ public class MemberController {
 		} else {// 존재하는 경우 사진 업데이트
 			result = service.updatePhoto(member, mp);
 			if (result > 0) {
-
+				System.out.println(result);
 			} else {
 				result = -1;
 			}
@@ -300,7 +300,7 @@ public class MemberController {
 
 		String tempImg = service.selectPhoto(memberSq);
 		String imagePath = null;
-		if (tempImg != null) {//등록된 사진이 있는경우
+		if (tempImg != null) {// 등록된 사진이 있는경우
 
 			imagePath = request.getServletContext().getRealPath("/resources/upload/member/" + tempImg);
 
@@ -313,6 +313,38 @@ public class MemberController {
 		}
 
 	}
+
+	// job스크랩
+	@RequestMapping(value = "/scrapJob", method = RequestMethod.POST)
+	public int scrapJob(@RequestBody Map param) {
+		System.out.println("param: " + param);
+
+		int result = 0;
+		result = service.insertScrap(param);
+
+		if (result > 0) {
+			return result;
+		} else {
+			return -1;
+		}
+
+	}
+	
+	// job스크랩제거
+		@RequestMapping(value = "/unscrapJob", method = RequestMethod.POST)
+		public int unscrapJob(@RequestBody Map param) {
+			System.out.println("param: " + param);
+
+			int result = 0;
+			result = service.deleteScrap(param);
+
+			if (result > 0) {
+				return result;
+			} else {
+				return -1;
+			}
+
+		}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public Map loginMember(@RequestBody Map param) throws IOException {

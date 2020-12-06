@@ -89,5 +89,15 @@ public class MemberServiceImpl implements MemberService {
 		return dao.updatePhoto(session, mp);
 	}
 
+	@Override
+	public int insertScrap(Map param) {
+		return dao.insertScrap(session, param);
+	}
+
+	@Override
+	public int deleteScrap(Map param) {
+		return dao.deleteScrap(session, param);
+	}
+
 	
 }

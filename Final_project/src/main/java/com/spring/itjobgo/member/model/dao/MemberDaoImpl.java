@@ -78,6 +78,17 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.updatePhoto", mp);
 	}
 
+	@Override
+	public int insertScrap(SqlSession session, Map param) {
+		
+		return session.insert("member.insertScrap", param);
+	}
+
+	@Override
+	public int deleteScrap(SqlSession session, Map param) {
+		return session.delete("member.deleteScrap", param);
+	}
+
 
 	
 }
