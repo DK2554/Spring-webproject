@@ -4,11 +4,12 @@
   
   <!-- 공지사항 select -->
   <select id="noticeList" resultType="Notice">
-  	SELECT * FROM NOTICE
+  	SELECT * FROM NOTICE ORDER BY NOTICE_SQ DESC
   </select>
   
-  <!-- 공지사항 insert -->
-<!--   <insert id="insertNotice">
+  
+<!-- 공지사항 insert -->
+  <insert id="insertNotice" parameterType="Notice">
 		INSERT INTO NOTICE VALUES(
 											SEQ_NOTICE_NO.NEXTVAL,
 											#{noticeDivision},
@@ -19,11 +20,111 @@
 											#{memberNum},
 											1
 											)
-  </insert> -->
+  </insert>
   
   <!-- 첨부파일 등록 insert -->
-<!--   <insert id="insertNoticeAttachment" parameterType="">
+  <insert id="insertNoticeAttachment" parameterType="NoticeAttachment">
+  	INSERT INTO NOTICE_ATTACHMENT VALUES(
+											SEQ_NOTICE_ATTACHMENT_NO.NEXTVAL,
+											#{noticeSq},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT										
+											)
+											
+		<!-- 현재 noticeSq의 시퀀스 번호를 알고 싶을때 curraval from dual을 이용해
+		selectKey를 설정한다 -->
+		<selectKey keyProperty="noticeSq" resultType="_int" order="BEFORE">
+ 		SELECT SEQ_NOTICE_NO.CURRVAL FROM DUAL
+  		</selectKey>
   
-  </insert> -->
+  </insert> 
+  
+  <!-- 공지사항 상세보기 -->
+  <select id="selectNoticeOne" parameterType="_int" resultType="Notice">
+  	SELECT * FROM NOTICE WHERE NOTICE_SQ=#{noticeSq}
+  </select>
+  
+  <!-- 조회수 증가(공지사항 상세보기) -->
+  <update id="updateReadCount" parameterType="_int">
+	UPDATE NOTICE SET
+								NOTICE_READ_COUNT=NOTICE_READ_COUNT+1
+								WHERE NOTICE_SQ=#{noticeSq}
+  </update>
+  
+  <!-- 공지사항 첨부파일 조회 -->
+  <select id="selectAttach" resultType="NoticeAttachment" parameterType="_int">
+  	SELECT * FROM NOTICE_ATTACHMENT WHERE NOTICE_SQ=#{noticeSq}
+  </select>
+  
+  <!-- 공지사항 삭제 -->
+  <delete id="deleteBoard" parameterType="_int">
+  	DELETE FROM NOTICE WHERE NOTICE_SQ=#{noticeSq}
+  </delete>
+  
+  <!-- 게시판 업데이트 update -->
+	<update id="updateBoard">
+		UPDATE NOTICE SET 
+											NOTICE_DIVISION=#{noticeDivision},
+											NOTICE_TITLE=#{noticeTitle},
+											NOTICE_CONTENT=#{noticeContent}
+										WHERE	NOTICE_SQ=#{noticeSq}
+	</update>
+	
+	<!-- 첨부파일 업데이트 -->
+	<update id="updateAttachment">
+		UPDATE NOTICE_ATTACHMENT SET
+														ORIGINALFILENAME=#{originalfilename},
+														RENAMEDFILENAME=#{renamedfilename}
+											WHERE NOTICE_SQ=#{noticeSq}
+													
+	</update>
+	
+	<!-- 첨부파일이 없는 게시글 첨부파일을 등록해 update 하기 -->
+	<insert id="insertAttachment2" parameterType="NoticeAttachment">
+	INSERT INTO NOTICE_ATTACHMENT VALUES(
+											#{attachmentno},
+											#{noticeSq},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT										
+											)
+	</insert>
+	
+	<!-- 댓글 insert -->
+	<insert id="insertComment" parameterType="NoticeComment" >
+			INSERT INTO NOTICE_COMMENT VALUES(
+											SEQ_NOTICE_COMMENT_NO.NEXTVAL,
+											#{ntBoardNo},
+											#{ntCommentContent},
+											#{memberSq},
+											TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss'),
+											#{memberName}							
+											)
+	
+	
+	</insert>
+	
+	<!-- 댓글 select List -->
+	<select id="selectComment" parameterType="_int" resultType="NoticeComment">
+		SELECT * FROM NOTICE_COMMENT WHERE NT_BOARD_NO=#{ntBoardNo}
+	
+	</select>	
+	
+	<!-- 댓글 delete -->
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM NOTICE_COMMENT WHERE NT_COMMENT_NO=#{ntCommentNo}
+	</delete>
+	
+	<!-- 댓글 update -->
+	<update id="updateComment" parameterType="java.util.HashMap">
+			UPDATE NOTICE_COMMENT SET
+												NT_COMMENT_CONTENT=#{ntCommentContent},
+												NT_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
+												WHERE NT_COMMENT_NO=#{ntCommentNo}
+	
+	</update>
   
 </mapper>

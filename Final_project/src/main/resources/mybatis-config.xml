@@ -109,6 +109,18 @@
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeWork"
 			alias="resume_work" />
 			
+		<typeAlias
+		type="com.spring.itjobgo.notice.model.vo.Notice"
+		alias="Notice" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.notice.model.vo.NoticeAttachment"
+		alias="NoticeAttachment" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.notice.model.vo.NoticeComment"
+		alias="NoticeComment" />	
+			
 	</typeAliases>
 
 </configuration>

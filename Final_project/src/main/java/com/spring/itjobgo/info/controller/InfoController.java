@@ -41,7 +41,7 @@ public class InfoController {
 	@Autowired
 	private InfoService service;
 
-	// 자유게시판 화면전환용 메서드
+	//게시판 화면전환용 메서드
 	@RequestMapping(value = "/info/infoList", method = RequestMethod.GET)
 	public List<Info> info() throws JsonMappingException, JsonGenerationException, IOException {
 

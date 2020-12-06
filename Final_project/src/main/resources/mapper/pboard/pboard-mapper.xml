@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="pboard">
   <insert id="insertpboard" parameterType="pboard">
-  	insert into pboard values(seq_pboard.nextval,#{pboardId},#{pboardTitle},#{pboardContent},#{pboardWriter},default,default,0)
+  	insert into pboard values(seq_pboard.nextval,#{pboardId},#{pboardTitle},#{pboardContent},#{pboardWriter},default,default,0,#{pboardDivision})
   <!-- <selectKey keyProperty="pboardWriter" resultType="string" order="BEFORE">
 	select member_name from  pboard join member on pboard.pboard_Id=member.member_sq
   </selectKey> --> 
@@ -52,7 +52,14 @@
   <update id="updatecommentstatus" parameterType="_int">
   update pboard set pboard_status = 'Y' where pboard_no=#{no}
   </update>
+  <update id="updatecommentnstatus" parameterType="_int">
+  update pboard set pboard_status = 'N' where pboard_no=#{pboardNo}
+  </update>
   <update id="updatecomment"   parameterType="java.util.HashMap">
   update pcomment set pcomment_content =#{pcommentcontent} where pcomment_no=#{pcommentNo}
   </update>
+  <!--게시글 조회시에 댓글 갯수 확인으로 답변 체크-->
+  <select id="selectcomment" parameterType="_int" resultType="_int">
+  select count(*) from pcomment where pboard_no=#{pboardNo}
+  </select>
 </mapper>
