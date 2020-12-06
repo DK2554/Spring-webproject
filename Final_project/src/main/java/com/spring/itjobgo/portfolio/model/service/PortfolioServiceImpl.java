@@ -26,6 +26,16 @@ public class PortfolioServiceImpl implements PortfolioService {
 	
 	
 	@Override
+	public int countcommet(int pboardNo) {
+		// TODO Auto-generated method stub
+		return dao.countcomment(session,pboardNo);
+	}
+	@Override
+	public int updatacommentNtext(int pboardNo) {
+		// TODO Auto-generated method stub
+		return dao.updatacommentNtext(session, pboardNo);
+	}
+	@Override
 	public int updatecomment(Map param) {
 		// TODO Auto-generated method stub
 		return dao.updatecomment(session,param);

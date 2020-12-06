@@ -16,18 +16,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -44,19 +40,7 @@ public class PortfolioController {
 	private PortfolioService service;
 	@Autowired
 	private Logger logger;
-//	@ResponseBody
-//	@RequestMapping(value="/portfoilo/portfoiloenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
-//	//@ModelAttribute 생략가능  써주는것이 좋음 
-//	public ModelAndView portboard(@RequestBody MultipartFile file,ModelAndView mv) {
-//		System.out.println(file);
-//	
-//		logger.debug("매핑확인");
-//		
-//		
-//		return mv;
-//		
-//			
-//	}
+
 	
 	@RequestMapping(value="/portfolio/portfolioenroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 
@@ -158,7 +142,9 @@ public class PortfolioController {
 							
 				}	
 		Pboard bp=service.selectPboardOne(pboardNo,hasRead);
-		//return pb;
+		//게시글을 클릭시에 해당 게시글에 댓글이 있으면 Y 없으면 N으로 업데이트하는 로직 구현
+		int count=service.countcommet(pboardNo);
+		if(count==0) service.updatacommentNtext(pboardNo);
 		return bp;
 	}
 	@RequestMapping(value="/portfolio/pboarddel{no}.do",method = RequestMethod.POST)
@@ -318,16 +304,16 @@ public class PortfolioController {
 	@RequestMapping(value="portfolio/commentList{no}.do",method =RequestMethod.GET)
 	public List<Comment> commentList(@PathVariable int no){
 		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글 을 불러오는것
-		logger.debug("메핑텟트");
+		logger.debug("댓글 조회");
 		List<Comment> list=service.selectComment(no);
-		for(Comment cm:list) {
-			logger.debug(cm.toString());
-		}
+		
 		return list;
 	}
+	//댓글 삭제 
 	@RequestMapping(value="portfolio/commentdel{no}.do",method=RequestMethod.POST)
 	public void commentdel(@PathVariable int no) {
 		int result=service.deletecomment(no);
+		
 		
 	}
 	//댓글 업데이트

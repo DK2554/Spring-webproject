@@ -35,6 +35,10 @@ public interface PortfolioService {
 
 	int updatecomment(Map param);
 
+	int countcommet(int pboardNo);
+
+	int updatacommentNtext(int pboardNo);
+
 	
 
 }

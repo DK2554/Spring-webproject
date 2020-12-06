@@ -41,4 +41,8 @@ public interface PortfolioDao {
 
 	int updatecomment(SqlSessionTemplate session, Map param);
 
+	int countcomment(SqlSessionTemplate session, int pboardNo);
+
+	int updatacommentNtext(SqlSessionTemplate session, int pboardNo);
+
 }
