@@ -124,17 +124,24 @@
 	
 	
 	<!--댓글 조회  --> 
-	<select id="selectQnacomment" parameterType="_int" resultType="qbcomment">
+	<select id="selectQnacomment" resultType="qbcomment">
 			SELECT * FROM QB_COMMENT WHERE QBOARD_NO=#{qboardNo}
-																		ORDER BY QBCOMMENT_DATE DESC
+							ORDER BY QBCOMMENT_DATE DESC
 	</select>
 	
 	
 	<!-- 댓글삭제 -->
-	<delete id="deletecomment">
-			DELETE QB_COMMENT WHERE QBOARD_NO=#{qbCommentNo}
+	<delete id="deletecomment" parameterType="_int">
+			DELETE QB_COMMENT WHERE QBOARD_NO=#{qboardCommentNo}
 	</delete>
 	
+	<!-- 댓글수정하기  -->
+	<update id="updateComment" parameterType="java.util.HashMap">
+			UPDATE QB_COMMENT SET
+										QB_COMMENT_CONTENT=#{qbCommentContent},
+										QBCOMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
+										WHERE QBOARD_COMMENT_NO=#p{qboardCommentNo}
+	</update>
 	
 
 	

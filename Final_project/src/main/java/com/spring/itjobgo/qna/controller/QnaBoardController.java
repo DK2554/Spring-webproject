@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
@@ -384,23 +385,44 @@ public class QnaBoardController {
 		
 	}
 	//댓글 조회
-	@RequestMapping(value="qna/qnalist",method =RequestMethod.GET)
+	@RequestMapping(value="qna/commentSelectOne{qboardNo}",method =RequestMethod.GET)
 	public List<QB_COMMENT> commentList(@PathVariable int qboardNo){
 		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글을 불러오는 것
 		logger.debug("댓글 조회 매핑테스트");
-		List<QB_COMMENT> list=service.selectQnacomment(qboardNo);
+		List<QB_COMMENT> list=service.selectComment(qboardNo);
+		
 		for(QB_COMMENT cm:list) {
 			logger.debug(cm.toString());
 		}
+		
 		return list;
 	}
 	
 	//댓글삭제
-	@RequestMapping(value="qna/commentdel",method=RequestMethod.POST)
-	public void commentdel(@PathVariable int qbCommentNo) {
-			int result=service.deletecomment(qbCommentNo);
+	@RequestMapping(value="qna/commentDelete{qboardCommentNo}",method=RequestMethod.POST)
+	public void commentdel(@PathVariable int qboardCommentNo) {
+		
+			int result=service.deletecomment(qboardCommentNo);
+			
+			if(result>0) {
+				System.out.println("게시판 댓글 삭제성공");		
+			}else {
+				System.out.println("게시판 댓글 삭제 실패");
+			}
 	}
 	
+	//댓글수정
+	@RequestMapping(value="qna/updateComment", method=RequestMethod.POST)
+	public void updateComment(@RequestBody Map param) {
+		System.out.println("==댓글수정 맵핑====");
+		
+		int result = service.updateComment(param);
+		
+		logger.debug("댓글  param"+param);
+		if(result>0) {
+			System.out.println("==댓글 수정 성공==");
+		}
+	}
 	
 	
 	
