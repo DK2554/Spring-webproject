@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- DB연결을 위한 class를 bean으로 등록하고 사용하기 -->
-	<!-- 1. DB연결정보를 구성하는 DataSource객체 등록하기 -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
-	destroy-method="close">
-		<!-- DB에 대한 연결정보의 값을 각 필드에 대입해줌 -->
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe"/>
-		<property name="username" value="itjobgo"/>
-		<property name="password" value="itjobgo"/>
-	</bean>
-	<!-- 2. SqlSessionFactoryBean객체를 bean으로 등록 -->
-	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<!-- DB연결정보, Config, Mapper파일의 위치정보를 등록함 -->
-		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:mybatis-config.xml"/>
-		<property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
-	</bean>
-	<!-- sqlSessionFactoryBean을 이용할 SqlSessionTemplate객체를 baen으로 등록 -->
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index="0" ref="sqlSessionFactoryBean"/>
-	</bean>	
-	
-	<!-- 트랜젝션 매니저 등록하기 -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"/>
-	</bean>
-	
-	<!-- 어노테이션 방식으로 트랜젝션 처리하기 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	<!-- 트랜젝션처리 구문 추가하기 : xml
-	트랜젝션용 advice를 등록한다
-	-->
-	
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<tx:method name="insert*" rollback-for="Exception"/>
-		</tx:attributes>
-	</tx:advice>
-	
-<!-- 	pointcut 설정하기 -->
-	<aop:config proxy-target-class="true">
-		<aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="serviceMethod"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" id="transactionAdvisor"/>
-	</aop:config>
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:aop="http://www.springframework.org/schema/aop"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+   
+   <!-- Root Context: defines shared resources visible to all other web components -->
+   <!-- DB연결을 위한 class를 bean으로 등록하고 사용하기 -->
+   <!-- 1. DB연결정보를 구성하는 DataSource객체 등록하기 -->
+   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" 
+   destroy-method="close">
+      <!-- DB에 대한 연결정보의 값을 각 필드에 대입해줌 -->
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+      <property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe"/>
+      <property name="username" value="itjobgo"/>
+      <property name="password" value="itjobgo"/>
+   </bean>
+   <!-- 2. SqlSessionFactoryBean객체를 bean으로 등록 -->
+   <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+      <!-- DB연결정보, Config, Mapper파일의 위치정보를 등록함 -->
+      <property name="dataSource" ref="dataSource"/>
+      <property name="configLocation" value="classpath:mybatis-config.xml"/>
+      <property name="mapperLocations" value="classpath*:mapper/**/*.xml"/>
+   </bean>
+   <!-- sqlSessionFactoryBean을 이용할 SqlSessionTemplate객체를 baen으로 등록 -->
+   <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+   </bean>   
+   
+   <!-- 트랜젝션 매니저 등록하기 -->
+   <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="dataSource"/>
+   </bean>
+   
+   <!-- 어노테이션 방식으로 트랜젝션 처리하기 -->
+   <tx:annotation-driven transaction-manager="transactionManager"/>
+   
+   <!-- 트랜젝션처리 구문 추가하기 : xml
+   트랜젝션용 advice를 등록한다
+   -->
+   
+   <tx:advice id="txAdvice" transaction-manager="transactionManager">
+      <tx:attributes>
+         <tx:method name="insert*" rollback-for="Exception"/>
+      </tx:attributes>
+   </tx:advice>
+   
+<!--    pointcut 설정하기 -->
+   <aop:config proxy-target-class="true">
+      <aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="serviceMethod"/>
+      <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod" id="transactionAdvisor"/>
+   </aop:config>
 
 </beans>
-
 
 
 

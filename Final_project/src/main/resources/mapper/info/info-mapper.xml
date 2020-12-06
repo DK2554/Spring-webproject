@@ -1,15 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="Info">
+<mapper namespace="info">
 
-<!-- <select id="selectInfoOne" parameterType="map" resultMap="Info">
-		SELECT * FROM INFO
-	</select>
--->
-
- 	<select id="selectInfoList" resultType="Info">
-		SELECT * FROM INFO
+ 	<!-- 	<resultMap id="Info" type="com.spring.itjobgo.info.model.vo.Info">
+		<result column="INFO_SQ" property="infoSq" />
+		<result column="INFO_CATEGORY" property="infoCategory" />
+		<result column="INFO_TITLE" property="infoTitle" />
+		<result column="INFO_DATE" property="infoDate" />
+		<result column="INFO_TIME" property="infoTime" />
+		<result column="INFO_ADDRESS" property="infoAddress" />
+		<result column="INFO_ORIGINAL_FILEPATH" property="infoOriginalFilepath" />
+		<result column="INFO_RENAME_FILEPATH" property="infoRenameFilepath" />
+		<result column="MEMBER_NUM" property="memberNum" />
+	</resultMap>  -->
+		
+   <!--취업정보 리스트-->
+ 	<select id="selectInfoList" resultType="info">
+		SELECT * FROM INFO ORDER BY INFO_SQ DESC
 	</select> 
 	
+	<!--취업정보 글 작성 -->
+	<insert id ="insertInfo" parameterType="info">
+		INSERT INTO INFO VALUES(
+											INFO_SQ.NEXTVAL,
+											#{infoCategory},
+											#{infoTitle},
+											#{infoDate},
+											#{infoTime},	
+											#{memberNum},		
+											#{infoContent},																	
+											1					
+											)
+	</insert>
 		
+	<!-- 첨부파일 첨부 -->
+	<insert id="insertAttachment" parameterType="info_attachment">
+		INSERT INTO INFO_ATTACHMENT VALUES(
+												SEQ_INFO_ATTACHMENT_NO.NEXTVAL,
+												#{infoSq},
+												#{originalfilename},
+												#{renamedfilename},
+												DEFAULT,
+												DEFAULT										
+												)
+	
+			<selectKey keyProperty="infoSq" resultType="_int" order="BEFORE">
+	 		SELECT INFO_SQ.CURRVAL FROM DUAL
+	  		</selectKey>
+	  </insert> 
+	  
+	  	<!-- 첨부파일이 없는 게시글 update 하기 -->
+		<insert id="insertAttachment2" parameterType="info_attachment">
+		INSERT INTO INFO_ATTACHMENT VALUES(
+												#{attachmentno},
+												#{infoSq},
+												#{originalfilename},
+												#{renamedfilename},
+												DEFAULT,
+												DEFAULT										
+												)
+		</insert>
+		
+	<!--상세보기 -->
+		<select id="selectInfoOne"  parameterType="_int" 
+		resultType="info">
+			SELECT * FROM INFO WHERE INFO_SQ=#{infoSq}
+		
+		</select>
+		
+	<!-- 삭제하기 -->
+		<delete id="deleteInfo" parameterType="_int">
+			DELETE  FROM INFO WHERE INFO_SQ=#{infoSq}
+		</delete>
+		
+	<!-- 첨부파일 조회 -->
+		<select id="selectAttach" resultType="info_attachment" parameterType="_int">
+			SELECT * FROM INFO_ATTACHMENT WHERE INFO_SQ=#{infoSq}
+		</select>
+		
+	<!-- 게시판 업데이트 update -->
+		<update id="updateinfo">
+			UPDATE INFO SET 
+						INFO_CATEGORY=#{infoCategory},
+						INFO_TITLE=#{infoTitle},
+						INFO_DATE=#{infoDate},
+						INFO_TIME=#{infoTime},						
+						INFO_CONTENT=#{infoContent}
+			WHERE INFO_SQ=#{infoSq}
+		</update>
+		
+		<!-- 첨부파일 업데이트 -->
+		<update id="updateAttachment">
+			UPDATE INFO_ATTACHMENT SET
+								ORIGINALFILENAME=#{originalfilename},
+								RENAMEDFILENAME=#{renamedfilename}
+					WHERE INFO_SQ=#{infoSq}
+		</update>										
+		
+		<!-- 조회수  -->
+		<update id="updateReadCount">
+		UPDATE INFO SET
+								INFO_COUNT=INFO_COUNT+1
+								WHERE INFO_SQ=#{infoSq}
+
+	</update>
 </mapper>
+	

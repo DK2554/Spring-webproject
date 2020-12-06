@@ -20,6 +20,18 @@ public class PortfolioDaoImpl implements PortfolioDao {
 	}
 
 	@Override
+	public int countcomment(SqlSessionTemplate session, int pboardNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("pboard.selectcomment",pboardNo);
+	}
+
+	@Override
+	public int updatacommentNtext(SqlSessionTemplate session, int pboardNo) {
+		// TODO Auto-generated method stub
+		return session.update("pboard.updatecommentnstatus",pboardNo);
+	}
+
+	@Override
 	public int insertComment(SqlSessionTemplate session, Comment cm) {
 		// TODO Auto-generated method stub
 		return session.insert("pboard.insertcomment",cm);

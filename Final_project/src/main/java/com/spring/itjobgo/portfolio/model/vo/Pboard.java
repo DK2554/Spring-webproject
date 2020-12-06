@@ -11,85 +11,66 @@ public class Pboard {
 	private Date pboardDate;
 	private String pboardStatus;
 	private int pboardCount;
-	public int getPboardId() {
-		return pboardId;
-	}
-
-	public void setPboardId(int pboardId) {
-		this.pboardId = pboardId;
-	}
-
-	
-	
+	private String pboardDivision;
 	public Pboard() {
 		// TODO Auto-generated constructor stub
 	}
-
 	public int getPboardNo() {
 		return pboardNo;
 	}
-
 	public void setPboardNo(int pboardNo) {
 		this.pboardNo = pboardNo;
 	}
-
+	public int getPboardId() {
+		return pboardId;
+	}
+	public void setPboardId(int pboardId) {
+		this.pboardId = pboardId;
+	}
 	public String getPboardTitle() {
 		return pboardTitle;
 	}
-
 	public void setPboardTitle(String pboardTitle) {
 		this.pboardTitle = pboardTitle;
 	}
-
 	public String getPboardWriter() {
 		return pboardWriter;
 	}
-
 	public void setPboardWriter(String pboardWriter) {
 		this.pboardWriter = pboardWriter;
 	}
-
 	public String getPboardContent() {
 		return pboardContent;
 	}
-
 	public void setPboardContent(String pboardContent) {
 		this.pboardContent = pboardContent;
 	}
-
 	public Date getPboardDate() {
 		return pboardDate;
 	}
-
 	public void setPboardDate(Date pboardDate) {
 		this.pboardDate = pboardDate;
 	}
-
 	public String getPboardStatus() {
 		return pboardStatus;
 	}
-
 	public void setPboardStatus(String pboardStatus) {
 		this.pboardStatus = pboardStatus;
 	}
-
 	public int getPboardCount() {
 		return pboardCount;
 	}
-
 	public void setPboardCount(int pboardCount) {
 		this.pboardCount = pboardCount;
 	}
-
-	@Override
-	public String toString() {
-		return "Pboard [pboardNo=" + pboardNo + ", pboardId=" + pboardId+", pboardTitle=" + pboardTitle + ", pboardWriter=" + pboardWriter
-				+ ", pboardContent=" + pboardContent + ", pboardDate=" + pboardDate + ", pboardStatus=" + pboardStatus
-				+ ", pboardCount=" + pboardCount + "]";
+	public String getPboardDivision() {
+		return pboardDivision;
 	}
-
-	public Pboard(int pboardNo, int pboardId ,String pboardTitle, String pboardWriter, String pboardContent, Date pboardDate,
-			String pboardStatus, int pboardCount) {
+	public void setPboardDivision(String pboardDivision) {
+		this.pboardDivision = pboardDivision;
+	}
+	public Pboard(int pboardNo, int pboardId, String pboardTitle, String pboardWriter, String pboardContent,
+			Date pboardDate, String pboardStatus, int pboardCount, String pboardDivision) {
 		super();
 		this.pboardNo = pboardNo;
 		this.pboardId = pboardId;
@@ -99,8 +80,17 @@ public class Pboard {
 		this.pboardDate = pboardDate;
 		this.pboardStatus = pboardStatus;
 		this.pboardCount = pboardCount;
+		this.pboardDivision = pboardDivision;
 	}
-
+	@Override
+	public String toString() {
+		return "Pboard [pboardNo=" + pboardNo + ", pboardId=" + pboardId + ", pboardTitle=" + pboardTitle
+				+ ", pboardWriter=" + pboardWriter + ", pboardContent=" + pboardContent + ", pboardDate=" + pboardDate
+				+ ", pboardStatus=" + pboardStatus + ", pboardCount=" + pboardCount + ", pboardDivision="
+				+ pboardDivision + "]";
+	}
+	
+	
 	
 
 }

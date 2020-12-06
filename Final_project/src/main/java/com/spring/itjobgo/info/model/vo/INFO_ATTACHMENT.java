@@ -1,21 +1,18 @@
-package com.spring.itjobgo.community.model.vo;
+package com.spring.itjobgo.info.model.vo;
 
 import java.sql.Date;
 
-import lombok.Data;
 
-
-public class CB_ATTACHMENT {
+public class INFO_ATTACHMENT {
 	
 	private int attachmentno;
-	private int boardSq;
+	private int infoSq;
 	private String originalfilename;
 	private String renamedfilename;
 	private Date uploaddate;
 	private String status;
 
-	public CB_ATTACHMENT() {
-		// TODO Auto-generated constructor stub
+	public INFO_ATTACHMENT() {
 	}
 
 	public int getAttachmentno() {
@@ -26,12 +23,12 @@ public class CB_ATTACHMENT {
 		this.attachmentno = attachmentno;
 	}
 
-	public int getBoardSq() {
-		return boardSq;
+	public int getInfoSq() {
+		return infoSq;
 	}
 
-	public void setBoardSq(int boardSq) {
-		this.boardSq = boardSq;
+	public void setInfoSq(int infoSq) {
+		this.infoSq = infoSq;
 	}
 
 	public String getOriginalfilename() {
@@ -68,25 +65,20 @@ public class CB_ATTACHMENT {
 
 	@Override
 	public String toString() {
-		return "CB_ATTACHMENT [attachmentno=" + attachmentno + ", boardSq=" + boardSq + ", originalfilename="
+		return "INFO_ATTACHMENT [attachmentno=" + attachmentno + ", infoSq=" + infoSq + ", originalfilename="
 				+ originalfilename + ", renamedfilename=" + renamedfilename + ", uploaddate=" + uploaddate + ", status="
 				+ status + "]";
 	}
 
-	public CB_ATTACHMENT(int attachmentno, int boardSq, String originalfilename, String renamedfilename,
+	public INFO_ATTACHMENT(int attachmentno, int infoSq, String originalfilename, String renamedfilename,
 			Date uploaddate, String status) {
 		super();
 		this.attachmentno = attachmentno;
-		this.boardSq = boardSq;
+		this.infoSq = infoSq;
 		this.originalfilename = originalfilename;
 		this.renamedfilename = renamedfilename;
 		this.uploaddate = uploaddate;
 		this.status = status;
 	}
-
-    
-	
-	
-	
 	
 }
