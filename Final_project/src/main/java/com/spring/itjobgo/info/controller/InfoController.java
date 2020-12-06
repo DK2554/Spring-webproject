@@ -107,7 +107,6 @@ public class InfoController {
 				files.add(file2);
 			}
 		}
-		
 		int result = 0;
 		try {
 			// Info 글 작성하기
