@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 @RestController
@@ -43,6 +44,7 @@ public class QnaBoardController {
 	private QnaBoardService service;
 	
 	@ResponseBody
+	//qna게시판 조회
 	@RequestMapping(value="qna/qnaboardlist" , method=RequestMethod.GET)
 	public List<QnaBoard> qnaBoard() {
 		
@@ -80,7 +82,7 @@ public class QnaBoardController {
 		
 		//업로드 경로 설정
 		//파일 리네임 처리후 파일 저장하기
-		String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBorad");
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBoard");
 		
 		File dir=new File(saveDir);
 		
@@ -137,16 +139,16 @@ public class QnaBoardController {
 	}
 	
 	//qna게시판 상세화면 전환페이지
-	@RequestMapping(value="/qna/qnaBoardView{QnaSeq}",
+	@RequestMapping(value="/qna/qnaBoardView{qboardNo}",
 										method=RequestMethod.GET)
-	public QnaBoard selectQnaBoardOne(@PathVariable int QnaSeq,
+	public QnaBoard selectQnaBoardOne(@PathVariable int qboardNo,
 																			HttpServletRequest request,
 																			HttpServletResponse response)
 			throws JsonMappingException,JsonGenerationException,IOException{
 		
 		System.out.print("=======상세화면========");
 		
-		logger.debug("qnaSeq"+Integer.toString(QnaSeq));
+		logger.debug("qboardNo"+Integer.toString(qboardNo));
 		
 		//조회수 증가로직 쿠키이용
 		Cookie[] cookies = request.getCookies();
@@ -161,7 +163,7 @@ public class QnaBoardController {
 				if("boardHistory".equals(name)) {
 					boardHistory=value; //현재 저장된 값 대입 덮어쓰기 하면서 누적
 					
-					if(value.contains("|"+QnaSeq+"|")) {
+					if(value.contains("|"+qboardNo+"|")) {
 						hasRead=true;
 						break;
 					}
@@ -170,22 +172,22 @@ public class QnaBoardController {
 		}//if
 		
 		if(!hasRead) {
-			Cookie c = new Cookie("boardHistory",boardHistory+"|"+QnaSeq+"|");
+			Cookie c = new Cookie("boardHistory",boardHistory+"|"+qboardNo+"|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
 					
 		}
 		
-		QnaBoard qboard =service.selectQnaBoardOne(QnaSeq,hasRead);
+		QnaBoard qboard =service.selectQnaBoardOne(qboardNo,hasRead);
 		
 		return qboard;
 	}
 	
 	
 	//qna게시판 삭제하기
-	@RequestMapping(value="/qna/qnaBoardDelete{qnaSeq}",
+	@RequestMapping(value="/qna/qnaBoardDelete{qboardNo}",
 									method=RequestMethod.POST)
-	public String deleteBoard(@PathVariable int qnaSeq, HttpServletRequest request) 
+	public String deleteBoard(@PathVariable int qboardNo, HttpServletRequest request) 
 			throws JsonMappingException,JsonGenerationException,IOException
 			{
 		
@@ -194,7 +196,7 @@ public class QnaBoardController {
 			logger.debug("첨부파일 삭제 후 게시글 삭제 로직 수행 logger");
 			
 			//먼저 게시글 번호를 가지고 해당 첨부파일을 가져오는 메서드
-			QB_ATTACHMENT qba = service.selectAttach(qnaSeq);
+			QB_ATTACHMENT qba = service.selectAttach(qboardNo);
 			System.out.println("qba");
 			
 			//첨부파일이 있을경우
@@ -205,7 +207,7 @@ public class QnaBoardController {
 			String saveDir = request.getServletContext().getRealPath("/resources/upload/qnaBoard");
 			
 			//먼저 게시글 삭제 후 첨부파일 삭제
-			int result =service.deleteBoard(qnaSeq);
+			int result =service.deleteBoard(qboardNo);
 			
 			if(result>0) {
 				msg="qna게시판 글 삭제 성공";
@@ -222,7 +224,7 @@ public class QnaBoardController {
 			}
 			//첨부파일이 없는 게시글 삭제
 			}else {
-				int result = service.deleteBoard(qnaSeq);
+				int result = service.deleteBoard(qboardNo);
 				msg =(result>0)? "qna게시판 글 삭제 성공" : "qna게시판 글 삭제 실패";
 			}
 			logger.debug(msg);
@@ -231,36 +233,37 @@ public class QnaBoardController {
 	
 	
 	//첨부파일 먼저 불러오기(update form으로)
-	@RequestMapping(value="/qna/qnaBoardUpdate{qnaSeq}",
-										method = RequestMethod.GET)
-	public QB_ATTACHMENT selectAttach(@PathVariable int qnaSeq) {
-		System.out.println("===첨부파일 불러오기 맵핑 시작===");
+	@RequestMapping(value="/qna/qnaBoardUpdate{qboardNo}",method = RequestMethod.GET)
+	public QB_ATTACHMENT qboardupdate(@PathVariable int qboardNo) 
+			throws JsonMappingException,JsonGenerationException,IOException{
 		
-		QB_ATTACHMENT qba=service.selectAttach(qnaSeq);
+		System.out.println("==첨부파일 불러오기 맵핑 시작==");
 		
-		System.out.println("qba");
+		QB_ATTACHMENT qba=service.selectAttach(qboardNo);
+		
+		System.out.println(qba);
 		
 		return qba;
+		
 	}
 	
 	
-	//qna 게시판 수정하기
+	//qna 게시판 수정하기//////////
 	@RequestMapping(value="/qna/qnaBoardUpdateEnd",
 										method=RequestMethod.POST,
 										consumes= {"multipart/form-data"})
-	public String qnaBoardUpdate(QnaBoard qb,
-														@RequestBody(required=false)
-															MultipartFile[] file,
-															HttpServletRequest request) {
+	//@ModelAttribute 생략가능  써주는것이 좋음 
+	public String qnaBoardUpdate(QnaBoard qboard,
+											@RequestBody(required=false)
+											MultipartFile[] file,
+											HttpServletRequest request) {
 		
-		System.out.println("==업데이트 메서드 실행=========");
+		System.out.println("==업데이트 메서드 실행==");
 		
 		if(file.length>0) {
 			//파일이 존재한다면 게시판 번호를 변수에 넣어둔다.
-			int qnaSeq = qb.getQnaSeq();
-			
+			int no = qboard.getQboardNo();
 			String saveDir=request.getServletContext().getRealPath("/resources/upload/qnaBoard");
-			
 			File dir = new File(saveDir);
 			if(!dir.exists()) {
 				//지정된 경로가 없으면 폴더를 생성해주는 메서드 mkdirs()
@@ -268,7 +271,6 @@ public class QnaBoardController {
 			}
 			
 			List<QB_ATTACHMENT> files = new ArrayList();
-			
 			//원래 파일이 존재한다면 get해서 가져와서 변수에 저장해두기
 			for(MultipartFile f:file) {
 				if(!f.isEmpty()) {
@@ -287,7 +289,7 @@ public class QnaBoardController {
 						e.printStackTrace();
 					}
 					
-					QB_ATTACHMENT file2 = new QB_ATTACHMENT(0,qnaSeq,originalFileName,renameFileName,null,null);
+					QB_ATTACHMENT file2 = new QB_ATTACHMENT(0,no,originalFileName,renameFileName,null,null);
 					files.add(file2);
 					
 				}
@@ -295,7 +297,7 @@ public class QnaBoardController {
 			int result=0;
 			try {
 				//게시판 글 업데이트
-				result = service.updateBoard(qb,files);
+				result = service.updateBoard(qboard,files);
 			}catch(RuntimeException e) {
 				e.printStackTrace();
 			}
@@ -305,20 +307,20 @@ public class QnaBoardController {
 			
 			}//193번째줄 if > 파일이 있다면 / 게시판 정보만 업데이트
 			else {
-			int result = service.updateBoard(qb);
+			int result = service.updateBoard(qboard);
 			}
 			return "업데이트 테스트";
 	
 	}
 		
 	//첨부파일 표시
-	@RequestMapping(value="qna/qnaBoardAttachment{qnaSeq}",
+	@RequestMapping(value="qna/qnaBoardAttachment{qboardNo}",
 										method=RequestMethod.GET)
-	public QB_ATTACHMENT downLoad(@PathVariable int qnaSeq) {
+	public QB_ATTACHMENT downLoad(@PathVariable int qboardNo) {
 		
 		System.out.println("====첨부파일 다운로드 매핑 시작=====");
-		logger.debug(Integer.toString(qnaSeq));
-		QB_ATTACHMENT qba=service.selectAttach(qnaSeq);
+		logger.debug(Integer.toString(qboardNo));
+		QB_ATTACHMENT qba=service.selectAttach(qboardNo);
 		if(qba==null) return null;
 		else return qba;
 	}
@@ -369,6 +371,39 @@ public class QnaBoardController {
 		}
 	}
 			
+	// 댓글작성하기
+	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
+	public void comment(QB_COMMENT cm) {
+	System.out.println("댓글작성하기~~~매핑시작");
+		int result = service.insertComment(cm);
+		if(result>0) {
+			//답글이 달리면 N->Y로 변경.
+			int comment = service.insertCommentText(cm.getQboardNo());
+			System.out.println("댓글작성하기~~~성공");
+		}
+		
+	}
+	//댓글 조회
+	@RequestMapping(value="qna/qnalist",method =RequestMethod.GET)
+	public List<QB_COMMENT> commentList(@PathVariable int qboardNo){
+		//해당 게시글 번호를 가져와서 게시글에 맞는 댓글을 불러오는 것
+		logger.debug("댓글 조회 매핑테스트");
+		List<QB_COMMENT> list=service.selectQnacomment(qboardNo);
+		for(QB_COMMENT cm:list) {
+			logger.debug(cm.toString());
+		}
+		return list;
+	}
+	
+	//댓글삭제
+	@RequestMapping(value="qna/commentdel",method=RequestMethod.POST)
+	public void commentdel(@PathVariable int qbCommentNo) {
+			int result=service.deletecomment(qbCommentNo);
+	}
+	
+	
+	
+	
 			
 	}
 	
