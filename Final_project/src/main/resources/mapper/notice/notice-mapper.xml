@@ -7,6 +7,7 @@
   	SELECT * FROM NOTICE ORDER BY NOTICE_SQ DESC
   </select>
   
+  
 <!-- 공지사항 insert -->
   <insert id="insertNotice" parameterType="Notice">
 		INSERT INTO NOTICE VALUES(
