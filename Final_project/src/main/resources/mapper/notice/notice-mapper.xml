@@ -4,7 +4,7 @@
   
   <!-- 공지사항 select -->
   <select id="noticeList" resultType="Notice">
-  	SELECT * FROM NOTICE
+  	SELECT * FROM NOTICE ORDER BY NOTICE_SQ DESC
   </select>
   
 <!-- 공지사항 insert -->
