@@ -112,7 +112,7 @@
 												#{qboardNo},
 												#{qbCommentContent},
 												#{memberSq},
-												default,
+												TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss'),
 												#{memberName}								
 												)
 	</insert>
@@ -132,7 +132,7 @@
 	
 	<!-- 댓글삭제 -->
 	<delete id="deletecomment" parameterType="_int">
-			DELETE QB_COMMENT WHERE QBOARD_NO=#{qboardCommentNo}
+			DELETE QB_COMMENT WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
 	</delete>
 	
 	<!-- 댓글수정하기  -->
@@ -140,7 +140,7 @@
 			UPDATE QB_COMMENT SET
 										QB_COMMENT_CONTENT=#{qbCommentContent},
 										QBCOMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
-										WHERE QBOARD_COMMENT_NO=#p{qboardCommentNo}
+										WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
 	</update>
 	
 
