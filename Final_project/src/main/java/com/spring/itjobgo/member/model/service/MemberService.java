@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.member.model.vo.MemberPhoto;
+import com.spring.itjobgo.member.model.vo.MemberScrap;
 
 public interface MemberService {
 	//public String createToken(LoginRequest loginRequest)
@@ -34,6 +35,10 @@ public interface MemberService {
 	int insertScrap(Map param);
 
 	int deleteScrap(Map param);
+
+	List<MemberScrap> selectScrapList(Map param);
+
+	int selectScrap(Map param);
 
 	
 

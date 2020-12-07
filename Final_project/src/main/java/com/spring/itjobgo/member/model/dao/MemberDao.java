@@ -1,11 +1,13 @@
 package com.spring.itjobgo.member.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.member.model.vo.MemberPhoto;
+import com.spring.itjobgo.member.model.vo.MemberScrap;
 
 public interface MemberDao {
 
@@ -34,6 +36,10 @@ public interface MemberDao {
 	int insertScrap(SqlSession session, Map param);
 
 	int deleteScrap(SqlSession session, Map param);
+
+	List<MemberScrap> selectScrapList(SqlSession session, Map param);
+
+	int selectScrap(SqlSession session, Map param);
 
 
 }
