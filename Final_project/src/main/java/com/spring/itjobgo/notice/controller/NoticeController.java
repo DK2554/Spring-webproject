@@ -410,7 +410,7 @@ public class NoticeController {
 		@RequestMapping(value="notice/updateComment", method=RequestMethod.POST)
 		public void updateComment(@RequestBody Map param) {
 			System.out.println("==댓글수정 맵핑테스트==");
-		
+			System.out.println("댓글수정(넘어온 param 확인)" + param);
 			int result = service.updateComment(param);
 			
 			logger.debug("댓글 param"+param);
