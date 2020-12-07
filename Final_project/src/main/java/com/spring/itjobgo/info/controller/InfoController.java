@@ -41,7 +41,7 @@ public class InfoController {
 	@Autowired
 	private InfoService service;
 
-	//게시판 화면전환용 메서드
+	// 화면전환용 메서드
 	@RequestMapping(value = "/info/infoList", method = RequestMethod.GET)
 	public List<Info> info() throws JsonMappingException, JsonGenerationException, IOException {
 
@@ -108,7 +108,9 @@ public class InfoController {
 			}
 		}
 		int result = 0;
+
 		try {
+
 			// Info 글 작성하기
 			result = service.insertInfo(iboard, files);
 		} catch (RuntimeException e) {
@@ -118,7 +120,7 @@ public class InfoController {
 		if (result > 0) msg = "등록 성공!";
 		else msg = "등록 실패!";
 		return msg;
-	 }
+	}
 
 	// 취업정보 게시판 상세화면 전환 페이지
 	@RequestMapping(value = "/info/infoDetail{infoSq}", method = RequestMethod.GET)
@@ -153,6 +155,7 @@ public class InfoController {
 			Cookie c = new Cookie("boardHistory", boardHistory + "|" + infoSq + "|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
+
 		}
 
 		Info iboard = service.selectInfoOne(infoSq, hasRead);
@@ -204,8 +207,9 @@ System.out.println("게시판 삭제 맵");
 		return msg;
 
 	}
-	
+
 	// 첨부파일 먼저 불러오기 (update form 으로)
+
 	@RequestMapping(value = "/info/infoUpdate{infoSq}", 
 								method = RequestMethod.GET)
 	public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
@@ -281,6 +285,7 @@ System.out.println("게시판 삭제 맵");
 			         int result = service.updateInfo(ifo);
 			      }
 			      return "업데이트 테스트";
+			   
 	}
 	
 	//첨부파일 표시
