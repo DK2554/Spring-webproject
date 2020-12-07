@@ -82,9 +82,10 @@
 	</select>
 	
 	<!-- qna게시판 업데이트 update -->	
-													<!-- QNA_CATEGORY=#{qnaCategory}, -->
+	<!-- QNA_CATEGORY=#{qnaCategory}, -->
 	<update id="updateBoard">
 			UPDATE QNA_BOARD SET
+													QNA_CATEGORY=#{qnaCategory},
 													QNA_TITLE=#{qnaTitle},
 													QNA_CONTENT=#{qnaContent}
 										WHERE QBOARD_NO=#{qboardNo}
@@ -93,8 +94,8 @@
 	<!-- 첨부파일 업데이트 -->	
 	<update id="updateAttachment">
 			UPDATE QB_ATTACHMENT SET
-													ORIGINALFILENAME=#{originalfilename},
-													RENAMEDFILENAME=#{renamedfilename}
+												ORIGINALFILENAME=#{originalfilename},
+												RENAMEDFILENAME=#{renamedfilename}
 												WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
