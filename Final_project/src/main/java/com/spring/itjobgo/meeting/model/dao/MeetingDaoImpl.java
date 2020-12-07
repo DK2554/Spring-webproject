@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
+import com.spring.itjobgo.member.model.vo.Member;
 
 
 @Repository
@@ -21,9 +22,28 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public List<Tmpapply> selectapply(SqlSessionTemplate session, String email) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectapply",email);
+	}
+
+	@Override
 	public int insertAttachment(SqlSessionTemplate session, Mattachment file) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.insertmattach",file);
+	}
+
+	@Override
+	public Member selectMemberOne(SqlSessionTemplate session, String email) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectmember",email);
+	}
+
+	@Override
+	public List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq) {
+		// TODO Auto-generated method stub
+		return session.selectList("meeting.selectListmember",memberSq);
+		
 	}
 
 	@Override

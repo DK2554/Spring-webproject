@@ -11,6 +11,7 @@ import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
+import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
 
 @Service
@@ -52,18 +53,42 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public int insertapply(int memberSq, String postion) {
+	public int insertapply(int memberSq, String postion,int collabSq) {
 		// TODO Auto-generated method stub
 		Tmpapply tmp=new Tmpapply();
 		tmp.setMemberSq(memberSq);
 		tmp.setPostion(postion);
+		tmp.setCollabSq(collabSq);
 		return dao.insertapply(session,tmp);
+	}
+
+	@Override
+	public List<Tmpapply> selectapply(String email) {
+		// TODO Auto-generated method stub
+		return dao.selectapply(session,email);
 	}
 
 	@Override
 	public List<Mboard> selectMlist() {
 		// TODO Auto-generated method stub
 		return dao.selectMlist(session);
+	}
+
+	@Override
+	public Member selectOneMember(String email) {
+		// TODO Auto-generated method stub
+		Member m=dao.selectMemberOne(session,email);
+	
+		//return 
+		return m;
+		
+		
+	}
+
+	@Override
+	public List<Mboard> selectMlist(int memberSq) {
+		// TODO Auto-generated method stub
+		return dao.selectMlist(session, memberSq);
 	}
 
 }

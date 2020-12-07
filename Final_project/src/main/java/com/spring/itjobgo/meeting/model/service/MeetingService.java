@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Tmpapply;
+import com.spring.itjobgo.member.model.vo.Member;
 
 
 public interface MeetingService {
@@ -15,8 +17,16 @@ public interface MeetingService {
 
 	Mboard selectMb(int no);
 
-	int insertapply(int memberSq, String postion);
+	int insertapply(int memberSq, String postion, int collabSq);
 
 	Mattachment selectMat(int no);
+
+	List<Tmpapply> selectapply(String email);
+
+	Member selectOneMember(String email);
+
+	List<Mboard> selectMlist(int memberSq);
+
+	
 
 }
