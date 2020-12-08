@@ -41,6 +41,7 @@ import com.google.gson.JsonParser;
 import com.spring.itjobgo.member.model.service.MemberService;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.member.model.vo.MemberPhoto;
+import com.spring.itjobgo.member.model.vo.MemberScrap;
 import com.spring.itjobgo.security.service.SecurityService;
 
 @RestController
@@ -283,7 +284,7 @@ public class MemberController {
 		} else {// 존재하는 경우 사진 업데이트
 			result = service.updatePhoto(member, mp);
 			if (result > 0) {
-
+				System.out.println(result);
 			} else {
 				result = -1;
 			}
@@ -300,7 +301,7 @@ public class MemberController {
 
 		String tempImg = service.selectPhoto(memberSq);
 		String imagePath = null;
-		if (tempImg != null) {//등록된 사진이 있는경우
+		if (tempImg != null) {// 등록된 사진이 있는경우
 
 			imagePath = request.getServletContext().getRealPath("/resources/upload/member/" + tempImg);
 
@@ -312,6 +313,62 @@ public class MemberController {
 			return null;
 		}
 
+	}
+
+	// job스크랩
+	@RequestMapping(value = "/scrapJob", method = RequestMethod.POST)
+	public int scrapJob(@RequestBody Map param) {
+		System.out.println("param: " + param);
+
+		int result = 0;
+		result = service.insertScrap(param);
+
+		if (result > 0) {
+			return result;
+		} else {
+			return -1;
+		}
+
+	}
+
+	// job스크랩제거
+	@RequestMapping(value = "/unscrapJob", method = RequestMethod.POST)
+	public int unscrapJob(@RequestBody Map param) {
+		System.out.println("param: " + param);
+
+		int result = 0;
+		result = service.deleteScrap(param);
+
+		if (result > 0) {
+			return result;
+		} else {
+			return -1;
+		}
+
+	}
+
+	// 스크랩확인용 : 구직정보 상세페이지
+	@RequestMapping(value = "/getScrapStatus", method = RequestMethod.GET)
+	public List<MemberScrap> getScrapStatus(@RequestParam Map param) throws IOException {
+		System.out.println("scrap멤버호출: " + param);
+		List<MemberScrap> ms = null;
+		
+		if (!(param.get("memberSq").equals("undefined"))) {
+			ms = service.selectScrapList(param);
+		}
+		System.out.println("ms: " + ms);
+		return ms;
+	}
+
+	// 스크랩확인용 : 마이페이지
+	@RequestMapping(value = "/getScrap", method = RequestMethod.GET)
+	public int getScrap(@RequestParam Map param) throws IOException {
+		System.out.println("멤버호출: " + param);
+
+		int result = service.selectScrap(param);
+		System.out.println("멤버호출: " + result);
+
+		return result;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
