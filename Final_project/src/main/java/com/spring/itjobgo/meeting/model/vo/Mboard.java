@@ -19,8 +19,40 @@ public class Mboard {
 	private int collabDesgin;
 	private String address;
 	private Date rdate;
+	private int memberSq;//신청자 기본키
+
 	public Mboard() {
 		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Mboard [collabSq=" + collabSq + ", collabTitle=" + collabTitle + ", collabContent=" + collabContent
+				+ ", collabSimcontent=" + collabSimcontent + ", collabWriter=" + collabWriter + ", collabEmail="
+				+ collabEmail + ", collabPhone=" + collabPhone + ", collabUploaddate=" + collabUploaddate
+				+ ", collabDeadline=" + collabDeadline + ", collabLang=" + Arrays.toString(collabLang) + ", collabBack="
+				+ collabBack + ", collabFront=" + collabFront + ", collabDesgin=" + collabDesgin + ", address="
+				+ address + ", rdate=" + rdate + ", memberSq=" + memberSq + "]";
+	}
+	public Mboard(int collabSq, String collabTitle, String collabContent, String collabSimcontent, String collabWriter,
+			String collabEmail, String collabPhone, Date collabUploaddate, Date collabDeadline, String[] collabLang,
+			int collabBack, int collabFront, int collabDesgin, String address, Date rdate, int memberSq) {
+		super();
+		this.collabSq = collabSq;
+		this.collabTitle = collabTitle;
+		this.collabContent = collabContent;
+		this.collabSimcontent = collabSimcontent;
+		this.collabWriter = collabWriter;
+		this.collabEmail = collabEmail;
+		this.collabPhone = collabPhone;
+		this.collabUploaddate = collabUploaddate;
+		this.collabDeadline = collabDeadline;
+		this.collabLang = collabLang;
+		this.collabBack = collabBack;
+		this.collabFront = collabFront;
+		this.collabDesgin = collabDesgin;
+		this.address = address;
+		this.rdate = rdate;
+		this.memberSq = memberSq;
 	}
 	public int getCollabSq() {
 		return collabSq;
@@ -112,34 +144,11 @@ public class Mboard {
 	public void setRdate(Date rdate) {
 		this.rdate = rdate;
 	}
-	public Mboard(int collabSq, String collabTitle, String collabContent, String collabSimcontent, String collabWriter,
-			String collabEmail, String collabPhone, Date collabUploaddate, Date collabDeadline, String[] collabLang,
-			int collabBack, int collabFront, int collabDesgin, String address, Date rdate) {
-		super();
-		this.collabSq = collabSq;
-		this.collabTitle = collabTitle;
-		this.collabContent = collabContent;
-		this.collabSimcontent = collabSimcontent;
-		this.collabWriter = collabWriter;
-		this.collabEmail = collabEmail;
-		this.collabPhone = collabPhone;
-		this.collabUploaddate = collabUploaddate;
-		this.collabDeadline = collabDeadline;
-		this.collabLang = collabLang;
-		this.collabBack = collabBack;
-		this.collabFront = collabFront;
-		this.collabDesgin = collabDesgin;
-		this.address = address;
-		this.rdate = rdate;
+	public int getMemberSq() {
+		return memberSq;
 	}
-	@Override
-	public String toString() {
-		return "Mboard [collabSq=" + collabSq + ", collabTitle=" + collabTitle + ", collabContent=" + collabContent
-				+ ", collabSimcontent=" + collabSimcontent + ", collabWriter=" + collabWriter + ", collabEmail="
-				+ collabEmail + ", collabPhone=" + collabPhone + ", collabUploaddate=" + collabUploaddate
-				+ ", collabDeadline=" + collabDeadline + ", collabLang=" + Arrays.toString(collabLang) + ", collabBack="
-				+ collabBack + ", collabFront=" + collabFront + ", collabDesgin=" + collabDesgin + ", address="
-				+ address + ", rdate=" + rdate + "]";
+	public void setMemberSq(int memberSq) {
+		this.memberSq = memberSq;
 	}
 	
 	
