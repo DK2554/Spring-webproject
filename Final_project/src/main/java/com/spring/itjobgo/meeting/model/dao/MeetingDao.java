@@ -33,4 +33,8 @@ public interface MeetingDao {
 
 	List<Tmpapply> selectapply(SqlSessionTemplate session, int no);
 
+	String selectMembername(SqlSessionTemplate session, int memberSq);
+
+	String selectMboardname(SqlSessionTemplate session, int collabSq);
+
 }

@@ -112,6 +112,8 @@ public class MeetingController {
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
 	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
 		logger.debug(Integer.toString(memberSq));
+		logger.debug(Integer.toString(collabSq));
+		logger.debug(Integer.toString(writerNo));
 		logger.debug(postion);
 		int result=service.insertapply(memberSq,postion,collabSq,writerNo);
 		
@@ -138,25 +140,34 @@ public class MeetingController {
 		return imageByteArray;
 	}
 	@RequestMapping(value="meeting/meetingapply{email}.do",method=RequestMethod.GET)
-	public List<Tmpapply> returntmpapply(@PathVariable String email) {
+	public List  returntmpapply(@PathVariable String email) throws JsonMappingException,JsonGenerationException,IOException{
 		logger.debug(email);
 		//로그인한 이메일로 사용자 정보 확인
 		Member m = service.selectOneMember(email);
 		logger.debug(m.toString());
-		List<Tmpapply>list=null;
-		if(m!=null) {
-			//로그인한 사용자가 있으면 해당 사용자 번호를 가지고 임시테이블에 확인
-			
-			list=service.selectapply(m.getMemberSq());
-			logger.debug(list.toString());
-		}
+		List<Tmpapply>list=service.selectapply(m.getMemberSq());
+		List list2=new ArrayList();
+		Map param=null;
+		String mname=null;
+		String bname=null;
+		logger.debug(list.toString());
 		
-//		Map<String, Integer> map=new HashMap<String, Integer>();
-//		for(Mboard map2:list) {
-//			map.put("no",map2.getCollabSq());
-//		}
-//		List<Tmpapply> tp=service.selectapply(map);
-		return list;
+		for(Tmpapply m2 : list) {
+				param=new HashMap();
+				mname=service.selectmembername(m2.getMemberSq());	
+				bname=service.selectMboardname(m2.getCollabSq());
+				param.put("no",m2.getTmpNo());
+				param.put("username",mname);
+				param.put("position",m2.getPostion());
+				param.put("collname",bname);
+				param.put("writerNo",m2.getWriterNo());
+				list2.add(param);
+				
+			logger.debug(m2.toString());
+			logger.debug(param+"param");
+			logger.debug(list2.toString());
+		}
+		return list2;
 	}
 
 

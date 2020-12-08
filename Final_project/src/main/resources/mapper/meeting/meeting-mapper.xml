@@ -21,19 +21,25 @@
   </select>
   <!--모임신청하는로직-->
   <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},defalut,#{collabsq},#{writerNo})
+  insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},default,#{collabSq},#{writerNo})
   </insert>
   <select id="selectmattach" resultType="mattachment" parameterType="_int">
   select * from m_attachment where pboard_sq=#{no}
   </select>
   <!--로그인한 사용자 이메일로 생성한 모임을 찾아서 그 모임에 신청을 한 사용자리스트를 반환-->
   <select id="selectapply" resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply" parameterType="_int">
-  	select * from where writer_no=#{no}
+  	select * from tmp_apply where writer_no=#{no}
   </select>
   <select id="selectmember" parameterType="String" resultType="com.spring.itjobgo.member.model.vo.Member">
   SELECT * FROM MEMBER WHERE Member_email=#{email}
   </select>
   <select id="selectListmember" parameterType="_int" resultMap="mboardmap" >
  SELECT * FROM COLLAB_BOARD WHERE MEMBER_SQ=#{memberSq} 
+  </select>
+  <select id="selectMembername" parameterType="_int" resultType="String">
+  select member_name from member where member_sq=#{memberSq}
+  </select>
+  <select id="selectMboardname" parameterType="_int" resultType="String">
+  select collab_title from collab_board where collab_sq=#{collabSq}
   </select>
 </mapper>

@@ -27,6 +27,10 @@ public interface MeetingService {
 
 	List<Mboard> selectMlist(int memberSq);
 
+	String selectmembername(int memberSq);
+
+	String selectMboardname(int collabSq);
+
 	
 
 }

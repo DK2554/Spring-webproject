@@ -64,6 +64,21 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public String selectMboardname(int collabSq) {
+		// TODO Auto-generated method stub
+		
+		
+		return dao.selectMboardname(session,collabSq);
+	}
+
+	@Override
+	public String selectmembername(int memberSq) {
+		// TODO Auto-generated method stub
+		
+		return dao.selectMembername(session,memberSq);
+	}
+
+	@Override
 	public List<Tmpapply> selectapply(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectapply(session,no);
