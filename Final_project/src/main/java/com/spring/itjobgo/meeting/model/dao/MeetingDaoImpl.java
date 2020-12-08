@@ -22,9 +22,9 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
-	public List<Tmpapply> selectapply(SqlSessionTemplate session, String email) {
+	public List<Tmpapply> selectapply(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
-		return session.selectOne("meeting.selectapply",email);
+		return session.selectList("meeting.selectapply",no);
 	}
 
 	@Override

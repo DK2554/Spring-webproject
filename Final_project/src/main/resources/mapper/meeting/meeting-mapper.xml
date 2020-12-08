@@ -21,14 +21,14 @@
   </select>
   <!--모임신청하는로직-->
   <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},defalut,#{collabsq})
+  insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},defalut,#{collabsq},#{writerNo})
   </insert>
   <select id="selectmattach" resultType="mattachment" parameterType="_int">
   select * from m_attachment where pboard_sq=#{no}
   </select>
   <!--로그인한 사용자 이메일로 생성한 모임을 찾아서 그 모임에 신청을 한 사용자리스트를 반환-->
   <select id="selectapply" resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply" parameterType="_int">
-  	
+  	select * from where writer_no=#{no}
   </select>
   <select id="selectmember" parameterType="String" resultType="com.spring.itjobgo.member.model.vo.Member">
   SELECT * FROM MEMBER WHERE Member_email=#{email}

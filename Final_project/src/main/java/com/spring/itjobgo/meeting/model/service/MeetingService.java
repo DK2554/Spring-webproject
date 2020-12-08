@@ -17,11 +17,11 @@ public interface MeetingService {
 
 	Mboard selectMb(int no);
 
-	int insertapply(int memberSq, String postion, int collabSq);
+	int insertapply(int memberSq, String postion, int collabSq, int writerNo);
 
 	Mattachment selectMat(int no);
 
-	List<Tmpapply> selectapply(String email);
+	List<Tmpapply> selectapply(int i);
 
 	Member selectOneMember(String email);
 

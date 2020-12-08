@@ -25,10 +25,12 @@ public interface MeetingDao {
 
 	Mattachment selectMattach(SqlSessionTemplate session, int no);
 
-	List<Tmpapply> selectapply(SqlSessionTemplate session, String email);
+	
 
 	Member selectMemberOne(SqlSessionTemplate session, String email);
 
 	List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq);
+
+	List<Tmpapply> selectapply(SqlSessionTemplate session, int no);
 
 }

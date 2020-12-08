@@ -53,19 +53,20 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public int insertapply(int memberSq, String postion,int collabSq) {
+	public int insertapply(int memberSq, String postion,int collabSq,int writerNo) {
 		// TODO Auto-generated method stub
 		Tmpapply tmp=new Tmpapply();
 		tmp.setMemberSq(memberSq);
 		tmp.setPostion(postion);
 		tmp.setCollabSq(collabSq);
+		tmp.setWriterNo(writerNo);
 		return dao.insertapply(session,tmp);
 	}
 
 	@Override
-	public List<Tmpapply> selectapply(String email) {
+	public List<Tmpapply> selectapply(int no) {
 		// TODO Auto-generated method stub
-		return dao.selectapply(session,email);
+		return dao.selectapply(session,no);
 	}
 
 	@Override
@@ -91,4 +92,5 @@ public class MeetingServiceImpl implements MeetingService {
 		return dao.selectMlist(session, memberSq);
 	}
 
+	
 }

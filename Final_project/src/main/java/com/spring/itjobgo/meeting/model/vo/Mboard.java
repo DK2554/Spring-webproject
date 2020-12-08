@@ -19,7 +19,8 @@ public class Mboard {
 	private int collabDesgin;
 	private String address;
 	private Date rdate;
-	private int memberSq;
+	private int memberSq;//신청자 기본키
+
 	public Mboard() {
 		// TODO Auto-generated constructor stub
 	}

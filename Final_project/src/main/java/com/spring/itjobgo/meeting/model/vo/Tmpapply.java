@@ -4,26 +4,22 @@ import lombok.Data;
 
 public class Tmpapply {
 	private int tmpNo;
-	private int memberSq;
+	private int memberSq;//신청한 사람 
 	private String postion;
 	private int collabSq;
+	private int writerNo;
 	
 	public Tmpapply() {
 	// TODO Auto-generated constructor stub
 	}
 
-	public Tmpapply(int tmpNo, int memberSq, String postion, int collabSq) {
+	public Tmpapply(int tmpNo, int memberSq, String postion, int collabSq, int writerNo) {
 		super();
 		this.tmpNo = tmpNo;
 		this.memberSq = memberSq;
 		this.postion = postion;
 		this.collabSq = collabSq;
-	}
-
-	@Override
-	public String toString() {
-		return "Tmpapply [tmpNo=" + tmpNo + ", memberSq=" + memberSq + ", postion=" + postion + ", collabSq=" + collabSq
-				+ "]";
+		this.writerNo = writerNo;
 	}
 
 	public int getTmpNo() {
@@ -58,6 +54,21 @@ public class Tmpapply {
 		this.collabSq = collabSq;
 	}
 
+	public int getWriterNo() {
+		return writerNo;
+	}
+
+	public void setWriterNo(int writerNo) {
+		this.writerNo = writerNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Tmpapply [tmpNo=" + tmpNo + ", memberSq=" + memberSq + ", postion=" + postion + ", collabSq=" + collabSq
+				+ ", writerNo=" + writerNo + "]";
+	}
+
+	
 	
 	
 }
