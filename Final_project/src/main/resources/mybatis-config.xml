@@ -51,12 +51,11 @@
 			alias="info_attachment" />
 			
 		<typeAlias
+			type="com.spring.itjobgo.ref.model.vo.REF_SITE"
+			alias="referenceSite"/>
+
+		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
-			alias="qnaBoard"/>
-			
-
-
-		<typeAlias type="com.spring.itjobgo.qna.model.vo.QnaBoard"
 			alias="qnaBoard" />
 
 		<typeAlias

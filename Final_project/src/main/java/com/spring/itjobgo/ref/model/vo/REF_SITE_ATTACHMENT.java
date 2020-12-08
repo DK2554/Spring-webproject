@@ -1,4 +1,4 @@
-package com.spring.itjobgo.ref.vo;
+package com.spring.itjobgo.ref.model.vo;
 
 import java.sql.Date;
 
