@@ -1,5 +1,6 @@
 package com.spring.itjobgo.member.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.management.RuntimeErrorException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.spring.itjobgo.member.model.dao.MemberDao;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.member.model.vo.MemberPhoto;
+import com.spring.itjobgo.member.model.vo.MemberScrap;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -87,6 +89,27 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int updatePhoto(Member member, MemberPhoto mp) {
 		return dao.updatePhoto(session, mp);
+	}
+
+	@Override
+	public int insertScrap(Map param) {
+		return dao.insertScrap(session, param);
+	}
+
+	@Override
+	public int deleteScrap(Map param) {
+		return dao.deleteScrap(session, param);
+	}
+
+	@Override
+	public List<MemberScrap> selectScrapList(Map param) {
+		return dao.selectScrapList(session, param);
+		
+	}
+
+	@Override
+	public int selectScrap(Map param) {
+		return dao.selectScrap(session, param);
 	}
 
 	
