@@ -11,7 +11,7 @@ public class REF_SITE {
 	private String refSiteAddr; //사이트 주소
 	private Date refDate; //등록일
 	private int RefReadCount; //조회수
-	private int MemberNum; //회원번호로 조회
+	private int MemberNum; //회원번호로 조회 fk
 	
 	public REF_SITE() {
 		// TODO Auto-generated constructor stub
