@@ -29,5 +29,5 @@ public interface ResumeService {
 	
 	//이력서 불러오기
 	
-	List<ResumeAll> selectResume(int memberno);
+	ResumeAll selectResume(int memberno);
 }
