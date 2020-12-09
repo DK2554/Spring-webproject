@@ -205,14 +205,11 @@ public class ResumeController {
 	}
 	
 	@RequestMapping(value="resume/selectResume/{memberSq}.do",method=RequestMethod.GET)
-	public List<ResumeAll> selectResume(ResumeAll resumeall, @PathVariable int memberSq) {
+	public ResumeAll selectResume(ResumeAll resumeall, @PathVariable int memberSq) {
 		System.out.println("********controller : 이력서 불러오기*********");
 		System.out.println("controller memberSq param : "+memberSq);
-		List<ResumeAll> list=service.selectResume(memberSq);
+		ResumeAll list=service.selectResume(memberSq);
 
-		for(ResumeAll i : list) {
-			System.out.println(i);
-		}
 		System.out.println(list);
 		return list;
 	}

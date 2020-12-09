@@ -105,7 +105,7 @@ public class ResumeServiceImpl implements ResumeService {
 		
 	}
 	@Override
-	public List<ResumeAll> selectResume(int memberno) {
+	public ResumeAll selectResume(int memberno) {
 		System.out.println("*******service 들어옴******");
 		return dao.selectResume(session, memberno);
 	}

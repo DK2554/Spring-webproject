@@ -56,5 +56,5 @@ public interface ResumeDao {
 	int insertResumeAttachment(SqlSessionTemplate session, ResumeAttachment file);
 	
 	//이력서 불러오기
-	List<ResumeAll> selectResume(SqlSessionTemplate session, int memberno);
+	ResumeAll selectResume(SqlSessionTemplate session, int memberno);
 }

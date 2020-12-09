@@ -99,9 +99,9 @@ public class ResumeDaoImpl implements ResumeDao {
 	}
 
 	@Override
-	public List<ResumeAll> selectResume(SqlSessionTemplate session, int memberno) {
+	public ResumeAll selectResume(SqlSessionTemplate session, int memberno) {
 		System.out.println("********dao 이력서 불러오기 전**********");
-		return session.selectList("resume.selectResume",memberno);
+		return session.selectOne("resume.selectResume",memberno);
 	}
 
 	//이력서 불러오기
