@@ -134,6 +134,14 @@
 		<typeAlias
 		type="com.spring.itjobgo.ItNews.model.vo.ItNews"
 		alias="ItNews" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment"
+		alias="ItnewsAttachment" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.ItNews.model.vo.ItNews"
+		alias="ItNews" />	
 			
 	</typeAliases>
 

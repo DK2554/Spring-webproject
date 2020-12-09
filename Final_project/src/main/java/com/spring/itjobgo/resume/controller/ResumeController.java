@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -203,11 +204,11 @@ public class ResumeController {
 		return msg;
 	}
 	
-	@RequestMapping(value="resume/selectResume.do",method=RequestMethod.GET)
-	public List<ResumeAll> selectResume(ResumeAll resumeall, @RequestParam(value="memberSq") int memberno) {
+	@RequestMapping(value="resume/selectResume/{memberSq}.do",method=RequestMethod.GET)
+	public List<ResumeAll> selectResume(ResumeAll resumeall, @PathVariable int memberSq) {
 		System.out.println("********controller : 이력서 불러오기*********");
-		System.out.println("controler param : "+memberno);
-		List<ResumeAll> list=service.selectResume(memberno);
+		System.out.println("controller memberSq param : "+memberSq);
+		List<ResumeAll> list=service.selectResume(memberSq);
 
 		for(ResumeAll i : list) {
 			System.out.println(i);

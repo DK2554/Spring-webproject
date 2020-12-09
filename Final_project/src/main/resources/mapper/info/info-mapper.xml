@@ -52,7 +52,7 @@
 	  	<!-- 첨부파일이 없는 게시글 update 하기 -->
 		<insert id="insertAttachment2" parameterType="info_attachment">
 		INSERT INTO INFO_ATTACHMENT VALUES(
-												#{attachmentno},
+												SEQ_INFO_ATTACHMENT_NO.NEXTVAL,
 												#{infoSq},
 												#{originalfilename},
 												#{renamedfilename},

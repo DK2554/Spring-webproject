@@ -8,12 +8,14 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.meeting.model.service.MeetingService;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Tmpapply;
+import com.spring.itjobgo.member.model.vo.Member;
 
 
 @RestController
@@ -106,10 +110,10 @@ public class MeetingController {
 	}
 	//모임신청하는 로직
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
-	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq ) {
+	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
 		logger.debug(Integer.toString(memberSq));
 		logger.debug(postion);
-		int result=service.insertapply(memberSq,postion);
+		int result=service.insertapply(memberSq,postion,collabSq,writerNo);
 		
 	}
 	//모임 목록에 이미지 보여주는 로직
@@ -132,6 +136,27 @@ public class MeetingController {
 		byte[] imageByteArray=IOUtils.toByteArray(in);
 		in.close();
 		return imageByteArray;
+	}
+	@RequestMapping(value="meeting/meetingapply{email}.do",method=RequestMethod.GET)
+	public List<Tmpapply> returntmpapply(@PathVariable String email) {
+		logger.debug(email);
+		//로그인한 이메일로 사용자 정보 확인
+		Member m = service.selectOneMember(email);
+		logger.debug(m.toString());
+		List<Tmpapply>list=null;
+		if(m!=null) {
+			//로그인한 사용자가 있으면 해당 사용자 번호를 가지고 임시테이블에 확인
+			
+			list=service.selectapply(m.getMemberSq());
+			logger.debug(list.toString());
+		}
+		
+//		Map<String, Integer> map=new HashMap<String, Integer>();
+//		for(Mboard map2:list) {
+//			map.put("no",map2.getCollabSq());
+//		}
+//		List<Tmpapply> tp=service.selectapply(map);
+		return list;
 	}
 
 

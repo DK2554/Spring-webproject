@@ -17,6 +17,10 @@
 		#{originalFileName},#{renamedFileName},sysdate)
 
 	</insert>
+	
+	<insert id="insertScrap" parameterType="map">
+	insert into Scrap values(scrap_sq.nextVal, #{memberSq}, #{jobNo}, #{jobTitle},#{company},#{deadline},#{applyMethod})
+	</insert>
 
 	<select id="selectOneMember" parameterType="map"
 		resultMap="memberMap">
@@ -71,11 +75,23 @@
 		select RENAMEDFILENAME from member_photo where
 		member_sq=#{memberSq}
 	</select>
+	
+	<select id="selectScrapList" parameterType="map" resultMap="memberScrap">
+	select *from scrap where member_sq=#{memberSq}
+	</select>
 
 	<delete id="deleteMember" parameterType="String">
 		DELETE FROM MEMBER WHERE
 		MEMBER_EMAIL=#{memberEmail}
 	</delete>
+	
+	<delete id="deleteScrap" parameterType="map">
+	delete from scrap where member_sq=#{memberSq} and job_no=#{jobNo}
+	</delete>
+	
+	<select id="selectScrap" parameterType="map" resultType="_int">
+	select count(*) from scrap where member_sq = #{memberSq}
+	</select>
 
 	<resultMap id="memberMap"
 		type="com.spring.itjobgo.member.model.vo.Member">
@@ -91,6 +107,13 @@
 		<result column="MEMBER_ADDR_EXTRA" property="memberAddrExtra" />
 		<result column="MEMBER_TOKEN" property="memberToken" />
 		<result column="MEMBER_POSITION" property="memberPosition" />
+	</resultMap>
+	
+	<resultMap id="memberScrap"
+		type="com.spring.itjobgo.member.model.vo.MemberScrap">
+		<result column="MEMBER_SQ" property="memberSq" />
+		<result column="job_No" property="jobNo" />
+		<result column="scrap_Sq" property="scrapSq" />
 	</resultMap>
 
 </mapper>

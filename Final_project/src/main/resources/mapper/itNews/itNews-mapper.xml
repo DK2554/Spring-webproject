@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="itNews">
+	
+	<!-- 게시판 작성 -->
+	<insert id="insertItNews" parameterType="map">
+		INSERT INTO IT_NEWS VALUES (
+												SEQ_NEWS_NO.NEXTVAL,
+												#{newsDivision},
+												#{newsTitle},
+												#{newsContent},
+												#{newsRefSite},
+												DEFAULT,
+												1,
+												#{memberSq}
+		)
+	</insert>
+	<!-- 첨부파일 등록 -->
+	<insert id="insertAttachment" parameterType="ItnewsAttachment">
+		INSERT INTO ITNEWS_ATTACHMENT VALUES(
+										SEQ_NEWS_ATTACHMENT_NO.NEXTVAL,
+											#{boardSq},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT				
+		
+		)
+	<!-- 첨부파일 등록시 게시판 등록 번호를 자동생성키 SELECT KEY 로 설정 -->	
+  	<selectKey keyProperty="boardSq" resultType="_int" order="BEFORE">
+ 		SELECT SEQ_NEWS_NO.CURRVAL FROM DUAL
+   </selectKey>
+		
+	</insert>
+	
+	<!-- 게시판 리스트 불러오기 -->
+	<select id="selectList" resultType="ItNews">
+		SELECT * FROM IT_NEWS ORDER BY NEWS_SQ DESC
+	</select>
+	
+	<!-- 이미지 불러오기 -->
+	<select id="selectImage" parameterType="_int" resultType="ItnewsAttachment">
+		SELECT  * FROM ITNEWS_ATTACHMENT WHERE BOARD_SQ=#{no}
+	</select>
+	
+	<!-- 상세화면 selectOne -->
+	<select id="selectOne" parameterType="_int" resultType="ItNews">
+		SELECT * FROM IT_NEWS WHERE NEWS_SQ=#{newsSq}
+	</select>
+  
+</mapper>
