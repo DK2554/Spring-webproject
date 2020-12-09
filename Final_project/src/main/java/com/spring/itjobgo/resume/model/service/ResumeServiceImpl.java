@@ -13,6 +13,7 @@ import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
+import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
@@ -102,6 +103,11 @@ public class ResumeServiceImpl implements ResumeService {
 		}
 		return result;
 		
+	}
+	@Override
+	public ResumeAll selectResume(int memberno) {
+		System.out.println("*******service 들어옴******");
+		return dao.selectResume(session, memberno);
 	}
 
 	

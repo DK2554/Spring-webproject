@@ -147,4 +147,24 @@
   			DEFAULT
   			)
   </insert>
+  
+  <select id="selectResume" parameterType="int" resultType="resume_all">
+  	select *
+	from resume a 
+	inner join resume_school b 
+	on a.member_no=b.member_no
+	inner join resume_work c
+	on a.member_no=b.member_no
+	inner join Resume_license e
+	on a.member_no=e.member_no
+	inner join Resume_language f
+	on a.member_no=f.member_no
+	inner join Resume_activity g
+	on a.member_no=g.member_no
+	inner join Resume_project h
+	on a.member_no=h.member_no
+	inner join Resume_abroad i
+	on a.member_no=i.member_no
+	where a.member_no=116
+  </select>
 </mapper>

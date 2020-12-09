@@ -29,10 +29,10 @@
 		<typeAlias
 			type="com.spring.itjobgo.member.model.vo.MemberPhoto"
 			alias="memberPhoto" />
-			<typeAlias
-			type="com.spring.itjobgo.member.model.vo.MemberScrap"
-			alias="memberScrap" />
-
+		<typeAlias
+		type="com.spring.itjobgo.member.model.vo.MemberScrap"
+		alias="memberScrap" />
+		
 		<typeAlias
 			type="com.spring.itjobgo.portfolio.model.vo.Pboard" alias="pboard" />
 
@@ -122,7 +122,18 @@
 		
 		<typeAlias
 		type="com.spring.itjobgo.notice.model.vo.NoticeComment"
-		alias="NoticeComment" />	
+		alias="NoticeComment" />
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAll"
+			alias="resume_all" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment"
+		alias="ItnewsAttachment" />	
+		
+		<typeAlias
+		type="com.spring.itjobgo.ItNews.model.vo.ItNews"
+		alias="ItNews" />	
 		
 		<typeAlias
 		type="com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment"
