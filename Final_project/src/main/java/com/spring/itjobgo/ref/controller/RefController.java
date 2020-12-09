@@ -76,8 +76,4 @@ public class RefController {
 		return msg;
 	}
 	
-	
-	
-	
-	
 }
