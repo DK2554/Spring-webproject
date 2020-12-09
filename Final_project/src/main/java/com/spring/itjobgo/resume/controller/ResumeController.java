@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bouncycastle.asn1.ocsp.Request;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +26,7 @@ import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
+import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
@@ -201,5 +201,18 @@ public class ResumeController {
 	
 		
 		return msg;
+	}
+	
+	@RequestMapping(value="resume/selectResume.do",method=RequestMethod.GET)
+	public List<ResumeAll> selectResume(ResumeAll resumeall, @RequestParam(value="memberSq") int memberno) {
+		System.out.println("********controller : 이력서 불러오기*********");
+		System.out.println("controler param : "+memberno);
+		List<ResumeAll> list=service.selectResume(memberno);
+
+		for(ResumeAll i : list) {
+			System.out.println(i);
+		}
+		System.out.println(list);
+		return list;
 	}
 }

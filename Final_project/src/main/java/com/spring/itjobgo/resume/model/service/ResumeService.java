@@ -7,6 +7,7 @@ import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
+import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
@@ -26,5 +27,7 @@ public interface ResumeService {
 			ResumeLanguage language, ResumeActivity activity, ResumeProject project, 
 			ResumeAbroad abroad, List<ResumeAttachment> files);
 	
+	//이력서 불러오기
 	
+	List<ResumeAll> selectResume(int memberno);
 }

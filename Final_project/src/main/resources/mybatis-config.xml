@@ -119,7 +119,10 @@
 		
 		<typeAlias
 		type="com.spring.itjobgo.notice.model.vo.NoticeComment"
-		alias="NoticeComment" />	
+		alias="NoticeComment" />
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAll"
+			alias="resume_all" />	
 			
 	</typeAliases>
 

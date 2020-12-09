@@ -9,6 +9,7 @@ import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
+import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
@@ -53,4 +54,7 @@ public interface ResumeDao {
 	
 	//이력서(사진파일) 등록
 	int insertResumeAttachment(SqlSessionTemplate session, ResumeAttachment file);
+	
+	//이력서 불러오기
+	List<ResumeAll> selectResume(SqlSessionTemplate session, int memberno);
 }
