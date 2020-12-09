@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.ItNews.model.vo.ItNews;
 import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
+import com.spring.itjobgo.ItNews.model.vo.ItnewsComment;
 
 public interface ItNewsDao {
 	
@@ -31,6 +32,26 @@ public interface ItNewsDao {
 	//게시글 삭제하기
 	int deleteBoard(SqlSessionTemplate session, int newsSq);
 	
+	//update 게시판
+	int updateBoard(SqlSessionTemplate session, ItNews itnews);
 	
+	//update 첨부파일
+	int updateAttachment(SqlSessionTemplate session, ItnewsAttachment file);
+	
+	//첨부파일이 없을때 게시판 수정시 첨부파일 등록(insert)
+	int insertAttachment2(SqlSessionTemplate session, ItnewsAttachment file);
+	
+	//댓글 작성
+	int insertComment(SqlSessionTemplate session, ItnewsComment it_comment);
+	
+	//댓글 조회
+	List<ItnewsComment> selecCommenttList(SqlSessionTemplate session, int itnewsNo);
 
+	//댓글 삭제
+	int deleteComment(SqlSessionTemplate session, int itCommentNo);
+	
+	//댓글 수정
+	int updateComment(SqlSessionTemplate session, Map param);
+	
+	
 }//클래스

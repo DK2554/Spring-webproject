@@ -109,7 +109,9 @@
 	
 	<!-- 댓글 select List -->
 	<select id="selectComment" parameterType="_int" resultType="NoticeComment">
-		SELECT * FROM NOTICE_COMMENT WHERE NT_BOARD_NO=#{ntBoardNo}
+		SELECT * FROM NOTICE_COMMENT 
+								WHERE NT_BOARD_NO=#{ntBoardNo}
+								ORDER BY NT_COMMENT_DATE DESC
 	
 	</select>	
 	
@@ -119,7 +121,7 @@
 	</delete>
 	
 	<!-- 댓글 update -->
-	<update id="updateComment" parameterType="java.util.HashMap">
+	<update id="updateComment" parameterType="map">
 			UPDATE NOTICE_COMMENT SET
 												NT_COMMENT_CONTENT=#{ntCommentContent},
 												NT_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')

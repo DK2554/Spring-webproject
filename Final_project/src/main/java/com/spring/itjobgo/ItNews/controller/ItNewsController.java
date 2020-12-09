@@ -31,6 +31,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.ItNews.model.service.ItNewsService;
 import com.spring.itjobgo.ItNews.model.vo.ItNews;
 import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
+import com.spring.itjobgo.ItNews.model.vo.ItnewsComment;
+import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 
 @RestController
 public class ItNewsController {
@@ -168,6 +170,128 @@ public class ItNewsController {
 		return msg;
 		
 	}
+	
+	//Update페이지로 첨부파일테이블 불러오기
+	@RequestMapping(value="itnews/itnewsUpdate{newsSq}",
+									method=RequestMethod.GET)
+	public ItnewsAttachment selectAttach(@PathVariable int newsSq) {
+		
+		ItnewsAttachment itAttach = service.selectAttach(newsSq);
+		
+		return itAttach;
+
+	}
+	//게시판 수정
+	@RequestMapping(value="notice/updateEnd",
+									method=RequestMethod.POST,
+									consumes = {"multipart/form-data"})
+	public String updateEnd(ItNews itnews,
+											@RequestBody(required = false) MultipartFile[] file,
+											HttpServletRequest request) {
+		
+		System.out.println("업데이트 메서드 맵핑 성공");
+		
+		if(file.length>0) {
+			int newsSq= itnews.getNewsSq();
+			
+			String saveDir = request.getServletContext().getRealPath("/resources/upload/itNews");
+			
+			File dir = new File(saveDir);
+			if(!dir.exists()) {
+				dir.mkdir();
+			}
+			List<ItnewsAttachment>files = new ArrayList();
+			
+			for(MultipartFile f:file) {
+				if(!f.isEmpty()) {
+					
+				     String originalFileName=f.getOriginalFilename();
+			         String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+			         SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+			         int rndNum=(int)(Math.random()*1000);
+			         String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+			         
+			            try {
+			                //파일저장하기
+			                //스프링이 제공하는 멀티파트가 메소드를 제공한다
+			                //transfer to(파일) 메소드를 이용한다.
+			                f.transferTo(new File(saveDir+"/"+renameFileName));
+			             }catch(IOException e) {
+			                e.printStackTrace();
+			             }
+			             
+			            ItnewsAttachment file2 =new ItnewsAttachment(0,newsSq,originalFileName,renameFileName,null,null);
+			             files.add(file2);
+			             
+			          }
+			       }
+			       int result=0;
+			       try {
+			          //게시판 글 업데이트
+			          result =service.updateBoard(itnews,files);
+			       }catch(RuntimeException e) {
+			          e.printStackTrace();
+			       }
+			       String msg="";
+			       if(result>0) msg="게시글 수정 성공";
+			       else msg="게시글 수정 실패";
+			       
+			       }//파일이 없을때 게시판 업데이트
+			       else {
+			          int result = service.updateBoard(itnews);
+			       }
+			       return "업데이트 테스트";
+		
+	}//메서드
+	
+	//댓글작성
+	@RequestMapping(value="itnews/insertComment", method=RequestMethod.POST)
+	public String insertComment(ItnewsComment it_comment) {
+		
+		String msg = "댓글 insert 메서드 실행 ";
+		
+		int result = service.insertComment(it_comment);
+		
+		return msg;
+	}
+	
+	//댓글조회
+	@RequestMapping(value="itnews/selectCommentList{itnewsNo}",method=RequestMethod.GET)
+	public List<ItnewsComment> selecCommenttList(@PathVariable int itnewsNo){
+		
+		List<ItnewsComment>list=service.selecCommenttList(itnewsNo);
+		
+		return list;
+		
+	}
+	
+	//댓글 삭제
+	@RequestMapping(value="itnews/deleteComment{itCommentNo}",method=RequestMethod.POST)
+	public void deleteComment(@PathVariable int itCommentNo) {
+		
+		int result = service.deleteComment(itCommentNo);
+		
+	}
+	
+	//댓글 업데이트 수정
+	@RequestMapping(value="itnews/updateComment",method=RequestMethod.POST)
+	public void updateComment(@RequestBody Map param) {
+		
+		int result=service.updateComment(param);
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

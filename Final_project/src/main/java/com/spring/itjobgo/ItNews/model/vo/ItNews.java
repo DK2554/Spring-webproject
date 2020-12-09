@@ -11,7 +11,7 @@ public class ItNews {
 	private String newsRefSite;
 	private Date newsDate;
 	private int newsReadCount;
-	private int memberNum;
+	private int memberNum; 
 	
 	public ItNews() {
 		// TODO Auto-generated constructor stub
