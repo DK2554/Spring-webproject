@@ -389,6 +389,7 @@ public class MemberController {
 				Map<String, Object> map = new LinkedHashMap<String, Object>();
 				// 토큰값!!!
 				map.put("token", token);
+				map.put("memberSq", login.getMemberSq());
 				logger.debug("map: " + map);
 				return map;
 			} else {// 비밀번호 매치x
@@ -407,6 +408,7 @@ public class MemberController {
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
 		member.setMemberLevel("3");// 소셜회원 : 3으로 초기화
+		
 		int result = 0;
 
 		logger.debug("member: ", member);
