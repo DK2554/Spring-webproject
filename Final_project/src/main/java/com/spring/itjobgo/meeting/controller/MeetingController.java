@@ -194,6 +194,45 @@ public class MeetingController {
 		}//throws로 예외처리해야함
 		
 	}
+	@RequestMapping(value="meeting/approvelist{no}.do",method=RequestMethod.GET)
+	public List approvelist(@PathVariable int no) {
+		logger.debug(Integer.toString(no));
+		//회원 번호로 신청한 모임목록을 가져오는 로직
+		List<Approve> ap=service.selectApprove(no);
+		logger.debug(ap.toString());
+		List list2=new ArrayList();
+		Map param=null;
+		String mname=null;
+		for(Approve app:ap) {
+			param=new HashedMap();
+			mname=service.selectMboardname(app.getCollabSq());
+			param.put("no",app.getAcnumber());
+			param.put("collname",mname);
+			param.put("collsq",app.getCollabSq());
+			param.put("position",app.getPosition());
+			param.put("status",app.getStatus());
+			list2.add(param);
+		}
+		return list2;
+	}
+	@RequestMapping(value="meeting/mklist{memberSq}.do",method=RequestMethod.GET)
+	public List retunmkmeeting(@PathVariable int memberSq) {
+		logger.debug(Integer.toString(memberSq));
+		List<Mboard> list =service.selectMlist(memberSq);
+		List relist=new ArrayList();
+		Map param =null;
+		String bname=null;
+		for(Mboard md:list) {
+			param=new HashedMap();
+			bname=service.selectMboardname(md.getCollabSq());
+			param.put("collabSq",md.getCollabSq());
+			param.put("title",bname);
+			param.put("mdate",md.getCollabUploaddate());
+			relist.add(param);
+		}
+		logger.debug(list.toString());
+		return relist;
+	}
 	
 
 

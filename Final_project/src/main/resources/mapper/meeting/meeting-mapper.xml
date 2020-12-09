@@ -34,7 +34,7 @@
   SELECT * FROM MEMBER WHERE Member_email=#{email}
   </select>
   <select id="selectListmember" parameterType="_int" resultMap="mboardmap" >
- SELECT * FROM COLLAB_BOARD WHERE MEMBER_SQ=#{memberSq} 
+ SELECT * FROM COLLAB_BOARD WHERE member_sq=#{memberSq} 
   </select>
   <select id="selectMembername" parameterType="_int" resultType="String">
   select member_name from member where member_sq=#{memberSq}
@@ -54,4 +54,8 @@
   <delete id="deleteapply">
   delete tmp_apply where tmp_no=#{no}
   </delete>
+  <!--회원번호로 신청한모임 목록리스트를 가져옴 -->
+  <select id="selectapprovelist" parameterType="_int" resultType="com.spring.itjobgo.meeting.model.vo.Approve">
+  select * from application_complted where member_sq=#{no}
+  </select>
 </mapper>

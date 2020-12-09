@@ -38,6 +38,8 @@ public interface MeetingService {
 
 	int deleteapply(int no);
 
+	List<Approve> selectApprove(int no);
+
 	
 
 }

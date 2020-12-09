@@ -92,6 +92,12 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public List<Approve> selectApprove(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectApprove(session,no);
+	}
+
+	@Override
 	public int deleteapply(int no) {
 		// TODO Auto-generated method stub
 		return dao.deleteapply(session,no);

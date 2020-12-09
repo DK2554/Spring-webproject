@@ -44,4 +44,6 @@ public interface MeetingDao {
 
 	int deleteapply(SqlSessionTemplate session, int no);
 
+	List<Approve> selectApprove(SqlSessionTemplate session, int no);
+
 }

@@ -59,6 +59,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public List<Approve> selectApprove(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectList("meeting.selectapprovelist",no);
+	}
+
+	@Override
 	public int deleteapply(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.delete("meeting.deleteapply",no);
@@ -73,6 +79,7 @@ public class MeetingDaoImpl implements MeetingDao {
 	@Override
 	public List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq) {
 		// TODO Auto-generated method stub
+		
 		return session.selectList("meeting.selectListmember",memberSq);
 		
 	}
