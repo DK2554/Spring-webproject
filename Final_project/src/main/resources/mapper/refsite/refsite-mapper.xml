@@ -2,17 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="refSite">
 
-	<!-- 사이트 글 작성(등록)  -->
-	<insert id="insertSite" parameterType="referenceSite">
+	<!-- 사이트 글 작성  -->
+	<insert id="insertSite" parameterType="map">
 		INSERT INTO REF_SITE VALUES (
 										SEQ_REF_SITE_NO.NEXTVAL,
-										#{refCategory),
-										#{refTitle),
-										#{refContent),
-										#{refSiteAddr),
+										#{refCategory},
+										#{refTitle},
+										#{refContent},
+										#{refSiteAddr},
 										DEFAULT,
-										#{refCategory),
-										#{memberNum),
+										1,
+										#{memberSq}
 										)
-	
 	</insert>
+  
+	<!--첨부파일 등록  -->
+	<insert id="insertAttachment" parameterType="referenceSiteAttach">
+		INSERT INTO REF_SITE_ATTACHMENT VALUES(
+										SEQ_REF_ATTACHMENT_NO.NEXTVAL,
+										#{refNo},
+										#{originalfilename},
+										#{renamedfilename},
+										DEFAULT,
+										DEFAULT
+										)
+	  <!-- 첨부파일 등록시 게시판 등록 번호를 자동생성키 SELECT KEY 로 설정 -->	
+	  <selectKey keyProperty="refNo" resultType="_int" order="BEFORE">
+	    SELECT SEQ_REF_SITE_NO.CURRVAL FROM DUAL
+	  </selectKey>
+	</insert>
+
+	
+</mapper>
+
+	
