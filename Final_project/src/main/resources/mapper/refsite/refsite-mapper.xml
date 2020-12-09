@@ -12,7 +12,7 @@
 										#{refSiteAddr},
 										DEFAULT,
 										1,
-										#{memberSq}
+										#{MemberNum}
 										)
 	</insert>
   
