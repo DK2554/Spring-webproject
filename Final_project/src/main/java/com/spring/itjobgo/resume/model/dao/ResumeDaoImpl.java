@@ -10,6 +10,7 @@ import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
+import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
@@ -97,6 +98,13 @@ public class ResumeDaoImpl implements ResumeDao {
 		return session.insert("resume.insertResumeAbroad",abroad);
 	}
 
+	@Override
+	public ResumeAll selectResume(SqlSessionTemplate session, int memberno) {
+		System.out.println("********dao 이력서 불러오기 전**********");
+		return session.selectOne("resume.selectResume",memberno);
+	}
+
+	//이력서 불러오기
 	
 	
 

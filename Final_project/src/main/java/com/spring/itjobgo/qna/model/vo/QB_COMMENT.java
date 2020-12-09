@@ -8,7 +8,7 @@ public class QB_COMMENT {
 	private int qboardNo; //외래키로 가져오는값
 	private String qbCommentContent;
 	private int memberSq;
-	private Date qbcommentDate; 
+	private String qbcommentDate; 
 	private String memberName;
 	
 	 
@@ -17,7 +17,7 @@ public class QB_COMMENT {
 	}
 
 
-	public QB_COMMENT(int qboardCommentNo, int qboardNo, String qbCommentContent, int memberSq, Date qbcommentDate,
+	public QB_COMMENT(int qboardCommentNo, int qboardNo, String qbCommentContent, int memberSq, String qbcommentDate,
 			String memberName) {
 		super();
 		this.qboardCommentNo = qboardCommentNo;
@@ -69,12 +69,12 @@ public class QB_COMMENT {
 	}
 
 
-	public Date getQbcommentDate() {
+	public String getQbcommentDate() {
 		return qbcommentDate;
 	}
 
 
-	public void setQbcommentDate(Date qbcommentDate) {
+	public void setQbcommentDate(String qbcommentDate) {
 		this.qbcommentDate = qbcommentDate;
 	}
 
@@ -95,10 +95,11 @@ public class QB_COMMENT {
 				+ qbCommentContent + ", memberSq=" + memberSq + ", qbcommentDate=" + qbcommentDate + ", memberName="
 				+ memberName + "]";
 	}
-	
-	
-	
-	
-	
 
+
+	
+	
+	
+	
+	
 }

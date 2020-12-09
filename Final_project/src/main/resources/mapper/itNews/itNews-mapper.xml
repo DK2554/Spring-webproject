@@ -47,5 +47,83 @@
 	<select id="selectOne" parameterType="_int" resultType="ItNews">
 		SELECT * FROM IT_NEWS WHERE NEWS_SQ=#{newsSq}
 	</select>
+	
+	<!-- 첨부파일 selectOne -->
+	<select id="selectAttach" parameterType="_int" resultType="ItnewsAttachment">
+		SELECT * FROM ITNEWS_ATTACHMENT WHERE BOARD_SQ=#{newsSq}
+	</select>
+	
+	<!-- 게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE FROM IT_NEWS WHERE NEWS_SQ=#{newsSq}
+	</delete>
+	
+	<!-- 게시판 업데이트 -->
+	<update id="updateBoard">
+		UPDATE IT_NEWS SET
+											 NEWS_DIVISION=#{newsDivision},
+											 NEWS_TITLE=#{newsTitle},
+										 	 NEWS_CONTENT=#{newsContent},
+								     		 NEWS_REF_SITE=#{newsRefSite}
+										WHERE NEWS_SQ=#{newsSq}						
+	</update>
+	
+	<!-- 첨부파일 업데이트 -->
+	<update id="updateAttachment">
+		UPDATE ITNEWS_ATTACHMENT SET
+												ORIGINALFILENAME=#{originalfilename},
+												RENAMEDFILENAME=#{renamedfilename}
+										WHERE BOARD_SQ=#{boardSq}
+	</update>
+	
+	<!-- 첨부파일 insert2(게시판 update시 첨부파일이 없을경우) -->
+	<insert id="insertAttachment2" parameterType="ItnewsAttachment">
+			INSERT INTO CB_ATTACHMENT VALUES(
+											#{attachmentno},
+											#{boardSq},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT										
+											)		
+		
+		)
+	
+	</insert>
+	
+	<!-- 댓글작성 -->
+	<insert id="insertComment" parameterType="ItnewsComment">
+		INSERT INTO ITNEWS_COMMENT VALUES(
+													SEQ_ITNEWS_COMMENT_NO.NEXTVAL,
+													#{itnewsNo},
+													#{itCommentContent},
+													#{memberSq},
+													TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss'),
+													#{memberName}	
+													)
+	</insert>
+	
+	<!-- 댓글조회 -->
+	<select id="selecCommenttList" resultType="ItnewsComment">
+		SELECT * FROM ITNEWS_COMMENT 
+									WHERE ITNEWS_NO=#{itnewsNo}
+									ORDER BY IT_COMMENT_DATE DESC
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="_int">
+		DELETE FROM ITNEWS_COMMENT 
+								WHERE IT_COMMENT_NO=#{itCommentNo}
+	
+	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="map">
+		UPDATE ITNEWS_COMMENT SET
+										IT_COMMENT_CONTENT=#{itCommentContent},
+										IT_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
+										WHERE IT_COMMENT_NO=#{itCommentNo}
+	</update>
+	
   
 </mapper>

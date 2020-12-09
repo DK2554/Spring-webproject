@@ -1,6 +1,7 @@
 package com.spring.itjobgo.qna.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -92,8 +93,14 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 
 	//댓글 삭제
 	@Override
-	public int deletecomment(SqlSessionTemplate session, int qbCommentNo) {
-		return session.delete("qnaBoard.deletecomment",qbCommentNo);
+	public int deletecomment(SqlSessionTemplate session, int qboardCommentNo) {
+		return session.delete("qnaBoard.deletecomment",qboardCommentNo);
+	}
+
+	//댓글 수정
+	@Override
+	public int updateComment(SqlSessionTemplate session, Map param) {
+		return session.update("qnaBoard.updateComment",param);
 	}
 	
 	
