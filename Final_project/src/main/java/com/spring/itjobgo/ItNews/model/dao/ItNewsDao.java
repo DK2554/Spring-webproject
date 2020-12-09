@@ -24,5 +24,13 @@ public interface ItNewsDao {
 
 	//상세화면 selectOne
 	ItNews selectOne(SqlSessionTemplate session, int newsSq);
+	
+	//첨부파일 불러오기
+	ItnewsAttachment selectAttach(SqlSessionTemplate session, int newsSq);
+	
+	//게시글 삭제하기
+	int deleteBoard(SqlSessionTemplate session, int newsSq);
+	
+	
 
 }//클래스

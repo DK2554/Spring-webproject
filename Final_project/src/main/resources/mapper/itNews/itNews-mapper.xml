@@ -47,5 +47,20 @@
 	<select id="selectOne" parameterType="_int" resultType="ItNews">
 		SELECT * FROM IT_NEWS WHERE NEWS_SQ=#{newsSq}
 	</select>
+	
+	<!-- 첨부파일 selectOne -->
+	<select id="selectAttach" parameterType="_int" resultType="ItnewsAttachment">
+		SELECT * FROM ITNEWS_ATTACHMENT WHERE BOARD_SQ=#{newsSq}
+	</select>
+	
+	<!-- 게시판 삭제하기 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE FROM IT_NEWS WHERE NEWS_SQ=#{newsSq}
+	</delete>
+	
+	
+	
+	
+	
   
 </mapper>

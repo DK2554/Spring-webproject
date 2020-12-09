@@ -11,7 +11,7 @@ public class ItNews {
 	private String newsRefSite;
 	private Date newsDate;
 	private int newsReadCount;
-	private int memeberNum;
+	private int memberNum;
 	
 	public ItNews() {
 		// TODO Auto-generated constructor stub
@@ -73,23 +73,23 @@ public class ItNews {
 		this.newsReadCount = newsReadCount;
 	}
 
-	public int getMemeberNum() {
-		return memeberNum;
+	public int getMemberNum() {
+		return memberNum;
 	}
 
-	public void setMemeberNum(int memeberNum) {
-		this.memeberNum = memeberNum;
+	public void setMemberNum(int memberNum) {
+		this.memberNum = memberNum;
 	}
 
 	@Override
 	public String toString() {
 		return "ItNews [newsSq=" + newsSq + ", newsDivision=" + newsDivision + ", newsTitle=" + newsTitle
 				+ ", newsContent=" + newsContent + ", newsRefSite=" + newsRefSite + ", newsDate=" + newsDate
-				+ ", newsReadCount=" + newsReadCount + ", memeberNum=" + memeberNum + "]";
+				+ ", newsReadCount=" + newsReadCount + ", memberNum=" + memberNum + "]";
 	}
 
 	public ItNews(int newsSq, String newsDivision, String newsTitle, String newsContent, String newsRefSite,
-			Date newsDate, int newsReadCount, int memeberNum) {
+			Date newsDate, int newsReadCount, int memberNum) {
 		super();
 		this.newsSq = newsSq;
 		this.newsDivision = newsDivision;
@@ -98,8 +98,10 @@ public class ItNews {
 		this.newsRefSite = newsRefSite;
 		this.newsDate = newsDate;
 		this.newsReadCount = newsReadCount;
-		this.memeberNum = memeberNum;
+		this.memberNum = memberNum;
 	}
+
+	
 	
 	
 

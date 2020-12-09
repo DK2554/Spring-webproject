@@ -129,4 +129,46 @@ public class ItNewsController {
 		return itnews;
 	}
 	
+	//게시판 글 삭제
+	@RequestMapping(value="itnews/itnewsDelete{newsSq}", method=RequestMethod.POST)
+	public String deleteBoard(@PathVariable int newsSq, HttpServletRequest request)
+			throws JsonMappingException, JsonGenerationException, IOException{
+		
+		//첨부파일이 있다면 삭제 후 게시글 삭제하도록
+		String msg="";
+		logger.debug("게시글 삭제 맵핑 성공 > 첨부파일 있는지 확인 후> 게시글 삭제 > 첨부파일 삭제");
+		
+		ItnewsAttachment itAttach = service.selectAttach(newsSq);
+		//첨부파일이 있을때 게시글 삭제
+		if(itAttach!=null) {
+			String ReNameFile =itAttach.getRenamedfilename();
+			String saveDir =request.getServletContext().getRealPath("/resources/upload/itNews");
+		
+			//게시글 먼저 삭제
+			int result = service.deleteBoard(newsSq);
+			
+			if(result>0) {
+				msg="itNews 게시판 글 삭제 성공";
+				//첨부파일 삭제 실행
+				File file = new File(saveDir+"/"+ReNameFile);
+				if(file.exists()) {
+					if(file.delete()) logger.debug("첨부파일 삭제 성공");
+					else logger.debug("첨부파일 삭제 실패");
+				}
+			}
+			else {
+				msg = "itNews 게시판 글 삭제 실패";
+			}
+			//첨부파일이 없는 게시글 삭제할때
+		}else {
+			int result=service.deleteBoard(newsSq);
+			msg=(result>0)?"itNews 게시판 글 삭제성공":"itNews게시판 글 삭제 실패";
+		}
+		logger.debug(msg);
+		return msg;
+		
+	}
+	
+	
+	
 }//클래스

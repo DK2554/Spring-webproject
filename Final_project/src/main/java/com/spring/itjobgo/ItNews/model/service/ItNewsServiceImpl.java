@@ -57,6 +57,20 @@ public class ItNewsServiceImpl implements ItNewsService {
 		// TODO Auto-generated method stub
 		return dao.selectOne(session,newsSq);
 	}
+	//첨부파일 불러오기
+	@Override
+	public ItnewsAttachment selectAttach(int newsSq) {
+		// TODO Auto-generated method stub
+		return dao.selectAttach(session, newsSq);
+	}
+
+	//게시판 삭제하기
+	public int deleteBoard(int newsSq) {
+		// TODO Auto-generated method stub
+		return dao.deleteBoard(session, newsSq);
+	}
+	
+	
 	
 	
 	

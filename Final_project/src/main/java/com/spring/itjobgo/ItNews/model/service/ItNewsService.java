@@ -19,5 +19,11 @@ public interface ItNewsService {
 	
 	//상세화면 selectOne
 	ItNews selectOne(int newsSq);
+	
+	//첨부파일 불러오기
+	ItnewsAttachment selectAttach(int newsSq);
+	
+	//게시판 delete
+	int deleteBoard(int newsSq);
 
 }

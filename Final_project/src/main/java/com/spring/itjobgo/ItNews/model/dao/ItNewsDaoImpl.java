@@ -42,6 +42,19 @@ public class ItNewsDaoImpl implements ItNewsDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("itNews.selectOne",newsSq);
 	}
+	//첨부파일 불러오기
+	@Override
+	public ItnewsAttachment selectAttach(SqlSessionTemplate session, int newsSq) {
+		// TODO Auto-generated method stub
+		return session.selectOne("itNews.selectAttach",newsSq);
+	}
+	@Override
+	public int deleteBoard(SqlSessionTemplate session, int newsSq) {
+		// TODO Auto-generated method stub
+		return session.delete("itNews.deleteBoard",newsSq);
+	}
+	
+	
 	
 	
 	
