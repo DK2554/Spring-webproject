@@ -42,4 +42,16 @@
   <select id="selectMboardname" parameterType="_int" resultType="String">
   select collab_title from collab_board where collab_sq=#{collabSq}
   </select>
+  <!--번호로 임시테이블에 잇는 정보를 가져온다-->
+  <select id="selectOneTmp" parameterType="_int" resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+  select * from tmp_apply where tmp_no=#{no}
+  </select>
+  <!--신청완료 테이블에 값을 넣는 로직-->
+  <insert id="insertApprove" parameterType="com.spring.itjobgo.meeting.model.vo.Approve">
+  insert into application_complted values(seq_complete.nextval,#{memberSq},#{position},default,#{collabSq},#{status})
+  </insert>
+  <!--신청을 완료하면 해당 임시테이블 값을 삭제-->
+  <delete id="deleteapply">
+  delete tmp_apply where tmp_no=#{no}
+  </delete>
 </mapper>

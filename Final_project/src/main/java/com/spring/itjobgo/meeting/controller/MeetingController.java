@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.meeting.model.service.MeetingService;
+import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
@@ -169,6 +170,31 @@ public class MeetingController {
 		}
 		return list2;
 	}
+	@RequestMapping(value="meeting/approve{no}.do",method=RequestMethod.GET)
+	public void approvemeeting(@PathVariable int no) {
+		Tmpapply tmp=service.selectOneapply(no);
+		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
+		//승인이면 상태를 Y로 넣어준다(기본값은 N)
+		Approve ap=new Approve(0,tmp.getMemberSq(),tmp.getPostion(),null,tmp.getCollabSq(),"Y");
+		int result=service.insertApprove(ap);
+		if(result>0) {
+			int check=service.deleteapply(no);
+		}//throws로 예외처리해야함
+		
+	}
+	@RequestMapping(value="meeting/unapprove{no}.do",method=RequestMethod.GET)
+	public void unapprovemeeting(@PathVariable int no) {
+		Tmpapply tmp=service.selectOneapply(no);
+		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
+		//미승인이면 상태를 N 넣어준다(기본값은 N)
+		Approve ap=new Approve(0,tmp.getMemberSq(),tmp.getPostion(),null,tmp.getCollabSq(),"N");
+		int result=service.insertApprove(ap);
+		if(result>0) {
+			int check=service.deleteapply(no);
+		}//throws로 예외처리해야함
+		
+	}
+	
 
 
 	
