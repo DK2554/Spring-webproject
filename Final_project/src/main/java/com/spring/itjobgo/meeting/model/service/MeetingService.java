@@ -40,6 +40,8 @@ public interface MeetingService {
 
 	List<Approve> selectApprove(int no);
 
+	int deletemeeting(int no);
+
 	
 
 }

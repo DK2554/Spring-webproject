@@ -58,4 +58,7 @@
   <select id="selectapprovelist" parameterType="_int" resultType="com.spring.itjobgo.meeting.model.vo.Approve">
   select * from application_complted where member_sq=#{no}
   </select>
+  <!--모임번호로 모임삭제-->
+  <delete id="deletemeeting" parameterType="_int">
+  delete collab_board where collab_sq=#{no}</delete>
 </mapper>
