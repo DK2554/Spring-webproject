@@ -14,7 +14,7 @@
   </selectKey>
   </insert>
   <select id="selectpboard" resultType="pboard">
-  select * from pboard order by pboard_No
+  select * from pboard order by pboard_Date desc
   </select>
   
   <select id="selectOnepboard" parameterType="_int" resultType="pboard">	
