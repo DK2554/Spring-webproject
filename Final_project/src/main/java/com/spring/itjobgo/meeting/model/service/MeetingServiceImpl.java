@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
+import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
@@ -61,6 +62,45 @@ public class MeetingServiceImpl implements MeetingService {
 		tmp.setCollabSq(collabSq);
 		tmp.setWriterNo(writerNo);
 		return dao.insertapply(session,tmp);
+	}
+
+	@Override
+	public String selectMboardname(int collabSq) {
+		// TODO Auto-generated method stub
+		
+		
+		return dao.selectMboardname(session,collabSq);
+	}
+
+	@Override
+	public String selectmembername(int memberSq) {
+		// TODO Auto-generated method stub
+		
+		return dao.selectMembername(session,memberSq);
+	}
+
+	@Override
+	public Tmpapply selectOneapply(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectOneapply(session,no);
+	}
+
+	@Override
+	public int insertApprove(Approve ap) {
+		// TODO Auto-generated method stub
+		return dao.insertApprove(session,ap);
+	}
+
+	@Override
+	public List<Approve> selectApprove(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectApprove(session,no);
+	}
+
+	@Override
+	public int deleteapply(int no) {
+		// TODO Auto-generated method stub
+		return dao.deleteapply(session,no);
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.spring.itjobgo.meeting.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
@@ -26,6 +27,18 @@ public interface MeetingService {
 	Member selectOneMember(String email);
 
 	List<Mboard> selectMlist(int memberSq);
+
+	String selectmembername(int memberSq);
+
+	String selectMboardname(int collabSq);
+
+	Tmpapply selectOneapply(int no);
+
+	int insertApprove(Approve ap);
+
+	int deleteapply(int no);
+
+	List<Approve> selectApprove(int no);
 
 	
 
