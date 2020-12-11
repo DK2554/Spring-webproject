@@ -32,11 +32,13 @@
   		#{schoolName1},
   		#{schoolStartDate1},
   		#{schoolFinishDate1},
+  		#{major1},
   		#{education1},
   		#{school2},
   		#{schoolName2},
   		#{schoolStartDate2},
   		#{schoolFinishDate2},
+  		#{major2},
   		#{education2}
   	)
   		
@@ -154,7 +156,7 @@
 	inner join resume_school b 
 	on a.member_no=b.member_no
 	inner join resume_work c
-	on a.member_no=b.member_no
+	on a.member_no=c.member_no
 	inner join Resume_license e
 	on a.member_no=e.member_no
 	inner join Resume_language f
@@ -165,6 +167,6 @@
 	on a.member_no=h.member_no
 	inner join Resume_abroad i
 	on a.member_no=i.member_no
-	where a.member_no=116
+	where a.member_no=#{memberno}
   </select>
 </mapper>

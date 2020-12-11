@@ -10,11 +10,13 @@ public class ResumeSchool {
 	private String schoolName1;
 	private Date schoolStartDate1;
 	private Date schoolFinishDate1;
+	private String major1;
 	private String education1;
 	private String school2;
 	private String schoolName2;
 	private Date schoolStartDate2;
 	private Date schoolFinishDate2;
+	private String major2;
 	private String education2;
 	
 	public ResumeSchool() {
@@ -22,8 +24,8 @@ public class ResumeSchool {
 	}
 
 	public ResumeSchool(int resumeSchoolno, int memberNo, String school1, String schoolName1, Date schoolStartDate1,
-			Date schoolFinishDate1, String education1, String school2, String schoolName2, Date schoolStartDate2,
-			Date schoolFinishDate2, String education2) {
+			Date schoolFinishDate1, String major1, String education1, String school2, String schoolName2,
+			Date schoolStartDate2, Date schoolFinishDate2, String major2, String education2) {
 		super();
 		this.resumeSchoolno = resumeSchoolno;
 		this.memberNo = memberNo;
@@ -31,11 +33,13 @@ public class ResumeSchool {
 		this.schoolName1 = schoolName1;
 		this.schoolStartDate1 = schoolStartDate1;
 		this.schoolFinishDate1 = schoolFinishDate1;
+		this.major1 = major1;
 		this.education1 = education1;
 		this.school2 = school2;
 		this.schoolName2 = schoolName2;
 		this.schoolStartDate2 = schoolStartDate2;
 		this.schoolFinishDate2 = schoolFinishDate2;
+		this.major2 = major2;
 		this.education2 = education2;
 	}
 
@@ -87,6 +91,14 @@ public class ResumeSchool {
 		this.schoolFinishDate1 = schoolFinishDate1;
 	}
 
+	public String getMajor1() {
+		return major1;
+	}
+
+	public void setMajor1(String major1) {
+		this.major1 = major1;
+	}
+
 	public String getEducation1() {
 		return education1;
 	}
@@ -127,6 +139,14 @@ public class ResumeSchool {
 		this.schoolFinishDate2 = schoolFinishDate2;
 	}
 
+	public String getMajor2() {
+		return major2;
+	}
+
+	public void setMajor2(String major2) {
+		this.major2 = major2;
+	}
+
 	public String getEducation2() {
 		return education2;
 	}
@@ -139,10 +159,11 @@ public class ResumeSchool {
 	public String toString() {
 		return "ResumeSchool [resumeSchoolno=" + resumeSchoolno + ", memberNo=" + memberNo + ", school1=" + school1
 				+ ", schoolName1=" + schoolName1 + ", schoolStartDate1=" + schoolStartDate1 + ", schoolFinishDate1="
-				+ schoolFinishDate1 + ", education1=" + education1 + ", school2=" + school2 + ", schoolName2="
-				+ schoolName2 + ", schoolStartDate2=" + schoolStartDate2 + ", schoolFinishDate2=" + schoolFinishDate2
-				+ ", education2=" + education2 + "]";
+				+ schoolFinishDate1 + ", major1=" + major1 + ", education1=" + education1 + ", school2=" + school2
+				+ ", schoolName2=" + schoolName2 + ", schoolStartDate2=" + schoolStartDate2 + ", schoolFinishDate2="
+				+ schoolFinishDate2 + ", major2=" + major2 + ", education2=" + education2 + "]";
 	}
+	
 	
 	
 }

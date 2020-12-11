@@ -91,6 +91,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public int deletemeeting(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.delete("meeting.deletemeeting",no);
+	}
+
+	@Override
 	public Mboard selectMinfo(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectOne("meeting.selectminfo",no);

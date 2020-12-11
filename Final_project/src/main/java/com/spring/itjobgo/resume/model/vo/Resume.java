@@ -22,7 +22,7 @@ public class Resume {
 	}
 
 	public Resume(int resumeNo, int memberNo, String rname, String engName, Date birth, String gender, int postcode,
-			String address, String telephone, String rphone, String remail) {
+			String address, String addressDetail, String telephone, String rphone, String remail) {
 		super();
 		this.resumeNo = resumeNo;
 		this.memberNo = memberNo;
@@ -32,6 +32,7 @@ public class Resume {
 		this.gender = gender;
 		this.postcode = postcode;
 		this.address = address;
+		this.addressDetail = addressDetail;
 		this.telephone = telephone;
 		this.rphone = rphone;
 		this.remail = remail;
@@ -101,6 +102,14 @@ public class Resume {
 		this.address = address;
 	}
 
+	public String getAddressDetail() {
+		return addressDetail;
+	}
+
+	public void setAddressDetail(String addressDetail) {
+		this.addressDetail = addressDetail;
+	}
+
 	public String getTelephone() {
 		return telephone;
 	}
@@ -129,8 +138,10 @@ public class Resume {
 	public String toString() {
 		return "Resume [resumeNo=" + resumeNo + ", memberNo=" + memberNo + ", rname=" + rname + ", engName=" + engName
 				+ ", birth=" + birth + ", gender=" + gender + ", postcode=" + postcode + ", address=" + address
-				+ ", telephone=" + telephone + ", rphone=" + rphone + ", remail=" + remail + "]";
+				+ ", addressDetail=" + addressDetail + ", telephone=" + telephone + ", rphone=" + rphone + ", remail="
+				+ remail + "]";
 	}
+
 	
 	
 }
