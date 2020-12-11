@@ -44,13 +44,11 @@ public class InfoController {
 	// 화면전환용 메서드
 	@RequestMapping(value = "/info/infoList", method = RequestMethod.GET)
 	public List<Info> info() throws JsonMappingException, JsonGenerationException, IOException {
-
 		List<Info> list = service.selectInfoList();
-
+		
 		for (Info i : list) {
 			System.out.println(i);
 		}
-
 		return list;
 	}
 	// info 게시판 글쓰기
@@ -68,6 +66,7 @@ public class InfoController {
 			logger.debug("파일명" + file[0].getOriginalFilename());
 			logger.debug("파일크기 : " + file[0].getSize());
 		}
+		
 		logger.debug(iboard.toString());
 
 		// 업로드 경로 설정
