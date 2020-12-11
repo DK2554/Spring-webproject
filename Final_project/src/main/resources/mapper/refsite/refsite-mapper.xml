@@ -31,6 +31,21 @@
 	    SELECT SEQ_REF_SITE_NO.CURRVAL FROM DUAL
 	  </selectKey>
 	</insert>
+	
+	<!--리스트 불러오기  -->
+	<select id="selectList" resultType="referenceSite">
+		SELECT * FROM REF_SITE ORDER BY REF_NO DESC
+	</select>
+	
+	<!-- 리스트 이미지 불러오기 -->
+	<select id="selectImage" parameterType="_int" resultType="referenceSiteAttach">
+		SELECT* FROM REF_SITE_ATTACHMENT WHERE REF_NO=#{no}
+	</select>
+	
+	
+	
+	
+	
 
 	
 </mapper>
