@@ -65,7 +65,9 @@ public class MemberController {
 		System.out.println("member: " + member);
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
-		member.setMemberLevel("0");// 일반회원 :0
+		//0:관리자 1: 일반 회원 2: 이력서 첨삭 관리자 
+		//3: 카카오 4:네이버 5: 구글
+		member.setMemberLevel("1");// 일반회원 :0
 		int result = 0;
 
 		System.out.println(member);
@@ -501,7 +503,7 @@ public class MemberController {
 				String encodePw = encoder.encode(member.getMemberPwd());
 				member.setMemberPwd(encodePw);
 				member.setMemberToken(access_token);
-				member.setMemberLevel("3");
+				member.setMemberLevel("4");
 				Random rand = new Random();
 
 				int ranPhone = rand.nextInt(999999999);
