@@ -53,7 +53,6 @@ public class InfoController {
 
 		return list;
 	}
-
 	// info 게시판 글쓰기
 	@RequestMapping(value = "/info/infoForm", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public String ifBoard(Info iboard, @RequestParam(value = "memberSq") int memberno,
