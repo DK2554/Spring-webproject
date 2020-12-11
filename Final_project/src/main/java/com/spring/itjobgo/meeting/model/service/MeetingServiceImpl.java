@@ -132,5 +132,11 @@ public class MeetingServiceImpl implements MeetingService {
 		return dao.selectMlist(session, memberSq);
 	}
 
+	@Override
+	public int deletemeeting(int no) {
+		// TODO Auto-generated method stub
+		return dao.deletemeeting(session,no);
+	}
+
 	
 }

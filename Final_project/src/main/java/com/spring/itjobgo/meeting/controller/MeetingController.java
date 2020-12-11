@@ -233,6 +233,23 @@ public class MeetingController {
 		logger.debug(list.toString());
 		return relist;
 	}
+	@RequestMapping(value="meeting/meetingdel{no}.do",method=RequestMethod.GET)
+	public void delmeeting(@PathVariable int no ,HttpServletRequest request,HttpServletResponse response) {
+		Mattachment mat=service.selectMat(no);
+		if(mat!=null) {
+			String fname=mat.getRenamedFilename();
+			String saveDir=request.getServletContext().getRealPath("/resource/upload/meeting");
+			int result=service.deletemeeting(no);
+			if(result>0) {
+				File file=new File(saveDir+"/"+fname);
+				if(file.exists()) {
+					if(file.delete()) logger.debug("이미지파일 삭제성공");
+					else logger.debug("삭제실패");
+				}
+				
+			}
+		}
+	}
 	
 
 
