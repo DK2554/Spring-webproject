@@ -250,6 +250,19 @@ public class MeetingController {
 			}
 		}
 	}
+	@RequestMapping(value="meeting/meetingupdate{no}.do",method=RequestMethod.GET)
+	public List updatemeeting(@PathVariable int no) {
+		logger.debug(Integer.toString(no));
+		Mboard md=service.selectMb(no);
+		Mattachment mat=service.selectMat(no);
+		List list=new ArrayList();
+		list.add(md);
+		list.add(mat);
+	  
+		
+		return list;
+	}
+	
 	
 
 
