@@ -95,7 +95,7 @@ public class RefController {
 	}
 	
 	//리스트 이미지 불러오기
-	@RequestMapping(value="ref/selectsiteImg",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
+	@RequestMapping(value="ref/selectsiteImg{no}",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
 	public @ResponseBody byte[] selectImage(@PathVariable int no, HttpServletRequest request, HttpServletResponse res)throws Exception{
 		logger.debug("이미지요청~");
 		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
@@ -107,13 +107,13 @@ public class RefController {
 		//파일이름
 		String fileNm = mt.getRenamedfilename();
 		//파일확장자
-		String ext = fileNm.substring(fileNm.lastIndexOf(".")+1);
-		String image=realFile+"//"+fileNm;
+		String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
+		String image=realFile+"\\"+fileNm;
 		
-		logger.debug("realFile : "+realFile+"fileNm : "+fileNm+"ext : "+ext);
+		logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
 		logger.debug(realFile+"\\"+fileNm);
 		
-		InputStream in = new FileInputStream(image);
+		InputStream in =new FileInputStream(image);
 		byte[] imageByteArray=IOUtils.toByteArray(in);
 		in.close();
 		
