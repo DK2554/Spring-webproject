@@ -255,6 +255,7 @@ public class MeetingController {
 		logger.debug(Integer.toString(no));
 		Mboard md=service.selectMb(no);
 		Mattachment mat=service.selectMat(no);
+		logger.debug(mat.toString());
 		List list=new ArrayList();
 		list.add(md);
 		list.add(mat);
@@ -262,10 +263,60 @@ public class MeetingController {
 		
 		return list;
 	}
-	
-	
-
-
-	
+	@RequestMapping(value="/meeting/updatemeeting.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public String meetingUpdateEnd(@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
+		
+		int mtno=Integer.valueOf((String) param.get("mtno"));
+		int result=0;
+		if(upfile.length>0) {
+			
+			String saveDir=request.getServletContext().getRealPath("/resources/upload/meeting");
+			File dir=new File(saveDir);
+			if(!dir.exists()) {
+				//지정된 경로의 폴더가 없으면 생성해라
+				dir.mkdirs();
+			}
+			List<Mattachment> files=new ArrayList();
+			for(MultipartFile f:upfile) {
+				if(!f.isEmpty()) {
+				logger.debug(Integer.toString(mtno));
+				String originalFileName=f.getOriginalFilename();
+				String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+				int rndNum=(int)(Math.random()*1000);
+				String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+				
+				try {
+					//파일저장하기
+					//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
+					f.transferTo(new File(saveDir+"/"+renameFileName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			Mattachment file2=new Mattachment(mtno,0,originalFileName,renameFileName,null,null);
+				files.add(file2);
+				
+				}
+			}
+			
+			try {
+				result=service.updatedmeeting(param,files);
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+			}
+			
+			}else {
+				result=service.updatedmeeting(param);
+			}
+		
+			
+			return "성공";
+	}
 }
+	
+	
+
+
+	
+
 	

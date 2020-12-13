@@ -42,6 +42,10 @@ public interface MeetingService {
 
 	int deletemeeting(int no);
 
+	int updatedmeeting(Map param, List<Mattachment> files);
+
+	int updatedmeeting(Map param);
+
 	
 
 }

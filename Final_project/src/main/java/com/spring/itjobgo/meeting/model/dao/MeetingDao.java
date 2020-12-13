@@ -48,4 +48,8 @@ public interface MeetingDao {
 
 	int deletemeeting(SqlSessionTemplate session, int no);
 
+	int updatemeeting(SqlSessionTemplate session, Map param);
+
+	int updateattachment(SqlSessionTemplate session, Mattachment file);
+
 }
