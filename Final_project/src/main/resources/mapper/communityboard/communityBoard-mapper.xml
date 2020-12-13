@@ -9,7 +9,7 @@
 	
 	<!-- select는 
 			반드시 resultType이 있다 
-												parameterType 은 입력될 데이터, 
+												parameterType 은 입력될 데이터유형, 
 												resultType은 쿼리 후 결과를 위한 데이터		
 	-->
 
