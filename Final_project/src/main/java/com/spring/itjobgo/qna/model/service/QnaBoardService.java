@@ -1,6 +1,7 @@
 package com.spring.itjobgo.qna.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
@@ -22,13 +23,15 @@ public interface QnaBoardService {
 	
 	int updateBoard(QnaBoard qboard);
 	
+	//댓글
 	int insertComment(QB_COMMENT cm);
 
 	int insertCommentText(int qboardNo);
 	
-	List<QB_COMMENT> selectQnacomment(int qboardNo);
+	List<QB_COMMENT> selectComment(int qboardNo);
 	
-	int deletecomment(int qbCommentNo);
+	int deletecomment(int qboardCommentNo);
 	
+	int updateComment(Map param);
 	
 }

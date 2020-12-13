@@ -1,6 +1,7 @@
 package com.spring.itjobgo.qna.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,15 +121,22 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 	//댓글 조회 로직
 	@Override
-	public List<QB_COMMENT> selectQnacomment(int qboardNo) {
+	public List<QB_COMMENT> selectComment(int qboardNo) {
 		return dao.selectQnacomment(session,qboardNo);
 	}
 
 	//댓글 삭제 로직
 	@Override
-	public int deletecomment(int qbCommentNo) {
-		return dao.deletecomment(session,qbCommentNo);
+	public int deletecomment(int qboardCommentNo) {
+		return dao.deletecomment(session,qboardCommentNo);
 	}
+
+	@Override
+	public int updateComment(Map param) {
+		return dao.updateComment(session,param);
+	}
+	
+	
 	
 	
 	

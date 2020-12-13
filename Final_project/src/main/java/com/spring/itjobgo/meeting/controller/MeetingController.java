@@ -36,6 +36,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.spring.itjobgo.meeting.model.service.MeetingService;
+import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
@@ -112,6 +113,8 @@ public class MeetingController {
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
 	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
 		logger.debug(Integer.toString(memberSq));
+		logger.debug(Integer.toString(collabSq));
+		logger.debug(Integer.toString(writerNo));
 		logger.debug(postion);
 		int result=service.insertapply(memberSq,postion,collabSq,writerNo);
 		
@@ -138,28 +141,182 @@ public class MeetingController {
 		return imageByteArray;
 	}
 	@RequestMapping(value="meeting/meetingapply{email}.do",method=RequestMethod.GET)
-	public List<Tmpapply> returntmpapply(@PathVariable String email) {
+	public List  returntmpapply(@PathVariable String email) throws JsonMappingException,JsonGenerationException,IOException{
 		logger.debug(email);
 		//로그인한 이메일로 사용자 정보 확인
 		Member m = service.selectOneMember(email);
 		logger.debug(m.toString());
-		List<Tmpapply>list=null;
-		if(m!=null) {
-			//로그인한 사용자가 있으면 해당 사용자 번호를 가지고 임시테이블에 확인
-			
-			list=service.selectapply(m.getMemberSq());
-			logger.debug(list.toString());
-		}
+		List<Tmpapply>list=service.selectapply(m.getMemberSq());
+		List list2=new ArrayList();
+		Map param=null;
+		String mname=null;
+		String bname=null;
+		logger.debug(list.toString());
 		
-//		Map<String, Integer> map=new HashMap<String, Integer>();
-//		for(Mboard map2:list) {
-//			map.put("no",map2.getCollabSq());
-//		}
-//		List<Tmpapply> tp=service.selectapply(map);
+		for(Tmpapply m2 : list) {
+				param=new HashMap();
+				mname=service.selectmembername(m2.getMemberSq());	
+				bname=service.selectMboardname(m2.getCollabSq());
+				param.put("no",m2.getTmpNo());
+				param.put("username",mname);
+				param.put("position",m2.getPostion());
+				param.put("collname",bname);
+				param.put("writerNo",m2.getWriterNo());
+				list2.add(param);
+				
+			logger.debug(m2.toString());
+			logger.debug(param+"param");
+			logger.debug(list2.toString());
+		}
+		return list2;
+	}
+	@RequestMapping(value="meeting/approve{no}.do",method=RequestMethod.GET)
+	public void approvemeeting(@PathVariable int no) {
+		Tmpapply tmp=service.selectOneapply(no);
+		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
+		//승인이면 상태를 Y로 넣어준다(기본값은 N)
+		Approve ap=new Approve(0,tmp.getMemberSq(),tmp.getPostion(),null,tmp.getCollabSq(),"Y");
+		int result=service.insertApprove(ap);
+		if(result>0) {
+			int check=service.deleteapply(no);
+		}//throws로 예외처리해야함
+		
+	}
+	@RequestMapping(value="meeting/unapprove{no}.do",method=RequestMethod.GET)
+	public void unapprovemeeting(@PathVariable int no) {
+		Tmpapply tmp=service.selectOneapply(no);
+		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
+		//미승인이면 상태를 N 넣어준다(기본값은 N)
+		Approve ap=new Approve(0,tmp.getMemberSq(),tmp.getPostion(),null,tmp.getCollabSq(),"N");
+		int result=service.insertApprove(ap);
+		if(result>0) {
+			int check=service.deleteapply(no);
+		}//throws로 예외처리해야함
+		
+	}
+	@RequestMapping(value="meeting/approvelist{no}.do",method=RequestMethod.GET)
+	public List approvelist(@PathVariable int no) {
+		logger.debug(Integer.toString(no));
+		//회원 번호로 신청한 모임목록을 가져오는 로직
+		List<Approve> ap=service.selectApprove(no);
+		logger.debug(ap.toString());
+		List list2=new ArrayList();
+		Map param=null;
+		String mname=null;
+		for(Approve app:ap) {
+			param=new HashedMap();
+			mname=service.selectMboardname(app.getCollabSq());
+			param.put("no",app.getAcnumber());
+			param.put("collname",mname);
+			param.put("collsq",app.getCollabSq());
+			param.put("position",app.getPosition());
+			param.put("status",app.getStatus());
+			list2.add(param);
+		}
+		return list2;
+	}
+	@RequestMapping(value="meeting/mklist{memberSq}.do",method=RequestMethod.GET)
+	public List retunmkmeeting(@PathVariable int memberSq) {
+		logger.debug(Integer.toString(memberSq));
+		List<Mboard> list =service.selectMlist(memberSq);
+		List relist=new ArrayList();
+		Map param =null;
+		String bname=null;
+		for(Mboard md:list) {
+			param=new HashedMap();
+			bname=service.selectMboardname(md.getCollabSq());
+			param.put("collabSq",md.getCollabSq());
+			param.put("title",bname);
+			param.put("mdate",md.getCollabUploaddate());
+			relist.add(param);
+		}
+		logger.debug(list.toString());
+		return relist;
+	}
+	@RequestMapping(value="meeting/meetingdel{no}.do",method=RequestMethod.GET)
+	public void delmeeting(@PathVariable int no ,HttpServletRequest request,HttpServletResponse response) {
+		Mattachment mat=service.selectMat(no);
+		if(mat!=null) {
+			String fname=mat.getRenamedFilename();
+			String saveDir=request.getServletContext().getRealPath("/resource/upload/meeting");
+			int result=service.deletemeeting(no);
+			if(result>0) {
+				File file=new File(saveDir+"/"+fname);
+				if(file.exists()) {
+					if(file.delete()) logger.debug("이미지파일 삭제성공");
+					else logger.debug("삭제실패");
+				}
+				
+			}
+		}
+	}
+	@RequestMapping(value="meeting/meetingupdate{no}.do",method=RequestMethod.GET)
+	public List updatemeeting(@PathVariable int no) {
+		logger.debug(Integer.toString(no));
+		Mboard md=service.selectMb(no);
+		Mattachment mat=service.selectMat(no);
+		logger.debug(mat.toString());
+		List list=new ArrayList();
+		list.add(md);
+		list.add(mat);
+	  
+		
 		return list;
 	}
+	@RequestMapping(value="/meeting/updatemeeting.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public String meetingUpdateEnd(@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
+		
+		int mtno=Integer.valueOf((String) param.get("mtno"));
+		int result=0;
+		if(upfile.length>0) {
+			
+			String saveDir=request.getServletContext().getRealPath("/resources/upload/meeting");
+			File dir=new File(saveDir);
+			if(!dir.exists()) {
+				//지정된 경로의 폴더가 없으면 생성해라
+				dir.mkdirs();
+			}
+			List<Mattachment> files=new ArrayList();
+			for(MultipartFile f:upfile) {
+				if(!f.isEmpty()) {
+				logger.debug(Integer.toString(mtno));
+				String originalFileName=f.getOriginalFilename();
+				String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+				int rndNum=(int)(Math.random()*1000);
+				String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+				
+				try {
+					//파일저장하기
+					//스프링이 제공하는 멀티파트가 메소드를 제공한다 tansferTo(파일)라는 메소드를 제공한다
+					f.transferTo(new File(saveDir+"/"+renameFileName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			Mattachment file2=new Mattachment(mtno,0,originalFileName,renameFileName,null,null);
+				files.add(file2);
+				
+				}
+			}
+			
+			try {
+				result=service.updatedmeeting(param,files);
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+			}
+			
+			}else {
+				result=service.updatedmeeting(param);
+			}
+		
+			
+			return "성공";
+	}
+}
+	
+	
 
 
 	
-}
+
 	

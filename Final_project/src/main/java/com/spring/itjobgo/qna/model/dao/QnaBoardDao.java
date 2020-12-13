@@ -1,6 +1,7 @@
 package com.spring.itjobgo.qna.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -49,8 +50,10 @@ public interface QnaBoardDao {
 	List<QB_COMMENT> selectQnacomment(SqlSessionTemplate session, int qboardNo);
 	
 	//댓글 삭제
-	int deletecomment(SqlSessionTemplate session, int qbCommentNo);
+	int deletecomment(SqlSessionTemplate session, int qboardCommentNo);
 	
+	//댓글 수정
+	int updateComment(SqlSessionTemplate session, Map param);
 	
 }
 

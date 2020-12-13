@@ -51,12 +51,15 @@
 			alias="info_attachment" />
 			
 		<typeAlias
+			type="com.spring.itjobgo.ref.model.vo.REF_SITE"
+			alias="referenceSite"/>
+		
+		<typeAlias
+			type="com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT"
+			alias="referenceSiteAttach"/>
+
+		<typeAlias
 			type="com.spring.itjobgo.qna.model.vo.QnaBoard"
-			alias="qnaBoard"/>
-			
-
-
-		<typeAlias type="com.spring.itjobgo.qna.model.vo.QnaBoard"
 			alias="qnaBoard" />
 
 		<typeAlias
@@ -125,7 +128,7 @@
 		alias="NoticeComment" />
 		
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeAll"
-			alias="resume_all" />	
+			alias="resume_all" /> 
 		
 		<typeAlias
 		type="com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment"

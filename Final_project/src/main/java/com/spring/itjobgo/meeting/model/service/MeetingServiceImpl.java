@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
+import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
@@ -64,6 +65,45 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public String selectMboardname(int collabSq) {
+		// TODO Auto-generated method stub
+		
+		
+		return dao.selectMboardname(session,collabSq);
+	}
+
+	@Override
+	public String selectmembername(int memberSq) {
+		// TODO Auto-generated method stub
+		
+		return dao.selectMembername(session,memberSq);
+	}
+
+	@Override
+	public Tmpapply selectOneapply(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectOneapply(session,no);
+	}
+
+	@Override
+	public int insertApprove(Approve ap) {
+		// TODO Auto-generated method stub
+		return dao.insertApprove(session,ap);
+	}
+
+	@Override
+	public List<Approve> selectApprove(int no) {
+		// TODO Auto-generated method stub
+		return dao.selectApprove(session,no);
+	}
+
+	@Override
+	public int deleteapply(int no) {
+		// TODO Auto-generated method stub
+		return dao.deleteapply(session,no);
+	}
+
+	@Override
 	public List<Tmpapply> selectapply(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectapply(session,no);
@@ -90,6 +130,37 @@ public class MeetingServiceImpl implements MeetingService {
 	public List<Mboard> selectMlist(int memberSq) {
 		// TODO Auto-generated method stub
 		return dao.selectMlist(session, memberSq);
+	}
+
+	@Override
+	public int updatedmeeting(Map param, List<Mattachment> files) {
+		// TODO Auto-generated method stub
+		int result=dao.updatemeeting(session,param);
+		if(result==0) throw new RuntimeException("데이터입력오류");
+		if(result>0) {
+			if(!files.isEmpty()) {
+				//files에 데이터가 있으면
+				for(Mattachment file:files) {
+					result=dao.updateattachment(session,file);
+					System.out.println(result);
+					if(result==0)throw new RuntimeException("이미지입력오류");
+				}
+			}
+			
+		}
+		return result;
+	}
+
+	@Override
+	public int updatedmeeting(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatemeeting(session,param);
+	}
+
+	@Override
+	public int deletemeeting(int no) {
+		// TODO Auto-generated method stub
+		return dao.deletemeeting(session,no);
 	}
 
 	
