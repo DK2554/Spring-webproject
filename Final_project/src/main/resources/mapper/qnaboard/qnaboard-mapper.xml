@@ -3,7 +3,7 @@
 <mapper namespace="qnaBoard">
 
 	<select id="selectBoardList"  resultType="qnaBoard">
-		SELECT * FROM QNA_BOARD
+		SELECT * FROM QNA_BOARD ORDER BY QBOARD_NO DESC
 	</select>
 	
 <!--  	<resultMap id="qnaBoard"
