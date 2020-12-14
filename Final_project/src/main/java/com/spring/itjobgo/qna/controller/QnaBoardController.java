@@ -61,6 +61,7 @@ public class QnaBoardController {
 		return list;
 	}
 	
+	
 	//qna게시판 글쓰기
 	@RequestMapping(value="/qna/qnaBoardWrite",
 										method = RequestMethod.POST, consumes= {"multipart/form-data"})
