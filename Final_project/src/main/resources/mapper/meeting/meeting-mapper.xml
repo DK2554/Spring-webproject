@@ -61,4 +61,11 @@
   <!--모임번호로 모임삭제-->
   <delete id="deletemeeting" parameterType="_int">
   delete collab_board where collab_sq=#{no}</delete>
+  <update id="updatemeeting" parameterType="map">
+  update collab_board set collab_title=#{mtitle},collab_content=#{mcontent},collab_simcontent=#{simcontent},collab_upload_date=#{sdate}, collab_deadline=#{fdate},collab_lang=#{langs},collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin},rdate=#{rdate},address=#{address}
+  where collab_sq=#{collabSq}
+  </update>
+  <update id="updateattachment" parameterType="mattachment">
+  update m_attachment set  originalFilename=#{originalFilename},renamedFilename=#{renamedFilename}
+  where mattachmentNo=#{mattachementNo}</update>
 </mapper>

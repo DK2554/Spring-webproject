@@ -4,17 +4,17 @@ import java.sql.Date;
 
 public class Mattachment {
 
-		private int mattachementNo;
+		private int mattachmentNo;
 		private int pboardSq;
 		private String originalFilename;
 		private String renamedFilename;
 		private Date uploadDate;
 		private String status;
 		public int getMattachementNo() {
-			return mattachementNo;
+			return mattachmentNo;
 		}
-		public void setMattachementNo(int mattachementNo) {
-			this.mattachementNo = mattachementNo;
+		public void setMattachementNo(int mattachmentNo) {
+			this.mattachmentNo = mattachmentNo;
 		}
 		public int getPboardSq() {
 			return pboardSq;
@@ -51,14 +51,14 @@ public class Mattachment {
 		}
 		@Override
 		public String toString() {
-			return "Mattachment [mattachementNo=" + mattachementNo + ", pboardSq=" + pboardSq + ", originalFilename="
+			return "Mattachment [mattachmentNo=" + mattachmentNo + ", pboardSq=" + pboardSq + ", originalFilename="
 					+ originalFilename + ", renamedFilename=" + renamedFilename + ", uploadDate=" + uploadDate
 					+ ", status=" + status + "]";
 		}
-		public Mattachment(int mattachementNo, int pboardSq, String originalFilename, String renamedFilename,
+		public Mattachment(int mattachmentNo, int pboardSq, String originalFilename, String renamedFilename,
 				Date uploadDate, String status) {
 			super();
-			this.mattachementNo = mattachementNo;
+			this.mattachmentNo = mattachmentNo;
 			this.pboardSq = pboardSq;
 			this.originalFilename = originalFilename;
 			this.renamedFilename = renamedFilename;
