@@ -48,7 +48,7 @@ public class ResumeController {
 	@ResponseBody
 	@RequestMapping(value="resume/rboardList.do",method=RequestMethod.GET)
 	public List<Rboard> selectRboardList() {
-		System.out.println("********이력서 리스트 컨트롤러 *********");
+		System.out.println("********이력서컨설팅 리스트 컨트롤러 *********");
 		List<Rboard> list=service.selectListRboard();
 
 		for(Rboard i : list) {
@@ -58,6 +58,18 @@ public class ResumeController {
 		return list;
 	}
 	
+	@RequestMapping(value="resume/resumeList/{memberSq}.do",method=RequestMethod.GET)
+	public List<ResumeList> selectResumeList(@PathVariable int memberSq) {
+		System.out.println("********이력서 리스트 컨트롤러 *********");
+		System.out.println(memberSq);
+		List<ResumeList> list=service.selectResumeList(memberSq);
+
+		for(ResumeList i : list) {
+			System.out.println(i);
+		}
+		System.out.println("controller : "+list);
+		return list;
+	}
 	
 	@RequestMapping(value="/resume/rboardEnroll.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 
@@ -225,11 +237,11 @@ public class ResumeController {
 		return msg;
 	}
 	
-	@RequestMapping(value="resume/selectResume/{memberSq}.do",method=RequestMethod.GET)
-	public ResumeAll selectResume(ResumeAll resumeall, @PathVariable int memberSq) {
+	@RequestMapping(value="resume/selectResume/{resumeNo}.do",method=RequestMethod.GET)
+	public ResumeAll selectResume(ResumeAll resumeall, @PathVariable int resumeNo) {
 		System.out.println("********controller : 이력서 불러오기*********");
-		System.out.println("controller memberSq param : "+memberSq);
-		ResumeAll list=service.selectResume(memberSq);
+		System.out.println("controller memberSq param : "+resumeNo);
+		ResumeAll list=service.selectResume(resumeNo);
 
 		System.out.println(list);
 		return list;

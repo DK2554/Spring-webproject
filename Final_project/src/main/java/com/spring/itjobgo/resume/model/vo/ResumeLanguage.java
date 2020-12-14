@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeLanguage {
 
 	private int resumeLanguageno;
-	private int memberNo;
+	private int resumeNo;
 	private String languageName;
 	private String languageLevel;
 	private String languageTest;
@@ -15,12 +15,12 @@ public class ResumeLanguage {
 	public ResumeLanguage() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public ResumeLanguage(int resumeLanguageno, int memberNo, String languageName, String languageLevel,
+	
+	public ResumeLanguage(int resumeLanguageno, int resumeNo, String languageName, String languageLevel,
 			String languageTest, String languageScore, Date languageDate) {
 		super();
 		this.resumeLanguageno = resumeLanguageno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.languageName = languageName;
 		this.languageLevel = languageLevel;
 		this.languageTest = languageTest;
@@ -36,12 +36,12 @@ public class ResumeLanguage {
 		this.resumeLanguageno = resumeLanguageno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getLanguageName() {
@@ -86,10 +86,11 @@ public class ResumeLanguage {
 
 	@Override
 	public String toString() {
-		return "ResumeLanguage [resumeLanguageno=" + resumeLanguageno + ", memberNo=" + memberNo + ", languageName="
+		return "ResumeLanguage [resumeLanguageno=" + resumeLanguageno + ", resumeNo=" + resumeNo + ", languageName="
 				+ languageName + ", languageLevel=" + languageLevel + ", languageTest=" + languageTest
 				+ ", languageScore=" + languageScore + ", languageDate=" + languageDate + "]";
 	}
+	
 	
 	
 }

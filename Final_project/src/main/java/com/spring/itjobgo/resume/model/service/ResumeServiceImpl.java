@@ -56,6 +56,15 @@ public class ResumeServiceImpl implements ResumeService {
 		}
 		return result;
 	}
+	
+	//이력서 리스트 보기
+	@Override
+	public List<ResumeList> selectResumeList(int memberSq) {
+		System.out.println("*******service selectResumeList 들어옴******");
+		return dao.selectResumeList(session, memberSq);
+	}
+	
+	//이력서 등록
 	@Override
 	public int insertResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license, 
 			ResumeLanguage language, ResumeActivity activity, ResumeProject project, 
@@ -64,6 +73,7 @@ public class ResumeServiceImpl implements ResumeService {
 			System.out.println("service: 개인정보  : "+result);
 			if(result==0) {throw new RuntimeException("이력서 등록 오류");
 				}else {result=0;}
+			
 		result=dao.insertResumeSchool(session, school);
 			System.out.println("service: 학력  : "+result);
 			if(result==0) {throw new RuntimeException("이력서 등록(학력) 오류");
@@ -88,6 +98,12 @@ public class ResumeServiceImpl implements ResumeService {
 			System.out.println("service: 프로젝트  : "+result);
 			if(result==0) {throw new RuntimeException("이력서 등록(프로젝트) 오류");
 				}else {result=0;}
+			
+		result=dao.insertResumeList(session, resumelist);
+			System.out.println("service: 이력서리스트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서리스트 등록 오류");
+				}else {result=0;}
+			
 		result=dao.insertResumeAbroad(session, abroad);
 			System.out.println("service: 해외경험  : "+result);
 			if(result==0) throw new RuntimeException("이력서 등록(해외경험) 오류");
@@ -101,18 +117,16 @@ public class ResumeServiceImpl implements ResumeService {
 					}
 				}
 		}
-		result=dao.insertResumeList(session, resumelist);
-		System.out.println("service: 이력서리스트  : "+result);
-		if(result==0) {throw new RuntimeException("이력서리스트 등록 오류");
-			}else {result=0;}
 
 		return result;
 		
 	}
+
+	//이력서 보기
 	@Override
-	public ResumeAll selectResume(int memberno) {
+	public ResumeAll selectResume(int resumeNo) {
 		System.out.println("*******service 들어옴******");
-		return dao.selectResume(session, memberno);
+		return dao.selectResume(session, resumeNo);
 	}
 
 	

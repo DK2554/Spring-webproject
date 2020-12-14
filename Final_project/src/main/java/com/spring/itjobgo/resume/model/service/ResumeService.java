@@ -17,8 +17,11 @@ import com.spring.itjobgo.resume.model.vo.ResumeSchool;
 import com.spring.itjobgo.resume.model.vo.ResumeWork;
 
 public interface ResumeService {
-	// 이력서 게시판 보기
+	//이력서 컨설팅 게시판 보기
 	List<Rboard> selectListRboard();
+	
+	//이력서 리스트 보기
+	List<ResumeList> selectResumeList(int memberSq);
 	
 	//이력서 게시판 등록하기
 	int insertRboard(Rboard rboard, List<RboardAttachment> files);
@@ -29,6 +32,5 @@ public interface ResumeService {
 			ResumeAbroad abroad, List<ResumeAttachment> files, ResumeList resumelist);
 	
 	//이력서 불러오기
-	
-	ResumeAll selectResume(int memberno);
+	ResumeAll selectResume(int resumeNo);
 }

@@ -29,6 +29,9 @@ public interface ResumeDao {
 	//이력서 게시판 파일첨부 등록
 	int insertAttachment(SqlSessionTemplate session, RboardAttachment file);
 	
+	//이력서 리스트 보기
+	List<ResumeList> selectResumeList(SqlSessionTemplate session, int memberSq);
+	
 	//이력서(개인정보) 등록
 	int insertResume(SqlSessionTemplate session, Resume resume);
 	
@@ -53,12 +56,12 @@ public interface ResumeDao {
 	//이력서(해외경험) 등록
 	int insertResumeAbroad(SqlSessionTemplate session, ResumeAbroad abroad);
 	
-	//이력서(사진파일) 등록
-	int insertResumeAttachment(SqlSessionTemplate session, ResumeAttachment file);
-	
 	//이력서리스트 등록
 	int insertResumeList(SqlSessionTemplate session, ResumeList resumelist);
 	
+	//이력서(사진파일) 등록
+	int insertResumeAttachment(SqlSessionTemplate session, ResumeAttachment file);
+	
 	//이력서 불러오기
-	ResumeAll selectResume(SqlSessionTemplate session, int memberno);
+	ResumeAll selectResume(SqlSessionTemplate session, int resumeNo);
 }
