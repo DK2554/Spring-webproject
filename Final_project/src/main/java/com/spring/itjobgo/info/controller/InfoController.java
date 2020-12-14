@@ -41,7 +41,7 @@ public class InfoController {
 	@Autowired
 	private InfoService service;
 
-	// 화면전환하는 메서드
+	// 화면전환 하는 메서드
 	@RequestMapping(value = "/info/infoList", method = RequestMethod.GET)
 	public List<Info> info() throws JsonMappingException, JsonGenerationException, IOException {
 		List<Info> list = service.selectInfoList();
