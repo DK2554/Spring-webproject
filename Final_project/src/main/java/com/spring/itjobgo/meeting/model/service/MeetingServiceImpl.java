@@ -133,6 +133,31 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public int updatedmeeting(Map param, List<Mattachment> files) {
+		// TODO Auto-generated method stub
+		int result=dao.updatemeeting(session,param);
+		if(result==0) throw new RuntimeException("데이터입력오류");
+		if(result>0) {
+			if(!files.isEmpty()) {
+				//files에 데이터가 있으면
+				for(Mattachment file:files) {
+					result=dao.updateattachment(session,file);
+					System.out.println(result);
+					if(result==0)throw new RuntimeException("이미지입력오류");
+				}
+			}
+			
+		}
+		return result;
+	}
+
+	@Override
+	public int updatedmeeting(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatemeeting(session,param);
+	}
+
+	@Override
 	public int deletemeeting(int no) {
 		// TODO Auto-generated method stub
 		return dao.deletemeeting(session,no);

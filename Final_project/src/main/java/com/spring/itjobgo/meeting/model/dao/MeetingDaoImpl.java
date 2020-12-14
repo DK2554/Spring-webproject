@@ -97,6 +97,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public int updatemeeting(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.updatemeeting",param);
+	}
+
+	@Override
 	public Mboard selectMinfo(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectOne("meeting.selectminfo",no);
@@ -106,6 +112,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int insertapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.inserttapply",tmp);
+	}
+
+	@Override
+	public int updateattachment(SqlSessionTemplate session, Mattachment file) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.updateattachment",file);
 	}
 
 	@Override
