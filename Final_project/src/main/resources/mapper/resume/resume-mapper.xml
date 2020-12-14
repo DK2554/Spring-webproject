@@ -150,6 +150,27 @@
   			)
   </insert>
   
+    <!-- 이력서 게시판 첨부파일 등록 -->
+  
+  <insert id="insertResumeList" parameterType="resume_list">
+  		INSERT INTO RESUMELIST VALUES(
+  			RESUMELIST_SEQ_NO.NEXTVAL,
+  			#{memberNo},
+  			#{resumeNo},
+  			#{resumelistTitle},
+  			#{resumelistWriter},
+  			DEFAULT,
+  			DEFAULT,
+  			#{resumelistAttachment},
+  			DEFAULT
+  			)
+  		<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>	
+  </insert>
+  
+  
+  
   <select id="selectResume" parameterType="int" resultType="resume_all">
   	select *
 	from resume a 

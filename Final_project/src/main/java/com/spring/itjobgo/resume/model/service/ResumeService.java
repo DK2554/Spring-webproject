@@ -11,6 +11,7 @@ import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
+import com.spring.itjobgo.resume.model.vo.ResumeList;
 import com.spring.itjobgo.resume.model.vo.ResumeProject;
 import com.spring.itjobgo.resume.model.vo.ResumeSchool;
 import com.spring.itjobgo.resume.model.vo.ResumeWork;
@@ -25,7 +26,7 @@ public interface ResumeService {
 	//이력서(개인정보+첨부파일) 등록
 	int insertResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license, 
 			ResumeLanguage language, ResumeActivity activity, ResumeProject project, 
-			ResumeAbroad abroad, List<ResumeAttachment> files);
+			ResumeAbroad abroad, List<ResumeAttachment> files, ResumeList resumelist);
 	
 	//이력서 불러오기
 	

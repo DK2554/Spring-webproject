@@ -31,6 +31,7 @@ import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
+import com.spring.itjobgo.resume.model.vo.ResumeList;
 import com.spring.itjobgo.resume.model.vo.ResumeProject;
 import com.spring.itjobgo.resume.model.vo.ResumeSchool;
 import com.spring.itjobgo.resume.model.vo.ResumeWork;
@@ -130,7 +131,8 @@ public class ResumeController {
 	
 	@RequestMapping(value="/resume/insertResume.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 		public String insertResume(Resume resume, ResumeAbroad abroad, ResumeActivity activity,
-				ResumeLanguage language, ResumeLicense license, ResumeProject project, ResumeSchool school, ResumeWork work,
+				ResumeLanguage language, ResumeLicense license, ResumeProject project, ResumeSchool school, 
+				ResumeWork work, ResumeList resumelist,
 				@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
 		
 		System.out.println("***********resume in 등록 컨트롤러 *********");
@@ -149,7 +151,26 @@ public class ResumeController {
 		
 		System.out.println("resume.getMemberNo"+resume.getMemberNo());
 		int memberNo=resume.getMemberNo();
-
+		
+		//resumeList 값 채우기
+		String resumeTitle=resume.getRtitle();
+		String resumeWriter=resume.getRname();
+		String resumeAttachment="";
+		if(upfile.length>0) {			
+			resumeAttachment="Y";
+		}
+		else {
+			resumeAttachment="N";
+		}
+		
+		resumelist.setMemberNo(memberNo);
+		resumelist.setResumelistTitle(resumeTitle);
+		resumelist.setResumelistWriter(resumeWriter);
+		resumelist.setResumelistAttachment(resumeAttachment);
+		
+		System.out.println("controller resumelist : "+ resumelist);
+		
+		
 		if(upfile.length>0) {
 			//오류나는 이유 로거에서 파일출력하는 부분에서 걸렸음
 			logger.debug("파일명"+upfile[0].getOriginalFilename());
@@ -192,7 +213,7 @@ public class ResumeController {
 		//data DB 저장하기
 		int result=0;
 		try {
-			result=service.insertResume(resume, school, work, license, language, activity, project, abroad, files);
+			result=service.insertResume(resume, school, work, license, language, activity, project, abroad, files, resumelist);
 		}catch(RuntimeException e) {
 			e.printStackTrace();
 		}

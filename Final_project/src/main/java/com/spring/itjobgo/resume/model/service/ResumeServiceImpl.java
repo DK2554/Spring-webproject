@@ -2,7 +2,6 @@ package com.spring.itjobgo.resume.model.service;
 
 import java.util.List;
 
-import org.bouncycastle.crypto.RuntimeCryptoException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +16,7 @@ import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
+import com.spring.itjobgo.resume.model.vo.ResumeList;
 import com.spring.itjobgo.resume.model.vo.ResumeProject;
 import com.spring.itjobgo.resume.model.vo.ResumeSchool;
 import com.spring.itjobgo.resume.model.vo.ResumeWork;
@@ -59,7 +59,7 @@ public class ResumeServiceImpl implements ResumeService {
 	@Override
 	public int insertResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license, 
 			ResumeLanguage language, ResumeActivity activity, ResumeProject project, 
-			ResumeAbroad abroad, List<ResumeAttachment> files) {
+			ResumeAbroad abroad, List<ResumeAttachment> files, ResumeList resumelist) {
 		int result=dao.insertResume(session, resume);
 			System.out.println("service: 개인정보  : "+result);
 			if(result==0) {throw new RuntimeException("이력서 등록 오류");
@@ -101,6 +101,11 @@ public class ResumeServiceImpl implements ResumeService {
 					}
 				}
 		}
+		result=dao.insertResumeList(session, resumelist);
+		System.out.println("service: 이력서리스트  : "+result);
+		if(result==0) {throw new RuntimeException("이력서리스트 등록 오류");
+			}else {result=0;}
+
 		return result;
 		
 	}
