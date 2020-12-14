@@ -264,7 +264,7 @@ public class MeetingController {
 		return list;
 	}
 	@RequestMapping(value="/meeting/updatemeeting.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public String meetingUpdateEnd(@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
+	public void meetingUpdateEnd(@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
 		
 		int mtno=Integer.valueOf((String) param.get("mtno"));
 		int result=0;
@@ -310,7 +310,7 @@ public class MeetingController {
 			}
 		
 			
-			return "성공";
+
 	}
 }
 	
