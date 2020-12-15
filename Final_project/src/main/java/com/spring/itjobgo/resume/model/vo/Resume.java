@@ -16,13 +16,16 @@ public class Resume {
 	private String telephone;
 	private String rphone;
 	private String remail;
+	private String rtitle;
+	private Date rdate;
 
 	public Resume() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public Resume(int resumeNo, int memberNo, String rname, String engName, Date birth, String gender, int postcode,
-			String address, String addressDetail, String telephone, String rphone, String remail) {
+			String address, String addressDetail, String telephone, String rphone, String remail, String rtitle,
+			Date rdate) {
 		super();
 		this.resumeNo = resumeNo;
 		this.memberNo = memberNo;
@@ -36,6 +39,8 @@ public class Resume {
 		this.telephone = telephone;
 		this.rphone = rphone;
 		this.remail = remail;
+		this.rtitle = rtitle;
+		this.rdate = rdate;
 	}
 
 	public int getResumeNo() {
@@ -134,13 +139,31 @@ public class Resume {
 		this.remail = remail;
 	}
 
+	public String getRtitle() {
+		return rtitle;
+	}
+
+	public void setRtitle(String rtitle) {
+		this.rtitle = rtitle;
+	}
+
+	public Date getRdate() {
+		return rdate;
+	}
+
+	public void setRdate(Date rdate) {
+		this.rdate = rdate;
+	}
+
 	@Override
 	public String toString() {
 		return "Resume [resumeNo=" + resumeNo + ", memberNo=" + memberNo + ", rname=" + rname + ", engName=" + engName
 				+ ", birth=" + birth + ", gender=" + gender + ", postcode=" + postcode + ", address=" + address
 				+ ", addressDetail=" + addressDetail + ", telephone=" + telephone + ", rphone=" + rphone + ", remail="
-				+ remail + "]";
+				+ remail + ", rtitle=" + rtitle + ", rdate=" + rdate + "]";
 	}
+	
+	
 
 	
 	

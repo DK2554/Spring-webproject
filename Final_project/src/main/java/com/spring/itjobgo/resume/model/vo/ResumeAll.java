@@ -17,6 +17,8 @@ public class ResumeAll {
 	private String telephone;
 	private String rphone;
 	private String remail;
+	private String rtitle;
+	private Date rdate;
 	//학력
 	private int resumeSchoolno;
 	private String school1;
@@ -81,18 +83,18 @@ public class ResumeAll {
 	}
 
 	public ResumeAll(int resumeNo, int memberNo, String rname, String engName, Date birth, String gender, int postcode,
-			String address, String addressDetail, String telephone, String rphone, String remail, int resumeSchoolno,
-			String school1, String schoolName1, Date schoolStartDate1, Date schoolFinishDate1, String major1,
-			String education1, String school2, String schoolName2, Date schoolStartDate2, Date schoolFinishDate2,
-			String major2, String education2, int resumeWorkno, Date workStartDate, Date workFinishDate,
-			String workName, String workLevel, String workState, String workDetail, int resumeLicenseno,
-			String licenseName, String licenseAgency, Date licenseDate, int resumeLanguageno, String languageName,
-			String languageLevel, String languageTest, String languageScore, Date languageDate, int resumeActivityno,
-			String activity, Date activityStartDate, Date activityFinishDate, String activityAgency,
-			String activityWork, String activityDetail, int resumeProjectno, String projectPart, Date projectStartDate,
-			Date projectFinishDate, String projectName, String projectWork, String projectDetail, int resumeAbroadno,
-			String abroad, Date abroadStartDate, Date abroadFinishDate, String abroadCountury, String abroadAgency,
-			String abroadDetail) {
+			String address, String addressDetail, String telephone, String rphone, String remail, String rtitle,
+			Date rdate, int resumeSchoolno, String school1, String schoolName1, Date schoolStartDate1,
+			Date schoolFinishDate1, String major1, String education1, String school2, String schoolName2,
+			Date schoolStartDate2, Date schoolFinishDate2, String major2, String education2, int resumeWorkno,
+			Date workStartDate, Date workFinishDate, String workName, String workLevel, String workState,
+			String workDetail, int resumeLicenseno, String licenseName, String licenseAgency, Date licenseDate,
+			int resumeLanguageno, String languageName, String languageLevel, String languageTest, String languageScore,
+			Date languageDate, int resumeActivityno, String activity, Date activityStartDate, Date activityFinishDate,
+			String activityAgency, String activityWork, String activityDetail, int resumeProjectno, String projectPart,
+			Date projectStartDate, Date projectFinishDate, String projectName, String projectWork, String projectDetail,
+			int resumeAbroadno, String abroad, Date abroadStartDate, Date abroadFinishDate, String abroadCountury,
+			String abroadAgency, String abroadDetail) {
 		super();
 		this.resumeNo = resumeNo;
 		this.memberNo = memberNo;
@@ -106,6 +108,8 @@ public class ResumeAll {
 		this.telephone = telephone;
 		this.rphone = rphone;
 		this.remail = remail;
+		this.rtitle = rtitle;
+		this.rdate = rdate;
 		this.resumeSchoolno = resumeSchoolno;
 		this.school1 = school1;
 		this.schoolName1 = schoolName1;
@@ -253,6 +257,22 @@ public class ResumeAll {
 
 	public void setRemail(String remail) {
 		this.remail = remail;
+	}
+
+	public String getRtitle() {
+		return rtitle;
+	}
+
+	public void setRtitle(String rtitle) {
+		this.rtitle = rtitle;
+	}
+
+	public Date getRdate() {
+		return rdate;
+	}
+
+	public void setRdate(Date rdate) {
+		this.rdate = rdate;
 	}
 
 	public int getResumeSchoolno() {
@@ -668,18 +688,18 @@ public class ResumeAll {
 		return "ResumeAll [resumeNo=" + resumeNo + ", memberNo=" + memberNo + ", rname=" + rname + ", engName="
 				+ engName + ", birth=" + birth + ", gender=" + gender + ", postcode=" + postcode + ", address="
 				+ address + ", addressDetail=" + addressDetail + ", telephone=" + telephone + ", rphone=" + rphone
-				+ ", remail=" + remail + ", resumeSchoolno=" + resumeSchoolno + ", school1=" + school1
-				+ ", schoolName1=" + schoolName1 + ", schoolStartDate1=" + schoolStartDate1 + ", schoolFinishDate1="
-				+ schoolFinishDate1 + ", major1=" + major1 + ", education1=" + education1 + ", school2=" + school2
-				+ ", schoolName2=" + schoolName2 + ", schoolStartDate2=" + schoolStartDate2 + ", schoolFinishDate2="
-				+ schoolFinishDate2 + ", major2=" + major2 + ", education2=" + education2 + ", resumeWorkno="
-				+ resumeWorkno + ", workStartDate=" + workStartDate + ", workFinishDate=" + workFinishDate
-				+ ", workName=" + workName + ", workLevel=" + workLevel + ", workState=" + workState + ", workDetail="
-				+ workDetail + ", resumeLicenseno=" + resumeLicenseno + ", licenseName=" + licenseName
-				+ ", licenseAgency=" + licenseAgency + ", licenseDate=" + licenseDate + ", resumeLanguageno="
-				+ resumeLanguageno + ", languageName=" + languageName + ", languageLevel=" + languageLevel
-				+ ", languageTest=" + languageTest + ", languageScore=" + languageScore + ", languageDate="
-				+ languageDate + ", resumeActivityno=" + resumeActivityno + ", activity=" + activity
+				+ ", remail=" + remail + ", rtitle=" + rtitle + ", rdate=" + rdate + ", resumeSchoolno="
+				+ resumeSchoolno + ", school1=" + school1 + ", schoolName1=" + schoolName1 + ", schoolStartDate1="
+				+ schoolStartDate1 + ", schoolFinishDate1=" + schoolFinishDate1 + ", major1=" + major1 + ", education1="
+				+ education1 + ", school2=" + school2 + ", schoolName2=" + schoolName2 + ", schoolStartDate2="
+				+ schoolStartDate2 + ", schoolFinishDate2=" + schoolFinishDate2 + ", major2=" + major2 + ", education2="
+				+ education2 + ", resumeWorkno=" + resumeWorkno + ", workStartDate=" + workStartDate
+				+ ", workFinishDate=" + workFinishDate + ", workName=" + workName + ", workLevel=" + workLevel
+				+ ", workState=" + workState + ", workDetail=" + workDetail + ", resumeLicenseno=" + resumeLicenseno
+				+ ", licenseName=" + licenseName + ", licenseAgency=" + licenseAgency + ", licenseDate=" + licenseDate
+				+ ", resumeLanguageno=" + resumeLanguageno + ", languageName=" + languageName + ", languageLevel="
+				+ languageLevel + ", languageTest=" + languageTest + ", languageScore=" + languageScore
+				+ ", languageDate=" + languageDate + ", resumeActivityno=" + resumeActivityno + ", activity=" + activity
 				+ ", activityStartDate=" + activityStartDate + ", activityFinishDate=" + activityFinishDate
 				+ ", activityAgency=" + activityAgency + ", activityWork=" + activityWork + ", activityDetail="
 				+ activityDetail + ", resumeProjectno=" + resumeProjectno + ", projectPart=" + projectPart
@@ -689,7 +709,7 @@ public class ResumeAll {
 				+ ", abroadFinishDate=" + abroadFinishDate + ", abroadCountury=" + abroadCountury + ", abroadAgency="
 				+ abroadAgency + ", abroadDetail=" + abroadDetail + "]";
 	}
-	
+
 	
 	
 }

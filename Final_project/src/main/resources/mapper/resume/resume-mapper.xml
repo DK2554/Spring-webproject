@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="resume">
 
-	<!-- 이력서(개인정보) 등록-->
+	<!-- 이력서 리스트 불러오기 -->
+  <select id="selectResumeList" resultType="resume_list" parameterType="_int">
+  	SELECT * FROM RESUMELIST WHERE MEMBER_NO=#{memberSq} ORDER BY RESUMELIST_NO DESC
+  </select>
 
+
+	<!-- 이력서(개인정보) 등록-->
   <insert id="insertResume" parameterType="resume">
   	INSERT INTO RESUME VALUES(
   		RESUME_SEQ_NO.NEXTVAL,
@@ -17,7 +22,9 @@
   		#{addressDetail},
   		#{telephone},
   		#{rphone},
-  		#{remail}
+  		#{remail},
+  		#{rtitle},
+  		DEFAULT
   	)
   		
   </insert>
@@ -27,7 +34,7 @@
   <insert id="insertResumeSchool" parameterType="resume_school">
   	INSERT INTO Resume_school VALUES(
   		RESUME_SCHOOL_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{school1},
   		#{schoolName1},
   		#{schoolStartDate1},
@@ -41,6 +48,9 @@
   		#{major2},
   		#{education2}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -49,7 +59,7 @@
   <insert id="insertResumeWork" parameterType="resume_work">
   	INSERT INTO Resume_work VALUES(
   		RESUME_WORK_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{workStartDate},
   		#{workFinishDate},
   		#{workName},
@@ -57,7 +67,9 @@
   		#{workState},
   		#{workDetail}
   	)
-  		
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   </insert>
   
   	<!-- 이력서(자격증) 등록-->
@@ -65,11 +77,14 @@
   <insert id="insertResumeLicense" parameterType="resume_license">
   	INSERT INTO Resume_license VALUES(
   		RESUME_LICENSE_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{licenseName},
   		#{licenseAgency},
   		#{licenseDate}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -78,13 +93,16 @@
   <insert id="insertResumeLanguage" parameterType="resume_language">
   	INSERT INTO Resume_language VALUES(
   		RESUME_LANGUAGE_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{languageName},
   		#{languageLevel},
   		#{languageTest},
   		#{languageScore},
   		#{languageDate}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -93,7 +111,7 @@
   <insert id="insertResumeActivity" parameterType="resume_activity">
   	INSERT INTO Resume_activity VALUES(
   		RESUME_ACTIVITY_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{activity},
   		#{activityStartDate},
   		#{activityFinishDate},
@@ -101,6 +119,9 @@
   		#{activityWork},
   		#{activityDetail}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -109,7 +130,7 @@
   <insert id="insertResumeProject" parameterType="resume_project">
   	INSERT INTO Resume_project VALUES(
   		RESUME_PROJECT_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{projectPart},
   		#{projectStartDate},
   		#{projectFinishDate},
@@ -117,6 +138,9 @@
   		#{projectWork},
   		#{projectDetail}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -125,7 +149,7 @@
   <insert id="insertResumeAbroad" parameterType="resume_abroad">
   	INSERT INTO Resume_abroad VALUES(
   		RESUME_ABROAD_SEQ_NO.NEXTVAL,
-  		#{memberNo},
+  		#{resumeNo},
   		#{abroad},
   		#{abroadStartDate},
   		#{abroadFinishDate},
@@ -133,6 +157,9 @@
   		#{abroadAgency},
   		#{abroadDetail}
   	)
+  	  	<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   		
   </insert>
   
@@ -142,31 +169,55 @@
   <insert id="insertResumeAttachment" parameterType="resume_attachment">
   		INSERT INTO RESUME_ATTACHMENT VALUES(
   			RESUME_ATTACHMENT_SEQ_NO.NEXTVAL,
-  			#{memberNo},
+  			#{resumeNo},
   			#{originalFilename},
   			#{renamedFilename},
   			DEFAULT,
   			DEFAULT
   			)
+  		<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
   </insert>
   
-  <select id="selectResume" parameterType="int" resultType="resume_all">
+    <!-- 이력서 게시판 첨부파일 등록 -->
+  
+  <insert id="insertResumeList" parameterType="resume_list">
+  		INSERT INTO RESUMELIST VALUES(
+  			RESUMELIST_SEQ_NO.NEXTVAL,
+  			#{memberNo},
+  			#{resumeNo},
+  			#{resumelistTitle},
+  			#{resumelistWriter},
+  			DEFAULT,
+  			DEFAULT,
+  			#{resumelistAttachment},
+  			DEFAULT
+  			)
+  		<selectKey keyProperty="resumeNo" resultType="_int" order="BEFORE">
+	 		SELECT RESUME_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
+  </insert>
+  
+  
+  
+  <select id="selectResume" parameterType="_int" resultType="resume_all">
   	select *
 	from resume a 
 	inner join resume_school b 
-	on a.member_no=b.member_no
+	on a.resume_no=b.resume_no
 	inner join resume_work c
-	on a.member_no=c.member_no
-	inner join Resume_license e
-	on a.member_no=e.member_no
-	inner join Resume_language f
-	on a.member_no=f.member_no
-	inner join Resume_activity g
-	on a.member_no=g.member_no
-	inner join Resume_project h
-	on a.member_no=h.member_no
-	inner join Resume_abroad i
-	on a.member_no=i.member_no
-	where a.member_no=#{memberno}
+	on a.resume_no=c.resume_no
+	inner join Resume_license d
+	on a.resume_no=d.resume_no
+	inner join Resume_language e
+	on a.resume_no=e.resume_no
+	inner join Resume_activity f
+	on a.resume_no=f.resume_no
+	inner join Resume_project g
+	on a.resume_no=g.resume_no
+	inner join Resume_abroad h
+	on a.resume_no=h.resume_no
+	where a.resume_no=#{resumeNo}
   </select>
 </mapper>
