@@ -181,12 +181,16 @@ public class PortfolioController {
 	@RequestMapping(value="/portfolio/pbaordupdate{no}.do",method = RequestMethod.GET)
 	public Attachment pboardupdate(@PathVariable int no) 
 			throws JsonMappingException,JsonGenerationException,IOException{
-			
 				logger.debug("pbaordNo"+Integer.toString(no));
 				Attachment at=service.selectattac(no);
-				logger.debug(at.toString());
+				if(at!=null) {
+					return at;
+				}else {
+					return null;
+				}
+		
 				
-				return at;
+				
 			}
 	@RequestMapping(value="/portfolio/portfolioupdataend.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	//@ModelAttribute 생략가능  써주는것이 좋음 

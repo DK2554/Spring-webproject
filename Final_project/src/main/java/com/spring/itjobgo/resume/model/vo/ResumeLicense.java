@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeLicense {
 
 	private int resumeLicenseno;
-	private int memberNo;
+	private int resumeNo;
 	private String licenseName;
 	private String licenseAgency;
 	private Date licenseDate;
@@ -14,11 +14,11 @@ public class ResumeLicense {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeLicense(int resumeLicenseno, int memberNo, String licenseName, String licenseAgency,
+	public ResumeLicense(int resumeLicenseno, int resumeNo, String licenseName, String licenseAgency,
 			Date licenseDate) {
 		super();
 		this.resumeLicenseno = resumeLicenseno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.licenseName = licenseName;
 		this.licenseAgency = licenseAgency;
 		this.licenseDate = licenseDate;
@@ -32,12 +32,12 @@ public class ResumeLicense {
 		this.resumeLicenseno = resumeLicenseno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getLicenseName() {
@@ -66,10 +66,9 @@ public class ResumeLicense {
 
 	@Override
 	public String toString() {
-		return "ResumeLicense [resumeLicenseno=" + resumeLicenseno + ", memberNo=" + memberNo + ", licenseName="
+		return "ResumeLicense [resumeLicenseno=" + resumeLicenseno + ", resumeNo=" + resumeNo + ", licenseName="
 				+ licenseName + ", licenseAgency=" + licenseAgency + ", licenseDate=" + licenseDate + "]";
 	}
-	
 	
 	
 }
