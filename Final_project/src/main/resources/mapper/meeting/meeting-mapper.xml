@@ -23,6 +23,9 @@
   <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
   insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},default,#{collabSq},#{writerNo})
   </insert>
+  <select id="selectappcount"  resultType="_int" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+  select count(memberSq) from tmp_apply where collab_sq=#{collabSq} AND memberSq=#{memberSq}
+  </select>
   <select id="selectmattach" resultType="mattachment" parameterType="_int">
   select * from m_attachment where pboard_sq=#{no}
   </select>
@@ -34,7 +37,7 @@
   SELECT * FROM MEMBER WHERE Member_email=#{email}
   </select>
   <select id="selectListmember" parameterType="_int" resultMap="mboardmap" >
- SELECT * FROM COLLAB_BOARD WHERE member_sq=#{memberSq} 
+ SELECT collab_sq,collab_upload_date FROM COLLAB_BOARD where member_sq=#{memberSq} 
   </select>
   <select id="selectMembername" parameterType="_int" resultType="String">
   select member_name from member where member_sq=#{memberSq}
@@ -68,4 +71,11 @@
   <update id="updateattachment" parameterType="mattachment">
   update m_attachment set  originalFilename=#{originalFilename},renamedFilename=#{renamedFilename}
   where mattachmentNo=#{mattachementNo}</update>
+  <delete id="deletemapply" parameterType="_int">
+  delete tmp_apply where tmp_no=#{tmpNo}
+   
+  </delete>
+  <select id="selecttno" resultType="_int" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+  select tmp_no from tmp_apply where collab_sq=#{collabSq} and memberSq=#{memberSq}
+  </select>
 </mapper>
