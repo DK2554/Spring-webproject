@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeWork {
 
 	private int resumeWorkno;
-	private int memberNo;
+	private int resumeNo;
 	private Date workStartDate;
 	private Date workFinishDate;
 	private String workName;
@@ -17,11 +17,11 @@ public class ResumeWork {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeWork(int resumeWorkno, int memberNo, Date workStartDate, Date workFinishDate, String workName,
+	public ResumeWork(int resumeWorkno, int resumeNo, Date workStartDate, Date workFinishDate, String workName,
 			String workLevel, String workState, String workDetail) {
 		super();
 		this.resumeWorkno = resumeWorkno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.workStartDate = workStartDate;
 		this.workFinishDate = workFinishDate;
 		this.workName = workName;
@@ -38,12 +38,12 @@ public class ResumeWork {
 		this.resumeWorkno = resumeWorkno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public Date getWorkStartDate() {
@@ -96,10 +96,12 @@ public class ResumeWork {
 
 	@Override
 	public String toString() {
-		return "ResumeWork [resumeWorkno=" + resumeWorkno + ", memberNo=" + memberNo + ", workStartDate="
+		return "ResumeWork [resumeWorkno=" + resumeWorkno + ", resumeNo=" + resumeNo + ", workStartDate="
 				+ workStartDate + ", workFinishDate=" + workFinishDate + ", workName=" + workName + ", workLevel="
 				+ workLevel + ", workState=" + workState + ", workDetail=" + workDetail + "]";
 	}
+	
+	
 	
 	
 }

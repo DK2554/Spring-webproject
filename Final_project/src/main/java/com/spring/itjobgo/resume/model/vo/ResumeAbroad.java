@@ -5,23 +5,23 @@ import java.sql.Date;
 public class ResumeAbroad {
 
 	private int resumeAbroadno;
-	private int memberNo;
+	private int resumeNo;
 	private String abroad;
 	private Date abroadStartDate;
 	private Date abroadFinishDate;
 	private String abroadCountury;
 	private String abroadAgency;
 	private String abroadDetail;
-	
+
 	public ResumeAbroad() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeAbroad(int resumeAbroadno, int memberNo, String abroad, Date abroadStartDate, Date abroadFinishDate,
+	public ResumeAbroad(int resumeAbroadno, int resumeNo, String abroad, Date abroadStartDate, Date abroadFinishDate,
 			String abroadCountury, String abroadAgency, String abroadDetail) {
 		super();
 		this.resumeAbroadno = resumeAbroadno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.abroad = abroad;
 		this.abroadStartDate = abroadStartDate;
 		this.abroadFinishDate = abroadFinishDate;
@@ -38,12 +38,12 @@ public class ResumeAbroad {
 		this.resumeAbroadno = resumeAbroadno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getAbroad() {
@@ -96,7 +96,8 @@ public class ResumeAbroad {
 
 	@Override
 	public String toString() {
-		return "ResumeAbroad [resumeAbroadno=" + resumeAbroadno + ", memberNo=" + memberNo + ", abroad=" + abroad
+		return "ResumeAbroad [resumeAbroadno=" + resumeAbroadno + ", resumeNo=" + resumeNo + ", abroad=" + abroad
+				+ ", abroadStartDate=" + abroadStartDate + ", abroadFinishDate=" + abroadFinishDate
 				+ ", abroadCountury=" + abroadCountury + ", abroadAgency=" + abroadAgency + ", abroadDetail="
 				+ abroadDetail + "]";
 	}

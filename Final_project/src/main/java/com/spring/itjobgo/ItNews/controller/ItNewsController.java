@@ -273,6 +273,8 @@ public class ItNewsController {
 		
 	}
 	
+
+	
 	//댓글 업데이트 수정
 	@RequestMapping(value="itnews/updateComment",method=RequestMethod.POST)
 	public void updateComment(@RequestBody Map param) {

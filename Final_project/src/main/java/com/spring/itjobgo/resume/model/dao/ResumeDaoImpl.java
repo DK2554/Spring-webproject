@@ -14,6 +14,7 @@ import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
+import com.spring.itjobgo.resume.model.vo.ResumeList;
 import com.spring.itjobgo.resume.model.vo.ResumeProject;
 import com.spring.itjobgo.resume.model.vo.ResumeSchool;
 import com.spring.itjobgo.resume.model.vo.ResumeWork;
@@ -40,6 +41,13 @@ public class ResumeDaoImpl implements ResumeDao {
 	public int insertAttachment(SqlSessionTemplate session, RboardAttachment file) {
 		System.out.println("********dao 파일첨부 하기 전**********");
 		return session.insert("rboard.insertAttachment",file);
+	}
+	
+	//이력서 리스트 보기
+	@Override
+	public List<ResumeList> selectResumeList(SqlSessionTemplate session, int memberSq) {
+		System.out.println("********dao 이력서 리스트 가져오기 전**********");
+		return session.selectList("resume.selectResumeList",memberSq);
 	}
 	
 	//이력서(개인정보) 등록
@@ -91,6 +99,13 @@ public class ResumeDaoImpl implements ResumeDao {
 		System.out.println("********dao 프로젝트 하기 전**********");
 		return session.insert("resume.insertResumeProject",project);
 	}
+	//이력서리스트 등록
+	@Override
+	public int insertResumeList(SqlSessionTemplate session, ResumeList resumelist) {
+		System.out.println("********dao 이력서리스트 등록 전**********");
+		return session.insert("resume.insertResumeList",resumelist);
+	}
+	
 	//이력서(해외경험) 등록
 	@Override
 	public int insertResumeAbroad(SqlSessionTemplate session, ResumeAbroad abroad) {
@@ -98,13 +113,23 @@ public class ResumeDaoImpl implements ResumeDao {
 		return session.insert("resume.insertResumeAbroad",abroad);
 	}
 
+	//이력서 불러오기
 	@Override
-	public ResumeAll selectResume(SqlSessionTemplate session, int memberno) {
+	public ResumeAll selectResume(SqlSessionTemplate session, int resumeNo) {
 		System.out.println("********dao 이력서 불러오기 전**********");
-		return session.selectOne("resume.selectResume",memberno);
+		return session.selectOne("resume.selectResume",resumeNo);
 	}
 
-	//이력서 불러오기
+	//증명사진 불러오기
+	@Override
+	public String selectAttachment(SqlSessionTemplate session, String resumeNo) {
+		System.out.println("********dao 증명사진 불러오기 전**********");
+		return session.selectOne("resume.selectAttachment",resumeNo);
+	}
+
+	
+
+
 	
 	
 

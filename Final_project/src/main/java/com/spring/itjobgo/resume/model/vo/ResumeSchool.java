@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeSchool {
 
 	private int resumeSchoolno;
-	private int memberNo ;
+	private int resumeNo ;
 	private String school1;
 	private String schoolName1;
 	private Date schoolStartDate1;
@@ -23,12 +23,12 @@ public class ResumeSchool {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeSchool(int resumeSchoolno, int memberNo, String school1, String schoolName1, Date schoolStartDate1,
+	public ResumeSchool(int resumeSchoolno, int resumeNo, String school1, String schoolName1, Date schoolStartDate1,
 			Date schoolFinishDate1, String major1, String education1, String school2, String schoolName2,
 			Date schoolStartDate2, Date schoolFinishDate2, String major2, String education2) {
 		super();
 		this.resumeSchoolno = resumeSchoolno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.school1 = school1;
 		this.schoolName1 = schoolName1;
 		this.schoolStartDate1 = schoolStartDate1;
@@ -51,12 +51,12 @@ public class ResumeSchool {
 		this.resumeSchoolno = resumeSchoolno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getSchool1() {
@@ -157,12 +157,13 @@ public class ResumeSchool {
 
 	@Override
 	public String toString() {
-		return "ResumeSchool [resumeSchoolno=" + resumeSchoolno + ", memberNo=" + memberNo + ", school1=" + school1
+		return "ResumeSchool [resumeSchoolno=" + resumeSchoolno + ", resumeNo=" + resumeNo + ", school1=" + school1
 				+ ", schoolName1=" + schoolName1 + ", schoolStartDate1=" + schoolStartDate1 + ", schoolFinishDate1="
 				+ schoolFinishDate1 + ", major1=" + major1 + ", education1=" + education1 + ", school2=" + school2
 				+ ", schoolName2=" + schoolName2 + ", schoolStartDate2=" + schoolStartDate2 + ", schoolFinishDate2="
 				+ schoolFinishDate2 + ", major2=" + major2 + ", education2=" + education2 + "]";
 	}
+	
 	
 	
 	

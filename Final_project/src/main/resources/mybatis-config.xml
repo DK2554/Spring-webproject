@@ -149,6 +149,9 @@
 		<typeAlias
 		type="com.spring.itjobgo.ItNews.model.vo.ItnewsComment"
 		alias="ItnewsComment" />	
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeList"
+		alias="resume_list" /> 
 			
 	</typeAliases>
 
