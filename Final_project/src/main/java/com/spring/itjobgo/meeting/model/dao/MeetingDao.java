@@ -30,7 +30,7 @@ public interface MeetingDao {
 
 	Member selectMemberOne(SqlSessionTemplate session, String email);
 
-	List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq);
+	List<Mboard> selectMklist(SqlSessionTemplate session, int memberSq);
 
 	List<Tmpapply> selectapply(SqlSessionTemplate session, int no);
 
@@ -51,5 +51,13 @@ public interface MeetingDao {
 	int updatemeeting(SqlSessionTemplate session, Map param);
 
 	int updateattachment(SqlSessionTemplate session, Mattachment file);
+
+	int selectapply(SqlSessionTemplate session, Tmpapply tmp);
+
+	int deleteapply(SqlSessionTemplate session, Tmpapply tmp);
+
+	int selecttno(SqlSessionTemplate session, Tmpapply tmp);
+
+	
 
 }
