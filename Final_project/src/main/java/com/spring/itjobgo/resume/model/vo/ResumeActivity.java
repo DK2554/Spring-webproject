@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeActivity {
 
 	private int resumeActivityno;
-	private int memberNo;
+	private int resumeNo;
 	private String activity;
 	private Date activityStartDate;
 	private Date activityFinishDate;
@@ -17,11 +17,11 @@ public class ResumeActivity {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeActivity(int resumeActivityno, int memberNo, String activity, Date activityStartDate,
+	public ResumeActivity(int resumeActivityno, int resumeNo, String activity, Date activityStartDate,
 			Date activityFinishDate, String activityAgency, String activityWork, String activityDetail) {
 		super();
 		this.resumeActivityno = resumeActivityno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.activity = activity;
 		this.activityStartDate = activityStartDate;
 		this.activityFinishDate = activityFinishDate;
@@ -38,12 +38,12 @@ public class ResumeActivity {
 		this.resumeActivityno = resumeActivityno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getActivity() {
@@ -96,7 +96,7 @@ public class ResumeActivity {
 
 	@Override
 	public String toString() {
-		return "ResumeActivity [resumeActivityno=" + resumeActivityno + ", memberNo=" + memberNo + ", activity="
+		return "ResumeActivity [resumeActivityno=" + resumeActivityno + ", resumeNo=" + resumeNo + ", activity="
 				+ activity + ", activityStartDate=" + activityStartDate + ", activityFinishDate=" + activityFinishDate
 				+ ", activityAgency=" + activityAgency + ", activityWork=" + activityWork + ", activityDetail="
 				+ activityDetail + "]";

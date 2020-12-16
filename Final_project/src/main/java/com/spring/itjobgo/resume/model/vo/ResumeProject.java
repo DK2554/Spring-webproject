@@ -5,7 +5,7 @@ import java.sql.Date;
 public class ResumeProject {
 
 	private int resumeProjectno;
-	private int memberNo;
+	private int resumeNo;
 	private String projectPart;
 	private Date projectStartDate;
 	private Date projectFinishDate;
@@ -17,11 +17,11 @@ public class ResumeProject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeProject(int resumeProjectno, int memberNo, String projectPart, Date projectStartDate,
+	public ResumeProject(int resumeProjectno, int resumeNo, String projectPart, Date projectStartDate,
 			Date projectFinishDate, String projectName, String projectWork, String projectDetail) {
 		super();
 		this.resumeProjectno = resumeProjectno;
-		this.memberNo = memberNo;
+		this.resumeNo = resumeNo;
 		this.projectPart = projectPart;
 		this.projectStartDate = projectStartDate;
 		this.projectFinishDate = projectFinishDate;
@@ -38,12 +38,12 @@ public class ResumeProject {
 		this.resumeProjectno = resumeProjectno;
 	}
 
-	public int getMemberNo() {
-		return memberNo;
+	public int getResumeNo() {
+		return resumeNo;
 	}
 
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
+	public void setResumeNo(int resumeNo) {
+		this.resumeNo = resumeNo;
 	}
 
 	public String getProjectPart() {
@@ -96,11 +96,14 @@ public class ResumeProject {
 
 	@Override
 	public String toString() {
-		return "ResumeProject [resumeProjectno=" + resumeProjectno + ", memberNo=" + memberNo + ", projectPart="
+		return "ResumeProject [resumeProjectno=" + resumeProjectno + ", resumeNo=" + resumeNo + ", projectPart="
 				+ projectPart + ", projectStartDate=" + projectStartDate + ", projectFinishDate=" + projectFinishDate
 				+ ", projectName=" + projectName + ", projectWork=" + projectWork + ", projectDetail=" + projectDetail
 				+ "]";
 	}
+	
+	
+	
 	
 	
 }
