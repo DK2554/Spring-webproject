@@ -128,6 +128,13 @@ public class ResumeServiceImpl implements ResumeService {
 		System.out.println("*******service 들어옴******");
 		return dao.selectResume(session, resumeNo);
 	}
+	
+	//증명사진 보기
+	@Override
+	public String selectAttachment(String resumeNo) {
+		System.out.println("*******service selectAttachment 들어옴******");
+		return dao.selectAttachment(session, resumeNo);
+	}
 
 	
 	

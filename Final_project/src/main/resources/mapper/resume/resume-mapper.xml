@@ -202,22 +202,37 @@
   
   
   <select id="selectResume" parameterType="_int" resultType="resume_all">
-  	select *
-	from resume a 
-	inner join resume_school b 
-	on a.resume_no=b.resume_no
-	inner join resume_work c
-	on a.resume_no=c.resume_no
-	inner join Resume_license d
-	on a.resume_no=d.resume_no
-	inner join Resume_language e
-	on a.resume_no=e.resume_no
-	inner join Resume_activity f
-	on a.resume_no=f.resume_no
-	inner join Resume_project g
-	on a.resume_no=g.resume_no
-	inner join Resume_abroad h
-	on a.resume_no=h.resume_no
-	where a.resume_no=#{resumeNo}
+	  	select *
+		from resume a 
+			<!-- 조인 (학력사항) -->
+			inner join resume_school b 
+			on a.resume_no=b.resume_no
+			<!-- 조인 (경력사항) -->
+			inner join resume_work c
+			on a.resume_no=c.resume_no
+			<!-- 조인 (자격증) -->
+			inner join Resume_license d
+			on a.resume_no=d.resume_no
+			<!-- 조인 (외국어) -->
+			inner join Resume_language e
+			on a.resume_no=e.resume_no
+			<!-- 조인 (외부활동) -->
+			inner join Resume_activity f
+			on a.resume_no=f.resume_no
+			<!-- 조인 (프로젝트) -->
+			inner join Resume_project g
+			on a.resume_no=g.resume_no
+			<!-- 조인 (해외경험) -->
+			inner join Resume_abroad h
+			on a.resume_no=h.resume_no
+			<!-- 조인 (파일첨부) -->
+			inner join Resume_attachment i
+			on a.resume_no=i.resume_no
+			
+		where a.resume_no=#{resumeNo}
   </select>
+  
+   <select id="selectAttachment" parameterType="String" resultType="String">
+	  	SELECT renamed_filename FROM resume_ATTACHMENT where resume_no=#{resumeNo}
+  	</select>
 </mapper>

@@ -1,7 +1,9 @@
 package com.spring.itjobgo.resume.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,8 +12,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -157,7 +161,7 @@ public class ResumeController {
 		System.out.println("project : "+ project);
 		System.out.println("school : "+ school);
 		System.out.println("work : "+ work);
-		
+		System.out.println("file :" + upfile);
 //		Object memberno=Request.getInstance(param.get(resume.getMemberNo()));
 //		System.out.println("param.getMemberNo"+Request.getInstance(param.get(resume.getMemberNo())));
 		
@@ -245,5 +249,30 @@ public class ResumeController {
 
 		System.out.println(list);
 		return list;
+	}
+	
+	// 이력서 사진 로드 
+	@RequestMapping(value = "/resume/selectAttachment", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] selectAttachment(HttpServletRequest request, @RequestParam Map param) throws IOException {
+		System.out.println("이력서 사진 controller 들어옴");
+		
+		String resumeNo = param.get("resumeNo").toString();
+		System.out.println("controller : "+resumeNo);
+		String tempImg = service.selectAttachment(resumeNo);
+		System.out.println("controller tempImg :"+tempImg);
+		
+		String imagePath = null;
+		if (tempImg != null) {// 등록된 사진이 있는경우
+
+			imagePath = request.getServletContext().getRealPath("/resources/upload/resume/" + tempImg);
+
+			InputStream imageStream = new FileInputStream(imagePath);
+			byte[] imageByteArray = IOUtils.toByteArray(imageStream);
+			imageStream.close();
+			return imageByteArray;
+		} else {
+			return null;
+		}
+
 	}
 }
