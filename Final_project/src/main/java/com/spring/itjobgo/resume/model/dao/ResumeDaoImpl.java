@@ -120,7 +120,14 @@ public class ResumeDaoImpl implements ResumeDao {
 		return session.selectOne("resume.selectResume",resumeNo);
 	}
 
+	//증명사진 불러오기
+	@Override
+	public String selectAttachment(SqlSessionTemplate session, String resumeNo) {
+		System.out.println("********dao 증명사진 불러오기 전**********");
+		return session.selectOne("resume.selectAttachment",resumeNo);
+	}
 
+	
 
 
 	

@@ -33,4 +33,7 @@ public interface ResumeService {
 	
 	//이력서 불러오기
 	ResumeAll selectResume(int resumeNo);
+	
+	//증명사진 불러오기
+	String selectAttachment(String resumeNo);
 }

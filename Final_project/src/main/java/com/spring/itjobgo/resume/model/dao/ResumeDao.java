@@ -64,4 +64,7 @@ public interface ResumeDao {
 	
 	//이력서 불러오기
 	ResumeAll selectResume(SqlSessionTemplate session, int resumeNo);
+	
+	//증명사진 불러오기
+	String selectAttachment(SqlSessionTemplate session, String resumeNo);
 }
