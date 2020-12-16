@@ -77,13 +77,14 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
-	public List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq) {
+	public List<Mboard> selectMklist(SqlSessionTemplate session, int memberSq) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(memberSq);
 		return session.selectList("meeting.selectListmember",memberSq);
 		
 	}
 
+	
 	@Override
 	public Mattachment selectMattach(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
@@ -112,6 +113,24 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int insertapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.inserttapply",tmp);
+	}
+
+	@Override
+	public int selectapply(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectappcount",tmp);
+	}
+
+	@Override
+	public int deleteapply(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.delete("meeting.deletemapply",tmp);
+	}
+
+	@Override
+	public int selecttno(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selecttno",tmp);
 	}
 
 	@Override
