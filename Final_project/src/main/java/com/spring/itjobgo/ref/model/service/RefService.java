@@ -3,6 +3,8 @@ package com.spring.itjobgo.ref.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.itjobgo.ItNews.model.vo.ItNews;
+import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
@@ -17,4 +19,23 @@ public interface RefService {
 	//이미지 불러오기
 	REF_SITE_ATTACHMENT selectImage(int no);
 
+	//첨부파일 불러오기
+	REF_SITE_ATTACHMENT selectAttach(int refNo);
+	
+	//상세화면 selectOne
+	REF_SITE selectOne(int refNo);
+	
+	//게시판 delete
+	int deleteSite(int refNo);
+
+	//update(파일 있을때)
+	int updateSite(REF_SITE refsite, List<REF_SITE_ATTACHMENT>files);
+	
+	//update(파일 없을때)
+	int updateSite(REF_SITE refsite);
+	
+	
+	
+	
+	
 }
