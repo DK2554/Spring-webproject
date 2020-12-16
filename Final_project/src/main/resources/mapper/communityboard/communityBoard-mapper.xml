@@ -39,7 +39,8 @@
 											DEFAULT,
 											#{memberNum},
 											#{boardWriter},
-											1
+											1,
+											0
 											)
 	</insert>
 		
@@ -148,6 +149,26 @@
 												CB_COMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
 												WHERE CB_COMMENT_NO=#{cbCommentNo}
 	</update>
-  		
+	
+	<!-- 댓글 갯수 증가 -->
+	<update id="updateCommentCount">
+			UPDATE COMMUNITY_BOARD SET
+												COMMENT_COUNT=COMMENT_COUNT+1
+												WHERE BOARD_SQ=#{cboardNo}
+	
+	
+	</update>
+	
+	<!-- 댓글 정보가져오기 -->
+	<select id="selectOneComment" parameterType="_int" resultType="CB_COMMENT" >
+		SELECT CBOARD_NO FROM CB_COMMENT WHERE CB_COMMENT_NO=#{cbCommentNo}
+	</select>
+	
+	<!-- 댓글 갯수 감소 -->
+	<update id="deleteCount">
+						UPDATE COMMUNITY_BOARD SET
+												COMMENT_COUNT=COMMENT_COUNT-1
+												WHERE BOARD_SQ=#{cboardNo}
+	</update>
   		
 </mapper>

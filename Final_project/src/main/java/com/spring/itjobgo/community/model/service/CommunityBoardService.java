@@ -30,4 +30,13 @@ public interface CommunityBoardService {
 	int deleteComment(int cbCommentNo);
 	
 	int updateComment(Map param);
+	
+	//댓글갯수 카운트 +1
+	int updateCommentCount(CB_COMMENT cbc);
+	
+	//댓글 정보가져오기
+	CB_COMMENT selectOneComment(int cbCommentNo);
+	
+	//댓글 갯수 카운트 -1
+	int deleteCount(int cboardNo);
 }
