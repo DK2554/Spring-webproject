@@ -58,6 +58,10 @@ public interface MeetingDao {
 
 	int selecttno(SqlSessionTemplate session, Tmpapply tmp);
 
+	int insertcount(SqlSessionTemplate session, Map param);
+
+	int updatecount(SqlSessionTemplate session, Map param);
+
 	
 
 }

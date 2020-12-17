@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meeting">
   <insert id="insertmboard" parameterType="map">
-  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq})
+  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
+  </insert>
+  <insert id="insertcount" parameterType="map">
+  insert into collab_count values(#{collabsq},#{back},#{front},#{desgin},default,default,default)
+  <selectKey keyProperty="collabsq" resultType="_int" order="BEFORE">
+  	select seq_meet.currval from dual
+  	</selectKey>
   </insert>
   <insert id="insertmattach" parameterType="mattachment" >
   insert into m_attachment values(seq_mattach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
@@ -37,7 +43,7 @@
   SELECT * FROM MEMBER WHERE Member_email=#{email}
   </select>
   <select id="selectListmember" parameterType="_int" resultMap="mboardmap" >
- SELECT collab_sq,collab_upload_date FROM COLLAB_BOARD where member_sq=#{memberSq} 
+ SELECT collab_sq,mkdate FROM COLLAB_BOARD where member_sq=#{memberSq}  order by collab_sq ASC
   </select>
   <select id="selectMembername" parameterType="_int" resultType="String">
   select member_name from member where member_sq=#{memberSq}
@@ -67,6 +73,9 @@
   <update id="updatemeeting" parameterType="map">
   update collab_board set collab_title=#{mtitle},collab_content=#{mcontent},collab_simcontent=#{simcontent},collab_upload_date=#{sdate}, collab_deadline=#{fdate},collab_lang=#{langs},collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin},rdate=#{rdate},address=#{address}
   where collab_sq=#{collabSq}
+  </update>
+  <update id="updatecounttable">
+  update collab_count set collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin} where collab_sq=#{collabSq}
   </update>
   <update id="updateattachment" parameterType="mattachment">
   update m_attachment set  originalFilename=#{originalFilename},renamedFilename=#{renamedFilename}

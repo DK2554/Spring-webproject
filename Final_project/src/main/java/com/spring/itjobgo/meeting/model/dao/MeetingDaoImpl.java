@@ -110,6 +110,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public int updatecount(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.updatecounttable",param);
+	}
+
+	@Override
 	public int insertapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.inserttapply",tmp);
@@ -125,6 +131,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int deleteapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.delete("meeting.deletemapply",tmp);
+	}
+
+	@Override
+	public int insertcount(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.insert("meeting.insertcount",param);
 	}
 
 	@Override

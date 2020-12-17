@@ -56,7 +56,6 @@ public class MeetingController {
 		String msg="";
 		System.out.println(param);	
 		if(upfile.length>0) {
-			
 			String saveDir=request.getServletContext().getRealPath("/resources/upload/meeting");
 			File dir=new File(saveDir);
 			if(!dir.exists()) {
@@ -257,7 +256,7 @@ public class MeetingController {
 			bname=service.selectMboardname(md.getCollabSq());
 			param.put("collabSq",md.getCollabSq());
 			param.put("title",bname);
-			param.put("mdate",md.getCollabUploaddate());
+			param.put("mdate",md.getMkdate());
 			relist.add(param);
 		}
 		logger.debug(list.toString());
@@ -278,6 +277,8 @@ public class MeetingController {
 				}
 				
 			}
+		}else {
+			int result=service.deletemeeting(no);
 		}
 	}
 	@RequestMapping(value="meeting/meetingupdate{no}.do",method=RequestMethod.GET)

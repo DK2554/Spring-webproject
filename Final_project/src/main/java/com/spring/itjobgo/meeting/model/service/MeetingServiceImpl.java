@@ -27,8 +27,11 @@ public class MeetingServiceImpl implements MeetingService {
 	public int insertMboard(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.insertMboard(session,param);
+		int check=dao.insertcount(session,param);
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
+			//모임 생성되면 모임 인원확인하는 테이블에도 생성
+			System.out.println(check);
 			if(!files.isEmpty()) {
 				//files에 데이터가 있으면
 				for(Mattachment file:files) {
@@ -156,6 +159,7 @@ public class MeetingServiceImpl implements MeetingService {
 	public int updatedmeeting(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
 		if(result==0) throw new RuntimeException("데이터입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
@@ -174,7 +178,9 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public int updatedmeeting(Map param) {
 		// TODO Auto-generated method stub
-		return dao.updatemeeting(session,param);
+		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
+		return result;
 	}
 
 	@Override
