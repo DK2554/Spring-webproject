@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Approve;
@@ -52,16 +53,21 @@ public class MeetingServiceImpl implements MeetingService {
 		// TODO Auto-generated method stub
 		return dao.selectMinfo(session,no);
 	}
+	@Transactional
+	@Override
+	public int insertapply(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+			//없으면 0 있으면 을 반환 0이면 임시에 넣는다.
+			return dao.insertapply(session,tmp);
+		
+		
+		 
+	}
 
 	@Override
-	public int insertapply(int memberSq, String postion,int collabSq,int writerNo) {
+	public int selectapply(Tmpapply tmp) {
 		// TODO Auto-generated method stub
-		Tmpapply tmp=new Tmpapply();
-		tmp.setMemberSq(memberSq);
-		tmp.setPostion(postion);
-		tmp.setCollabSq(collabSq);
-		tmp.setWriterNo(writerNo);
-		return dao.insertapply(session,tmp);
+		return dao.selectapply(session,tmp);
 	}
 
 	@Override
@@ -70,6 +76,12 @@ public class MeetingServiceImpl implements MeetingService {
 		
 		
 		return dao.selectMboardname(session,collabSq);
+	}
+
+	@Override
+	public int deleteapply(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.deleteapply(session,tmp);
 	}
 
 	@Override
@@ -89,6 +101,12 @@ public class MeetingServiceImpl implements MeetingService {
 	public int insertApprove(Approve ap) {
 		// TODO Auto-generated method stub
 		return dao.insertApprove(session,ap);
+	}
+
+	@Override
+	public int selecttno(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selecttno(session,tmp);
 	}
 
 	@Override
@@ -127,9 +145,11 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public List<Mboard> selectMlist(int memberSq) {
+	public List<Mboard> selectMklist(int memberSq) {
 		// TODO Auto-generated method stub
-		return dao.selectMlist(session, memberSq);
+		List<Mboard>list=dao.selectMklist(session, memberSq);
+		System.out.println(list.toString());
+		return list;
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class ResumeList {
 
-	private int resumelistNo;
+	private int resumeListno;
 	private int memberNo;
 	private int resumeNo;
 	private String resumelistTitle;
@@ -18,10 +18,10 @@ public class ResumeList {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ResumeList(int resumelistNo, int memberNo, int resumeNo, String resumelistTitle, String resumelistWriter,
+	public ResumeList(int resumeListno, int memberNo, int resumeNo, String resumelistTitle, String resumelistWriter,
 			Date resumelistDate, String resumelistStatus, String resumelistAttachment, int resumelistCount) {
 		super();
-		this.resumelistNo = resumelistNo;
+		this.resumeListno = resumeListno;
 		this.memberNo = memberNo;
 		this.resumeNo = resumeNo;
 		this.resumelistTitle = resumelistTitle;
@@ -32,12 +32,12 @@ public class ResumeList {
 		this.resumelistCount = resumelistCount;
 	}
 
-	public int getResumelistNo() {
-		return resumelistNo;
+	public int getResumeListno() {
+		return resumeListno;
 	}
 
-	public void setResumelistNo(int resumelistNo) {
-		this.resumelistNo = resumelistNo;
+	public void setResumeListno(int resumeListno) {
+		this.resumeListno = resumeListno;
 	}
 
 	public int getMemberNo() {
@@ -106,15 +106,12 @@ public class ResumeList {
 
 	@Override
 	public String toString() {
-		return "ResumeList [resumelistNo=" + resumelistNo + ", memberNo=" + memberNo + ", resumeNo=" + resumeNo
+		return "ResumeList [resumeListno=" + resumeListno + ", memberNo=" + memberNo + ", resumeNo=" + resumeNo
 				+ ", resumelistTitle=" + resumelistTitle + ", resumelistWriter=" + resumelistWriter
 				+ ", resumelistDate=" + resumelistDate + ", resumelistStatus=" + resumelistStatus
 				+ ", resumelistAttachment=" + resumelistAttachment + ", resumelistCount=" + resumelistCount + "]";
 	}
-	
-	
-	
-	
+
 	
 	
 }

@@ -111,13 +111,38 @@ public class MeetingController {
 	}
 	//모임신청하는 로직
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
-	public void applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
-		logger.debug(Integer.toString(memberSq));
-		logger.debug(Integer.toString(collabSq));
-		logger.debug(Integer.toString(writerNo));
-		logger.debug(postion);
-		int result=service.insertapply(memberSq,postion,collabSq,writerNo);
+	public int applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
+		Tmpapply tmp=new Tmpapply();
+		tmp.setMemberSq(memberSq);
+		tmp.setPostion(postion);
+		tmp.setCollabSq(collabSq);
+		tmp.setWriterNo(writerNo);
+		int check=service.selectapply(tmp);
+		int result=0;
+		if(check==0) {
+			 result=service.insertapply(tmp);
+		}
 		
+		return result;
+		
+	}
+	//모임신청 취소
+	@RequestMapping(value="meeting/delapplymeeting.do",method=RequestMethod.POST)
+	public int delapplymeeting(@RequestParam int memberSq,@RequestParam int collabSq) {
+		Tmpapply tmp=new Tmpapply();
+		tmp.setMemberSq(memberSq);
+		tmp.setCollabSq(collabSq);
+		int check=service.selectapply(tmp);
+		logger.debug(Integer.toString(check));
+		int result=0;
+		if(check==1) {
+			int tno=service.selecttno(tmp);
+			logger.debug(Integer.toString(tno));
+			result=service.deleteapply(tno);
+			logger.debug(Integer.toString(result));
+			return result;
+		}else return 0;
+		      
 	}
 	//모임 목록에 이미지 보여주는 로직
 	@RequestMapping(value="meeting/imagesrequest{no}",method=RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
@@ -126,19 +151,24 @@ public class MeetingController {
 		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
 		Mattachment mt=service.selectMat(no);
 		logger.debug(mt.toString());
-		//파일경로
 		String realFile = request.getServletContext().getRealPath("/resources/upload/meeting");
-		//파일이름
 		String fileNm = mt.getRenamedFilename();
-		//파일 확장자
-		String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
-		String image=realFile+"\\"+fileNm;
-		logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
-		logger.debug(realFile+"\\"+fileNm);
-		InputStream in =new FileInputStream(image);
-		byte[] imageByteArray=IOUtils.toByteArray(in);
-		in.close();
-		return imageByteArray;
+		//파일이름
+		if(fileNm!=null) {
+			//파일 확장자
+			String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
+			String image=realFile+"\\"+fileNm;
+			logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
+			logger.debug(realFile+"\\"+fileNm);
+			InputStream in =new FileInputStream(image);
+			byte[] imageByteArray=IOUtils.toByteArray(in);
+			in.close();
+			return imageByteArray;
+		}else {
+			return null;
+		}
+		
+		
 	}
 	@RequestMapping(value="meeting/meetingapply{email}.do",method=RequestMethod.GET)
 	public List  returntmpapply(@PathVariable String email) throws JsonMappingException,JsonGenerationException,IOException{
@@ -218,7 +248,7 @@ public class MeetingController {
 	@RequestMapping(value="meeting/mklist{memberSq}.do",method=RequestMethod.GET)
 	public List retunmkmeeting(@PathVariable int memberSq) {
 		logger.debug(Integer.toString(memberSq));
-		List<Mboard> list =service.selectMlist(memberSq);
+		List<Mboard> list =service.selectMklist(memberSq);
 		List relist=new ArrayList();
 		Map param =null;
 		String bname=null;
