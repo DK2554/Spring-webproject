@@ -12,7 +12,8 @@
 										#{refSiteAddr},
 										DEFAULT,
 										1,
-										#{MemberNum}
+										#{MemberNum},
+										DEFAULT
 										)
 	</insert>
   
@@ -26,6 +27,7 @@
 										DEFAULT,
 										DEFAULT
 										)
+										
 	  <!-- 첨부파일 등록시 게시판 등록 번호를 자동생성키 SELECT KEY 로 설정 -->	
 	  <selectKey keyProperty="refNo" resultType="_int" order="BEFORE">
 	    SELECT SEQ_REF_SITE_NO.CURRVAL FROM DUAL
@@ -61,11 +63,11 @@
 	<!-- 게시판 업데이트 -->
 	<update id="updateSite">
 		UPDATE REF_SITE SET
-											 REF_CATEGORY=#{refCategory},
-											 REF_TITLE=#{refTitle},
-										 	 REF_CONTENT=#{refContent},
-								     		 REF_SITE_ADDR=#{refSiteAddr}
-										WHERE REF_NO=#{refNo}						
+										REF_CATEGORY=#{refCategory},
+										REF_TITLE=#{refTitle},
+										REF_CONTENT=#{refContent},
+								     	REF_SITE_ADDR=#{refSiteAddr}
+								WHERE REF_NO=#{refNo}		
 	</update>
 	
 	<!-- 첨부파일 업데이트 -->
