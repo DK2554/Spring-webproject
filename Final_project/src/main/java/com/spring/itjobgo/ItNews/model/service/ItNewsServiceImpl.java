@@ -23,11 +23,11 @@ public class ItNewsServiceImpl implements ItNewsService {
 	
 	//itnews 글작성
 	@Override
-	public int insertItNews(Map param, List<ItnewsAttachment> files) {
+	public int insertItNews(ItNews itnews, List<ItnewsAttachment> files) {
 		
 		//글작성이 정삭적으로 이루어지면=(result>0)
 		//첨부파일 등록
-		int result = dao.insertItNews(session, param);
+		int result = dao.insertItNews(session, itnews);
 		if(result==0) throw new RuntimeException("itnews글작성 오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
