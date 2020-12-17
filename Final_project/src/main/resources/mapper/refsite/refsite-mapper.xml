@@ -16,7 +16,7 @@
 										DEFAULT
 										)
 	</insert>
-  
+   
 	<!--첨부파일 등록  -->
 	<insert id="insertAttachment" parameterType="referenceSiteAttach">
 		INSERT INTO REF_SITE_ATTACHMENT VALUES(
