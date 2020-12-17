@@ -87,8 +87,7 @@ public class ResumeAll {
 	private String abroadDetail;
 	
 	//파일첨부
-	private int rboardAttachmentno;
-	private int rboardNo;
+	private int resumeAttachmentno;
 	private String originalFilename;
 	private String renamedFilename;
 	private Date uploadDate;
@@ -112,7 +111,7 @@ public class ResumeAll {
 			String activityAgency, String activityWork, String activityDetail, int resumeProjectno, String projectPart,
 			Date projectStartDate, Date projectFinishDate, String projectName, String projectWork, String projectDetail,
 			int resumeAbroadno, String abroad, Date abroadStartDate, Date abroadFinishDate, String abroadCountury,
-			String abroadAgency, String abroadDetail, int rboardAttachmentno, int rboardNo, String originalFilename,
+			String abroadAgency, String abroadDetail, int resumeAttachmentno, String originalFilename,
 			String renamedFilename, Date uploadDate, String status) {
 		super();
 		this.resumeNo = resumeNo;
@@ -180,8 +179,7 @@ public class ResumeAll {
 		this.abroadCountury = abroadCountury;
 		this.abroadAgency = abroadAgency;
 		this.abroadDetail = abroadDetail;
-		this.rboardAttachmentno = rboardAttachmentno;
-		this.rboardNo = rboardNo;
+		this.resumeAttachmentno = resumeAttachmentno;
 		this.originalFilename = originalFilename;
 		this.renamedFilename = renamedFilename;
 		this.uploadDate = uploadDate;
@@ -839,23 +837,13 @@ public class ResumeAll {
 	}
 
 
-	public int getRboardAttachmentno() {
-		return rboardAttachmentno;
+	public int getResumeAttachmentno() {
+		return resumeAttachmentno;
 	}
 
 
-	public void setRboardAttachmentno(int rboardAttachmentno) {
-		this.rboardAttachmentno = rboardAttachmentno;
-	}
-
-
-	public int getRboardNo() {
-		return rboardNo;
-	}
-
-
-	public void setRboardNo(int rboardNo) {
-		this.rboardNo = rboardNo;
+	public void setResumeAttachmentno(int resumeAttachmentno) {
+		this.resumeAttachmentno = resumeAttachmentno;
 	}
 
 
@@ -923,13 +911,13 @@ public class ResumeAll {
 				+ ", projectName=" + projectName + ", projectWork=" + projectWork + ", projectDetail=" + projectDetail
 				+ ", resumeAbroadno=" + resumeAbroadno + ", abroad=" + abroad + ", abroadStartDate=" + abroadStartDate
 				+ ", abroadFinishDate=" + abroadFinishDate + ", abroadCountury=" + abroadCountury + ", abroadAgency="
-				+ abroadAgency + ", abroadDetail=" + abroadDetail + ", rboardAttachmentno=" + rboardAttachmentno
-				+ ", rboardNo=" + rboardNo + ", originalFilename=" + originalFilename + ", renamedFilename="
-				+ renamedFilename + ", uploadDate=" + uploadDate + ", status=" + status + "]";
+				+ abroadAgency + ", abroadDetail=" + abroadDetail + ", resumeAttachmentno=" + resumeAttachmentno
+				+ ", originalFilename=" + originalFilename + ", renamedFilename=" + renamedFilename + ", uploadDate="
+				+ uploadDate + ", status=" + status + "]";
 	}
 
-	
 
+	
 	
 	
 }
