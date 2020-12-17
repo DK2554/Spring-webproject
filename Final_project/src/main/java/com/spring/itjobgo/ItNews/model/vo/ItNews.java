@@ -101,6 +101,7 @@ public class ItNews {
 		this.memberNum = memberNum;
 	}
 
+
 	
 	
 	
