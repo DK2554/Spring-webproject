@@ -12,13 +12,14 @@ public class REF_SITE {
 	private Date refDate; //등록일
 	private int RefReadCount; //조회수
 	private int MemberNum; //회원번호로 조회 fk
+	private String status;
 	
 	public REF_SITE() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public REF_SITE(int refNo, String refCategory, String refTitle, String refContent, String refSiteAddr, Date refDate,
-			int refReadCount, int memberNum) {
+			int refReadCount, int memberNum, String status) {
 		super();
 		this.refNo = refNo;
 		this.refCategory = refCategory;
@@ -28,7 +29,9 @@ public class REF_SITE {
 		this.refDate = refDate;
 		RefReadCount = refReadCount;
 		MemberNum = memberNum;
+		this.status = status;
 	}
+
 
 	public int getRefNo() {
 		return refNo;
@@ -94,12 +97,21 @@ public class REF_SITE {
 		MemberNum = memberNum;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "REF_SITE [refNo=" + refNo + ", refCategory=" + refCategory + ", refTitle=" + refTitle + ", refContent="
 				+ refContent + ", refSiteAddr=" + refSiteAddr + ", refDate=" + refDate + ", RefReadCount="
-				+ RefReadCount + ", MemberNum=" + MemberNum + "]";
+				+ RefReadCount + ", MemberNum=" + MemberNum + ", status=" + status + "]";
 	}
+
 	
 	
 	

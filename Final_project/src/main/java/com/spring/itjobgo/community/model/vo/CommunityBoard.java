@@ -19,6 +19,7 @@ public class CommunityBoard {
 	private int memberNum; //회원시퀀스로 분류
 	private String boardWriter;
 	private int boardCount;//조회수
+	private int commentCount; //댓글갯수
 	
 	
 	public CommunityBoard() {
@@ -106,8 +107,18 @@ public class CommunityBoard {
 	}
 
 
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+
+
 	public CommunityBoard(int boardSq, String boardDivision, String boardTitle, String boardContent, Date boardDate,
-			int memberNum, String boardWriter, int boardCount) {
+			int memberNum, String boardWriter, int boardCount, int commentCount) {
 		super();
 		this.boardSq = boardSq;
 		this.boardDivision = boardDivision;
@@ -117,7 +128,19 @@ public class CommunityBoard {
 		this.memberNum = memberNum;
 		this.boardWriter = boardWriter;
 		this.boardCount = boardCount;
+		this.commentCount = commentCount;
 	}
+
+
+	@Override
+	public String toString() {
+		return "CommunityBoard [boardSq=" + boardSq + ", boardDivision=" + boardDivision + ", boardTitle=" + boardTitle
+				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", memberNum=" + memberNum
+				+ ", boardWriter=" + boardWriter + ", boardCount=" + boardCount + ", commentCount=" + commentCount
+				+ "]";
+	}
+	
+	
 	
 	
 }

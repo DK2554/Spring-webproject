@@ -370,6 +370,11 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
       String msg="댓글insert";
       int result = service.insertComment(cbc);
       
+      if(result>0) {
+    	  int result2=service.updateCommentCount(cbc);
+    	  System.out.println("댓글갯수 증가 성공여부 : " + result2);
+      }
+      
       logger.debug(cbc.toString());
       logger.debug("댓글달기 매핑테스트");
       return msg;
@@ -393,13 +398,24 @@ public void filedownload(HttpServletRequest request,HttpServletResponse response
    @RequestMapping(value="community/commentDelete{cbCommentNo}",method=RequestMethod.POST)
    public void commentDelete(@PathVariable int cbCommentNo) {
       
-      int result=service.deleteComment(cbCommentNo);
-      
-      if(result>0) {
-         System.out.println("게시판 댓글 삭제성공");      
-      }else {
-         System.out.println("게시판 댓글 삭제 실패");
+	   //부모게시판의 댓글 갯수부터 먼저 -1 update하는 구문 실행후 댓글삭제
+	   CB_COMMENT cbc = service.selectOneComment(cbCommentNo);
+	   //게시판 번호 가져와서 댓글갯수 -1 update 해주기
+	   int cboardNo=cbc.getCboardNo();
+	   
+	   int deleteCount = service.deleteCount(cboardNo);
+	   	   
+      if(deleteCount>0) {
+    	  
+    	  int result=service.deleteComment(cbCommentNo);
+    	  
+    	  if(result>0) {
+    		  System.out.println("댓글갯수 -1 성공 및 댓글삭제 성공");
+    	  }
       }
+	   
+      
+      
    }
    
    //댓글수정

@@ -140,6 +140,27 @@ public int updateBoard(CommunityBoard cb, List<CB_ATTACHMENT> files) {
 		// TODO Auto-generated method stub
 		return dao.updateComment(session,param);
 	}
+	//댓글 갯수 카운트
+	@Override
+	public int updateCommentCount(CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return dao.updateCommentCount(session, cbc);
+	}
+	//댓글 정보가져오기
+	@Override
+	public CB_COMMENT selectOneComment(int cbCommentNo) {
+		// TODO Auto-generated method stub
+		return dao.selectOneComment(session, cbCommentNo);
+	}
+	//댓글 갯수 -1
+	@Override
+	public int deleteCount(int cboardNo) {
+		// TODO Auto-generated method stub
+		return dao.deleteCount(session, cboardNo);
+	}
+	
+	
+	
 
   
 	
