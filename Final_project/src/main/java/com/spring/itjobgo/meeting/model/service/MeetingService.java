@@ -6,6 +6,7 @@ import java.util.Map;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -51,6 +52,10 @@ public interface MeetingService {
 	int deleteapply(Tmpapply tmp);
 
 	int selecttno(Tmpapply tmp);
+
+	int updatedcount(Map param);
+
+	Mcount selectcount(Tmpapply tmp);
 
 	
 

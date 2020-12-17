@@ -87,4 +87,17 @@
   <select id="selecttno" resultType="_int" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
   select tmp_no from tmp_apply where collab_sq=#{collabSq} and memberSq=#{memberSq}
   </select>
+  <select id="selectcount" resultType="com.spring.itjobgo.meeting.model.vo.Mcount">
+  select * from collab_count where collab_sq=#{collabSq}
+  </select>
+  <update id="upcount" parameterType="map" >
+  update collab_count 
+  <set>
+  <if test='position.equals("back")'>back_count=back_count+1,</if>
+  <if test='position.equals("front")'>front_count=front_count+1,</if>
+  <if test='position.equals("desgin")'>desgin_count=desgin_count+1,</if>
+  </set>
+  where collab_sq=#{collabsq}
+  </update>
+  
 </mapper>

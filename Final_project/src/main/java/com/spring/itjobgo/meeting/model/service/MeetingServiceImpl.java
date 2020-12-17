@@ -12,6 +12,7 @@ import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
@@ -45,10 +46,22 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public int updatedcount(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatedcount(session,param);
+	}
+
+	@Override
 	public Mattachment selectMat(int no) {
 		// TODO Auto-generated method stub
 		//번호로 첨부파일 db연동
 		return dao.selectMattach(session,no);
+	}
+
+	@Override
+	public Mcount selectcount(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectcount(session,tmp);
 	}
 
 	@Override

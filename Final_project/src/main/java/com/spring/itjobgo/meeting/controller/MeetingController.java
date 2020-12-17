@@ -19,10 +19,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.MediaType;
-
-
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -39,6 +35,7 @@ import com.spring.itjobgo.meeting.model.service.MeetingService;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -116,12 +113,36 @@ public class MeetingController {
 		tmp.setPostion(postion);
 		tmp.setCollabSq(collabSq);
 		tmp.setWriterNo(writerNo);
-		int check=service.selectapply(tmp);
-		int result=0;
-		if(check==0) {
-			 result=service.insertapply(tmp);
-		}
 		
+		Mcount mc=service.selectcount(tmp);
+		logger.debug(mc.toString());
+		int code=0;
+		switch(postion) {
+		case "back":
+			if(mc.getCollabBack()>=mc.getBackCount()) {
+				code=2;
+			}else code=0;
+			return code;
+		case "front":
+			if(mc.getCollabFront()>=mc.getFrontCount()) {
+				code=2;
+			}else code=0;
+			return code;
+			
+		case "desgin":
+			if(mc.getCollabDesgin()>=mc.getDesginCount()) {
+				code=2;
+			}else code=0;
+			return code;
+			
+		}
+		int result=0;
+		if(code==0) {
+			int check=service.selectapply(tmp);
+			if(check==0) {
+				 result=service.insertapply(tmp);
+			}
+		}
 		return result;
 		
 	}
@@ -204,9 +225,15 @@ public class MeetingController {
 		Tmpapply tmp=service.selectOneapply(no);
 		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
 		//승인이면 상태를 Y로 넣어준다(기본값은 N)
+		Map param=new HashedMap();
+		param.put("position",tmp.getPostion());
+		param.put("collabsq",tmp.getCollabSq());
+		logger.debug("param:"+param.get("position"));
 		Approve ap=new Approve(0,tmp.getMemberSq(),tmp.getPostion(),null,tmp.getCollabSq(),"Y");
 		int result=service.insertApprove(ap);
 		if(result>0) {
+			int pluscount=service.updatedcount(param);
+			System.out.println(pluscount);
 			int check=service.deleteapply(no);
 		}//throws로 예외처리해야함
 		
