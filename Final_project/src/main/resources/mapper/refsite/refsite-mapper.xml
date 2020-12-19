@@ -90,9 +90,12 @@
 											)		
 		
 		)
-	
 	</insert>
 	
+	<!-- 사이트 관리자 승인시 status N->Y 변경  -->
+	<update id="updateStatus" parameterType="_int">
+			UPDATE REF_SITE SET STATUS ='Y' WHERE REF_NO=#{refNo}
+	</update>
 
 
 
