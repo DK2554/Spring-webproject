@@ -99,5 +99,8 @@
   </set>
   where collab_sq=#{collabsq}
   </update>
+  <select id="selectapplycount"  parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply" resultType="_int">
+  select * from application_complted where member_sq=#{memberSq} and collab_sq=#{collabSq}
+  </select>
   
 </mapper>

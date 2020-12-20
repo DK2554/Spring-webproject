@@ -113,37 +113,33 @@ public class MeetingController {
 		tmp.setPostion(postion);
 		tmp.setCollabSq(collabSq);
 		tmp.setWriterNo(writerNo);
-		
-		Mcount mc=service.selectcount(tmp);
-		logger.debug(mc.toString());
+	
 		int code=0;
-		switch(postion) {
-		case "back":
-			if(mc.getCollabBack()>=mc.getBackCount()) {
-				code=2;
-			}else code=0;
+		//이미 가입한 모임인지 확인
+		int appcount=service.selectapplycheck(tmp);
+		if(appcount>0) {
+			code=3;
 			return code;
-		case "front":
-			if(mc.getCollabFront()>=mc.getFrontCount()) {
-				code=2;
-			}else code=0;
-			return code;
-			
-		case "desgin":
-			if(mc.getCollabDesgin()>=mc.getDesginCount()) {
-				code=2;
-			}else code=0;
-			return code;
-			
-		}
-		int result=0;
-		if(code==0) {
-			int check=service.selectapply(tmp);
-			if(check==0) {
-				 result=service.insertapply(tmp);
+		}else {
+			Mcount mc=service.selectcount(tmp);
+			logger.debug(mc.toString());
+			//신청한 포지션이 마감 여부
+			if(postion.equals("back")) {
+				code=mc.getCollabBack()==mc.getBackCount() ? 2:0;
+			}else if(postion.equals("front")) {
+				code=mc.getCollabFront()==mc.getFrontCount()?2:0;
+			}else if(postion.equals("desgin")) {
+				code=mc.getCollabDesgin()==mc.getDesginCount()?2:0;
 			}
+			if(code==0) {
+				int check=service.selectapply(tmp);
+				if(check==0) {
+					code=service.insertapply(tmp);
+				}
+			}
+			return code;
 		}
-		return result;
+		
 		
 	}
 	//모임신청 취소
