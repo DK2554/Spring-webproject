@@ -21,6 +21,7 @@
 </resultMap>
   <select id="selectmList" resultMap="mboardmap" >
   	select collab_sq,collab_title,collab_writer,collab_simcontent,collab_back,collab_front,collab_desgin from collab_board
+  	order by collab_sq desc
   </select>
   <select id="selectminfo" resultMap="mboardmap" parameterType="_int"> 
   	select * from collab_board where collab_sq=#{no}
@@ -99,7 +100,7 @@
   </set>
   where collab_sq=#{collabsq}
   </update>
-  <select id="selectapplycount"  parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply" resultType="_int">
+  <select id="selectapplycount"  parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply" resultType="Integer">
   select * from application_complted where member_sq=#{memberSq} and collab_sq=#{collabSq}
   </select>
   

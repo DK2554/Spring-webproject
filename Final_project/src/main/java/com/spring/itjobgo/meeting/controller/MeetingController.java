@@ -106,6 +106,7 @@ public class MeetingController {
 		return md;
 	}
 	//모임신청하는 로직
+	
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
 	public int applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
 		Tmpapply tmp=new Tmpapply();
@@ -116,8 +117,8 @@ public class MeetingController {
 	
 		int code=0;
 		//이미 가입한 모임인지 확인
-		int appcount=service.selectapplycheck(tmp);
-		if(appcount>0) {
+		Integer appcount=service.selectapplycheck(tmp);
+		if(appcount!=null) {
 			code=3;
 			return code;
 		}else {

@@ -24,7 +24,7 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
-	public int selectapplycheck(SqlSessionTemplate session, Tmpapply tmp) {
+	public Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.selectOne("meeting.selectapplycount",tmp);
 	}

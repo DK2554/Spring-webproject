@@ -46,7 +46,7 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public int selectapplycheck(Tmpapply tmp) {
+	public Integer selectapplycheck(Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return dao.selectapplycheck(session,tmp);
 	}
