@@ -244,6 +244,17 @@ public class RefController {
 		
 	}
 	
+	@RequestMapping(value="ref/refStatus",method=RequestMethod.POST)
+	public void status(REF_SITE site) {
+		
+		int status = service.updateStatus(site.getRefNo());
+		System.out.println("관리자 승인 업데이트~~~");
+		
+	}
+	
+	
+	
+	
 	
 	
 	

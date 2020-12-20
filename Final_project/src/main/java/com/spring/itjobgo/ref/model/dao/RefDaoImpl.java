@@ -72,7 +72,12 @@ public class RefDaoImpl implements RefDao {
 		return session.insert("refSite.insertAttachment2" , file);
 	}
 
-
+	//관리자 승인
+	@Override
+	public int updateStatus(SqlSessionTemplate session, int refNo) {
+		return session.update("refSite.updateStatus",refNo);
+	}
+	
 	
 	
 	
