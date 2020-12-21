@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.spring.itjobgo.ItNews.model.vo.ItNews;
-import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
@@ -44,8 +42,11 @@ public interface RefDao {
 	
 	//관리자 승인
 	int updateStatus(SqlSessionTemplate session, int refNo);
+
+	//글작성 카운트
+	int statuscount(SqlSessionTemplate session);
 	
-	
-	
+	//글작성 카운트 조회
+	int selectCount(SqlSessionTemplate session);
 	
 }

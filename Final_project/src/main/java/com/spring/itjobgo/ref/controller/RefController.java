@@ -28,8 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.spring.itjobgo.ItNews.model.vo.ItNews;
-import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.service.RefService;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
@@ -244,6 +242,7 @@ public class RefController {
 		
 	}
 	
+	//관리자 승인
 	@RequestMapping(value="ref/refStatus",method=RequestMethod.POST)
 	public void status(REF_SITE site) {
 		
@@ -252,10 +251,17 @@ public class RefController {
 		
 	}
 	
+	//글작성 카운트 조회
+	@RequestMapping(value="ref/statusCount",method=RequestMethod.GET)
+	public int  selectCount() {
+		
+		int count=service.selectCount();
+		System.out.println("status count~~~~~~ : "+count);
+		return count;
+	}
 	
 	
-	
-	
+
 	
 	
 }
