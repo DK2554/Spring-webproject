@@ -152,6 +152,12 @@
 		
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.ResumeList"
 		alias="resume_list" /> 
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.Consult"
+		alias="consult" /> 
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ConsultAttachment"
+		alias="consult_attachment" /> 
 			
 	</typeAliases>
 
