@@ -34,6 +34,8 @@ public interface RefService {
 	//update(파일 없을때)
 	int updateSite(REF_SITE refsite);
 	
+	//관리자 승인
+	int updateStatus(int refNo);
 	
 	
 	

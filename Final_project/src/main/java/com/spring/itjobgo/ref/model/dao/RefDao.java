@@ -42,6 +42,8 @@ public interface RefDao {
 	//첨부파일이 없을때 게시판 수정시 첨부파일 등록(insert)
 	int insertAttachment2(SqlSessionTemplate session, REF_SITE_ATTACHMENT file);	
 	
+	//관리자 승인
+	int updateStatus(SqlSessionTemplate session, int refNo);
 	
 	
 	

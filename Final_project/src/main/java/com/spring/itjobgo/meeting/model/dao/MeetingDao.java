@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -57,6 +58,16 @@ public interface MeetingDao {
 	int deleteapply(SqlSessionTemplate session, Tmpapply tmp);
 
 	int selecttno(SqlSessionTemplate session, Tmpapply tmp);
+
+	int insertcount(SqlSessionTemplate session, Map param);
+
+	int updatecount(SqlSessionTemplate session, Map param);
+
+	int updatedcount(SqlSessionTemplate session,Map param);
+
+	Mcount selectcount(SqlSessionTemplate session, Tmpapply tmp);
+
+	Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp);
 
 	
 

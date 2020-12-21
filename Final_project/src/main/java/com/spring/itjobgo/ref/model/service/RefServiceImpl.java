@@ -98,6 +98,11 @@ public class RefServiceImpl implements RefService {
 		return dao.updateSite(session,refsite);
 	}
 	
+	//관리자 승인
+	@Override
+	public int updateStatus(int refNo) {
+		return dao.updateStatus(session, refNo);
+	}	
 	
 	
 	

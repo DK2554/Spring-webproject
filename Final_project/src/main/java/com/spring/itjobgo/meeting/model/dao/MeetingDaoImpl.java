@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -20,6 +21,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int insertMboard(SqlSessionTemplate session, Map param) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.insertmboard",param);
+	}
+
+	@Override
+	public Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectapplycount",tmp);
 	}
 
 	@Override
@@ -110,6 +117,24 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public Mcount selectcount(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectcount",tmp);
+	}
+
+	@Override
+	public int updatecount(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.updatecounttable",param);
+	}
+
+	@Override
+	public int updatedcount(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.upcount",param);
+	}
+
+	@Override
 	public int insertapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.insert("meeting.inserttapply",tmp);
@@ -125,6 +150,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	public int deleteapply(SqlSessionTemplate session, Tmpapply tmp) {
 		// TODO Auto-generated method stub
 		return session.delete("meeting.deletemapply",tmp);
+	}
+
+	@Override
+	public int insertcount(SqlSessionTemplate session, Map param) {
+		// TODO Auto-generated method stub
+		return session.insert("meeting.insertcount",param);
 	}
 
 	@Override

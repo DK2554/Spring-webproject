@@ -20,6 +20,7 @@ public class Mboard {
 	private String address;
 	private Date rdate;
 	private int memberSq;//신청자 기본키
+	private Date mkdate;
 
 	public Mboard() {
 		// TODO Auto-generated constructor stub
@@ -31,11 +32,11 @@ public class Mboard {
 				+ collabEmail + ", collabPhone=" + collabPhone + ", collabUploaddate=" + collabUploaddate
 				+ ", collabDeadline=" + collabDeadline + ", collabLang=" + Arrays.toString(collabLang) + ", collabBack="
 				+ collabBack + ", collabFront=" + collabFront + ", collabDesgin=" + collabDesgin + ", address="
-				+ address + ", rdate=" + rdate + ", memberSq=" + memberSq + "]";
+				+ address + ", rdate=" + rdate + ", memberSq=" + memberSq + ", mkdate="+mkdate+"]";
 	}
 	public Mboard(int collabSq, String collabTitle, String collabContent, String collabSimcontent, String collabWriter,
 			String collabEmail, String collabPhone, Date collabUploaddate, Date collabDeadline, String[] collabLang,
-			int collabBack, int collabFront, int collabDesgin, String address, Date rdate, int memberSq) {
+			int collabBack, int collabFront, int collabDesgin, String address, Date rdate, int memberSq ,Date mkdate) {
 		super();
 		this.collabSq = collabSq;
 		this.collabTitle = collabTitle;
@@ -53,6 +54,7 @@ public class Mboard {
 		this.address = address;
 		this.rdate = rdate;
 		this.memberSq = memberSq;
+		this.mkdate=mkdate;
 	}
 	public int getCollabSq() {
 		return collabSq;
@@ -146,6 +148,12 @@ public class Mboard {
 	}
 	public int getMemberSq() {
 		return memberSq;
+	}
+	public Date getMkdate() {
+		return mkdate;
+	}
+	public void setMkdate(Date mkdate) {
+		this.mkdate = mkdate;
 	}
 	public void setMemberSq(int memberSq) {
 		this.memberSq = memberSq;

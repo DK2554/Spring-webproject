@@ -12,6 +12,7 @@ import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
@@ -27,8 +28,11 @@ public class MeetingServiceImpl implements MeetingService {
 	public int insertMboard(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.insertMboard(session,param);
+		int check=dao.insertcount(session,param);
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
+			//모임 생성되면 모임 인원확인하는 테이블에도 생성
+			System.out.println(check);
 			if(!files.isEmpty()) {
 				//files에 데이터가 있으면
 				for(Mattachment file:files) {
@@ -42,10 +46,28 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Integer selectapplycheck(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectapplycheck(session,tmp);
+	}
+
+	@Override
+	public int updatedcount(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatedcount(session,param);
+	}
+
+	@Override
 	public Mattachment selectMat(int no) {
 		// TODO Auto-generated method stub
 		//번호로 첨부파일 db연동
 		return dao.selectMattach(session,no);
+	}
+
+	@Override
+	public Mcount selectcount(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectcount(session,tmp);
 	}
 
 	@Override
@@ -156,6 +178,7 @@ public class MeetingServiceImpl implements MeetingService {
 	public int updatedmeeting(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
 		if(result==0) throw new RuntimeException("데이터입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
@@ -174,7 +197,9 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public int updatedmeeting(Map param) {
 		// TODO Auto-generated method stub
-		return dao.updatemeeting(session,param);
+		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
+		return result;
 	}
 
 	@Override
