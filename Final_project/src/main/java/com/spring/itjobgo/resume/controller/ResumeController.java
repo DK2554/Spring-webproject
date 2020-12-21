@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.resume.model.service.ResumeService;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -35,6 +35,7 @@ import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
 import com.spring.itjobgo.resume.model.vo.ResumeAll;
 import com.spring.itjobgo.resume.model.vo.ResumeAttachment;
+import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ResumeLanguage;
 import com.spring.itjobgo.resume.model.vo.ResumeLicense;
 import com.spring.itjobgo.resume.model.vo.ResumeList;
@@ -399,4 +400,84 @@ public class ResumeController {
 		
 		return msg;
 	}
+	
+	
+	@RequestMapping(value="/resume/insertconsult.do",method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	public String insertResume(Consult consult, @RequestBody MultipartFile[] upfile,HttpServletRequest request) {
+	
+		System.out.println("***********resume in 등록 컨트롤러 *********");
+		System.out.println("consult : "+ consult);
+		System.out.println("file :" + upfile);
+
+		int consultNo=consult.getConsultNo();
+		System.out.println(consultNo);
+		
+		String consultAttachment="";
+		if(upfile.length>0) {			
+			consultAttachment="Y";
+		}
+		else {
+			consultAttachment="N";
+		}
+
+		consult.setConsultAttachment(consultAttachment);
+		
+		System.out.println("controller consult : "+ consult);
+		
+		
+		if(upfile.length>0) {
+			//오류나는 이유 로거에서 파일출력하는 부분에서 걸렸음
+			logger.debug("파일명"+upfile[0].getOriginalFilename());
+			logger.debug("파일크기 : "+upfile[0].getSize());
+		}
+		
+		//업로드 경로
+		String saveDir=request.getServletContext().getRealPath("/resources/upload/consult");
+		File dir=new File(saveDir);
+		
+		System.out.println("업로더 경로 : "+dir);
+		//폴더 만들기
+		if(!dir.exists()) {
+			dir.mkdirs();
+		}
+		
+		//첨부파일 객체 저장
+		List<ConsultAttachment> files=new ArrayList();
+		for(MultipartFile f : upfile) {
+			System.out.println("f : "+f);
+			if(!f.isEmpty()) {
+				String originalFileName=f.getOriginalFilename();
+				String ext=originalFileName.substring(originalFileName.lastIndexOf(".")+1);
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HHmmssSSS");
+				int rndNum=(int)(Math.random()*1000);
+				String renameFileName=sdf.format(new Date(System.currentTimeMillis()))+"_"+rndNum+"."+ext;
+				
+				try {
+	
+					f.transferTo(new File(saveDir+"/"+renameFileName));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+				ConsultAttachment file2=new ConsultAttachment(0,consultNo,originalFileName,renameFileName,null,null);
+				
+				files.add(file2);
+			}
+		}
+		
+		//data DB 저장하기
+		int result=0;
+		try {
+			result=service.insertConsult(consult, files);
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		String msg="";
+		if(result>0) msg="전문가 등록성공";
+		else msg="전문가 등록실패";
+	
+		
+		return msg;
+	}
+	
+	
 }
