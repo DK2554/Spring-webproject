@@ -34,4 +34,15 @@ public interface QnaBoardService {
 	
 	int updateComment(Map param);
 	
+	//댓글갯수 카운트 +1
+	int updateCommentCount(QB_COMMENT qbc);
+	
+	//댓글 정보 가져오기
+	QB_COMMENT selectOneComment(int qbCommentNo);
+	
+	//댓글갯수 카운트 -1
+	int deleteCount(int qboardNo);
+	
+	
+	
 }

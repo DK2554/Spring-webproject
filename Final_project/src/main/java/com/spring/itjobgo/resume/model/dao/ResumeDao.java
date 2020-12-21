@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.itjobgo.resume.model.vo.Consult;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -127,4 +129,10 @@ public interface ResumeDao {
 		
 	//이력서(사진파일) 삭제
 	int deleteResumeAttachment(SqlSessionTemplate session, int resumeNo);
+	
+	//전문가 등록
+	int insertConsult(SqlSessionTemplate session, Consult consult);
+	
+	//전문가 증빙서류(첨부파일) 등록
+	int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file);
 }

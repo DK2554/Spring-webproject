@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
@@ -375,16 +376,25 @@ public class QnaBoardController {
 			
 	// 댓글작성하기
 	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
-	public void comment(QB_COMMENT cm) {
-		
+	public String comment(QB_COMMENT cm) {
+		String msg="댓글 insert";
 		int result = service.insertComment(cm);
+		
 		if(result>0) {
 			//답글이 달리면 N->Y로 변경.
 			int comment = service.insertCommentText(cm.getQboardNo());
 			System.out.println("댓글작성하기~~~성공");
+			
+			//댓글갯수 증가로직 +1
+			int result2=service.updateCommentCount(cm);
+			System.out.println("댓글갯수 증가 성공여부 : "+result2);
 		}
 		
+		logger.debug(cm.toString());
+		logger.debug("댓글달기 매핑테스트");
+		return msg;
 	}
+	
 	//댓글 조회
 	@RequestMapping(value="qna/commentSelectOne{qboardNo}",method =RequestMethod.GET)
 	public List<QB_COMMENT> commentList(@PathVariable int qboardNo){
@@ -403,13 +413,22 @@ public class QnaBoardController {
 	@RequestMapping(value="qna/commentDelete{qboardCommentNo}",method=RequestMethod.POST)
 	public void commentdel(@PathVariable int qboardCommentNo) {
 		
-			int result=service.deletecomment(qboardCommentNo);
+			//부모게시판의 댓글 갯수부터 먼저 -1 update하는 구문 실행후 댓글삭제
+		   QB_COMMENT qbc = service.selectOneComment(qboardCommentNo);
+		   //게시판 번호 가져와서 댓글갯수 -1 update 해주기
+		   int qboardNo=qbc.getQboardNo();
+		   int deleteCount=service.deleteCount(qboardNo);
+		   
+		   if(deleteCount>0) {
+			   
+			   int result=service.deletecomment(qboardCommentNo);
+			   
+			   if(result>0) {
+				   System.out.println("게시판 댓글 삭제성공, 갯수-1");		
+			   }
+		   }
+		   
 			
-			if(result>0) {
-				System.out.println("게시판 댓글 삭제성공");		
-			}else {
-				System.out.println("게시판 댓글 삭제 실패");
-			}
 	}
 	
 	//댓글수정

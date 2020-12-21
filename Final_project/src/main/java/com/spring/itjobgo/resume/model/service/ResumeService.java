@@ -2,6 +2,8 @@ package com.spring.itjobgo.resume.model.service;
 
 import java.util.List;
 
+import com.spring.itjobgo.resume.model.vo.Consult;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -47,4 +49,7 @@ public interface ResumeService {
 	
 	//이력서 삭제하기 (파일제외)
 	int deleteResume1(int resumeNo);
+	
+	//전문가 등록하기
+	int insertConsult(Consult consult, List<ConsultAttachment> files);
 }

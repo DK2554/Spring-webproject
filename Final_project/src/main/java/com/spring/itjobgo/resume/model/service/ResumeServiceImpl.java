@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.itjobgo.resume.model.dao.ResumeDao;
+import com.spring.itjobgo.resume.model.vo.Consult;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -303,7 +305,27 @@ public class ResumeServiceImpl implements ResumeService {
 			
 			return result;
 	      }
+	@Override
+	public int insertConsult(Consult consult, List<ConsultAttachment> files) {
+
+		int result=dao.insertConsult(session, consult);
+		System.out.println("service consult result  : "+result);
+		
+		if(result==0) throw new RuntimeException("전문가 등록 오류");
+		if(result>0) {
+			if(!files.isEmpty()) {
+				for(ConsultAttachment file:files) {
+					System.out.println("*******file : "+file);
+					result=dao.insertConsultAttachment(session,file);
+					System.out.println("******"+result+"*******");
+					if(result==0) throw new RuntimeException("전문가 증빙서류(파일첨부) 오류"); 
+				}
+			}
+		}
+		return result;
+	}
 	
 
+	
 	
 }

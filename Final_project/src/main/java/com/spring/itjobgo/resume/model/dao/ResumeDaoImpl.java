@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.itjobgo.resume.model.vo.Consult;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -254,6 +256,19 @@ public class ResumeDaoImpl implements ResumeDao {
 			System.out.println("********dao 해외경험 수정하기 전**********");
 			return session.delete("resume.deleteResumeAbroad",resumeNo);
 		}
-	
 
+		//전문가 등록
+		@Override
+		public int insertConsult(SqlSessionTemplate session, Consult consult) {
+			System.out.println("********dao 전문가 등록 전**********");
+			return session.delete("resume.insertConsult",consult);
+		}
+
+		@Override
+		public int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file) {
+			System.out.println("********dao 전문가 증빙서류(파일첨부) 등록 전**********");
+			return session.delete("resume.insertConsultAttachment",file);
+		}
+	
+		
 }

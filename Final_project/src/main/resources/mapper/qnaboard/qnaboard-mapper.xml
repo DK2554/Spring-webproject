@@ -32,7 +32,8 @@
 										#{qnaAnswerYn},
 										DEFAULT,
 										#{memberNum},
-										1
+										1,
+										0
 										)
 	</insert>
 	
@@ -142,6 +143,26 @@
 										QB_COMMENT_CONTENT=#{qbCommentContent},
 										QBCOMMENT_DATE=TO_CHAR(SYSDATE,'yyyy.mm.dd hh24:mi:ss')
 										WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
+	</update>
+	
+	<!-- 댓글 수 조회 기능 mapper 3-->
+	<!-- 댓글카운트 갯수증가 +1 -->
+	<update id="updateCommentCount">
+			UPDATE QNA_BOARD SET
+										COMMENT_COUNT=COMMENT_COUNT+1
+										WHERE QBOARD_NO=#{qboardNo}
+	</update>
+
+	<!-- 댓글 정보 가져오기 -->
+	<select id="selectOneComment" parameterType="_int" resultType="qbcomment" >
+			SELECT QBOARD_NO FROM QB_COMMENT WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
+	</select>
+	
+	<!-- 댓글 갯수 감소 -1 -->
+	<update id="deleteCount">
+			UPDATE QNA_BOARD SET
+							COMMENT_COUNT=COMMENT_COUNT-1
+							WHERE QBOARD_NO=#{qboardNo}
 	</update>
 	
 

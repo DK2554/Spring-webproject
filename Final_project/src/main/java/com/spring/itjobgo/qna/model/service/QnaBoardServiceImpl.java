@@ -135,6 +135,22 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	public int updateComment(Map param) {
 		return dao.updateComment(session,param);
 	}
+
+	//댓글 갯수 카운트 +1
+	@Override
+	public int updateCommentCount(QB_COMMENT qbc) {
+		return dao.updateCommentCount(session,qbc);
+	}
+	//댓글 정보가져오기
+	@Override
+	public QB_COMMENT selectOneComment(int qbCommentNo) {
+		return dao.selectOneComment(session, qbCommentNo);
+	}
+	//댓글 갯수 -1
+	@Override
+	public int deleteCount(int qboardNo) {
+		return dao.deleteCount(session, qboardNo);
+	}
 	
 	
 	
