@@ -357,7 +357,7 @@ public class ResumeController {
 			}catch(IOException e) {
 				e.printStackTrace();
 			}
-			ResumeAttachment file2=new ResumeAttachment(0,memberNo,originalFileName,renameFileName,null,null);
+			ResumeAttachment file2=new ResumeAttachment(0,resumeNo,originalFileName,renameFileName,null,null);
 			
 			files.add(file2);
 		}
