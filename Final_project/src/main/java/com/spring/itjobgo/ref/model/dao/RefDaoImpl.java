@@ -29,6 +29,12 @@ public class RefDaoImpl implements RefDao {
 	public List<REF_SITE> selectList(SqlSessionTemplate session) {
 		return session.selectList("refSite.selectList");
 	}
+	
+	//리스트 불러오기(미승인 조회)
+	@Override
+	public List<REF_SITE> selectListNo(SqlSessionTemplate session) {
+		return session.selectList("refSite.selectListNo");
+	}
 
 	//이미지 불러오기
 	@Override

@@ -9,6 +9,7 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 
 public interface QnaBoardService {
 
+	//글작성
 	List<QnaBoard> selectQnaBoard();
 	
 	int insertQnaBoard(QnaBoard qnaboard, List<QB_ATTACHMENT> files);
