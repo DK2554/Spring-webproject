@@ -11,7 +11,7 @@ import com.spring.itjobgo.info.model.vo.Info;
 @Repository
 public class InfoDaoImpl implements InfoDao {
 
-	//자유게시판 리스트 불러오기
+	//게시판 리스트 불러오기
 	@Override
 	public List<Info> selectInfoList(SqlSessionTemplate session) {
 		return session.selectList("info.selectInfoList"); 
