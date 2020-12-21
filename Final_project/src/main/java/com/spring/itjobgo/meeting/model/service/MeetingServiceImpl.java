@@ -58,6 +58,12 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public List enterList(int no) {
+		// TODO Auto-generated method stub
+		return dao.enterList(session,no);
+	}
+
+	@Override
 	public Mcount joinmcount(int no) {
 		// TODO Auto-generated method stub
 		return dao.joincount(session,no);

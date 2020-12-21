@@ -71,6 +71,8 @@ public interface MeetingDao {
 
 	Mcount joincount(SqlSessionTemplate session, int no);
 
+	List enterList(SqlSessionTemplate session, int no);
+
 	
 
 }

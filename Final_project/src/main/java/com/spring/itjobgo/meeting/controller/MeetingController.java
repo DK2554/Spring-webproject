@@ -373,6 +373,13 @@ public class MeetingController {
 		logger.debug(mc.toString());
 		return mc;
 	}
+	@RequestMapping(value="meeting/meetingenter{no}.do",method=RequestMethod.GET)
+	public List<Member> returnenter(@PathVariable int no){
+		//no은 모임 번호 모임 번호로 완료된 사람 불러 올 때 멤버 번호로 불러와서
+		List list=service.enterList(no);
+		logger.debug(list.toString());
+		return list;
+	}
 	
 }
 	

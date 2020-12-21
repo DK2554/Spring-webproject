@@ -61,6 +61,8 @@ public interface MeetingService {
 
 	Mcount joinmcount(int no);
 
+	List enterList(int no);
+
 	
 
 }
