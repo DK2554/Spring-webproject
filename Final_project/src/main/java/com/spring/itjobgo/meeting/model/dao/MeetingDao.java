@@ -67,6 +67,8 @@ public interface MeetingDao {
 
 	Mcount selectcount(SqlSessionTemplate session, Tmpapply tmp);
 
+	Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp);
+
 	
 
 }

@@ -46,6 +46,12 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Integer selectapplycheck(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectapplycheck(session,tmp);
+	}
+
+	@Override
 	public int updatedcount(Map param) {
 		// TODO Auto-generated method stub
 		return dao.updatedcount(session,param);

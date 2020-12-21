@@ -270,7 +270,6 @@ public class PortfolioController {
 			String encodeRename="";
 			if(isMSIE) {
 				encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
-				
 			}else {
 				encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
 			}

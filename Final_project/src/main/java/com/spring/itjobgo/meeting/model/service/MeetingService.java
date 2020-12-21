@@ -57,6 +57,8 @@ public interface MeetingService {
 
 	Mcount selectcount(Tmpapply tmp);
 
+	Integer selectapplycheck(Tmpapply tmp);
+
 	
 
 }
