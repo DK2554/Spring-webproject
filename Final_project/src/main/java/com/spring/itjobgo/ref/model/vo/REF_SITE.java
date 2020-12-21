@@ -12,7 +12,7 @@ public class REF_SITE {
 	private Date refDate; //등록일
 	private int RefReadCount; //조회수
 	private int MemberNum; //회원번호로 조회 fk
-	private String status;
+	private String status; //승인 여부
 	
 	public REF_SITE() {
 		// TODO Auto-generated constructor stub
@@ -31,7 +31,6 @@ public class REF_SITE {
 		MemberNum = memberNum;
 		this.status = status;
 	}
-
 
 	public int getRefNo() {
 		return refNo;
@@ -113,9 +112,6 @@ public class REF_SITE {
 	}
 
 	
-	
-	
-	
-	
-	
+
+
 }
