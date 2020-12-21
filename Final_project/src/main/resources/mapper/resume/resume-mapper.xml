@@ -464,4 +464,32 @@
    	DELETE Resume_abroad WHERE RESUME_NO=#{resumeNo}
   </delete>
   
+  <!-- 전문가 등록 -->
+   <insert id="insertConsult" parameterType="consult">
+  	INSERT INTO consult VALUES(
+  		CONSULT_SEQ_NO.NEXTVAL,
+  		#{memberSq},
+  		#{consultName},
+  		#{consultField},
+  		#{consultWork},
+  		#{consultAttachment},
+  		DEFAULT,
+  		DEFAULT
+  	)
+  </insert>
+  
+    <!-- 전문가 증빙서류 등록 -->
+   <insert id="insertConsultAttachment" parameterType="consult_attachment">
+  	INSERT INTO consult_attachment VALUES(
+  		consult_ATTACHMENT_SEQ_NO.NEXTVAL,
+  		#{consultNo},
+  		#{originalFilename},
+  		#{renamedFilename},
+  		DEFAULT,
+  		DEFAULT
+  	)
+  	  	 <selectKey keyProperty="consultNo" resultType="_int" order="BEFORE">
+	 		SELECT CONSULT_SEQ_NO.CURRVAL FROM DUAL
+	  	</selectKey>
+  </insert>
 </mapper>
