@@ -3,7 +3,7 @@
 <mapper namespace="itNews">
 	
 	<!-- 게시판 작성 -->
-	<insert id="insertItNews" parameterType="map">
+	<insert id="insertItNews" parameterType="ItNews">
 		INSERT INTO IT_NEWS VALUES (
 												SEQ_NEWS_NO.NEXTVAL,
 												#{newsDivision},
@@ -12,7 +12,7 @@
 												#{newsRefSite},
 												DEFAULT,
 												1,
-												#{memberSq}
+												#{memberNum}
 		)
 	</insert>
 	<!-- 첨부파일 등록 -->

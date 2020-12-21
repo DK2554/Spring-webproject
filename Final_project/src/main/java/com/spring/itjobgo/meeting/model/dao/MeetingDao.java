@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -30,7 +31,7 @@ public interface MeetingDao {
 
 	Member selectMemberOne(SqlSessionTemplate session, String email);
 
-	List<Mboard> selectMlist(SqlSessionTemplate session, int memberSq);
+	List<Mboard> selectMklist(SqlSessionTemplate session, int memberSq);
 
 	List<Tmpapply> selectapply(SqlSessionTemplate session, int no);
 
@@ -51,5 +52,23 @@ public interface MeetingDao {
 	int updatemeeting(SqlSessionTemplate session, Map param);
 
 	int updateattachment(SqlSessionTemplate session, Mattachment file);
+
+	int selectapply(SqlSessionTemplate session, Tmpapply tmp);
+
+	int deleteapply(SqlSessionTemplate session, Tmpapply tmp);
+
+	int selecttno(SqlSessionTemplate session, Tmpapply tmp);
+
+	int insertcount(SqlSessionTemplate session, Map param);
+
+	int updatecount(SqlSessionTemplate session, Map param);
+
+	int updatedcount(SqlSessionTemplate session,Map param);
+
+	Mcount selectcount(SqlSessionTemplate session, Tmpapply tmp);
+
+	Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp);
+
+	
 
 }

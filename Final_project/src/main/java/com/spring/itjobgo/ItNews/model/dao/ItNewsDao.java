@@ -12,7 +12,7 @@ import com.spring.itjobgo.ItNews.model.vo.ItnewsComment;
 public interface ItNewsDao {
 	
 	//게시글 작성
-	int insertItNews(SqlSessionTemplate session, Map param);
+	int insertItNews(SqlSessionTemplate session, ItNews itnews);
 	
 	//첨부파일 등록
 	int insertAttachment(SqlSessionTemplate session, ItnewsAttachment file);

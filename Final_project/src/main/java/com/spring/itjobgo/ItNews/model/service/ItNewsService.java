@@ -10,7 +10,7 @@ import com.spring.itjobgo.ItNews.model.vo.ItnewsComment;
 public interface ItNewsService {
 	
 	//글작성
-	int insertItNews(Map param, List<ItnewsAttachment> files);
+	int insertItNews(ItNews itnews, List<ItnewsAttachment> files);
 	
 	//게시판 리스트 불러오기
 	List<ItNews> selectList();

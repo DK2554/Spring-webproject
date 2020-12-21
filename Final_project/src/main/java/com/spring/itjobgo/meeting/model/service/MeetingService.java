@@ -6,6 +6,7 @@ import java.util.Map;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 
@@ -18,7 +19,7 @@ public interface MeetingService {
 
 	Mboard selectMb(int no);
 
-	int insertapply(int memberSq, String postion, int collabSq, int writerNo);
+	int insertapply(Tmpapply tmp);
 
 	Mattachment selectMat(int no);
 
@@ -26,7 +27,7 @@ public interface MeetingService {
 
 	Member selectOneMember(String email);
 
-	List<Mboard> selectMlist(int memberSq);
+	List<Mboard> selectMklist(int memberSq);
 
 	String selectmembername(int memberSq);
 
@@ -45,6 +46,18 @@ public interface MeetingService {
 	int updatedmeeting(Map param, List<Mattachment> files);
 
 	int updatedmeeting(Map param);
+
+	int selectapply(Tmpapply tmp);
+
+	int deleteapply(Tmpapply tmp);
+
+	int selecttno(Tmpapply tmp);
+
+	int updatedcount(Map param);
+
+	Mcount selectcount(Tmpapply tmp);
+
+	Integer selectapplycheck(Tmpapply tmp);
 
 	
 

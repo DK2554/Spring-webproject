@@ -15,9 +15,9 @@ public class ItNewsDaoImpl implements ItNewsDao {
 
 	//게시판 작성
 	@Override
-	public int insertItNews(SqlSessionTemplate session, Map param) {
+	public int insertItNews(SqlSessionTemplate session, ItNews itnews) {
 		// TODO Auto-generated method stub
-		return session.insert("itNews.insertItNews",param);
+		return session.insert("itNews.insertItNews",itnews);
 	}
 	//첨부파일 등록
 	@Override

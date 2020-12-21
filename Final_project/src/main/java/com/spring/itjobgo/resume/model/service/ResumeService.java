@@ -33,4 +33,18 @@ public interface ResumeService {
 	
 	//이력서 불러오기
 	ResumeAll selectResume(int resumeNo);
+	
+	//증명사진 불러오기
+	String selectAttachment(String resumeNo);
+	
+	//이력서 업데이트
+	int updateResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license, 
+			ResumeLanguage language, ResumeActivity activity, ResumeProject project, 
+			ResumeAbroad abroad, List<ResumeAttachment> files, ResumeList resumelist);
+	
+	//이력서 삭제하기 (파일포함)
+	int deleteResume(int resumeNo);
+	
+	//이력서 삭제하기 (파일제외)
+	int deleteResume1(int resumeNo);
 }

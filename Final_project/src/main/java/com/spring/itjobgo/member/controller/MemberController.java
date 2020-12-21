@@ -304,9 +304,7 @@ public class MemberController {
 		String tempImg = service.selectPhoto(memberSq);
 		String imagePath = null;
 		if (tempImg != null) {// 등록된 사진이 있는경우
-
 			imagePath = request.getServletContext().getRealPath("/resources/upload/member/" + tempImg);
-
 			InputStream imageStream = new FileInputStream(imagePath);
 			byte[] imageByteArray = IOUtils.toByteArray(imageStream);
 			imageStream.close();

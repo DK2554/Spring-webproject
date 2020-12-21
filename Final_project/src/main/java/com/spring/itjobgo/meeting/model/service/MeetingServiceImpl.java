@@ -6,11 +6,13 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.itjobgo.meeting.model.dao.MeetingDao;
 import com.spring.itjobgo.meeting.model.vo.Approve;
 import com.spring.itjobgo.meeting.model.vo.Mattachment;
 import com.spring.itjobgo.meeting.model.vo.Mboard;
+import com.spring.itjobgo.meeting.model.vo.Mcount;
 import com.spring.itjobgo.meeting.model.vo.Tmpapply;
 import com.spring.itjobgo.member.model.vo.Member;
 import com.spring.itjobgo.portfolio.model.vo.Attachment;
@@ -26,8 +28,11 @@ public class MeetingServiceImpl implements MeetingService {
 	public int insertMboard(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.insertMboard(session,param);
+		int check=dao.insertcount(session,param);
 		if(result==0) throw new RuntimeException("입력오류");
 		if(result>0) {
+			//모임 생성되면 모임 인원확인하는 테이블에도 생성
+			System.out.println(check);
 			if(!files.isEmpty()) {
 				//files에 데이터가 있으면
 				for(Mattachment file:files) {
@@ -41,6 +46,18 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Integer selectapplycheck(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectapplycheck(session,tmp);
+	}
+
+	@Override
+	public int updatedcount(Map param) {
+		// TODO Auto-generated method stub
+		return dao.updatedcount(session,param);
+	}
+
+	@Override
 	public Mattachment selectMat(int no) {
 		// TODO Auto-generated method stub
 		//번호로 첨부파일 db연동
@@ -48,20 +65,31 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Mcount selectcount(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selectcount(session,tmp);
+	}
+
+	@Override
 	public Mboard selectMb(int no) {
 		// TODO Auto-generated method stub
 		return dao.selectMinfo(session,no);
 	}
+	@Transactional
+	@Override
+	public int insertapply(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+			//없으면 0 있으면 을 반환 0이면 임시에 넣는다.
+			return dao.insertapply(session,tmp);
+		
+		
+		 
+	}
 
 	@Override
-	public int insertapply(int memberSq, String postion,int collabSq,int writerNo) {
+	public int selectapply(Tmpapply tmp) {
 		// TODO Auto-generated method stub
-		Tmpapply tmp=new Tmpapply();
-		tmp.setMemberSq(memberSq);
-		tmp.setPostion(postion);
-		tmp.setCollabSq(collabSq);
-		tmp.setWriterNo(writerNo);
-		return dao.insertapply(session,tmp);
+		return dao.selectapply(session,tmp);
 	}
 
 	@Override
@@ -70,6 +98,12 @@ public class MeetingServiceImpl implements MeetingService {
 		
 		
 		return dao.selectMboardname(session,collabSq);
+	}
+
+	@Override
+	public int deleteapply(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.deleteapply(session,tmp);
 	}
 
 	@Override
@@ -89,6 +123,12 @@ public class MeetingServiceImpl implements MeetingService {
 	public int insertApprove(Approve ap) {
 		// TODO Auto-generated method stub
 		return dao.insertApprove(session,ap);
+	}
+
+	@Override
+	public int selecttno(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.selecttno(session,tmp);
 	}
 
 	@Override
@@ -127,15 +167,18 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
-	public List<Mboard> selectMlist(int memberSq) {
+	public List<Mboard> selectMklist(int memberSq) {
 		// TODO Auto-generated method stub
-		return dao.selectMlist(session, memberSq);
+		List<Mboard>list=dao.selectMklist(session, memberSq);
+		System.out.println(list.toString());
+		return list;
 	}
 
 	@Override
 	public int updatedmeeting(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
 		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
 		if(result==0) throw new RuntimeException("데이터입력오류");
 		if(result>0) {
 			if(!files.isEmpty()) {
@@ -154,7 +197,9 @@ public class MeetingServiceImpl implements MeetingService {
 	@Override
 	public int updatedmeeting(Map param) {
 		// TODO Auto-generated method stub
-		return dao.updatemeeting(session,param);
+		int result=dao.updatemeeting(session,param);
+		int check=dao.updatecount(session,param);
+		return result;
 	}
 
 	@Override

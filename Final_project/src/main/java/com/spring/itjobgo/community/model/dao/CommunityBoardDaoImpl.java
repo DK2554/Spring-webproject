@@ -104,6 +104,29 @@ public class CommunityBoardDaoImpl implements CommunityBoardDao {
 		// TODO Auto-generated method stub
 		return session.update("communityBoard.updateComment",param);
 	}
+
+	//댓글 카운트
+	@Override
+	public int updateCommentCount(SqlSessionTemplate session, CB_COMMENT cbc) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.updateCommentCount", cbc);
+	}
+	//댓글정보가져오기
+	@Override
+	public CB_COMMENT selectOneComment(SqlSessionTemplate session, int cbCommentNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("communityBoard.selectOneComment",cbCommentNo );
+	}
+	//댓글 카운트 -1
+	@Override
+	public int deleteCount(SqlSessionTemplate session, int cboardNo) {
+		// TODO Auto-generated method stub
+		return session.update("communityBoard.deleteCount",cboardNo);
+	}
+	
+	
+	
+	
 	
 	
 	

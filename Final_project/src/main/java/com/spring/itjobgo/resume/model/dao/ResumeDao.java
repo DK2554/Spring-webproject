@@ -64,4 +64,67 @@ public interface ResumeDao {
 	
 	//이력서 불러오기
 	ResumeAll selectResume(SqlSessionTemplate session, int resumeNo);
+	
+	//증명사진 불러오기
+	String selectAttachment(SqlSessionTemplate session, String resumeNo);
+	
+	//이력서(개인정보) 수정
+	int updateResume(SqlSessionTemplate session, Resume resume);
+		
+	//이력서(학력) 수정
+	int updateResumeSchool(SqlSessionTemplate session, ResumeSchool school);
+		
+	//이력서(경력) 수정
+	int updateResumeWork(SqlSessionTemplate session, ResumeWork work);
+		
+	//이력서(자격증) 수정
+	int updateResumeLicense(SqlSessionTemplate session, ResumeLicense license);
+		
+	//이력서(외국어) 수정
+	int updateResumeLanguage(SqlSessionTemplate session, ResumeLanguage language);
+		
+	//이력서(활동내역) 수정
+	int updateResumeActivity(SqlSessionTemplate session, ResumeActivity activity);
+		
+	//이력서(프로젝트) 수정
+	int updateResumeProject(SqlSessionTemplate session, ResumeProject project);
+		
+	//이력서(해외경험) 수정
+	int updateResumeAbroad(SqlSessionTemplate session, ResumeAbroad abroad);
+		
+	//이력서리스트 수정
+	int updateResumeList(SqlSessionTemplate session, ResumeList resumelist);
+		
+	//이력서(사진파일) 수정
+	int updateResumeAttachment(SqlSessionTemplate session, ResumeAttachment file);
+	
+	//이력서(개인정보) 삭제
+	int deleteResume(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(학력) 삭제
+	int deleteResumeSchool(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(경력) 삭제
+	int deleteResumeWork(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(자격증) 삭제
+	int deleteResumeLicense(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(외국어) 삭제
+	int deleteResumeLanguage(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(활동내역) 삭제
+	int deleteResumeActivity(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(프로젝트) 삭제
+	int deleteResumeProject(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(해외경험) 삭제
+	int deleteResumeAbroad(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서리스트 삭제
+	int deleteResumeList(SqlSessionTemplate session, int resumeNo);
+		
+	//이력서(사진파일) 삭제
+	int deleteResumeAttachment(SqlSessionTemplate session, int resumeNo);
 }

@@ -202,22 +202,266 @@
   
   
   <select id="selectResume" parameterType="_int" resultType="resume_all">
-  	select *
-	from resume a 
-	inner join resume_school b 
-	on a.resume_no=b.resume_no
-	inner join resume_work c
-	on a.resume_no=c.resume_no
-	inner join Resume_license d
-	on a.resume_no=d.resume_no
-	inner join Resume_language e
-	on a.resume_no=e.resume_no
-	inner join Resume_activity f
-	on a.resume_no=f.resume_no
-	inner join Resume_project g
-	on a.resume_no=g.resume_no
-	inner join Resume_abroad h
-	on a.resume_no=h.resume_no
-	where a.resume_no=#{resumeNo}
+	  	select *
+		from resume a 
+			<!-- 조인 (학력사항) -->
+			inner join resume_school b 
+			on a.resume_no=b.resume_no
+			<!-- 조인 (경력사항) -->
+			inner join resume_work c
+			on a.resume_no=c.resume_no
+			<!-- 조인 (자격증) -->
+			inner join Resume_license d
+			on a.resume_no=d.resume_no
+			<!-- 조인 (외국어) -->
+			inner join Resume_language e
+			on a.resume_no=e.resume_no
+			<!-- 조인 (외부활동) -->
+			inner join Resume_activity f
+			on a.resume_no=f.resume_no
+			<!-- 조인 (프로젝트) -->
+			inner join Resume_project g
+			on a.resume_no=g.resume_no
+			<!-- 조인 (해외경험) -->
+			inner join Resume_abroad h
+			on a.resume_no=h.resume_no
+			<!-- 조인 (파일첨부) -->
+			inner join Resume_attachment i
+			on a.resume_no=i.resume_no
+			
+		where a.resume_no=#{resumeNo}
   </select>
+  
+   <select id="selectAttachment" parameterType="String" resultType="String">
+	  	SELECT renamed_filename FROM resume_ATTACHMENT where resume_no=#{resumeNo}
+  	</select>
+  	
+  	<!-- 이력서 수정 (개인정보) -->
+  <update id="updateResume" parameterType="resume">
+  	UPDATE RESUME SET 
+  		resume_no=#{resumeNo},
+  		member_no=#{memberNo},
+  		rname=#{rname},
+  		eng_name=#{engName},
+  		birth=#{birth},
+  		gender=#{gender},
+  		postcode=#{postcode},
+  		address=#{address},
+  		address_detail=#{addressDetail},
+  		telephone=#{telephone},
+  		rphone=#{rphone},
+  		remail=#{remail},
+  		rtitle=#{rtitle},
+  		rdate=#{rdate}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="rdate" resultType="date" order="BEFORE">
+	 		SELECT rdate FROM RESUME where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  
+  	<!-- 이력서(학력) 수정-->
+
+  <update id="updateResumeSchool" parameterType="resume_school">
+  	UPDATE Resume_school SET
+  		resume_schoolno=#{resumeSchoolno},
+  		resume_no=#{resumeNo},
+  		school1=#{school1},
+  		school_name1=#{schoolName1},
+  		school_start_date1=#{schoolStartDate1},
+  		school_finish_date1=#{schoolFinishDate1},
+  		major1=#{major1},
+  		education1=#{education1},
+  		school2=#{school2},
+  		school_name2=#{schoolName2},
+  		school_start_date2=#{schoolStartDate2},
+  		school_finish_date2=#{schoolFinishDate2},
+  		major2=#{major2},
+  		education2=#{education2}
+  	WHERE RESUME_NO=#{resumeNo}	
+  	  	<selectKey keyProperty="resumeSchoolno" resultType="_int" order="BEFORE">
+	 		SELECT resume_schoolno FROM Resume_school where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(경력) 수정-->
+
+  <update id="updateResumeWork" parameterType="resume_work">
+  	UPDATE Resume_work SET
+  		resume_workno=#{resumeWorkno},
+  		resume_no=#{resumeNo},
+  		work_start_date=#{workStartDate},
+  		work_finish_date=#{workFinishDate},
+  		work_name=#{workName},
+  		work_level=#{workLevel},
+  		work_state=#{workState},
+  		work_detail=#{workDetail}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeWorkno" resultType="_int" order="BEFORE">
+	 		SELECT resume_workno FROM Resume_work where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(자격증) 수정-->
+
+  <update id="updateResumeLicense" parameterType="resume_license">
+  	UPDATE Resume_license SET
+  		resume_licenseno=#{resumeLicenseno},
+  		resume_no=#{resumeNo},
+  		license_name=#{licenseName},
+  		license_agency=#{licenseAgency},
+  		license_date=#{licenseDate}
+  	WHERE RESUME_NO=#{resumeNo}	
+  	  	<selectKey keyProperty="resumeLicenseno" resultType="_int" order="BEFORE">
+	 		SELECT resume_licenseno FROM Resume_license where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(외국어) 수정-->
+
+  <update id="updateResumeLanguage" parameterType="resume_language">
+  	UPDATE Resume_language SET
+  		resume_languageno=#{resumeLanguageno},
+  		resume_no=#{resumeNo},
+  		language_name=#{languageName},
+  		language_level=#{languageLevel},
+  		language_test=#{languageTest},
+  		language_score=#{languageScore},
+  		language_date=#{languageDate}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeLanguageno" resultType="_int" order="BEFORE">
+	 		SELECT resume_languageno FROM Resume_language where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(주요활동 및 수상) 수정-->
+
+  <update id="updateResumeActivity" parameterType="resume_activity">
+  	UPDATE Resume_activity SET
+  		resume_activityno=#{resumeActivityno},
+  		resume_no=#{resumeNo},
+  		activity=#{activity},
+  		activity_start_date=#{activityStartDate},
+  		activity_finish_date=#{activityFinishDate},
+  		activity_agency=#{activityAgency},
+  		activity_work=#{activityWork},
+  		activity_detail=#{activityDetail}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeActivityno" resultType="_int" order="BEFORE">
+	 		SELECT resume_activityno FROM Resume_activity where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(프로젝트) 수정-->
+
+  <update id="updateResumeProject" parameterType="resume_project">
+  	UPDATE Resume_project SET
+  		resume_projectno=#{resumeProjectno},
+  		resume_no=#{resumeNo},
+  		project_part=#{projectPart},
+  		project_start_date=#{projectStartDate},
+  		project_finish_date=#{projectFinishDate},
+  		project_name=#{projectName},
+  		project_work=#{projectWork},
+  		project_detail=#{projectDetail}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeProjectno" resultType="_int" order="BEFORE">
+	 		SELECT resume_projectno FROM Resume_project where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  	<!-- 이력서(해외경험) 수정-->
+
+  <update id="updateResumeAbroad" parameterType="resume_abroad">
+  	UPDATE Resume_abroad SET
+  		resume_abroadno=#{resumeAbroadno},
+  		resume_no=#{resumeNo},
+  		abroad=#{abroad},
+  		abroad_start_date=#{abroadStartDate},
+  		abroad_finish_date=#{abroadFinishDate},
+  		abroad_countury=#{abroadCountury},
+  		abroad_agency=#{abroadAgency},
+  		abroad_detail=#{abroadDetail}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeAbroadno" resultType="_int" order="BEFORE">
+	 		SELECT resume_abroadno FROM Resume_abroad where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+
+  <!-- 이력서 게시판 첨부파일 수정 -->
+  
+  <update id="updateResumeAttachment" parameterType="resume_attachment">
+  	UPDATE RESUME_ATTACHMENT SET
+  		resume_attachmentno=#{resumeAttachmentno},
+  		resume_no=#{resumeNo},
+  		original_filename=#{originalFilename},
+  		renamed_filename=#{renamedFilename},
+  		upload_date=#{uploadDate},
+  		status=#{status}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeAttachmentno" resultType="_int" order="BEFORE">
+	 		SELECT resume_attachmentno FROM RESUME_ATTACHMENT where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+    <!-- 이력서 게시판 리스트 수정 -->
+  
+  <update id="updateResumeList" parameterType="resume_list">
+  	UPDATE RESUMELIST SET
+  		resumelist_no=#{resumeListno},
+  		member_no=#{memberNo},
+  		resume_no=#{resumeNo},
+  		resumelist_title=#{resumelistTitle},
+  		resumelist_writer=#{resumelistWriter},
+  		resumelist_date=#{resumelistDate},
+  		resumelist_status=#{resumelistStatus},
+  		resumelist_attachment=#{resumelistAttachment},
+  		resumelist_count=#{resumelistCount}
+  	WHERE RESUME_NO=#{resumeNo}
+  	  	<selectKey keyProperty="resumeListno" resultType="_int" order="BEFORE">
+	 		SELECT resumelist_no FROM RESUMELIST where resume_no=#{resumeNo}
+	  	</selectKey>
+  </update>
+  
+  <delete id="deleteResume" parameterType="_int">
+   	DELETE RESUME WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeAttachment" parameterType="_int">
+   	DELETE Resume_Attachment WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeSchool" parameterType="_int">
+   	DELETE Resume_school WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeWork" parameterType="_int">
+   	DELETE Resume_work WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeLicense" parameterType="_int">
+   	DELETE Resume_license WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeLanguage" parameterType="_int">
+   	DELETE Resume_language WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeActivity" parameterType="_int">
+   	DELETE Resume_activity WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeProject" parameterType="_int">
+   	DELETE Resume_project WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeList" parameterType="_int">
+   	DELETE RESUMELIST WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
+  <delete id="deleteResumeAbroad" parameterType="_int">
+   	DELETE Resume_abroad WHERE RESUME_NO=#{resumeNo}
+  </delete>
+  
 </mapper>

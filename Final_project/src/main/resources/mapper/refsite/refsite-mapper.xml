@@ -12,10 +12,11 @@
 										#{refSiteAddr},
 										DEFAULT,
 										1,
-										#{MemberNum}
+										#{MemberNum},
+										DEFAULT
 										)
 	</insert>
-  
+   
 	<!--첨부파일 등록  -->
 	<insert id="insertAttachment" parameterType="referenceSiteAttach">
 		INSERT INTO REF_SITE_ATTACHMENT VALUES(
@@ -26,6 +27,7 @@
 										DEFAULT,
 										DEFAULT
 										)
+										
 	  <!-- 첨부파일 등록시 게시판 등록 번호를 자동생성키 SELECT KEY 로 설정 -->	
 	  <selectKey keyProperty="refNo" resultType="_int" order="BEFORE">
 	    SELECT SEQ_REF_SITE_NO.CURRVAL FROM DUAL
@@ -42,9 +44,63 @@
 		SELECT* FROM REF_SITE_ATTACHMENT WHERE REF_NO=#{no}
 	</select>
 	
+	<!-- 첨부파일 selectOne -->
+	<select id="selectAttach" parameterType="_int" resultType="referenceSiteAttach">
+		SELECT* FROM REF_SITE_ATTACHMENT WHERE REF_NO=#{refNo}
+	</select>
 	
+	<!-- 상세화면 selectOne -->
+	<select id="selectOne" parameterType="_int" resultType="referenceSite">
+		SELECT* FROM REF_SITE WHERE REF_NO=#{refNo}
+	</select>
+	
+	<!-- 등록 사이트 삭제하기 -->
+	<delete id="deleteSite" parameterType="_int">
+		DELETE FROM REF_SITE WHERE REF_NO=#{refNo}
+	</delete>
+	
+	
+	<!-- 게시판 업데이트 -->
+	<update id="updateSite">
+		UPDATE REF_SITE SET
+										REF_CATEGORY=#{refCategory},
+										REF_TITLE=#{refTitle},
+										REF_CONTENT=#{refContent},
+								     	REF_SITE_ADDR=#{refSiteAddr}
+								WHERE REF_NO=#{refNo}		
+	</update>
+	
+	<!-- 첨부파일 업데이트 -->
+	<update id="updateAttachment">
+		UPDATE REF_SITE_ATTACHMENT SET
+												ORIGINALFILENAME=#{originalfilename},
+												RENAMEDFILENAME=#{renamedfilename}
+										WHERE REF_NO=#{refNo}
+	</update>
+	
+	<!-- 첨부파일 insert2(게시판 update시 첨부파일이 없을경우) -->
+	<insert id="insertAttachment2" parameterType="ItnewsAttachment">
+			INSERT INTO REF_SITE_ATTACHMENT VALUES(
+											#{attachmentNo},
+											#{refNo},
+											#{originalfilename},
+											#{renamedfilename},
+											DEFAULT,
+											DEFAULT
+											)		
+		
+		)
+	</insert>
+	
+	<!-- 사이트 관리자 승인시 status N->Y 변경  -->
+	<update id="updateStatus" parameterType="_int">
+			UPDATE REF_SITE SET STATUS ='Y' WHERE REF_NO=#{refNo}
+	</update>
+
+
 
 	
 </mapper>
+
 
 	

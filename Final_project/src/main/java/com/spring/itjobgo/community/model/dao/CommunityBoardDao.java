@@ -51,4 +51,13 @@ public interface CommunityBoardDao {
 	
 	//댓글 update
 	int updateComment(SqlSessionTemplate session, Map param);
+	
+	//댓글 카운트
+	int updateCommentCount(SqlSessionTemplate session, CB_COMMENT cbc);
+	
+	//댓글 정보가져오기
+	CB_COMMENT selectOneComment(SqlSessionTemplate session, int cbCommentNo);
+	
+	//댓글 카운트 -1
+	int deleteCount(SqlSessionTemplate session, int cboardNo);
 }

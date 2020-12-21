@@ -32,7 +32,6 @@ import com.spring.itjobgo.ItNews.model.service.ItNewsService;
 import com.spring.itjobgo.ItNews.model.vo.ItNews;
 import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ItNews.model.vo.ItnewsComment;
-import com.spring.itjobgo.community.model.vo.CB_ATTACHMENT;
 
 @RestController
 public class ItNewsController {
@@ -45,9 +44,14 @@ public class ItNewsController {
  
 	//ItNews 글작성
 	@RequestMapping(value="/itnews/insertNews",method = RequestMethod.POST, consumes = { "multipart/form-data" })
-	public String meetingFromEnd(@RequestParam Map param,@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
+	public String meetingFromEnd(ItNews itnews,@RequestParam(value="memberNum")int memberNum,
+			@RequestBody MultipartFile[] upfile,HttpServletRequest request) {
 		String msg="";
-		System.out.println(param);	
+		
+		System.out.println("itnews 글쓴이 번호 "+ memberNum);
+		
+		itnews.setMemberNum(memberNum);
+		
 		if(upfile.length>0) {
 			
 			String saveDir=request.getServletContext().getRealPath("/resources/upload/itNews");
@@ -76,7 +80,7 @@ public class ItNewsController {
 			}
 			int result=0;
 			try {
-				result=service.insertItNews(param,files);
+				result=service.insertItNews(itnews,files);
 			}catch(RuntimeException e) {
 				e.printStackTrace();
 			}
@@ -272,6 +276,8 @@ public class ItNewsController {
 		int result = service.deleteComment(itCommentNo);
 		
 	}
+	
+
 	
 	//댓글 업데이트 수정
 	@RequestMapping(value="itnews/updateComment",method=RequestMethod.POST)

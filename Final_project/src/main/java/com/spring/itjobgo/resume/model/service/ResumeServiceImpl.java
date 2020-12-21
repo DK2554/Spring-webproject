@@ -128,7 +128,182 @@ public class ResumeServiceImpl implements ResumeService {
 		System.out.println("*******service 들어옴******");
 		return dao.selectResume(session, resumeNo);
 	}
-
 	
+	//증명사진 보기
+	@Override
+	public String selectAttachment(String resumeNo) {
+		System.out.println("*******service selectAttachment 들어옴******");
+		return dao.selectAttachment(session, resumeNo);
+	}
+	
+	//이력서 수정
+	@Override
+	public int updateResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license,
+			ResumeLanguage language, ResumeActivity activity, ResumeProject project, ResumeAbroad abroad,
+			List<ResumeAttachment> files, ResumeList resumelist) {
+		
+			int result=dao.updateResume(session, resume);
+			System.out.println("service: 개인정보  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 수정 오류");
+				}else {result=0;}
+			
+		result=dao.updateResumeSchool(session, school);
+			System.out.println("service: 학력  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  수정(학력) 오류");
+				}else {result=0;}
+		result=dao.updateResumeWork(session, work);
+			System.out.println("service: 경력 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  수정(경력) 오류");
+				}else {result=0;}
+		result=dao.updateResumeLicense(session, license);
+			System.out.println("service: 자격증  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 수정(자격증) 오류");
+				}else {result=0;}
+		result=dao.updateResumeLanguage(session, language);
+			System.out.println("service: 외국어 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  수정(외국어) 오류");
+				}else {result=0;}
+		result=dao.updateResumeActivity(session, activity);
+			System.out.println("service: 활동  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 수정(활동및수상내역) 오류");
+				}else {result=0;}
+		result=dao.updateResumeProject(session, project);
+			System.out.println("service: 프로젝트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  수정(프로젝트) 오류");
+				}else {result=0;}
+			
+		result=dao.updateResumeList(session, resumelist);
+			System.out.println("service: 이력서리스트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서리스트  수정 오류");
+				}else {result=0;}
+			
+		result=dao.updateResumeAbroad(session, abroad);
+			System.out.println("service: 해외경험  : "+result);
+			if(result==0) throw new RuntimeException("이력서  수정(해외경험) 오류");
+			if(result>0) {
+				if(!files.isEmpty()) {
+					for(ResumeAttachment file:files) {
+						System.out.println("*******file : "+file);
+						result=dao.updateResumeAttachment(session,file);
+						System.out.println("******"+result+"*******");
+						if(result==0) throw new RuntimeException("이력서   수정(사진파일) 오류"); 
+					}
+				}
+		}
+	
+		return result;
+	}
+	
+	//이력서 삭제하기 (파일포함)
+	@Override
+	public int deleteResume(int resumeNo) {
+		
+			
+		int result=dao.deleteResumeSchool(session, resumeNo);
+			System.out.println("service: 학력  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(학력) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeWork(session, resumeNo);
+			System.out.println("service: 경력 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(경력) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeLicense(session, resumeNo);
+			System.out.println("service: 자격증  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 삭제(자격증) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeLanguage(session, resumeNo);
+			System.out.println("service: 외국어 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(외국어) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeActivity(session, resumeNo);
+			System.out.println("service: 활동  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 삭제(활동및수상내역) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeProject(session, resumeNo);
+			System.out.println("service: 프로젝트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(프로젝트) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeList(session, resumeNo);
+			System.out.println("service: 이력서리스트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서리스트 삭제 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeAbroad(session, resumeNo);
+			System.out.println("service: 해외경험  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(해외경험) 오류");
+			}else {result=0;}
+			
+		result=dao.deleteResumeAttachment(session,resumeNo);
+			System.out.println("******"+result+"*******");
+			if(result==0) {throw new RuntimeException("이력서  삭제(사진파일) 오류"); 
+			}else {result=0;}
+			
+		result=dao.deleteResume(session, resumeNo);
+			System.out.println("service: 개인정보  : "+result);
+			if(result==0) {throw new RuntimeException("이력서(개인정보) 삭제 오류");
+			}
+			
+			return result;
+	   }
+	
+	//이력서 삭제하기 (파일제외)
+	@Override
+	public int deleteResume1(int resumeNo) {
+		
+		int result=dao.deleteResumeSchool(session, resumeNo);
+			System.out.println("service: 학력  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(학력) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeWork(session, resumeNo);
+			System.out.println("service: 경력 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(경력) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeLicense(session, resumeNo);
+			System.out.println("service: 자격증  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 삭제(자격증) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeLanguage(session, resumeNo);
+			System.out.println("service: 외국어 : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(외국어) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeActivity(session, resumeNo);
+			System.out.println("service: 활동  : "+result);
+			if(result==0) {throw new RuntimeException("이력서 삭제(활동및수상내역) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeProject(session, resumeNo);
+			System.out.println("service: 프로젝트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(프로젝트) 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeList(session, resumeNo);
+			System.out.println("service: 이력서리스트  : "+result);
+			if(result==0) {throw new RuntimeException("이력서리스트 삭제 오류");
+				}else {result=0;}
+			
+		result=dao.deleteResumeAbroad(session, resumeNo);
+			System.out.println("service: 해외경험  : "+result);
+			if(result==0) {throw new RuntimeException("이력서  삭제(해외경험) 오류");
+			}else {result=0;}
+			
+			result=dao.deleteResume(session, resumeNo);
+			System.out.println("service: 개인정보  : "+result);
+			if(result==0) {throw new RuntimeException("이력서(개인정보) 삭제 오류");
+			}
+			
+			return result;
+	      }
+	
+
 	
 }
