@@ -77,6 +77,18 @@ public class RefDaoImpl implements RefDao {
 	public int updateStatus(SqlSessionTemplate session, int refNo) {
 		return session.update("refSite.updateStatus",refNo);
 	}
+
+	//글작성 수 카운트
+	@Override
+	public int statuscount(SqlSessionTemplate session) {
+		return session.update("refSite.statusCount");
+	}
+
+	//글작성 카운트 조회
+	@Override
+	public int selectCount(SqlSessionTemplate session) {
+		return session.selectOne("refSite.selectCount");
+	}
 	
 	
 	

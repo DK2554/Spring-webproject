@@ -102,6 +102,24 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 	public int updateComment(SqlSessionTemplate session, Map param) {
 		return session.update("qnaBoard.updateComment",param);
 	}
+
+	//댓글카운트 +1
+	@Override
+	public int updateCommentCount(SqlSessionTemplate session, QB_COMMENT qbc) {
+		return session.update("qnaBoard.updateCommentCount",qbc);
+	}
+
+	//댓글정보가져오기
+	@Override
+	public QB_COMMENT selectOneComment(SqlSessionTemplate session, int qbCommentNo) {
+		return session.selectOne("qnaBoard.selectOneComment",qbCommentNo);
+	}
+
+	//댓글 카운트 -1
+	@Override
+	public int deleteCount(SqlSessionTemplate session, int qboardNo) {
+		return session.update("qnaBoard.deleteCount",qboardNo);
+	}
 	
 	
 	

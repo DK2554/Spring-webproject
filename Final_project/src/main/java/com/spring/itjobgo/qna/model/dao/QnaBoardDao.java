@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
@@ -54,6 +55,17 @@ public interface QnaBoardDao {
 	
 	//댓글 수정
 	int updateComment(SqlSessionTemplate session, Map param);
+	
+	//댓글 카운트 +1
+	int updateCommentCount(SqlSessionTemplate session, QB_COMMENT qbc);
+	
+	//댓글 정보가져오기
+	QB_COMMENT selectOneComment(SqlSessionTemplate session, int qbCommentNo);
+	
+	//댓글 카운트 -1
+	int deleteCount(SqlSessionTemplate session, int qboardNo);
+	
+	
 	
 }
 

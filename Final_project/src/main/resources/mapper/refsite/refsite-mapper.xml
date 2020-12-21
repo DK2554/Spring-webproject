@@ -87,16 +87,20 @@
 											#{renamedfilename},
 											DEFAULT,
 											DEFAULT
-											)		
-		
-		)
+											)
 	</insert>
 	
 	<!-- 사이트 관리자 승인시 status N->Y 변경  -->
 	<update id="updateStatus" parameterType="_int">
 			UPDATE REF_SITE SET STATUS ='Y' WHERE REF_NO=#{refNo}
 	</update>
-
+	
+	<!-- 글작성 수 조회 -->
+	<select id="selectCount" resultType="_int">
+			SELECT COUNT(*) FROM REF_SITE WHERE STATUS='N'
+	</select>
+	
+	
 
 
 	
