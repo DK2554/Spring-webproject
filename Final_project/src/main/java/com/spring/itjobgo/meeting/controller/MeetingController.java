@@ -367,6 +367,13 @@ public class MeetingController {
 			
 
 	}
+	@RequestMapping(value="meeting/meetingcount{no}.do",method=RequestMethod.GET)
+	public Mcount returnmcount(@PathVariable int no) {
+		Mcount mc=service.joinmcount(no);
+		logger.debug(mc.toString());
+		return mc;
+	}
+	
 }
 	
 	

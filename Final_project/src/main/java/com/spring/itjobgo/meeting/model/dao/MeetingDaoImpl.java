@@ -30,6 +30,12 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public Mcount joincount(SqlSessionTemplate session, int no) {
+		// TODO Auto-generated method stub
+		return session.selectOne("meeting.selectjoincount",no);
+	}
+
+	@Override
 	public List<Tmpapply> selectapply(SqlSessionTemplate session, int no) {
 		// TODO Auto-generated method stub
 		return session.selectList("meeting.selectapply",no);

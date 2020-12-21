@@ -58,6 +58,12 @@ public class MeetingServiceImpl implements MeetingService {
 	}
 
 	@Override
+	public Mcount joinmcount(int no) {
+		// TODO Auto-generated method stub
+		return dao.joincount(session,no);
+	}
+
+	@Override
 	public Mattachment selectMat(int no) {
 		// TODO Auto-generated method stub
 		//번호로 첨부파일 db연동
