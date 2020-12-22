@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.info.model.dao.InfoDao;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
@@ -44,6 +45,13 @@ public List<Info> selectInfoList() {
 		return result;	
 	}
 
+	//이미지 불러오기
+	@Override
+	public INFO_ATTACHMENT selectImage(int sq) {
+		// TODO Auto-generated method stub
+		return dao.selectImage(session,sq);
+	}
+	
 	//취업정보 상세 글
 	@Override
 	public Info selectInfoOne(int infoSq,boolean hasRead) {

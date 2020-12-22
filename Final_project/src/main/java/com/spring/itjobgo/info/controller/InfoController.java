@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -15,19 +16,23 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.info.model.service.InfoService;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
@@ -41,20 +46,17 @@ public class InfoController {
 	@Autowired
 	private InfoService service;
 
-	// 화면전환용 메서드
+	// 화면전환 메서드
 	@RequestMapping(value = "/info/infoList", method = RequestMethod.GET)
 	public List<Info> info() throws JsonMappingException, JsonGenerationException, IOException {
-
 		List<Info> list = service.selectInfoList();
-
+		
 		for (Info i : list) {
 			System.out.println(i);
 		}
-
 		return list;
 	}
-
-	// 취업 정보 게시판 글쓰기
+	// info 게시판 글쓰기
 	@RequestMapping(value = "/info/infoForm", method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	public String ifBoard(Info iboard, @RequestParam(value = "memberSq") int memberno,
 			@RequestBody MultipartFile[] file, HttpServletRequest request) {
@@ -69,6 +71,7 @@ public class InfoController {
 			logger.debug("파일명" + file[0].getOriginalFilename());
 			logger.debug("파일크기 : " + file[0].getSize());
 		}
+		
 		logger.debug(iboard.toString());
 
 		// 업로드 경로 설정
@@ -122,27 +125,53 @@ public class InfoController {
 		return msg;
 	}
 
+	//게시판 list 에 이미지 불러오기
+		@RequestMapping(value="info/imagesrequest{sq}",method=RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
+		public @ResponseBody byte[]  selectImage(@PathVariable int sq,HttpServletRequest request,HttpServletResponse res)throws Exception{
+			logger.debug("이미지요청");
+			//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
+			INFO_ATTACHMENT mt=service.selectImage(sq);
+			
+			logger.debug(mt.toString());
+			//파일경로
+			String realFile = request.getServletContext().getRealPath("/resources/upload/info");
+			//파일이름
+			String fileNm = mt.getRenamedfilename();
+			//파일 확장자
+			String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
+			String image=realFile+"\\"+fileNm;
+			
+			logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
+			logger.debug(realFile+"\\"+fileNm);
+			
+			InputStream in =new FileInputStream(image);
+			byte[] imageByteArray=IOUtils.toByteArray(in);
+			in.close();
+			
+			return imageByteArray;
+		}
+	
 	// 취업정보 게시판 상세화면 전환 페이지
 	@RequestMapping(value = "/info/infoDetail{infoSq}", method = RequestMethod.GET)
 	public Info selectInfoOne(@PathVariable int infoSq, HttpServletRequest request, HttpServletResponse response)
 			throws JsonMappingException, JsonGenerationException, IOException {
-
+	
 		logger.debug("infoSq" + Integer.toString(infoSq));
-
+	
 		// 조회수 증가
 		Cookie[] cookies = request.getCookies();
 		String boardHistory = "";
 		boolean hasRead = false;
-
+	
 		if (cookies != null) {
 			for (Cookie c : cookies) {
-
+	
 				String name = c.getName();
 				String value = c.getValue();
-
+	
 				if ("boardHistory".equals(name)) {
 					boardHistory = value;
-
+	
 					if (value.contains("|" + infoSq + "|")) {
 						hasRead = true;
 						break;
@@ -150,18 +179,13 @@ public class InfoController {
 				}
 			} // for
 		} // if
-
 		if (!hasRead) {
 			Cookie c = new Cookie("boardHistory", boardHistory + "|" + infoSq + "|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
-
 		}
-
 		Info iboard = service.selectInfoOne(infoSq, hasRead);
-
 		return iboard;
-
 	}
 
 	// 취업정보 글 삭제하기
