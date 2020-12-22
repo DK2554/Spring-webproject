@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.qna.model.vo.QnaBoard;
 import com.spring.itjobgo.resume.model.dao.ResumeDao;
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
@@ -59,11 +61,71 @@ public class ResumeServiceImpl implements ResumeService {
 		return result;
 	}
 	
+	//이력서 게시판 수정 (파일포함)
+	@Override
+	public int updateRboard(Rboard rboard, List<RboardAttachment> files) {
+		//첨부파일이 있으면 첨부파일 등록 dao도 같이 실행해줘야 한다.
+				int result = dao.updateRboard(session,rboard);
+				//등록이 성공되지 않는다면
+				if(result==0) throw new RuntimeException("게시글 등록 오류");
+				//등록이 성공하고 첨부파일이 존재한다면 첨부파일 등록을 해줘야 한다.
+				if(result>0) {
+					if(!files.isEmpty()) {
+						for(RboardAttachment file:files) {
+							result=dao.updateRboardAttachment(session,file);
+							
+							//첨부파일이 없는 게시글일 경우 시퀀스 때문에 수정이 안된다.
+							//그럴경우 시퀀스가 없는 insertAttachment2매퍼로 이동하도록 유도한다.
+							
+							if(result==0)						
+								 
+								dao.insertRboardAttachment(session,file);
+									System.out.println("==첨부파일이 없는 글 첨부파일 등록 성공===");
+									
+						}//for문
+					}//세번째 if문
+				}//두번째 if문
+				
+				return result;
+	}
+	
+	//이력서 게시판 수정 (파일미포함)
+	@Override
+	public int updateRboard(Rboard rboard) {
+		return dao.updateRboard(session,rboard);
+	}
+	
+	//이력서 게시판 삭제
+	@Override
+	public int deleteRboard(int rboardNo) {
+		return dao.deleteRboard(session,rboardNo);
+	}
+	
 	//이력서 리스트 보기
 	@Override
 	public List<ResumeList> selectResumeList(int memberSq) {
 		System.out.println("*******service selectResumeList 들어옴******");
 		return dao.selectResumeList(session, memberSq);
+	}
+	
+	//이력서 상세화면 보기
+	@Override
+	public Rboard selectRboard(int rboardNo, boolean hasRead) {
+		Rboard rboard = dao.selectRboard(session, rboardNo);
+		
+		//hasRead가 false이면
+		if(rboard!=null && !hasRead) {
+			int result = dao.updateRboardCount(session,rboardNo);
+			if(result==0) throw new RuntimeException("이력서 게시판 조회수 증가 오류"); 
+			if(result>0) System.out.println("조회수 증가 성공");
+		}
+		return rboard;
+	}
+	
+	//이력서 상세화면 (첨부파일) 가져오기
+	@Override
+	public RboardAttachment selectRboardAttachment(int rboardNo) {
+		return dao.selectRboardAttachment(session, rboardNo);
 	}
 	
 	//이력서 등록
@@ -305,6 +367,8 @@ public class ResumeServiceImpl implements ResumeService {
 			
 			return result;
 	      }
+	
+	//이력서 전문가 등록
 	@Override
 	public int insertConsult(Consult consult, List<ConsultAttachment> files) {
 
@@ -325,7 +389,18 @@ public class ResumeServiceImpl implements ResumeService {
 		return result;
 	}
 	
+	//이력서 전문가 신청 리스트 불러오기
+	@Override
+	public List<Consult> selectConsultant() {
+		return dao.selectConsultant(session);
+	}
 
+
+	
+	
+
+	
+	
 	
 	
 }

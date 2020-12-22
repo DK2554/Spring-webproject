@@ -22,11 +22,26 @@ public interface ResumeService {
 	//이력서 컨설팅 게시판 보기
 	List<Rboard> selectListRboard();
 	
+	//이력서 컨설팅 상세화면 보기
+	Rboard selectRboard(int rboardNo,boolean hasRead);
+	
+	//이력서 컨설팅 상세화면 (첨부파일) 가져오기
+	RboardAttachment selectRboardAttachment(int rboardNo);
+	
 	//이력서 리스트 보기
 	List<ResumeList> selectResumeList(int memberSq);
 	
 	//이력서 게시판 등록하기
 	int insertRboard(Rboard rboard, List<RboardAttachment> files);
+	
+	//이력서 게시판 수정하기(파일포함)
+	int updateRboard(Rboard rboard, List<RboardAttachment> files);
+	
+	//이력서 게시판 수정하기(파일미포함)
+	int updateRboard(Rboard rboard);
+	
+	//이력서 게시판 삭제하기
+	int deleteRboard(int rboardNo);
 	
 	//이력서(개인정보+첨부파일) 등록
 	int insertResume(Resume resume, ResumeSchool school, ResumeWork work, ResumeLicense license, 
@@ -52,4 +67,7 @@ public interface ResumeService {
 	
 	//전문가 등록하기
 	int insertConsult(Consult consult, List<ConsultAttachment> files);
+	
+	//이력서 전문가 신청 리스트 불러오기
+	List<Consult> selectConsultant();
 }

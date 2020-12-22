@@ -2,19 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="rboard">
 
-	<!-- 이력서 게시판 리스트 -->
-  <select id="selectRboard" resultType="rboard">
-  
+  <!-- 이력서 게시판 리스트 -->
+  <select id="selectListRboard" resultType="rboard">
   	SELECT * FROM RBOARD ORDER BY RBOARD_NO DESC
-<!--    	SELECT RBOARD_NO as rboardNo, 
-   	RBOARD_ID as rboardId, 
-   	RBOARD_TITLE as rboardTitle,
-   	RBOARD_CONTENT as rboardContent,
-   	RBOARD_WRITER as rboardWriter,
-   	RBOARD_DATE as rboardDate,
-   	RBOARD_STATUS as rboardStatus,
-   	RBOARD_COUNT as rboardCount
-   	FROM RBOARD -->
+  </select>
+  
+  <!-- 이력서 게시판 상세보기 -->
+  <select id="selectRboard" parameterType="_int" resultType="rboard">
+	SELECT * FROM RBOARD WHERE RBOARD_NO=#{rboardNo}
+  </select>
+  
+  <!-- 이력서 게시판 조회수 증가 -->
+  <update id="updateRboardCount" parameterType="_int">
+	UPDATE RBOARD SET
+		RBOARD_COUNT=RBOARD_COUNT+1
+	WHERE RBOARD_NO=#{rboardNo}
+  </update>
+	
+  <!-- 이력서 게시판 상세보기 (첨부파일 가져오기) -->
+  <select id="selectRboardAttachment" resultType="rboard_attachment" parameterType="_int">
+	SELECT * FROM RBOARD_ATTACHMENT WHERE RBOARD_NO=#{rboardNo}
   </select>
   
   <!-- 이력서 게시판 글 등록 -->
@@ -47,4 +54,43 @@
 	 		SELECT RBOARD_SEQ_NO.CURRVAL FROM DUAL
 	  	</selectKey>	
   </insert>
+  
+  
+  <!--이력서 컨설팅 게시물 등록 (기존의 첨부파일 없는 경우)-->
+	<insert id="insertRboardAttachment" parameterType="rboard_attachment">
+		INSERT INTO RBOARD_ATTACHMENT VALUES(
+  			RBOARD_ATTACHMENT_SEQ_NO.NEXTVAL,
+  			#{rboardNo},
+  			#{originalFilename},
+  			#{renamedFilename},
+  			DEFAULT,
+  			DEFAULT				
+		)
+	</insert>
+	
+	<!-- 이력서 컨설팅 게시물 수정 -->	
+	<update id="updateRboard" parameterType="rboard">
+		UPDATE RBOARD SET
+			rboard_TITLE=#{rboardTitle},
+			rboard_CONTENT=#{rboardContent}
+		WHERE rboard_NO=#{rboardNo}
+	</update>
+	
+	<!-- 이력서 컨설팅 게시물 수정 (첨부파일 있는 경우)-->	
+	<update id="updateRboardAttachment" parameterType="rboard_attachment">
+		UPDATE RBOARD_ATTACHMENT SET
+			ORIGINAL_FILENAME=#{originalFilename},
+			RENAMED_FILENAME=#{renamedFilename}
+		WHERE RBOARD_NO=#{rboardNo}
+	</update>
+	
+	<!-- 이력서 컨설팅 게시물 삭제 -->
+	<delete id="deleteRboard" parameterType="_int">
+			DELETE FROM RBOARD WHERE RBOARD_NO=#{rboardNo}
+	</delete>
+	
+	<!-- 이력서 게시판 리스트 -->
+	 <select id="selectConsultant" resultType="consult">
+	  	SELECT * FROM CONSULT ORDER BY CONSULT_NO DESC
+	 </select>
 </mapper>

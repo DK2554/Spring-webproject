@@ -45,6 +45,12 @@ public class RefServiceImpl implements RefService {
 	public List<REF_SITE> selectList() {
 		return dao.selectList(session);
 	}
+	
+	//리스트 불러오기(미승인 조회)
+		@Override
+	public List<REF_SITE> selectListNo() {
+		return dao.selectListNo(session);
+	}
 
 	@Override
 	public REF_SITE_ATTACHMENT selectImage(int no) {

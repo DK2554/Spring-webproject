@@ -14,6 +14,9 @@ public interface RefService {
 	//리스트 불러오기(조회)
 	List<REF_SITE> selectList();
 	
+	//리스트 불러오기(미승인 조회)
+	List<REF_SITE> selectListNo();
+	
 	//이미지 불러오기
 	REF_SITE_ATTACHMENT selectImage(int no);
 

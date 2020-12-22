@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 @Repository
 public class QnaBoardDaoImpl implements QnaBoardDao {
@@ -121,7 +122,11 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 		return session.update("qnaBoard.deleteCount",qboardNo);
 	}
 	
-	
+	//이미지 불러오기
+	@Override
+	public QB_ATTACHMENT selectImage(SqlSessionTemplate session, int qboardNo) {
+		return session.selectOne("refSite.selectImage",qboardNo);
+	}
 	
 	
 	

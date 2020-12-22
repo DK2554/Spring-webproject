@@ -19,6 +19,9 @@ public interface RefDao {
 	//리스트 불러오기(조회)
 	List<REF_SITE> selectList(SqlSessionTemplate session);
 	
+	//리스트 불러오기(미승인 조회)
+	List<REF_SITE> selectListNo(SqlSessionTemplate session);
+	
 	//이미지 불러오기
 	REF_SITE_ATTACHMENT selectImage(SqlSessionTemplate session, int no);
 	

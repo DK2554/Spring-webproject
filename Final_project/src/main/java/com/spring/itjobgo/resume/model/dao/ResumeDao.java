@@ -25,11 +25,32 @@ public interface ResumeDao {
 	//이력서 게시판 리스트
 	List<Rboard> selectListRboard(SqlSessionTemplate session);
 	
+	//이력서 게시판 상세보기
+	Rboard selectRboard(SqlSessionTemplate session, int rboardNo);
+	
+	//이력서 게시판 조회수 증가
+	int updateRboardCount(SqlSessionTemplate session,int rboardNo);
+	
+	///이력서 게시판 상세보기 (첨부파일 가져오기)
+	RboardAttachment selectRboardAttachment(SqlSessionTemplate session, int rboardNo);
+	
 	//이력서 게시판 글 등록
 	int insertRboard(SqlSessionTemplate session, Rboard rboard);
 	
 	//이력서 게시판 파일첨부 등록
 	int insertAttachment(SqlSessionTemplate session, RboardAttachment file);
+	
+	//이력서 게시판 글 수정
+	int updateRboard(SqlSessionTemplate session,Rboard rboard);
+	
+	//이력서 게시판 첨부파일 수정
+	int updateRboardAttachment(SqlSessionTemplate session, RboardAttachment file);
+	
+	//이력서 게시판 첨수파일 등록 (기존의 첨부파일 없는 경우)
+	int insertRboardAttachment(SqlSessionTemplate session, RboardAttachment file);
+	
+	//이력서 게시판 글 삭제
+	int deleteRboard(SqlSessionTemplate session,int rboardNo);
 	
 	//이력서 리스트 보기
 	List<ResumeList> selectResumeList(SqlSessionTemplate session, int memberSq);
@@ -130,9 +151,12 @@ public interface ResumeDao {
 	//이력서(사진파일) 삭제
 	int deleteResumeAttachment(SqlSessionTemplate session, int resumeNo);
 	
-	//전문가 등록
+	//이력서 전문가 등록
 	int insertConsult(SqlSessionTemplate session, Consult consult);
 	
-	//전문가 증빙서류(첨부파일) 등록
+	//이력서 전문가 증빙서류(첨부파일) 등록
 	int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file);
+	
+	//이력서 전문가 신청 리스트 불러오기
+	List<Consult> selectConsultant(SqlSessionTemplate session);
 }

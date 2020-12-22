@@ -94,6 +94,17 @@ public class RefController {
 			return list;
 	}
 	
+	//리스트 불러오기(미승인 조회) 
+	@RequestMapping(value="ref/selectsiteNo",method = RequestMethod.GET)
+	public List<REF_SITE> selectListNo()throws JsonMappingException,JsonGenerationException,IOException{
+		List<REF_SITE> list2=service.selectListNo();
+					//logger.debug("list 불러오기 성공2");
+					System.out.println("미승인 조회"+list2.toString());
+					//logger.debug(list.toString());
+			return list2;
+	}
+
+	
 	//리스트 이미지 불러오기
 	@RequestMapping(value="ref/selectsiteImg{no}",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
 	public @ResponseBody byte[] selectImage(@PathVariable int no, HttpServletRequest request, HttpServletResponse res)throws Exception{
