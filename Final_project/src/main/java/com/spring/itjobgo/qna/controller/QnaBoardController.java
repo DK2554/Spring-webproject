@@ -455,6 +455,10 @@ public class QnaBoardController {
 		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
 		QB_ATTACHMENT mt=service.selectImage(qboardNo);
 		
+		if(mt!=null) {
+			System.out.println("불러오기~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		}
+		
 		logger.debug(mt.toString());
 		//파일경로
 		String realFile = request.getServletContext().getRealPath("/resources/upload/qnaBoard");

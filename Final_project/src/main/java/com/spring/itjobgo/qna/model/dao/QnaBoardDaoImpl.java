@@ -125,7 +125,7 @@ public class QnaBoardDaoImpl implements QnaBoardDao {
 	//이미지 불러오기
 	@Override
 	public QB_ATTACHMENT selectImage(SqlSessionTemplate session, int qboardNo) {
-		return session.selectOne("refSite.selectImage",qboardNo);
+		return session.selectOne("qnaBoard.selectImage",qboardNo);
 	}
 	
 	
