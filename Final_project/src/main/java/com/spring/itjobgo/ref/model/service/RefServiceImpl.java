@@ -7,7 +7,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.dao.RefDao;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
@@ -31,6 +30,10 @@ public class RefServiceImpl implements RefService {
 			if(!files.isEmpty()) {
 				for(REF_SITE_ATTACHMENT file:files) {
 					result=dao.insertAttachment(session,file);
+					
+					//글등록 수 조회
+					result=dao.statuscount(session);
+					
 					if(result==0) throw new RuntimeException("ref site 첨부파일 작성 오류");
 				}
 			}
@@ -41,6 +44,12 @@ public class RefServiceImpl implements RefService {
 	@Override
 	public List<REF_SITE> selectList() {
 		return dao.selectList(session);
+	}
+	
+	//리스트 불러오기(미승인 조회)
+		@Override
+	public List<REF_SITE> selectListNo() {
+		return dao.selectListNo(session);
 	}
 
 	@Override
@@ -102,9 +111,13 @@ public class RefServiceImpl implements RefService {
 	@Override
 	public int updateStatus(int refNo) {
 		return dao.updateStatus(session, refNo);
+	}
+
+	//글작성 카운트 조회
+	@Override
+	public int selectCount() {
+		return dao.selectCount(session);
 	}	
-	
-	
 	
 	
 	

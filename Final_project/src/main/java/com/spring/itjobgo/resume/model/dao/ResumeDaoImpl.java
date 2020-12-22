@@ -5,6 +5,8 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.itjobgo.resume.model.vo.Consult;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -26,7 +28,25 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public List<Rboard> selectListRboard(SqlSessionTemplate session) {
 
-		return session.selectList("rboard.selectRboard");
+		return session.selectList("rboard.selectListRboard");
+	}
+	
+	//이력서 게시판 상세보기
+	@Override
+	public Rboard selectRboard(SqlSessionTemplate session, int rboardNo) {
+		return session.selectOne("rboard.selectRboard",rboardNo);
+	}
+	
+	//이력서 게시판 조회수 증가
+	@Override
+	public int updateRboardCount(SqlSessionTemplate session, int rboardNo) {
+		return session.update("rboard.updateRboardCount",rboardNo);
+	}
+	
+	//이력서 게시판 상세보기(파일첨부 가져오기)
+	@Override
+	public RboardAttachment selectRboardAttachment(SqlSessionTemplate session, int rboardNo) {
+		return session.selectOne("rboard.selectRboardAttachment",rboardNo);
 	}
 	
 	//이력서 게시판 글 등록
@@ -41,6 +61,30 @@ public class ResumeDaoImpl implements ResumeDao {
 	public int insertAttachment(SqlSessionTemplate session, RboardAttachment file) {
 		System.out.println("********dao 파일첨부 하기 전**********");
 		return session.insert("rboard.insertAttachment",file);
+	}
+	
+	//이력서 컨설팅 게시물 수정
+	@Override
+	public int updateRboard(SqlSessionTemplate session, Rboard rboard) {
+		return session.update("rboard.updateRboard",rboard);
+	}
+
+	//이력서 컨설팅 게시물 수정 (첨부파일 있는 경우)
+	@Override
+	public int updateRboardAttachment(SqlSessionTemplate session, RboardAttachment file) {
+		return session.update("rboard.updateRboardAttachment",file);
+	}
+
+	//이력서 컨설팅 게시물 등록 (기존의 첨부파일 없는 경우)
+	@Override
+	public int insertRboardAttachment(SqlSessionTemplate session, RboardAttachment file) {
+		return session.insert("rboard.insertRboardAttachment",file);
+	}
+	
+	//이력서 컨설팅 게시물 삭제
+	@Override
+	public int deleteRboard(SqlSessionTemplate session, int rboardNo) {
+		return session.delete("rboard.deleteRboard",rboardNo);
 	}
 	
 	//이력서 리스트 보기
@@ -254,6 +298,39 @@ public class ResumeDaoImpl implements ResumeDao {
 			System.out.println("********dao 해외경험 수정하기 전**********");
 			return session.delete("resume.deleteResumeAbroad",resumeNo);
 		}
-	
 
+		//이력서 전문가 등록
+		@Override
+		public int insertConsult(SqlSessionTemplate session, Consult consult) {
+			System.out.println("********dao 전문가 등록 전**********");
+			return session.delete("resume.insertConsult",consult);
+		}
+		
+		//이력서 전문가 증빙서류(파일첨부) 등록
+		@Override
+		public int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file) {
+			System.out.println("********dao 전문가 증빙서류(파일첨부) 등록 전**********");
+			return session.delete("resume.insertConsultAttachment",file);
+		}
+
+		//이력서 전문가 신청 리스트 불러오기
+		@Override
+		public List<Consult> selectConsultant(SqlSessionTemplate session) {
+			return session.selectList("rboard.selectConsultant");
+		}
+		
+		
+		
+
+
+
+
+
+
+
+
+		
+		
+	
+		
 }

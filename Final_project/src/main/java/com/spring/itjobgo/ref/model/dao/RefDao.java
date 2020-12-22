@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.spring.itjobgo.ItNews.model.vo.ItNews;
-import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
@@ -20,6 +18,9 @@ public interface RefDao {
 	
 	//리스트 불러오기(조회)
 	List<REF_SITE> selectList(SqlSessionTemplate session);
+	
+	//리스트 불러오기(미승인 조회)
+	List<REF_SITE> selectListNo(SqlSessionTemplate session);
 	
 	//이미지 불러오기
 	REF_SITE_ATTACHMENT selectImage(SqlSessionTemplate session, int no);
@@ -44,8 +45,11 @@ public interface RefDao {
 	
 	//관리자 승인
 	int updateStatus(SqlSessionTemplate session, int refNo);
+
+	//글작성 카운트
+	int statuscount(SqlSessionTemplate session);
 	
-	
-	
+	//글작성 카운트 조회
+	int selectCount(SqlSessionTemplate session);
 	
 }

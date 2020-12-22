@@ -14,13 +14,14 @@ public class QnaBoard {
 	private Date qnaDate; //날짜
 	private int memberNum; //회원시퀀스로 분류
 	private int boardCount; //조회수
+	private int commentCount; //댓글수
 	
 	public QnaBoard() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public QnaBoard(int qboardNo, String qnaCategory, String qnaTitle, String qnaWriter, String qnaContent,
-			String qnaAnswerYn, Date qnaDate, int memberNum, int boardCount) {
+			String qnaAnswerYn, Date qnaDate, int memberNum, int boardCount, int commentCount) {
 		super();
 		this.qboardNo = qboardNo;
 		this.qnaCategory = qnaCategory;
@@ -31,6 +32,7 @@ public class QnaBoard {
 		this.qnaDate = qnaDate;
 		this.memberNum = memberNum;
 		this.boardCount = boardCount;
+		this.commentCount = commentCount;
 	}
 
 	public int getQboardNo() {
@@ -105,16 +107,22 @@ public class QnaBoard {
 		this.boardCount = boardCount;
 	}
 
+	public int getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+
 	@Override
 	public String toString() {
 		return "QnaBoard [qboardNo=" + qboardNo + ", qnaCategory=" + qnaCategory + ", qnaTitle=" + qnaTitle
 				+ ", qnaWriter=" + qnaWriter + ", qnaContent=" + qnaContent + ", qnaAnswerYn=" + qnaAnswerYn
-				+ ", qnaDate=" + qnaDate + ", memberNum=" + memberNum + ", boardCount=" + boardCount + "]";
+				+ ", qnaDate=" + qnaDate + ", memberNum=" + memberNum + ", boardCount=" + boardCount + ", commentCount="
+				+ commentCount + "]";
 	}
 
-	
-	
-	
 	
 	
 }

@@ -28,8 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.spring.itjobgo.ItNews.model.vo.ItNews;
-import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.ref.model.service.RefService;
 import com.spring.itjobgo.ref.model.vo.REF_SITE;
 import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
@@ -95,6 +93,17 @@ public class RefController {
 					logger.debug(list.toString());
 			return list;
 	}
+	
+	//리스트 불러오기(미승인 조회) 
+	@RequestMapping(value="ref/selectsiteNo",method = RequestMethod.GET)
+	public List<REF_SITE> selectListNo()throws JsonMappingException,JsonGenerationException,IOException{
+		List<REF_SITE> list2=service.selectListNo();
+					//logger.debug("list 불러오기 성공2");
+					System.out.println("미승인 조회"+list2.toString());
+					//logger.debug(list.toString());
+			return list2;
+	}
+
 	
 	//리스트 이미지 불러오기
 	@RequestMapping(value="ref/selectsiteImg{no}",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
@@ -244,6 +253,7 @@ public class RefController {
 		
 	}
 	
+	//관리자 승인
 	@RequestMapping(value="ref/refStatus",method=RequestMethod.POST)
 	public void status(REF_SITE site) {
 		
@@ -252,10 +262,17 @@ public class RefController {
 		
 	}
 	
+	//글작성 카운트 조회
+	@RequestMapping(value="ref/statusCount",method=RequestMethod.GET)
+	public int  selectCount() {
+		
+		int count=service.selectCount();
+		System.out.println("status count~~~~~~ : "+count);
+		return count;
+	}
 	
 	
-	
-	
+
 	
 	
 }

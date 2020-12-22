@@ -59,6 +59,10 @@ public interface MeetingService {
 
 	Integer selectapplycheck(Tmpapply tmp);
 
+	Mcount joinmcount(int no);
+
+	List enterList(int no);
+
 	
 
 }

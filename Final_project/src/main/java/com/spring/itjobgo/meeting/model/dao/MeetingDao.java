@@ -69,6 +69,10 @@ public interface MeetingDao {
 
 	Integer selectapplycheck(SqlSessionTemplate session, Tmpapply tmp);
 
+	Mcount joincount(SqlSessionTemplate session, int no);
+
+	List enterList(SqlSessionTemplate session, int no);
+
 	
 
 }

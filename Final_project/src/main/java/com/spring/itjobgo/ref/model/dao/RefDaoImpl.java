@@ -29,6 +29,12 @@ public class RefDaoImpl implements RefDao {
 	public List<REF_SITE> selectList(SqlSessionTemplate session) {
 		return session.selectList("refSite.selectList");
 	}
+	
+	//리스트 불러오기(미승인 조회)
+	@Override
+	public List<REF_SITE> selectListNo(SqlSessionTemplate session) {
+		return session.selectList("refSite.selectListNo");
+	}
 
 	//이미지 불러오기
 	@Override
@@ -76,6 +82,18 @@ public class RefDaoImpl implements RefDao {
 	@Override
 	public int updateStatus(SqlSessionTemplate session, int refNo) {
 		return session.update("refSite.updateStatus",refNo);
+	}
+
+	//글작성 수 카운트
+	@Override
+	public int statuscount(SqlSessionTemplate session) {
+		return session.update("refSite.statusCount");
+	}
+
+	//글작성 카운트 조회
+	@Override
+	public int selectCount(SqlSessionTemplate session) {
+		return session.selectOne("refSite.selectCount");
 	}
 	
 	

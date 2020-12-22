@@ -32,7 +32,8 @@
 										#{qnaAnswerYn},
 										DEFAULT,
 										#{memberNum},
-										1
+										1,
+										0
 										)
 	</insert>
 	
@@ -144,8 +145,29 @@
 										WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
 	</update>
 	
+	<!-- 댓글 수 조회 기능 mapper 3-->
+	<!-- 댓글카운트 갯수증가 +1 -->
+	<update id="updateCommentCount">
+			UPDATE QNA_BOARD SET
+										COMMENT_COUNT=COMMENT_COUNT+1
+										WHERE QBOARD_NO=#{qboardNo}
+	</update>
 
+	<!-- 댓글 정보 가져오기 -->
+	<select id="selectOneComment" parameterType="_int" resultType="qbcomment" >
+			SELECT QBOARD_NO FROM QB_COMMENT WHERE QBOARD_COMMENT_NO=#{qboardCommentNo}
+	</select>
 	
+	<!-- 댓글 갯수 감소 -1 -->
+	<update id="deleteCount">
+			UPDATE QNA_BOARD SET
+							COMMENT_COUNT=COMMENT_COUNT-1
+							WHERE QBOARD_NO=#{qboardNo}
+	</update>
 	
+	<!-- 리스트 이미지 불러오기 -->
+	<select id="selectImage" parameterType="_int"  resultType="qna_attachment">
+		SELECT* FROM QB_ATTACHMENT WHERE QBOARD_NO=#{qboardNo}
+	</select>
 	
 </mapper>

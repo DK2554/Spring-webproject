@@ -11,6 +11,7 @@ import com.spring.itjobgo.qna.model.dao.QnaBoardDao;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 	@Service
 	public class QnaBoardServiceImpl implements QnaBoardService {
@@ -135,7 +136,28 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 	public int updateComment(Map param) {
 		return dao.updateComment(session,param);
 	}
+
+	//댓글 갯수 카운트 +1
+	@Override
+	public int updateCommentCount(QB_COMMENT qbc) {
+		return dao.updateCommentCount(session,qbc);
+	}
+	//댓글 정보가져오기
+	@Override
+	public QB_COMMENT selectOneComment(int qbCommentNo) {
+		return dao.selectOneComment(session, qbCommentNo);
+	}
+	//댓글 갯수 -1
+	@Override
+	public int deleteCount(int qboardNo) {
+		return dao.deleteCount(session, qboardNo);
+	}
 	
+	//이미지 불러오기
+	@Override
+	public QB_ATTACHMENT selectImage(int qboardNo) {
+		return dao.selectImage(session,qboardNo);
+	}
 	
 	
 	

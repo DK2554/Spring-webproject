@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -16,8 +17,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -30,10 +33,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 @RestController
 public class QnaBoardController {
@@ -375,16 +380,25 @@ public class QnaBoardController {
 			
 	// 댓글작성하기
 	@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
-	public void comment(QB_COMMENT cm) {
-		
+	public String comment(QB_COMMENT cm) {
+		String msg="댓글 insert";
 		int result = service.insertComment(cm);
+		
 		if(result>0) {
 			//답글이 달리면 N->Y로 변경.
 			int comment = service.insertCommentText(cm.getQboardNo());
 			System.out.println("댓글작성하기~~~성공");
+			
+			//댓글갯수 증가로직 +1
+			int result2=service.updateCommentCount(cm);
+			System.out.println("댓글갯수 증가 성공여부 : "+result2);
 		}
 		
+		logger.debug(cm.toString());
+		logger.debug("댓글달기 매핑테스트");
+		return msg;
 	}
+	
 	//댓글 조회
 	@RequestMapping(value="qna/commentSelectOne{qboardNo}",method =RequestMethod.GET)
 	public List<QB_COMMENT> commentList(@PathVariable int qboardNo){
@@ -403,13 +417,22 @@ public class QnaBoardController {
 	@RequestMapping(value="qna/commentDelete{qboardCommentNo}",method=RequestMethod.POST)
 	public void commentdel(@PathVariable int qboardCommentNo) {
 		
-			int result=service.deletecomment(qboardCommentNo);
+			//부모게시판의 댓글 갯수부터 먼저 -1 update하는 구문 실행후 댓글삭제
+		   QB_COMMENT qbc = service.selectOneComment(qboardCommentNo);
+		   //게시판 번호 가져와서 댓글갯수 -1 update 해주기
+		   int qboardNo=qbc.getQboardNo();
+		   int deleteCount=service.deleteCount(qboardNo);
+		   
+		   if(deleteCount>0) {
+			   
+			   int result=service.deletecomment(qboardCommentNo);
+			   
+			   if(result>0) {
+				   System.out.println("게시판 댓글 삭제성공, 갯수-1");		
+			   }
+		   }
+		   
 			
-			if(result>0) {
-				System.out.println("게시판 댓글 삭제성공");		
-			}else {
-				System.out.println("게시판 댓글 삭제 실패");
-			}
 	}
 	
 	//댓글수정
@@ -425,9 +448,30 @@ public class QnaBoardController {
 		}
 	}
 	
-	
-	
-			
+	//리스트 이미지 불러오기
+	@RequestMapping(value="qna/selectImg{qboardNo}",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] selectImage(@PathVariable int qboardNo, HttpServletRequest request, HttpServletResponse res)throws Exception{
+		logger.debug("이미지요청~qna");
+		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
+		QB_ATTACHMENT mt=service.selectImage(qboardNo);
+		
+		logger.debug(mt.toString());
+		//파일경로
+		String realFile = request.getServletContext().getRealPath("/resources/upload/qnaBoard");
+		//파일이름
+		String fileNm = mt.getRenamedfilename();
+		//파일확장자
+		String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
+		String image=realFile+"\\"+fileNm;
+		
+		logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
+		logger.debug(realFile+"\\"+fileNm);
+		
+		InputStream in =new FileInputStream(image);
+		byte[] imageByteArray=IOUtils.toByteArray(in);
+		in.close();
+		
+		return imageByteArray;
 	}
 	
 	
@@ -435,31 +479,7 @@ public class QnaBoardController {
 	
 	
 	
+			
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	
-	
-	
-	
-

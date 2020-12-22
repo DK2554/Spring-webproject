@@ -6,9 +6,11 @@ import java.util.Map;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 public interface QnaBoardService {
 
+	//글작성
 	List<QnaBoard> selectQnaBoard();
 	
 	int insertQnaBoard(QnaBoard qnaboard, List<QB_ATTACHMENT> files);
@@ -33,5 +35,19 @@ public interface QnaBoardService {
 	int deletecomment(int qboardCommentNo);
 	
 	int updateComment(Map param);
+	
+	//댓글갯수 카운트 +1
+	int updateCommentCount(QB_COMMENT qbc);
+	
+	//댓글 정보 가져오기
+	QB_COMMENT selectOneComment(int qbCommentNo);
+	
+	//댓글갯수 카운트 -1
+	int deleteCount(int qboardNo);
+	
+	//이미지 불러오기
+	QB_ATTACHMENT selectImage(int qboardNo);
+
+	
 	
 }
