@@ -169,6 +169,5 @@
 	<select id="selectImage" parameterType="_int"  resultType="qna_attachment">
 		SELECT* FROM QB_ATTACHMENT WHERE QBOARD_NO=#{qboardNo}
 	</select>
-
 	
 </mapper>
