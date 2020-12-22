@@ -182,9 +182,7 @@ public class QnaBoardController {
 			Cookie c = new Cookie("boardHistory",boardHistory+"|"+qboardNo+"|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
-					
 		}
-		
 		QnaBoard qboard =service.selectQnaBoardOne(qboardNo,hasRead);
 		
 		return qboard;
