@@ -1,6 +1,7 @@
 package com.spring.itjobgo.resume.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
@@ -9,6 +10,7 @@ import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -169,4 +171,16 @@ public interface ResumeDao {
 	
 	//이력서 전문가 신청 승인여부 수정하기
 	int updateConsultApproval(SqlSessionTemplate session, Consult consult);
+	
+	//이력서 게시판 댓글 조회하기
+	List<RboardComment> selectRboardComment(SqlSessionTemplate session, int rboardNo);
+	
+	//댓글 입력
+	int insertRboardComment(SqlSessionTemplate session, RboardComment rboardComment);
+	
+	//댓글 삭제
+	int deleteRboardComment(SqlSessionTemplate session, int rboardCommentNo);
+	
+	//댓글 수정
+	int updateRboardComment(SqlSessionTemplate session, Map param);
 }

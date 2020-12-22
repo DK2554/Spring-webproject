@@ -36,7 +36,6 @@
   		DEFAULT,
   		DEFAULT
   	)
-  		
   </insert>
   
   <!-- 이력서 게시판 첨부파일 등록 -->
@@ -116,5 +115,35 @@
 		UPDATE CONSULT SET
 			CONSULT_APPROVAL=#{consultApproval}
 		WHERE CONSULT_NO=#{consultNo}
+	</update>
+	
+	
+	<!-- 이력서 게시판 댓글 리스트 -->
+	 <select id="selectRboardComment" resultType="rboard_comment" parameterType="_int">
+	  	SELECT * FROM RBOARD_COMMENT WHERE RBOARD_NO=#{rboardNo}
+	 </select>
+	 
+	 <!-- 댓글 등록 -->
+	  <insert id="insertRboardComment" parameterType="rboard_comment">
+	  	INSERT INTO RBOARD_COMMENT VALUES(
+	  		RBOARD_COMMENT_SEQ_NO.NEXTVAL,
+	  		#{rboardNo},
+	  		#{memberSq},
+	  		#{memberName},
+	  		#{rboardCommentContent},
+	  		DEFAULT
+	  	)
+	  </insert>
+	  
+	 <!-- 댓글 삭제 -->
+	<delete id="deleteRboardComment" parameterType="_int">
+		DELETE FROM RBOARD_COMMENT WHERE RBOARD_COMMENTNO=#{rboardCommentNo}
+	</delete>
+		
+	<!-- 댓글수정하기  -->
+	<update id="updateRboardComment" parameterType="java.util.HashMap">
+		UPDATE RBOARD_COMMENT SET 
+		RBOARD_COMMENT_CONTENT=#{rboardCommentContent}
+		WHERE RBOARD_COMMENTNO=#{rboardCommentno}
 	</update>
 </mapper>

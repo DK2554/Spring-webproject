@@ -162,6 +162,8 @@
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll"
 		alias="consult_attachment_all" /> 
 			
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.RboardComment"
+		alias="rboard_comment" /> 
 	</typeAliases>
 
 </configuration>

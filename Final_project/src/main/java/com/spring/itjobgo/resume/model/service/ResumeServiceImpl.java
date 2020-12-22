@@ -1,6 +1,7 @@
 package com.spring.itjobgo.resume.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -410,6 +412,30 @@ public class ResumeServiceImpl implements ResumeService {
 	@Override
 	public int updateConsultApproval(Consult consult) {
 		return dao.updateConsultApproval(session, consult);
+	}
+	
+	//이력서 게시판 댓글 조회
+	@Override
+	public List<RboardComment> selectRboardComment(int rboardNo) {
+		return dao.selectRboardComment(session, rboardNo);
+	}
+	
+	//댓글 입력
+	@Override
+	public int insertRboardComment(RboardComment rboardComment) {
+		return dao.insertRboardComment(session, rboardComment);
+	}
+	
+	//댓글 삭제
+	@Override
+	public int deleteRboardComment(int rboardCommentNo) {
+		return dao.deleteRboardComment(session, rboardCommentNo);
+	}
+	
+	//댓글 수정
+	@Override
+	public int updateRboardComment(Map param) {
+		return dao.updateRboardComment(session, param);
 	}
 	
 

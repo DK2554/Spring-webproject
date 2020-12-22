@@ -1,6 +1,7 @@
 package com.spring.itjobgo.resume.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -338,19 +340,28 @@ public class ResumeDaoImpl implements ResumeDao {
 			return session.update("rboard.updateConsultApproval",consult);
 		}
 
-		
-		
-		
+		//이력서 게시판 댓글 조회하기
+		@Override
+		public List<RboardComment> selectRboardComment(SqlSessionTemplate session, int rboardNo) {
+			return session.selectList("rboard.selectRboardComment",rboardNo);
+		}
 
+		//댓글 입력
+		@Override
+		public int insertRboardComment(SqlSessionTemplate session, RboardComment rboardComment) {
+			return session.insert("rboard.insertRboardComment",rboardComment);
+		}
 
+		//댓글 삭제
+		@Override
+		public int deleteRboardComment(SqlSessionTemplate session, int rboardCommentNo) {
+			return session.insert("rboard.deleteRboardComment",rboardCommentNo);
+		}
 
+		//댓글 수정
+		@Override
+		public int updateRboardComment(SqlSessionTemplate session, Map param) {
+			return session.update("rboard.updateRboardComment",param);
+		}
 
-
-
-
-
-		
-		
-	
-		
 }

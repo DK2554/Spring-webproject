@@ -33,12 +33,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
+import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.resume.model.service.ResumeService;
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -806,26 +809,64 @@ public class ResumeController {
 	}
 	
 	// 댓글작성하기
-//		@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
-//		public String comment(QB_COMMENT cm) {
-//			String msg="댓글 insert";
-//			int result = service.insertComment(cm);
+	@RequestMapping(value="resume/insertRboardComment",method = RequestMethod.POST)
+	public String insertRboardComment(RboardComment rboardComment) {
+		System.out.println("댓글 작성하기 controller param"+rboardComment);
+		String msg="";
+		int result = service.insertRboardComment(rboardComment);
+		
+//		if(result>0) {
+//			//답글이 달리면 N->Y로 변경.
+//			int comment = service.insertRboardCommentText(rboardComment.getRboardCommentno());
+//			System.out.println("댓글작성하기~~~성공");
 //			
-//			if(result>0) {
-//				//답글이 달리면 N->Y로 변경.
-//				int comment = service.insertCommentText(cm.getQboardNo());
-//				System.out.println("댓글작성하기~~~성공");
-//				
-//				//댓글갯수 증가로직 +1
-//				int result2=service.updateCommentCount(cm);
-//				System.out.println("댓글갯수 증가 성공여부 : "+result2);
-//			}
-//			
-//			logger.debug(cm.toString());
-//			logger.debug("댓글달기 매핑테스트");
-//			return msg;
+//			//댓글갯수 증가로직 +1
+//			int result2=service.updateCommentCount(comment);
+//			System.out.println("댓글갯수 증가 성공여부 : "+result2);
 //		}
+		if(result>0) {
+			msg="댓글 작성 성공";
+		}else {
+			msg="댓글 작성 실패";
+		}
+		return msg;
+	}
+	//댓글 조회
+	@RequestMapping(value="resume/selectRboardComment/{rboardNo}",method =RequestMethod.GET)
+	public List<RboardComment> selectRboardComment(@PathVariable int rboardNo){
+		System.out.println("댓글리스트 controller");
+		
+		List<RboardComment> list=service.selectRboardComment(rboardNo);
+		
+		for(RboardComment rc:list) {
+			logger.debug(rc.toString());
+		}
+		
+		return list;
+	}
 	
-	
-	
+   //댓글삭제
+   @RequestMapping(value="resume/deleteRboardComment/{rboardCommentNo}.do",method=RequestMethod.POST)
+   public void deleteRboardComment(@PathVariable int rboardCommentNo) {
+       
+    	  int result=service.deleteRboardComment(rboardCommentNo);
+    	  
+    	  if(result>0) {
+    		  System.out.println("댓글삭제 성공");
+    	  }
+      }
+   
+   
+   //댓글수정
+   @RequestMapping(value="resume/updateRboardComment", method=RequestMethod.POST)
+   public void updateRboardComment(@RequestBody Map param) {
+      System.out.println("댓글 수정 controller");
+   
+      int result = service.updateRboardComment(param);
+      
+      if(result>0) {
+         System.out.println("==댓글 수정 성공==");
+      }
+   
+   }
 }
