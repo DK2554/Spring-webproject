@@ -1,13 +1,16 @@
 package com.spring.itjobgo.resume.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -158,5 +161,26 @@ public interface ResumeDao {
 	int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file);
 	
 	//이력서 전문가 신청 리스트 불러오기
-	List<Consult> selectConsultant(SqlSessionTemplate session);
+	List<ConsultAttachmentAll> selectConsultant(SqlSessionTemplate session);
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	List<ConsultAttachmentAll> selectConsultantOne(SqlSessionTemplate session, int memberSq);
+	
+	//이력서 전문가 신청 파일첨부 불러오기
+	ConsultAttachmentAll selectConsultAttachment(SqlSessionTemplate session, int consultNo);
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	int updateConsultApproval(SqlSessionTemplate session, Consult consult);
+	
+	//이력서 게시판 댓글 조회하기
+	List<RboardComment> selectRboardComment(SqlSessionTemplate session, int rboardNo);
+	
+	//댓글 입력
+	int insertRboardComment(SqlSessionTemplate session, RboardComment rboardComment);
+	
+	//댓글 삭제
+	int deleteRboardComment(SqlSessionTemplate session, int rboardCommentNo);
+	
+	//댓글 수정
+	int updateRboardComment(SqlSessionTemplate session, Map param);
 }

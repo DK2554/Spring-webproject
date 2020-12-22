@@ -102,6 +102,13 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.selectScrap", param);
 	}
 
+	//이력서 전문가 등록
+	@Override
+	public int updateConsultant(SqlSession session, int memberSq) {
+		return session.update("member.updateConsultant", memberSq);
+	}
 
+
+	
 	
 }

@@ -629,4 +629,23 @@ public class MemberController {
 		return token;
 	}
 
+	// 이력서 전문가 승인
+		@RequestMapping(value = "/updateConsultant.do", method = RequestMethod.POST)
+		public String updateConsultant(@RequestParam(value="memberSq") int memberSq) {
+			System.out.println("consultNo : " + memberSq);
+			
+			int result=0;
+			String msg="";
+			
+			try {
+				result = service.updateConsultant(memberSq);
+			}catch(RuntimeException e) {
+				e.printStackTrace();
+			}
+			
+			if(result>0) msg="이력서 컨설팅 전문가 승인 성공";
+			else msg="이력서 컨설틴 전문가 승인 실패";
+		
+			return msg;
+		}
 }
