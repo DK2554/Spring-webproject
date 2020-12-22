@@ -694,6 +694,21 @@ public class ResumeController {
 				logger.debug(msg);
 				return msg;
 		}
+		
+
+	@RequestMapping(value="resume/Consultant.do",method=RequestMethod.GET)
+		public List<Consult> selectConsultant() {
+			System.out.println("********이력서 전문가 신청 리스트 컨트롤러 *********");
+			List<Consult> list=service.selectConsultant();
+
+			for(Consult i : list) {
+				System.out.println(i);
+			}
+			System.out.println(list);
+			return list;
+		}
+	
+	
 	// 댓글작성하기
 //		@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
 //		public String comment(QB_COMMENT cm) {

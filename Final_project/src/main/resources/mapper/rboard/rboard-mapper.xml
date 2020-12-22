@@ -88,4 +88,9 @@
 	<delete id="deleteRboard" parameterType="_int">
 			DELETE FROM RBOARD WHERE RBOARD_NO=#{rboardNo}
 	</delete>
+	
+	<!-- 이력서 게시판 리스트 -->
+	 <select id="selectConsultant" resultType="consult">
+	  	SELECT * FROM CONSULT ORDER BY CONSULT_NO DESC
+	 </select>
 </mapper>
