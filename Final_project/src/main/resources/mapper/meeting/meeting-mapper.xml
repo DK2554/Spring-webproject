@@ -5,7 +5,7 @@
   	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
   </insert>
   <insert id="insertcount" parameterType="map">
-  insert into collab_count values(#{collabsq},#{back},#{front},#{desgin},default,default,default)
+  insert into collab_count values(#{collabsq},#{back},#{front},#{desgin},default,default,default,default)
   <selectKey keyProperty="collabsq" resultType="_int" order="BEFORE">
   	select seq_meet.currval from dual
   	</selectKey>
@@ -20,8 +20,14 @@
 	<result column="collab_lang" property="collabLang" typeHandler="strarr"/>
 </resultMap>
   <select id="selectmList" resultMap="mboardmap" >
-  	select collab_sq,collab_title,collab_writer,collab_simcontent,collab_back,collab_front,collab_desgin from collab_board
-  	order by collab_sq desc
+  	select C.collab_sq,C.collab_title,C.collab_writer,C.collab_simcontent,C.collab_back,C.collab_front,C.collab_desgin 
+  	from collab_board C join collab_count B on C.collab_sq=B.collab_sq where Trunc(C.collab_DEADLINE)>= sysdate and B.status='N'
+  	order by C.collab_sq desc
+  </select>
+  <select id="selectendList"  resultMap="mboardmap">
+  select C.collab_sq,C.collab_title,C.collab_writer,C.collab_simcontent,C.collab_back,C.collab_front,C.collab_desgin 
+  	from collab_board C join collab_count B on C.collab_sq=B.collab_sq where sysdate >= Trunc(C.collab_DEADLINE)   or B.status='Y'
+  	order by C.collab_sq desc
   </select>
   <select id="selectminfo" resultMap="mboardmap" parameterType="_int"> 
   	select * from collab_board   where collab_sq=#{no} 
@@ -107,9 +113,10 @@
 	select T.collab_back,T.collab_front,T.collab_desgin,T.back_count,T.front_count,T.desgin_count from collab_board C join collab_count T on C.collab_sq=T.collab_sq
 	where T.collab_sq=#{no}   
   </select>
-  
   <select id="enterList" resultType="hashmap">
   select M.member_email,M.member_name,A.position from application_complted A join member M on A.member_sq=M.member_sq where collab_sq=#{no} 
   </select>
-  
+  <update id="updatestatus" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+  update collab_count set status='Y' where  collab_sq=#{collabSq}
+  </update>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
 
@@ -20,6 +21,9 @@ public interface InfoDao {
 	//글 상세보기
 	Info selectInfoOne(SqlSessionTemplate session, int infoSq);
 
+	//이미지 불러오기
+	INFO_ATTACHMENT selectImage(SqlSessionTemplate session, int sq);
+	
 	//글 삭제하기
 	int deleteInfo(SqlSessionTemplate session, int infoSq);
 	
