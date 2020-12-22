@@ -98,6 +98,12 @@ public class MeetingController {
 		logger.debug(list.toString());
 		return list;
 	}
+	@RequestMapping(value="meeting/meetingendList.do",method=RequestMethod.GET)
+	public List<Mboard>meetingendList(){
+		List<Mboard> list=service.selectendlist();
+		logger.debug(list.toString());
+		return list;
+	}
 	//모임을 클릭했을때 해당 모임정보를 리턴
 	@RequestMapping(value="meeting/meetinginfo{no}.do",method=RequestMethod.GET)
 	public Mboard meetinginfo(@PathVariable int no)throws JsonMappingException,JsonGenerationException,IOException{
@@ -116,8 +122,9 @@ public class MeetingController {
 		tmp.setWriterNo(writerNo);
 	
 		int code=0;
-		//이미 가입한 모임인지 확인
+		//이미 가입한 모임인지 확인 완료된 테이블에서 확인
 		Integer appcount=service.selectapplycheck(tmp);
+		//값이 없으면 null 있으면 1반환
 		if(appcount!=null) {
 			code=3;
 			return code;
@@ -223,6 +230,7 @@ public class MeetingController {
 		//번호로 해당 임시테이블에 있는 정보를 실제 신청완료한 테이블에 넣어준다.
 		//승인이면 상태를 Y로 넣어준다(기본값은 N)
 		Map param=new HashedMap();
+	
 		param.put("position",tmp.getPostion());
 		param.put("collabsq",tmp.getCollabSq());
 		logger.debug("param:"+param.get("position"));
@@ -232,7 +240,19 @@ public class MeetingController {
 			int pluscount=service.updatedcount(param);
 			System.out.println(pluscount);
 			int check=service.deleteapply(no);
-		}//throws로 예외처리해야함
+		}
+		//모임이 다차면 Y,N으로 표기하고싶은 로직을 추가한다.
+		Mcount mc=service.selectcount(tmp);
+		//모집인원의 합계와 신청완료된 사용자의 합계가 같으면
+		//상태를 Y로 바꿔준다.
+		int total=mc.getCollabBack()+mc.getCollabDesgin()+mc.getCollabFront();
+		int count=mc.getBackCount()+mc.getDesginCount()+mc.getFrontCount();
+		if(total==count) {
+			int ck=service.updatedstatus(tmp);
+		}
+		
+		
+		
 		
 	}
 	@RequestMapping(value="meeting/unapprove{no}.do",method=RequestMethod.GET)

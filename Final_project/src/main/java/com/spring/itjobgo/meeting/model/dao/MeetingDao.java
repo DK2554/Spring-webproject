@@ -73,6 +73,10 @@ public interface MeetingDao {
 
 	List enterList(SqlSessionTemplate session, int no);
 
+	int updatestatus(SqlSessionTemplate session, Tmpapply tmp);
+
+	List<Mboard> selectendList(SqlSessionTemplate session);
+
 	
 
 }
