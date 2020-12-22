@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -16,8 +17,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -35,6 +38,7 @@ import com.spring.itjobgo.qna.model.service.QnaBoardService;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 @RestController
 public class QnaBoardController {
@@ -444,9 +448,30 @@ public class QnaBoardController {
 		}
 	}
 	
-	
-	
-			
+	//리스트 이미지 불러오기
+	@RequestMapping(value="qna/selectImg{qboardNo}",method=RequestMethod.GET,produces=MediaType.IMAGE_JPEG_VALUE)
+	public @ResponseBody byte[] selectImage(@PathVariable int qboardNo, HttpServletRequest request, HttpServletResponse res)throws Exception{
+		logger.debug("이미지요청~qna");
+		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
+		QB_ATTACHMENT mt=service.selectImage(qboardNo);
+		
+		logger.debug(mt.toString());
+		//파일경로
+		String realFile = request.getServletContext().getRealPath("/resources/upload/qnaBoard");
+		//파일이름
+		String fileNm = mt.getRenamedfilename();
+		//파일확장자
+		String ext = fileNm.substring(fileNm.lastIndexOf(".") + 1);
+		String image=realFile+"\\"+fileNm;
+		
+		logger.debug("realFile:"+realFile+"fileNm:"+fileNm+"ext:"+ext);
+		logger.debug(realFile+"\\"+fileNm);
+		
+		InputStream in =new FileInputStream(image);
+		byte[] imageByteArray=IOUtils.toByteArray(in);
+		in.close();
+		
+		return imageByteArray;
 	}
 	
 	
@@ -454,31 +479,7 @@ public class QnaBoardController {
 	
 	
 	
+			
+	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	
-	
-	
-	
-

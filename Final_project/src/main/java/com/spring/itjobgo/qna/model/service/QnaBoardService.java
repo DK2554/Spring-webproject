@@ -6,6 +6,7 @@ import java.util.Map;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 public interface QnaBoardService {
 
@@ -44,6 +45,9 @@ public interface QnaBoardService {
 	//댓글갯수 카운트 -1
 	int deleteCount(int qboardNo);
 	
+	//이미지 불러오기
+	QB_ATTACHMENT selectImage(int qboardNo);
+
 	
 	
 }

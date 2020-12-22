@@ -11,6 +11,7 @@ import com.spring.itjobgo.qna.model.dao.QnaBoardDao;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 	@Service
 	public class QnaBoardServiceImpl implements QnaBoardService {
@@ -152,6 +153,11 @@ import com.spring.itjobgo.qna.model.vo.QnaBoard;
 		return dao.deleteCount(session, qboardNo);
 	}
 	
+	//이미지 불러오기
+	@Override
+	public QB_ATTACHMENT selectImage(int qboardNo) {
+		return dao.selectImage(session,qboardNo);
+	}
 	
 	
 	

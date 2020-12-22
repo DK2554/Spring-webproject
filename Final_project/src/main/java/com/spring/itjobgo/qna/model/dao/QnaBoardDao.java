@@ -9,6 +9,7 @@ import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QnaBoard;
+import com.spring.itjobgo.ref.model.vo.REF_SITE_ATTACHMENT;
 
 public interface QnaBoardDao {
 
@@ -65,7 +66,8 @@ public interface QnaBoardDao {
 	//댓글 카운트 -1
 	int deleteCount(SqlSessionTemplate session, int qboardNo);
 	
-	
+	//이미지 불러오기
+	QB_ATTACHMENT selectImage(SqlSessionTemplate session, int qboardNo);
 	
 }
 
