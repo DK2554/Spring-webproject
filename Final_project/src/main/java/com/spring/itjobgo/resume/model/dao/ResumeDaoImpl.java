@@ -299,19 +299,28 @@ public class ResumeDaoImpl implements ResumeDao {
 			return session.delete("resume.deleteResumeAbroad",resumeNo);
 		}
 
-		//전문가 등록
+		//이력서 전문가 등록
 		@Override
 		public int insertConsult(SqlSessionTemplate session, Consult consult) {
 			System.out.println("********dao 전문가 등록 전**********");
 			return session.delete("resume.insertConsult",consult);
 		}
 		
-		//전문가 증빙서류(파일첨부) 등록
+		//이력서 전문가 증빙서류(파일첨부) 등록
 		@Override
 		public int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file) {
 			System.out.println("********dao 전문가 증빙서류(파일첨부) 등록 전**********");
 			return session.delete("resume.insertConsultAttachment",file);
 		}
+
+		//이력서 전문가 신청 리스트 불러오기
+		@Override
+		public List<Consult> selectConsultant(SqlSessionTemplate session) {
+			return session.selectList("rboard.selectConsultant");
+		}
+		
+		
+		
 
 
 

@@ -67,4 +67,7 @@ public interface ResumeService {
 	
 	//전문가 등록하기
 	int insertConsult(Consult consult, List<ConsultAttachment> files);
+	
+	//이력서 전문가 신청 리스트 불러오기
+	List<Consult> selectConsultant();
 }

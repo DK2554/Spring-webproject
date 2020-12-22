@@ -367,6 +367,8 @@ public class ResumeServiceImpl implements ResumeService {
 			
 			return result;
 	      }
+	
+	//이력서 전문가 등록
 	@Override
 	public int insertConsult(Consult consult, List<ConsultAttachment> files) {
 
@@ -385,6 +387,12 @@ public class ResumeServiceImpl implements ResumeService {
 			}
 		}
 		return result;
+	}
+	
+	//이력서 전문가 신청 리스트 불러오기
+	@Override
+	public List<Consult> selectConsultant() {
+		return dao.selectConsultant(session);
 	}
 
 

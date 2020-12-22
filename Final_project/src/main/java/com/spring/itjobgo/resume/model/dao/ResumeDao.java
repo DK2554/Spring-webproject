@@ -151,9 +151,12 @@ public interface ResumeDao {
 	//이력서(사진파일) 삭제
 	int deleteResumeAttachment(SqlSessionTemplate session, int resumeNo);
 	
-	//전문가 등록
+	//이력서 전문가 등록
 	int insertConsult(SqlSessionTemplate session, Consult consult);
 	
-	//전문가 증빙서류(첨부파일) 등록
+	//이력서 전문가 증빙서류(첨부파일) 등록
 	int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file);
+	
+	//이력서 전문가 신청 리스트 불러오기
+	List<Consult> selectConsultant(SqlSessionTemplate session);
 }
