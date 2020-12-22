@@ -41,5 +41,6 @@ public interface MemberDao {
 
 	int selectScrap(SqlSession session, Map param);
 
-
+	//이력서 전문가 등록
+	int updateConsultant(SqlSession session, int memberSq);
 }
