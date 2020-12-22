@@ -54,6 +54,18 @@ public class MeetingDaoImpl implements MeetingDao {
 	}
 
 	@Override
+	public List<Mboard> selectendList(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("meeting.selectendList");
+	}
+
+	@Override
+	public int updatestatus(SqlSessionTemplate session, Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return session.update("meeting.updatestatus",tmp);
+	}
+
+	@Override
 	public String selectMboardname(SqlSessionTemplate session, int collabSq) {
 		// TODO Auto-generated method stub
 		return session.selectOne("meeting.selectMboardname",collabSq);

@@ -8,6 +8,19 @@ public class Mcount {
 	private int backCount;
 	private int frontCount;
 	private int desginCount;
+	public Mcount(int collabSq, int collabBack, int collabFront, int collabDesgin, int backCount, int frontCount,
+			int desginCount, String status) {
+		super();
+		this.collabSq = collabSq;
+		this.collabBack = collabBack;
+		this.collabFront = collabFront;
+		this.collabDesgin = collabDesgin;
+		this.backCount = backCount;
+		this.frontCount = frontCount;
+		this.desginCount = desginCount;
+		this.status = status;
+	}
+	private String status;
 	public Mcount() {
 		// TODO Auto-generated constructor stub
 	}
@@ -57,19 +70,10 @@ public class Mcount {
 	public String toString() {
 		return "Mcount [collabSq=" + collabSq + ", collabBack=" + collabBack + ", collabFront=" + collabFront
 				+ ", collabDesgin=" + collabDesgin + ", backCount=" + backCount + ", frontCount=" + frontCount
-				+ ", desginCount=" + desginCount + "]";
+				+ ", desginCount=" + desginCount + ", status=" + status + "]";
 	}
-	public Mcount(int collabSq, int collabBack, int collabFront, int collabDesgin, int backCount, int frontCount,
-			int desginCount) {
-		super();
-		this.collabSq = collabSq;
-		this.collabBack = collabBack;
-		this.collabFront = collabFront;
-		this.collabDesgin = collabDesgin;
-		this.backCount = backCount;
-		this.frontCount = frontCount;
-		this.desginCount = desginCount;
-	}
+	
+	
 	
 
 }

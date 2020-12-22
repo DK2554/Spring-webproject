@@ -23,7 +23,7 @@ public class MeetingServiceImpl implements MeetingService {
 	private MeetingDao dao;
 	@Autowired
 	private SqlSessionTemplate session;
-
+	@Transactional
 	@Override
 	public int insertMboard(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
@@ -50,7 +50,7 @@ public class MeetingServiceImpl implements MeetingService {
 		// TODO Auto-generated method stub
 		return dao.selectapplycheck(session,tmp);
 	}
-
+	@Transactional
 	@Override
 	public int updatedcount(Map param) {
 		// TODO Auto-generated method stub
@@ -74,6 +74,18 @@ public class MeetingServiceImpl implements MeetingService {
 		// TODO Auto-generated method stub
 		//번호로 첨부파일 db연동
 		return dao.selectMattach(session,no);
+	}
+
+	@Override
+	public List<Mboard> selectendlist() {
+		// TODO Auto-generated method stub
+		return dao.selectendList(session);
+	}
+	@Transactional
+	@Override
+	public int updatedstatus(Tmpapply tmp) {
+		// TODO Auto-generated method stub
+		return dao.updatestatus(session,tmp);
 	}
 
 	@Override
@@ -130,7 +142,7 @@ public class MeetingServiceImpl implements MeetingService {
 		// TODO Auto-generated method stub
 		return dao.selectOneapply(session,no);
 	}
-
+	@Transactional
 	@Override
 	public int insertApprove(Approve ap) {
 		// TODO Auto-generated method stub
@@ -185,7 +197,7 @@ public class MeetingServiceImpl implements MeetingService {
 		System.out.println(list.toString());
 		return list;
 	}
-
+	@Transactional
 	@Override
 	public int updatedmeeting(Map param, List<Mattachment> files) {
 		// TODO Auto-generated method stub
@@ -205,7 +217,7 @@ public class MeetingServiceImpl implements MeetingService {
 		}
 		return result;
 	}
-
+	@Transactional
 	@Override
 	public int updatedmeeting(Map param) {
 		// TODO Auto-generated method stub
