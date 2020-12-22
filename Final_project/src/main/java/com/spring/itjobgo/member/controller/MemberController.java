@@ -65,8 +65,8 @@ public class MemberController {
 		System.out.println("member: " + member);
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
-		//0:관리자 1: 일반 회원 2: 이력서 첨삭 관리자 
-		//3: 카카오 4:네이버 5: 구글
+		// 0:관리자 1: 일반 회원 2: 이력서 첨삭 관리자
+		// 3: 카카오 4:네이버 5: 구글
 		member.setMemberLevel("1");// 일반회원 :0
 		int result = 0;
 
@@ -352,7 +352,7 @@ public class MemberController {
 	public List<MemberScrap> getScrapStatus(@RequestParam Map param) throws IOException {
 		System.out.println("scrap멤버호출: " + param);
 		List<MemberScrap> ms = null;
-		
+
 		if (!(param.get("memberSq").equals("undefined"))) {
 			ms = service.selectScrapList(param);
 		}
@@ -408,7 +408,7 @@ public class MemberController {
 		String encodePw = encoder.encode(member.getMemberPwd());
 		member.setMemberPwd(encodePw);
 		member.setMemberLevel("3");// 소셜회원 : 3으로 초기화
-		
+
 		int result = 0;
 
 		logger.debug("member: ", member);
@@ -419,6 +419,37 @@ public class MemberController {
 
 		if (login == null) {// 디비에 없는 경우
 
+			result = service.insertMember(member);
+			if (result > 0) {
+				return result;
+			} else {
+				return -1;
+			}
+		} else { // 디비에 존쟈하는 경우
+			return 1;
+
+		}
+
+	}
+
+	// 구글 로그인
+	@RequestMapping(value = "/googleLogin", method = RequestMethod.POST)
+	public int googleLogin(@RequestBody Member member) {
+		System.out.println("member: " + member);
+		String encodePw = encoder.encode(member.getMemberPwd());
+		member.setMemberPwd(encodePw);
+		// 0:관리자 1: 일반 회원 2: 이력서 첨삭 관리자
+		// 3: 카카오 4:네이버 5: 구글
+
+		int result = 0;
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		Map param = objectMapper.convertValue(member, Map.class); // pojo->Map
+
+		Member login = service.selectOneMember(param);// 가입한 회원인지 확인
+
+
+		if (login == null) {// 디비에 없는 경우
 			result = service.insertMember(member);
 			if (result > 0) {
 				return result;
