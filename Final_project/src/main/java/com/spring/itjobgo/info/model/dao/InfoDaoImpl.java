@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.itjobgo.ItNews.model.vo.ItnewsAttachment;
 import com.spring.itjobgo.info.model.vo.INFO_ATTACHMENT;
 import com.spring.itjobgo.info.model.vo.Info;
 
@@ -25,6 +26,12 @@ public class InfoDaoImpl implements InfoDao {
 	@Override
 	public int insertAttachment(SqlSessionTemplate session, INFO_ATTACHMENT info_attach) {
 		return session.insert("info.insertAttachment",info_attach);
+	}
+	
+	//이미지 불러오기
+	@Override
+	public INFO_ATTACHMENT selectImage(SqlSessionTemplate session, int sq) {
+		return session.selectOne("info.selectImage",sq);
 	}
 	
 	//상세보기
