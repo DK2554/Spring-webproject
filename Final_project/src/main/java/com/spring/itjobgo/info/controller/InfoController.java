@@ -125,8 +125,6 @@ public class InfoController {
 		return msg;
 	}
 
-	
-	
 	//게시판 list 에 이미지 불러오기
 		@RequestMapping(value="info/imagesrequest{sq}",method=RequestMethod.GET,produces = MediaType.IMAGE_JPEG_VALUE)
 		public @ResponseBody byte[]  selectImage(@PathVariable int sq,HttpServletRequest request,HttpServletResponse res)throws Exception{
@@ -153,41 +151,27 @@ public class InfoController {
 			return imageByteArray;
 		}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 취업정보 게시판 상세화면 전환 페이지
 	@RequestMapping(value = "/info/infoDetail{infoSq}", method = RequestMethod.GET)
 	public Info selectInfoOne(@PathVariable int infoSq, HttpServletRequest request, HttpServletResponse response)
 			throws JsonMappingException, JsonGenerationException, IOException {
-
+	
 		logger.debug("infoSq" + Integer.toString(infoSq));
-
+	
 		// 조회수 증가
 		Cookie[] cookies = request.getCookies();
 		String boardHistory = "";
 		boolean hasRead = false;
-
+	
 		if (cookies != null) {
 			for (Cookie c : cookies) {
-
+	
 				String name = c.getName();
 				String value = c.getValue();
-
+	
 				if ("boardHistory".equals(name)) {
 					boardHistory = value;
-
+	
 					if (value.contains("|" + infoSq + "|")) {
 						hasRead = true;
 						break;
@@ -195,18 +179,13 @@ public class InfoController {
 				}
 			} // for
 		} // if
-
 		if (!hasRead) {
 			Cookie c = new Cookie("boardHistory", boardHistory + "|" + infoSq + "|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
-
 		}
-
 		Info iboard = service.selectInfoOne(infoSq, hasRead);
-
 		return iboard;
-
 	}
 
 	// 취업정보 글 삭제하기
