@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meeting">
+	
 	<insert id="insertmboard" parameterType="map">
 		insert into collab_board
 		values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
@@ -169,11 +170,12 @@
 		select
 		collab_board.collab_title,collab_board.collab_writer,tmp_apply.tmp_date,
 		tmp_apply.memberSq,collab_board.collab_Sq
-		from collab_board join tmp_apply
+		from collab_board join
+		tmp_apply
 		on
 		collab_board.collab_sq=tmp_apply.collab_sq
-<!--  		where  -->
-<!--  		tmp_apply.memberSq=#{no}  -->
+		<!-- where -->
+		<!-- tmp_apply.memberSq=#{no} -->
 	</select>
 
 	<resultMap type="com.spring.itjobgo.meeting.model.vo.Mboard"
@@ -197,4 +199,10 @@
 		<collection property="mboard" resultMap="Mboard" />
 
 	</resultMap>
+	
+	<update id="updatestatus"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		update collab_count set status='Y' where collab_sq=#{collabSq}
+	</update>
+
 </mapper>

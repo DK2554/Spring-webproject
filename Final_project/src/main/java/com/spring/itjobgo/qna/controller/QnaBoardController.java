@@ -182,9 +182,7 @@ public class QnaBoardController {
 			Cookie c = new Cookie("boardHistory",boardHistory+"|"+qboardNo+"|");
 			c.setMaxAge(-1);
 			response.addCookie(c);
-					
 		}
-		
 		QnaBoard qboard =service.selectQnaBoardOne(qboardNo,hasRead);
 		
 		return qboard;
@@ -454,6 +452,10 @@ public class QnaBoardController {
 		logger.debug("이미지요청~qna");
 		//받아온 번호로 해당 첨부파일 db가서 받아오는 로직수행
 		QB_ATTACHMENT mt=service.selectImage(qboardNo);
+		
+		if(mt!=null) {
+			System.out.println("불러오기~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		}
 		
 		logger.debug(mt.toString());
 		//파일경로

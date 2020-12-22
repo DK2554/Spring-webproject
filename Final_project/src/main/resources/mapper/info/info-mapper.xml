@@ -67,7 +67,12 @@
 			SELECT * FROM INFO WHERE INFO_SQ=#{infoSq}
 		
 		</select>
-		
+			
+	<!--이미지 불러오기  -->
+		<select id="selectImage" parameterType="_int" resultType="info_attachment">
+			SELECT  * FROM INFO_ATTACHMENT WHERE INFO_SQ=#{sq}
+		</select>
+			
 	<!-- 삭제하기 -->
 		<delete id="deleteInfo" parameterType="_int">
 			DELETE  FROM INFO WHERE INFO_SQ=#{infoSq}
