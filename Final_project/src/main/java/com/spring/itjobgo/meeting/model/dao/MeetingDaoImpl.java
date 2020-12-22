@@ -188,4 +188,11 @@ public class MeetingDaoImpl implements MeetingDao {
 		return session.selectList("meeting.selectmList");
 	}
 
+	@Override
+	public List selectWaitList(SqlSessionTemplate session, int no) {		
+		return session.selectList("meeting.selectWaitList");
+	}
+	
+	
+
 }

@@ -1,115 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="meeting">
-  <insert id="insertmboard" parameterType="map">
-  	insert into collab_board values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
-  </insert>
-  <insert id="insertcount" parameterType="map">
-  insert into collab_count values(#{collabsq},#{back},#{front},#{desgin},default,default,default)
-  <selectKey keyProperty="collabsq" resultType="_int" order="BEFORE">
-  	select seq_meet.currval from dual
-  	</selectKey>
-  </insert>
-  <insert id="insertmattach" parameterType="mattachment" >
-  insert into m_attachment values(seq_mattach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
-   <selectKey keyProperty="pboardSq" resultType="_int" order="BEFORE">
- 		select seq_meet.currval from dual
-  </selectKey>
-  </insert>
-  <resultMap type="mboard" id="mboardmap">
-	<result column="collab_lang" property="collabLang" typeHandler="strarr"/>
-</resultMap>
-  <select id="selectmList" resultMap="mboardmap" >
-  	select collab_sq,collab_title,collab_writer,collab_simcontent,collab_back,collab_front,collab_desgin from collab_board
-  	order by collab_sq desc
-  </select>
-  <select id="selectminfo" resultMap="mboardmap" parameterType="_int"> 
-  	select * from collab_board   where collab_sq=#{no} 
-  </select>
-  <!--모임신청하는로직-->
-  <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  insert into tmp_apply values(seq_apply.nextval,#{memberSq},#{postion},default,#{collabSq},#{writerNo})
-  </insert>
-  <select id="selectappcount"  resultType="_int" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  select count(memberSq) from tmp_apply where collab_sq=#{collabSq} AND memberSq=#{memberSq}
-  </select>
-  <select id="selectmattach" resultType="mattachment" parameterType="_int">
-  select * from m_attachment where pboard_sq=#{no}
-  </select>
-  <!--로그인한 사용자 이메일로 생성한 모임을 찾아서 그 모임에 신청을 한 사용자리스트를 반환-->
-  <select id="selectapply" resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply" parameterType="_int">
-  	select * from tmp_apply where writer_no=#{no}
-  </select>
-  <select id="selectmember" parameterType="String" resultType="com.spring.itjobgo.member.model.vo.Member">
-  SELECT * FROM MEMBER WHERE Member_email=#{email}
-  </select>
-  <select id="selectListmember" parameterType="_int" resultMap="mboardmap" >
- SELECT collab_sq,mkdate FROM COLLAB_BOARD where member_sq=#{memberSq}  order by collab_sq ASC
-  </select>
-  <select id="selectMembername" parameterType="_int" resultType="String">
-  select member_name from member where member_sq=#{memberSq}
-  </select>
-  <select id="selectMboardname" parameterType="_int" resultType="String">
-  select collab_title from collab_board where collab_sq=#{collabSq}
-  </select>
-  <!--번호로 임시테이블에 잇는 정보를 가져온다-->
-  <select id="selectOneTmp" parameterType="_int" resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  select * from tmp_apply where tmp_no=#{no}
-  </select>
-  <!--신청완료 테이블에 값을 넣는 로직-->
-  <insert id="insertApprove" parameterType="com.spring.itjobgo.meeting.model.vo.Approve">
-  insert into application_complted values(seq_complete.nextval,#{memberSq},#{position},default,#{collabSq},#{status})
-  </insert>
-  <!--신청을 완료하면 해당 임시테이블 값을 삭제-->
-  <delete id="deleteapply">
-  delete tmp_apply where tmp_no=#{no}
-  </delete>
-  <!--회원번호로 신청한모임 목록리스트를 가져옴 -->
-  <select id="selectapprovelist" parameterType="_int" resultType="com.spring.itjobgo.meeting.model.vo.Approve">
-  select * from application_complted where member_sq=#{no}
-  </select>
-  <!--모임번호로 모임삭제-->
-  <delete id="deletemeeting" parameterType="_int">
-  delete collab_board where collab_sq=#{no}</delete>
-  <update id="updatemeeting" parameterType="map">
-  update collab_board set collab_title=#{mtitle},collab_content=#{mcontent},collab_simcontent=#{simcontent},collab_upload_date=#{sdate}, collab_deadline=#{fdate},collab_lang=#{langs},collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin},rdate=#{rdate},address=#{address}
-  where collab_sq=#{collabSq}
-  </update>
-  <update id="updatecounttable">
-  update collab_count set collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin} where collab_sq=#{collabSq}
-  </update>
-  <update id="updateattachment" parameterType="mattachment">
-  update m_attachment set  originalFilename=#{originalFilename},renamedFilename=#{renamedFilename}
-  where mattachmentNo=#{mattachementNo}</update>
-  <delete id="deletemapply" parameterType="_int">
-  delete tmp_apply where tmp_no=#{tmpNo}
-   
-  </delete>
-  <select id="selecttno" resultType="_int" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
-  select tmp_no from tmp_apply where collab_sq=#{collabSq} and memberSq=#{memberSq}
-  </select>
-  <select id="selectcount" resultType="com.spring.itjobgo.meeting.model.vo.Mcount">
-  select * from collab_count where collab_sq=#{collabSq}
-  </select>
-  <update id="upcount" parameterType="map" >
-  update collab_count 
-  <set>
-  <if test='position.equals("back")'>back_count=back_count+1,</if>
-  <if test='position.equals("front")'>front_count=front_count+1,</if>
-  <if test='position.equals("desgin")'>desgin_count=desgin_count+1,</if>
-  </set>
-  where collab_sq=#{collabsq}
-  </update>
-  <select id="selectapplycount"  parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply" resultType="Integer">
-  select * from application_complted where member_sq=#{memberSq} and collab_sq=#{collabSq}
-  </select>
-  <select id="selectjoincount" resultType="com.spring.itjobgo.meeting.model.vo.Mcount" parameterType="_int">
-	select T.collab_back,T.collab_front,T.collab_desgin,T.back_count,T.front_count,T.desgin_count from collab_board C join collab_count T on C.collab_sq=T.collab_sq
-	where T.collab_sq=#{no}   
-  </select>
-  
-  <select id="enterList" resultType="hashmap">
-  select M.member_email,M.member_name,A.position from application_complted A join member M on A.member_sq=M.member_sq where collab_sq=#{no} 
-  </select>
-  
+	<insert id="insertmboard" parameterType="map">
+		insert into collab_board
+		values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
+	</insert>
+	<insert id="insertcount" parameterType="map">
+		insert into collab_count
+		values(#{collabsq},#{back},#{front},#{desgin},default,default,default)
+		<selectKey keyProperty="collabsq" resultType="_int"
+			order="BEFORE">
+			select seq_meet.currval from dual
+		</selectKey>
+	</insert>
+	<insert id="insertmattach" parameterType="mattachment">
+		insert into m_attachment
+		values(seq_mattach.nextval,#{pboardSq},#{originalFilename},#{renamedFilename},default,default)
+		<selectKey keyProperty="pboardSq" resultType="_int"
+			order="BEFORE">
+			select seq_meet.currval from dual
+		</selectKey>
+	</insert>
+	<resultMap type="mboard" id="mboardmap">
+		<result column="collab_lang" property="collabLang"
+			typeHandler="strarr" />
+	</resultMap>
+	<select id="selectmList" resultMap="mboardmap">
+		select
+		collab_sq,collab_title,collab_writer,collab_simcontent,collab_back,collab_front,collab_desgin
+		from collab_board
+		order by collab_sq desc
+	</select>
+	<select id="selectminfo" resultMap="mboardmap"
+		parameterType="_int">
+		select * from collab_board where collab_sq=#{no}
+	</select>
+	<!--모임신청하는로직 -->
+	<insert id="inserttapply"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		insert into tmp_apply
+		values(seq_apply.nextval,#{memberSq},#{postion},default,#{collabSq},#{writerNo})
+	</insert>
+	<select id="selectappcount" resultType="_int"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		select count(memberSq) from tmp_apply where
+		collab_sq=#{collabSq} AND
+		memberSq=#{memberSq}
+	</select>
+	<select id="selectmattach" resultType="mattachment"
+		parameterType="_int">
+		select * from m_attachment where pboard_sq=#{no}
+	</select>
+	<!--로그인한 사용자 이메일로 생성한 모임을 찾아서 그 모임에 신청을 한 사용자리스트를 반환 -->
+	<select id="selectapply"
+		resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply"
+		parameterType="_int">
+		select * from tmp_apply where writer_no=#{no}
+	</select>
+	<select id="selectmember" parameterType="String"
+		resultType="com.spring.itjobgo.member.model.vo.Member">
+		SELECT * FROM MEMBER WHERE Member_email=#{email}
+	</select>
+	<select id="selectListmember" parameterType="_int"
+		resultMap="mboardmap">
+		SELECT collab_sq,mkdate FROM COLLAB_BOARD where
+		member_sq=#{memberSq} order
+		by collab_sq ASC
+	</select>
+	<select id="selectMembername" parameterType="_int"
+		resultType="String">
+		select member_name from member where member_sq=#{memberSq}
+	</select>
+	<select id="selectMboardname" parameterType="_int"
+		resultType="String">
+		select collab_title from collab_board where
+		collab_sq=#{collabSq}
+	</select>
+	<!--번호로 임시테이블에 잇는 정보를 가져온다 -->
+	<select id="selectOneTmp" parameterType="_int"
+		resultType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		select * from tmp_apply where tmp_no=#{no}
+	</select>
+	<!--신청완료 테이블에 값을 넣는 로직 -->
+	<insert id="insertApprove"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Approve">
+		insert into application_complted
+		values(seq_complete.nextval,#{memberSq},#{position},default,#{collabSq},#{status})
+	</insert>
+	<!--신청을 완료하면 해당 임시테이블 값을 삭제 -->
+	<delete id="deleteapply">
+		delete tmp_apply where tmp_no=#{no}
+	</delete>
+	<!--회원번호로 신청한모임 목록리스트를 가져옴 -->
+	<select id="selectapprovelist" parameterType="_int"
+		resultType="com.spring.itjobgo.meeting.model.vo.Approve">
+		select * from application_complted where member_sq=#{no}
+	</select>
+	<!--모임번호로 모임삭제 -->
+	<delete id="deletemeeting" parameterType="_int">
+		delete collab_board
+		where collab_sq=#{no}
+	</delete>
+	<update id="updatemeeting" parameterType="map">
+		update collab_board set
+		collab_title=#{mtitle},collab_content=#{mcontent},collab_simcontent=#{simcontent},collab_upload_date=#{sdate},
+		collab_deadline=#{fdate},collab_lang=#{langs},collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin},rdate=#{rdate},address=#{address}
+		where collab_sq=#{collabSq}
+	</update>
+	<update id="updatecounttable">
+		update collab_count set
+		collab_back=#{back},collab_front=#{front},collab_desgin=#{desgin}
+		where collab_sq=#{collabSq}
+	</update>
+	<update id="updateattachment" parameterType="mattachment">
+		update m_attachment
+		set
+		originalFilename=#{originalFilename},renamedFilename=#{renamedFilename}
+		where mattachmentNo=#{mattachementNo}
+	</update>
+	<delete id="deletemapply" parameterType="_int">
+		delete tmp_apply where
+		tmp_no=#{tmpNo}
+
+	</delete>
+	<select id="selecttno" resultType="_int"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		select tmp_no from tmp_apply where collab_sq=#{collabSq}
+		and
+		memberSq=#{memberSq}
+	</select>
+	<select id="selectcount"
+		resultType="com.spring.itjobgo.meeting.model.vo.Mcount">
+		select * from collab_count where collab_sq=#{collabSq}
+	</select>
+	<update id="upcount" parameterType="map">
+		update collab_count
+		<set>
+			<if test='position.equals("back")'>back_count=back_count+1,</if>
+			<if test='position.equals("front")'>front_count=front_count+1,</if>
+			<if test='position.equals("desgin")'>desgin_count=desgin_count+1,</if>
+		</set>
+		where collab_sq=#{collabsq}
+	</update>
+	<select id="selectapplycount"
+		parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply"
+		resultType="Integer">
+		select * from application_complted where
+		member_sq=#{memberSq} and
+		collab_sq=#{collabSq}
+	</select>
+	<select id="selectjoincount"
+		resultType="com.spring.itjobgo.meeting.model.vo.Mcount"
+		parameterType="_int">
+		select
+		T.collab_back,T.collab_front,T.collab_desgin,T.back_count,T.front_count,T.desgin_count
+		from collab_board C join collab_count T on C.collab_sq=T.collab_sq
+		where T.collab_sq=#{no}
+	</select>
+
+	<select id="enterList" resultType="hashmap">
+		select
+		M.member_email,M.member_name,A.position from application_complted A
+		join member M on A.member_sq=M.member_sq where collab_sq=#{no}
+	</select>
+
+	<select id="selectWaitList" parameterType="_int"
+		resultMap="Tmpapply">
+		select
+		collab_board.collab_title,collab_board.collab_writer,tmp_apply.tmp_date,
+		tmp_apply.memberSq,collab_board.collab_Sq
+		from collab_board join tmp_apply
+		on
+		collab_board.collab_sq=tmp_apply.collab_sq
+<!--  		where  -->
+<!--  		tmp_apply.memberSq=#{no}  -->
+	</select>
+
+	<resultMap type="com.spring.itjobgo.meeting.model.vo.Mboard"
+		id="Mboard">
+		<result column="COLLAB_SQ" property="collabSq" />
+		<result column="MEMBER_SQ" property="memberSq" />
+		<result column="COLLAB_TITLE" property="collabTitle" />
+		<result column="COLLAB_WRITER" property="collabWriter" />
+
+	</resultMap>
+
+
+	<resultMap id="Tmpapply"
+		type="com.spring.itjobgo.meeting.model.vo.Tmpapply">
+		<result column="membersq" property="memberSq" />
+		<result column="TMP_NO" property="tmpNo" />
+		<result column="POSTION" property="postion" />
+		<result column="WRITER_NO" property="writerNo" />
+		<result column="COLLAB_SQ" property="collabSq" />
+		<result column="TMP_DATE" property="tmpDate" />
+		<collection property="mboard" resultMap="Mboard" />
+
+	</resultMap>
 </mapper>

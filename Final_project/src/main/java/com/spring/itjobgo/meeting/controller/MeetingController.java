@@ -381,6 +381,13 @@ public class MeetingController {
 		return list;
 	}
 	
+	//waitList.do
+	
+	@RequestMapping(value="meeting/waitList{no}.do",method=RequestMethod.GET)
+	public List waitList(@PathVariable int no){
+		List list = service.selectWaitList(no);
+		return list;
+	}
 }
 	
 	

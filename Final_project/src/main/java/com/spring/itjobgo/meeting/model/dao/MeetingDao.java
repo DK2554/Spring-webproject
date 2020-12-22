@@ -73,6 +73,8 @@ public interface MeetingDao {
 
 	List enterList(SqlSessionTemplate session, int no);
 
+	List selectWaitList(SqlSessionTemplate session, int no);
+
 	
 
 }
