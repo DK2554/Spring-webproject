@@ -238,8 +238,6 @@ System.out.println("게시판 삭제 맵");
 								method = RequestMethod.GET)
 	public INFO_ATTACHMENT selectAttach(@PathVariable int infoSq) {
 
-		System.out.println("==첨부파일 불러오기 맵핑 시작==");
-
 		INFO_ATTACHMENT ifa = service.selectAttach(infoSq);
 
 		System.out.println(ifa);
@@ -255,8 +253,6 @@ System.out.println("게시판 삭제 맵");
 							@RequestBody(required = false) 
 							MultipartFile[] file,
 							HttpServletRequest request) {
-
-		System.out.println("==업데이트 메서드 실행==");
 
 		if (file.length > 0) {
 			// 파일이 존재한다면 게시판 번호를 변수에 넣어둔다.
@@ -316,8 +312,6 @@ System.out.println("게시판 삭제 맵");
 	@RequestMapping(value="info/infoAttachment{infoSq}",
 	                        method=RequestMethod.GET)
 	public INFO_ATTACHMENT downLoad(@PathVariable int infoSq) {
-	   
-	   System.out.println("==첨부파일 다운로드 매핑 시작==");
 	   logger.debug(Integer.toString(infoSq));
 	   INFO_ATTACHMENT ifa = service.selectAttach(infoSq);
 	   if(ifa==null) return null;
