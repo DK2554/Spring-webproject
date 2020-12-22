@@ -251,12 +251,12 @@
   		telephone=#{telephone},
   		rphone=#{rphone},
   		remail=#{remail},
-  		rtitle=#{rtitle},
-  		rdate=#{rdate}
+  		rtitle=#{rtitle}
+<!--   		rdate=#{rdate} -->
   	WHERE RESUME_NO=#{resumeNo}
-  	  	<selectKey keyProperty="rdate" resultType="date" order="BEFORE">
+<!--   	  	<selectKey keyProperty="rdate" resultType="date" order="BEFORE">
 	 		SELECT rdate FROM RESUME where resume_no=#{resumeNo}
-	  	</selectKey>
+	  	</selectKey> -->
   </update>
   
   
@@ -396,9 +396,7 @@
   		resume_attachmentno=#{resumeAttachmentno},
   		resume_no=#{resumeNo},
   		original_filename=#{originalFilename},
-  		renamed_filename=#{renamedFilename},
-  		upload_date=#{uploadDate},
-  		status=#{status}
+  		renamed_filename=#{renamedFilename}
   	WHERE RESUME_NO=#{resumeNo}
   	  	<selectKey keyProperty="resumeAttachmentno" resultType="_int" order="BEFORE">
 	 		SELECT resume_attachmentno FROM RESUME_ATTACHMENT where resume_no=#{resumeNo}
@@ -414,14 +412,14 @@
   		resume_no=#{resumeNo},
   		resumelist_title=#{resumelistTitle},
   		resumelist_writer=#{resumelistWriter},
-  		resumelist_date=#{resumelistDate},
-  		resumelist_status=#{resumelistStatus},
+<!--   		resumelist_date=#{resumelistDate},
+  		resumelist_status=#{resumelistStatus}, -->
   		resumelist_attachment=#{resumelistAttachment},
   		resumelist_count=#{resumelistCount}
   	WHERE RESUME_NO=#{resumeNo}
-  	  	<selectKey keyProperty="resumeListno" resultType="_int" order="BEFORE">
+<!--   	  	<selectKey keyProperty="resumeListno" resultType="_int" order="BEFORE">
 	 		SELECT resumelist_no FROM RESUMELIST where resume_no=#{resumeNo}
-	  	</selectKey>
+	  	</selectKey> -->
   </update>
   
   <delete id="deleteResume" parameterType="_int">

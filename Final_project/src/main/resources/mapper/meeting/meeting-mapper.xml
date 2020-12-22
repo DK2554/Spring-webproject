@@ -24,7 +24,7 @@
   	order by collab_sq desc
   </select>
   <select id="selectminfo" resultMap="mboardmap" parameterType="_int"> 
-  	select * from collab_board where collab_sq=#{no}
+  	select * from collab_board   where collab_sq=#{no} 
   </select>
   <!--모임신청하는로직-->
   <insert id="inserttapply" parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply">
@@ -102,6 +102,14 @@
   </update>
   <select id="selectapplycount"  parameterType="com.spring.itjobgo.meeting.model.vo.Tmpapply" resultType="Integer">
   select * from application_complted where member_sq=#{memberSq} and collab_sq=#{collabSq}
+  </select>
+  <select id="selectjoincount" resultType="com.spring.itjobgo.meeting.model.vo.Mcount" parameterType="_int">
+	select T.collab_back,T.collab_front,T.collab_desgin,T.back_count,T.front_count,T.desgin_count from collab_board C join collab_count T on C.collab_sq=T.collab_sq
+	where T.collab_sq=#{no}   
+  </select>
+  
+  <select id="enterList" resultType="hashmap">
+  select M.member_email,M.member_name,A.position from application_complted A join member M on A.member_sq=M.member_sq where collab_sq=#{no} 
   </select>
   
 </mapper>
