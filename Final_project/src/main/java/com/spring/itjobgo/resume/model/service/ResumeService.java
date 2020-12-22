@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -69,5 +70,14 @@ public interface ResumeService {
 	int insertConsult(Consult consult, List<ConsultAttachment> files);
 	
 	//이력서 전문가 신청 리스트 불러오기
-	List<Consult> selectConsultant();
+	List<ConsultAttachmentAll> selectConsultant();
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	List<ConsultAttachmentAll> selectConsultantOne(int memberSq);
+	
+	//이력서 전문가 신청 첨부파일 불러오기
+	ConsultAttachmentAll selectConsultAttachment(int consultNo);
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	int updateConsultApproval(Consult consult);
 }

@@ -6,11 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
-import com.spring.itjobgo.qna.model.vo.QnaBoard;
 import com.spring.itjobgo.resume.model.dao.ResumeDao;
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -391,9 +390,28 @@ public class ResumeServiceImpl implements ResumeService {
 	
 	//이력서 전문가 신청 리스트 불러오기
 	@Override
-	public List<Consult> selectConsultant() {
+	public List<ConsultAttachmentAll> selectConsultant() {
 		return dao.selectConsultant(session);
 	}
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	@Override
+	public List<ConsultAttachmentAll> selectConsultantOne(int memberSq) {
+		return dao.selectConsultantOne(session, memberSq);
+	}
+	
+	//이력서 전문가 신청 파일첨부 불러오기
+	@Override
+	public ConsultAttachmentAll selectConsultAttachment(int consultNo) {
+		return dao.selectConsultAttachment(session, consultNo);
+	}
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	@Override
+	public int updateConsultApproval(Consult consult) {
+		return dao.updateConsultApproval(session, consult);
+	}
+	
 
 
 	

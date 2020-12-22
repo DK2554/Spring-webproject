@@ -643,8 +643,8 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			
-			if(result>0) msg="이력서 컨설틴 전문가 등록 성공";
-			else msg="이력서 컨설틴 전문가 등록 성공";
+			if(result>0) msg="이력서 컨설팅 전문가 승인 성공";
+			else msg="이력서 컨설틴 전문가 승인 실패";
 		
 			return msg;
 		}

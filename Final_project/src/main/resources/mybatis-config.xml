@@ -158,6 +158,9 @@
 		
 		<typeAlias type="com.spring.itjobgo.resume.model.vo.ConsultAttachment"
 		alias="consult_attachment" /> 
+		
+		<typeAlias type="com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll"
+		alias="consult_attachment_all" /> 
 			
 	</typeAliases>
 

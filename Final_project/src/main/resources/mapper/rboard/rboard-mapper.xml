@@ -90,7 +90,31 @@
 	</delete>
 	
 	<!-- 이력서 게시판 리스트 -->
-	 <select id="selectConsultant" resultType="consult">
-	  	SELECT * FROM CONSULT ORDER BY CONSULT_NO DESC
+	 <select id="selectConsultant" resultType="consult_attachment_all">
+	  	SELECT * FROM CONSULT a
+		left outer join consult_attachment b
+		on a.consult_no=b.consult_no
+		ORDER BY a.CONSULT_NO DESC
 	 </select>
+	 
+	 <!-- 나의 이력서 게시판 리스트 -->
+	 <select id="selectConsultantOne" resultType="consult_attachment_all" parameterType="_int">
+	  	SELECT * FROM CONSULT a 
+	  	left outer join consult_attachment b
+	  	on a.consult_no=b.consult_no
+	  	where member_sq=#{memberSq}
+	  	ORDER BY a.CONSULT_NO DESC
+	 </select>
+	 
+	<!-- 이력서 전문가 신청 파일첨부 가져오기 -->
+	  <select id="selectConsultAttachment" resultType="consult_attachment" parameterType="_int">
+		SELECT * FROM CONSULT_ATTACHMENT WHERE CONSULT_NO=#{consultNo}
+	  </select>
+	  
+	<!-- 이력서 전문가 신청 승인여부 수정하기 -->	
+	<update id="updateConsultApproval" parameterType="consult">
+		UPDATE CONSULT SET
+			CONSULT_APPROVAL=#{consultApproval}
+		WHERE CONSULT_NO=#{consultNo}
+	</update>
 </mapper>

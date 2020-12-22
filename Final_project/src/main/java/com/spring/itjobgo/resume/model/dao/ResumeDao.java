@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
 import com.spring.itjobgo.resume.model.vo.Resume;
@@ -158,5 +159,14 @@ public interface ResumeDao {
 	int insertConsultAttachment(SqlSessionTemplate session, ConsultAttachment file);
 	
 	//이력서 전문가 신청 리스트 불러오기
-	List<Consult> selectConsultant(SqlSessionTemplate session);
+	List<ConsultAttachmentAll> selectConsultant(SqlSessionTemplate session);
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	List<ConsultAttachmentAll> selectConsultantOne(SqlSessionTemplate session, int memberSq);
+	
+	//이력서 전문가 신청 파일첨부 불러오기
+	ConsultAttachmentAll selectConsultAttachment(SqlSessionTemplate session, int consultNo);
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	int updateConsultApproval(SqlSessionTemplate session, Consult consult);
 }
