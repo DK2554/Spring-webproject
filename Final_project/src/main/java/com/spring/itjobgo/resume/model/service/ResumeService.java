@@ -1,11 +1,14 @@
 package com.spring.itjobgo.resume.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -69,5 +72,27 @@ public interface ResumeService {
 	int insertConsult(Consult consult, List<ConsultAttachment> files);
 	
 	//이력서 전문가 신청 리스트 불러오기
-	List<Consult> selectConsultant();
+	List<ConsultAttachmentAll> selectConsultant();
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	List<ConsultAttachmentAll> selectConsultantOne(int memberSq);
+	
+	//이력서 전문가 신청 첨부파일 불러오기
+	ConsultAttachmentAll selectConsultAttachment(int consultNo);
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	int updateConsultApproval(Consult consult);
+	
+	//이력서 게시판 댓글 조회
+	List<RboardComment> selectRboardComment(int rboardNo);
+	
+	//댓글 입력
+	int insertRboardComment(RboardComment rboardComment);
+
+	//댓글 삭제
+	int deleteRboardComment(int rboardCommentNo);
+	
+	//댓글 수정
+	int updateRboardComment(Map param);
+	
 }

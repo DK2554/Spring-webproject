@@ -40,7 +40,8 @@ public interface MemberService {
 
 	int selectScrap(Map param);
 
-	
+	//이력서 전문가 등록
+	int updateConsultant(int memberSq);
 
 
 }

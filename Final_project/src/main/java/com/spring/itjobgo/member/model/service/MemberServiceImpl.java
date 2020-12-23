@@ -112,5 +112,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.selectScrap(session, param);
 	}
 
+	//이력서 전문가 등록
+	@Override
+	public int updateConsultant(int memberSq) {
+		return dao.updateConsultant(session, memberSq);
+	}
+
 	
 }

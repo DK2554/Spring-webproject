@@ -116,4 +116,10 @@
 		<result column="scrap_Sq" property="scrapSq" />
 	</resultMap>
 
+	<!-- 이력서 전문가 등록 -->
+	<update id="updateConsultant" parameterType="_int">
+		UPDATE MEMBER SET
+			MEMBER_LEVEL=2
+		WHERE MEMBER_SQ=#{membersSq}
+	</update>
 </mapper>

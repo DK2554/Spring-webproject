@@ -1,18 +1,19 @@
 package com.spring.itjobgo.resume.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
-import com.spring.itjobgo.qna.model.vo.QnaBoard;
 import com.spring.itjobgo.resume.model.dao.ResumeDao;
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -391,9 +392,52 @@ public class ResumeServiceImpl implements ResumeService {
 	
 	//이력서 전문가 신청 리스트 불러오기
 	@Override
-	public List<Consult> selectConsultant() {
+	public List<ConsultAttachmentAll> selectConsultant() {
 		return dao.selectConsultant(session);
 	}
+	
+	//나의 이력서 전문가 신청 리스트 불러오기
+	@Override
+	public List<ConsultAttachmentAll> selectConsultantOne(int memberSq) {
+		return dao.selectConsultantOne(session, memberSq);
+	}
+	
+	//이력서 전문가 신청 파일첨부 불러오기
+	@Override
+	public ConsultAttachmentAll selectConsultAttachment(int consultNo) {
+		return dao.selectConsultAttachment(session, consultNo);
+	}
+	
+	//이력서 전문가 신청 승인여부 수정하기
+	@Override
+	public int updateConsultApproval(Consult consult) {
+		return dao.updateConsultApproval(session, consult);
+	}
+	
+	//이력서 게시판 댓글 조회
+	@Override
+	public List<RboardComment> selectRboardComment(int rboardNo) {
+		return dao.selectRboardComment(session, rboardNo);
+	}
+	
+	//댓글 입력
+	@Override
+	public int insertRboardComment(RboardComment rboardComment) {
+		return dao.insertRboardComment(session, rboardComment);
+	}
+	
+	//댓글 삭제
+	@Override
+	public int deleteRboardComment(int rboardCommentNo) {
+		return dao.deleteRboardComment(session, rboardCommentNo);
+	}
+	
+	//댓글 수정
+	@Override
+	public int updateRboardComment(Map param) {
+		return dao.updateRboardComment(session, param);
+	}
+	
 
 
 	

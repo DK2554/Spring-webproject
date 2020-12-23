@@ -33,14 +33,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.spring.itjobgo.qna.model.vo.QB_ATTACHMENT;
+import com.spring.itjobgo.community.model.vo.CB_COMMENT;
 import com.spring.itjobgo.qna.model.vo.QB_COMMENT;
-import com.spring.itjobgo.qna.model.vo.QnaBoard;
 import com.spring.itjobgo.resume.model.service.ResumeService;
 import com.spring.itjobgo.resume.model.vo.Consult;
 import com.spring.itjobgo.resume.model.vo.ConsultAttachment;
+import com.spring.itjobgo.resume.model.vo.ConsultAttachmentAll;
 import com.spring.itjobgo.resume.model.vo.Rboard;
 import com.spring.itjobgo.resume.model.vo.RboardAttachment;
+import com.spring.itjobgo.resume.model.vo.RboardComment;
 import com.spring.itjobgo.resume.model.vo.Resume;
 import com.spring.itjobgo.resume.model.vo.ResumeAbroad;
 import com.spring.itjobgo.resume.model.vo.ResumeActivity;
@@ -695,41 +696,177 @@ public class ResumeController {
 				return msg;
 		}
 		
-
+	//이력서 전문가 리스트
 	@RequestMapping(value="resume/Consultant.do",method=RequestMethod.GET)
-		public List<Consult> selectConsultant() {
+		public List<ConsultAttachmentAll> selectConsultant() {
 			System.out.println("********이력서 전문가 신청 리스트 컨트롤러 *********");
-			List<Consult> list=service.selectConsultant();
+			List<ConsultAttachmentAll> list=service.selectConsultant();
 
-			for(Consult i : list) {
+			for(ConsultAttachmentAll i : list) {
 				System.out.println(i);
 			}
 			System.out.println(list);
 			return list;
 		}
 	
+	//나의 이력서 전문가 리스트
+	@RequestMapping(value="resume/ConsultantOne/{memberSq}.do",method=RequestMethod.GET)
+		public List<ConsultAttachmentAll> selectConsultantOne(@PathVariable int memberSq) {
+			System.out.println("********이력서 전문가 신청 리스트 컨트롤러 *********");
+			System.out.println("memberSq :"+memberSq);
+			List<ConsultAttachmentAll> list=service.selectConsultantOne(memberSq);
+
+			for(ConsultAttachmentAll i : list) {
+				System.out.println(i);
+			}
+			System.out.println(list);
+			return list;
+		}
+	
+	//이력서 전문가 신청 첨부파일 표시
+	@RequestMapping(value="resume/consultAttachment/{consultNo}.do",method=RequestMethod.GET)
+	public ConsultAttachmentAll selectConsultAttachment(@PathVariable int consultNo) {
+		
+		System.out.println("이력서 게시판 상세정보 첨부파일");
+		System.out.println("controller rboardNo: "+consultNo);
+
+		ConsultAttachmentAll consultAttachmentAll=service.selectConsultAttachment(consultNo);
+		System.out.println(consultAttachmentAll);
+		
+		if(consultAttachmentAll==null) return null;
+		else return consultAttachmentAll;
+	}
+	
+	//이력서 전문가 신청 첨부파일 다운로드(이름 보내기)
+	@RequestMapping(value="resume/consultFileDownload",method=RequestMethod.GET)
+		public void consultFileDownload(HttpServletRequest request, HttpServletResponse response,
+			@RequestHeader(name="user-agent")String header,
+			@RequestParam(value="oriName")String oriName,
+			@RequestParam(value="reName")String reName){
+		
+			System.out.println("oriName : "+oriName);
+			System.out.println("reName : "+reName);
+			
+			String path=request.getServletContext().getRealPath("/resources/upload/consult");
+			File saveFile=new File(path+"/"+reName);
+			BufferedInputStream bis=null;
+			ServletOutputStream sos=null;
+			
+			try {
+				bis=new BufferedInputStream(new FileInputStream(saveFile));
+				sos=response.getOutputStream();
+				boolean isMSIE=header.indexOf("Trident")!=-1||header.indexOf("MSIE")!=-1;
+				String encodeRename="";
+				if(isMSIE) {
+					encodeRename=URLEncoder.encode(oriName,"UTF-8").replaceAll("\\+","%20");
+					
+				}else {
+					encodeRename=new String(oriName.getBytes("UTF-8"),"ISO-8859-1");
+				}
+				response.setContentType("application/octet-stream;charset=utf-8");
+				response.setHeader("Content-Disposition", "attachment;filename=\""+encodeRename+"\"");
+				response.setHeader("Content-Transfer-Encoding", "binary;");
+				response.setContentLength((int)saveFile.length());
+				int read=-1;
+				while((read=bis.read())!=-1) {
+					sos.write(read);
+				}
+			}catch(IOException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					sos.close();
+					bis.close();
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	
+	// 이력서 전문가 승인
+	@RequestMapping(value = "resume/updateConsultApproval.do", method = RequestMethod.POST)
+	public String updateConsultApproval(@RequestParam(value="consultNo") int consultNo, @RequestParam(value="approval") String approval,
+			@RequestParam(value="memberSq") int memberSq) {
+		System.out.println("memberSq : " + consultNo);
+		System.out.println("approval : " + approval);
+		System.out.println("memberSq : " + memberSq);
+		
+		Consult consult=new Consult(consultNo,memberSq,null,null,null,null,approval,null);
+		
+		int result=0;
+		String msg="";
+		
+		try {
+			result = service.updateConsultApproval(consult);
+		}catch(RuntimeException e) {
+			e.printStackTrace();
+		}
+		
+		if(result>0) msg="이력서 컨설틴 전문가 등록 성공";
+		else msg="이력서 컨설틴 전문가 등록 성공";
+	
+		return msg;
+	}
 	
 	// 댓글작성하기
-//		@RequestMapping(value="qna/qnacomment",method = RequestMethod.POST)
-//		public String comment(QB_COMMENT cm) {
-//			String msg="댓글 insert";
-//			int result = service.insertComment(cm);
+	@RequestMapping(value="resume/insertRboardComment",method = RequestMethod.POST)
+	public String insertRboardComment(RboardComment rboardComment) {
+		System.out.println("댓글 작성하기 controller param"+rboardComment);
+		String msg="";
+		int result = service.insertRboardComment(rboardComment);
+		
+//		if(result>0) {
+//			//답글이 달리면 N->Y로 변경.
+//			int comment = service.insertRboardCommentText(rboardComment.getRboardCommentno());
+//			System.out.println("댓글작성하기~~~성공");
 //			
-//			if(result>0) {
-//				//답글이 달리면 N->Y로 변경.
-//				int comment = service.insertCommentText(cm.getQboardNo());
-//				System.out.println("댓글작성하기~~~성공");
-//				
-//				//댓글갯수 증가로직 +1
-//				int result2=service.updateCommentCount(cm);
-//				System.out.println("댓글갯수 증가 성공여부 : "+result2);
-//			}
-//			
-//			logger.debug(cm.toString());
-//			logger.debug("댓글달기 매핑테스트");
-//			return msg;
+//			//댓글갯수 증가로직 +1
+//			int result2=service.updateCommentCount(comment);
+//			System.out.println("댓글갯수 증가 성공여부 : "+result2);
 //		}
+		if(result>0) {
+			msg="댓글 작성 성공";
+		}else {
+			msg="댓글 작성 실패";
+		}
+		return msg;
+	}
+	//댓글 조회
+	@RequestMapping(value="resume/selectRboardComment/{rboardNo}",method =RequestMethod.GET)
+	public List<RboardComment> selectRboardComment(@PathVariable int rboardNo){
+		System.out.println("댓글리스트 controller");
+		
+		List<RboardComment> list=service.selectRboardComment(rboardNo);
+		
+		for(RboardComment rc:list) {
+			logger.debug(rc.toString());
+		}
+		
+		return list;
+	}
 	
-	
-	
+   //댓글삭제
+   @RequestMapping(value="resume/deleteRboardComment/{rboardCommentNo}.do",method=RequestMethod.POST)
+   public void deleteRboardComment(@PathVariable int rboardCommentNo) {
+       
+    	  int result=service.deleteRboardComment(rboardCommentNo);
+    	  
+    	  if(result>0) {
+    		  System.out.println("댓글삭제 성공");
+    	  }
+      }
+   
+   
+   //댓글수정
+   @RequestMapping(value="resume/updateRboardComment", method=RequestMethod.POST)
+   public void updateRboardComment(@RequestBody Map param) {
+      System.out.println("댓글 수정 controller");
+   
+      int result = service.updateRboardComment(param);
+      
+      if(result>0) {
+         System.out.println("==댓글 수정 성공==");
+      }
+   
+   }
 }
