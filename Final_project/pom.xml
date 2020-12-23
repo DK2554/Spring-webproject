@@ -103,6 +103,31 @@
          </exclusions>
          <scope>runtime</scope>
       </dependency>
+      
+      <!--thymeleaf  -->
+      <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf-spring5</artifactId>
+        <version>3.0.9.RELEASE</version>
+     </dependency>
+     
+     <!-- https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf -->
+    <dependency>
+        <groupId>org.thymeleaf</groupId>
+        <artifactId>thymeleaf</artifactId>
+        <version>3.0.9.RELEASE</version>
+    </dependency>
+     
+     
+     <!-- Thymeleaf lagacy html5를 위한 라이브러리 -->
+     <!-- https://mvnrepository.com/artifact/net.sourceforge.nekohtml/nekohtml -->
+     <dependency>
+        <groupId>net.sourceforge.nekohtml</groupId>
+        <artifactId>nekohtml</artifactId>
+        <version>1.9.22</version>
+     </dependency>
+
+
 
       <!-- @Inject -->
       <dependency>
