@@ -63,9 +63,13 @@ public interface MeetingService {
 
 	List enterList(int no);
 
+
+	List selectWaitList(int no);
+
 	int updatedstatus(Tmpapply tmp);
 
 	List<Mboard> selectendlist();
+
 
 	
 
