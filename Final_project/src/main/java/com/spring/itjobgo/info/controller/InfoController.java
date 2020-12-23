@@ -75,7 +75,6 @@ public class InfoController {
 		logger.debug(iboard.toString());
 
 		// 업로드 경로 설정
-		// 파일 리네임 처리후 파일 저장하기
 		String saveDir = request.getServletContext().getRealPath("/resources/upload/info");
 
 		File dir = new File(saveDir);
