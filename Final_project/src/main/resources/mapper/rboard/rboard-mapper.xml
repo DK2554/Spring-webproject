@@ -93,6 +93,7 @@
 	  	SELECT * FROM CONSULT a
 		left outer join consult_attachment b
 		on a.consult_no=b.consult_no
+		where consult_approval='N'
 		ORDER BY a.CONSULT_NO DESC
 	 </select>
 	 
