@@ -6,9 +6,10 @@
 		insert into collab_board
 		values(seq_meet.nextval,#{mtitle},#{mcontent},#{simcontent},#{mwriter},#{memail},#{mphone},#{sdate},#{fdate},#{langs},#{back},#{front},#{desgin},#{address},#{rdate},#{memberSq},default)
 	</insert>
+	<!-- 12-26수정 -->
 	<insert id="insertcount" parameterType="map">
 		insert into collab_count
-		values(#{collabsq},#{back},#{front},#{desgin},default,default,default)
+		values(#{collabsq},#{back},#{front},#{desgin},default,default,default,default)
 		<selectKey keyProperty="collabsq" resultType="_int"
 			order="BEFORE">
 			select seq_meet.currval from dual
