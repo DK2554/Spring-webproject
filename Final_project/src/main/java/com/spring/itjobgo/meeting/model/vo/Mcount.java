@@ -8,6 +8,8 @@ public class Mcount {
 	private int backCount;
 	private int frontCount;
 	private int desginCount;
+	private String status;
+	
 	public Mcount(int collabSq, int collabBack, int collabFront, int collabDesgin, int backCount, int frontCount,
 			int desginCount, String status) {
 		super();
@@ -20,7 +22,15 @@ public class Mcount {
 		this.desginCount = desginCount;
 		this.status = status;
 	}
-	private String status;
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public Mcount() {
 		// TODO Auto-generated constructor stub
 	}

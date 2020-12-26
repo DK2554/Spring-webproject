@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -114,7 +115,7 @@ public class MeetingController {
 	//모임신청하는 로직
 	
 	@RequestMapping(value="meeting/applymeeting.do",method=RequestMethod.POST)
-	public int applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) {
+	public int applymeeting(@RequestParam(value="postion") String postion,@RequestParam int memberSq,@RequestParam int collabSq,@RequestParam int writerNo  ) throws ParseException {
 		Tmpapply tmp=new Tmpapply();
 		tmp.setMemberSq(memberSq);
 		tmp.setPostion(postion);
@@ -124,13 +125,29 @@ public class MeetingController {
 		int code=0;
 		//이미 가입한 모임인지 확인 완료된 테이블에서 확인
 		Integer appcount=service.selectapplycheck(tmp);
+		Mcount mc=service.selectcount(tmp);
+		Mboard md=service.selectMb(tmp.getCollabSq());
+		//현재 날짜를 확인
+		Date tmpdate;
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+		Date date=new Date();
+		String today=format.format(date);
+		tmpdate=format.parse(today);
+		//tmpdate>deadline :1 현재 날짜가 마감 날짜 보다 크면 1
+		//tmpdate==deadline :0 동일 0 
+		//tmpdate<deadline :-1 작은면 -1
+		int compars=tmpdate.compareTo(md.getCollabDeadline());
+		String status=mc.getStatus();
+		logger.debug(mc.toString());
 		//값이 없으면 null 있으면 1반환
-		if(appcount!=null) {
+		if(status=="Y"||compars>0) {
+			code=4;
+			return code;
+		}
+		else if(appcount!=null) {
 			code=3;
 			return code;
 		}else {
-			Mcount mc=service.selectcount(tmp);
-			logger.debug(mc.toString());
 			//신청한 포지션이 마감 여부
 			if(postion.equals("back")) {
 				code=mc.getCollabBack()==mc.getBackCount() ? 2:0;
@@ -147,7 +164,6 @@ public class MeetingController {
 			}
 			return code;
 		}
-		
 		
 	}
 	//모임신청 취소
